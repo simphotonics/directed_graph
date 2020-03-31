@@ -61,6 +61,9 @@ void main() {
   print(bluePen('\nPrimary colour graph:'));
   print(graph);
 
+  print(bluePen('\nIs Acylic:'));
+  print(graph.isAcyclic());
+
   print(bluePen('\nStrongly connected components:'));
   print(graph.stronglyConnectedComponents());
 
