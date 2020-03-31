@@ -1,5 +1,4 @@
 # Directed Graph
-[![Build Status](https://travis-ci.com/simphotonics/quote_buffer.svg?branch=master)](https://travis-ci.com/simphotonics/quote_buffer)
 
 
 ## Example
@@ -8,9 +7,9 @@ a [directed_graph], manipulate its vertices, determine if the graph is acyclic, 
 obtain a list of vertices in topological order.
 
 The program can be run in a terminal by navigating to the
-folder *directed_graph* in your local copy of this library and using the command:
+folder *directed_graph/example* in your local copy of this library and using the command:
 ```Shell
-$ dart example/bin/example.dart
+$ dart bin/example.dart
 ```
 
 ```Dart
@@ -25,29 +24,34 @@ import 'package:ansicolor/ansicolor.dart';
 //
 // followed by enter.
 void main() {
-  var aa = Vertex<String>('aa');
-  var ab = Vertex<String>('ab');
-  var b4 = Vertex<String>('b4');
-  var d5 = Vertex<String>('d5');
-  var e9 = Vertex<String>('e9');
-  var e8 = Vertex<String>('e8');
-  var ff = Vertex<String>('ff');
-  var gg = Vertex<String>('gg');
 
-  // A comparator function can be used to sort vertices.
-  // See functions: topologicalOrdering() and
-  //                topologicalOrderingDFS() below.
-  int comparator(Vertex<String> v1, Vertex<String> v2) {
-    return v1.data.compareTo(v2.data);
+  var red = Vertex<String>('red');
+  var yellow = Vertex<String>('yellow');
+  var orange = Vertex<String>('orange');
+  var green = Vertex<String>('green');
+  var blue = Vertex<String>('blue');
+  var violet = Vertex<String>('violet');
+  var gray = Vertex<String>('gray');
+  var darkRed = Vertex<String>('darkRed');
+
+  // Function used to sort vertices in lexicographical order.
+  int comparator(
+    Vertex<String> vertex1,
+    Vertex<String> vertex2,
+  ) {
+    return vertex1.data.compareTo(vertex2.data);
   }
 
-  // Instantiate a graph.
+  // Instantiate a directed graph:
   var graph = DirectedGraph<String>(
     {
-      e8: [ff, e9, gg],
-      aa: [ab, e8],
-      b4: [d5, e8],
+      orange: [red, yellow],
+      green: [yellow, blue],
+      violet: [red, blue],
+      gray: [red, yellow, blue],
+      red: [darkRed],
     },
+    comparator: comparator,
   );
 
   AnsiPen bluePen = AnsiPen()..blue(bold: true);
@@ -61,15 +65,15 @@ void main() {
   print(graph.stronglyConnectedComponents());
 
   print(bluePen('\nShortestPath(orange,red):'));
-  print(graph.shortestPath(aa, gg));
+  print(graph.shortestPath(orange, darkRed));
 
   print(bluePen('\nInDegree(red):'));
-  print(graph.inDegree(e9));
+  print(graph.inDegree(red));
 
-  print(bluePen('\nVertices'));
+  print(bluePen('\nVertices sorted in lexicographical order:'));
   print(graph.vertices);
 
-  print(bluePen('\nInDegreeMap'));
+  print(bluePen('\nInDegreeMap:'));
   print(graph.inDegreeMap);
 
   print(bluePen('\nTopologicalOrdering:'));
