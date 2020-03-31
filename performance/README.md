@@ -10,7 +10,8 @@ the following command:
 # dart performance/bin/benchmark.dart
 ```
 
-The program compares the average runtime of the methods below:
+The program runs the benchmarked methods 10 times repeatedly for a minimum duration of
+2000 milliseconds.
 ```Dart
 import 'package:directed_graph/directed_graph.dart';
 
@@ -79,12 +80,16 @@ Point ->
   Player, Game
 
 ```
+The method `topologicalOrderingDFS()`, based on a depth-first search algorithm, executes marginaly faster
+but `topologicalOrdering()` takes an optional comparator function an is able to generate a sorted topological ordering.
 
+
+The method `stronglyConnectedComponents()` is provided for convenience only as it is simply calling the homonymously named function provided by the package [graphs].
 
 
 ## Features and bugs
 
 Please file feature requests and bugs at the [issue tracker].
 
-[issue tracker]: https://github.com/simphotonics/quote_buffer/issues
-[code_builder]: https://pub.dev/packages/code_builder
+[issue tracker]: https://github.com/simphotonics/directed_graph/issues
+[graphs]: https://pub.dev/packages/graphs
