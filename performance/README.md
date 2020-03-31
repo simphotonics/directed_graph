@@ -81,7 +81,8 @@ Point ->
 
 ```
 The method `topologicalOrderingDFS()`, based on a depth-first search algorithm, executes marginaly faster
-but `topologicalOrdering()` takes an optional comparator function an is able to generate a sorted topological ordering.
+but `topologicalOrdering()` takes an optional comparator function as argument
+and is able to generate a sorted topological ordering.
 
 
 The method `stronglyConnectedComponents()` is provided for convenience only as it is simply calling the homonymously named function provided by the package [graphs].
