@@ -2,9 +2,12 @@
 
 
 ## Example
-The example located in this folder demonstrates how to create
+The program `example.dart` (see folder *bin*) demonstrates how to create
 a [directed_graph], manipulate its vertices, determine if the graph is acyclic, or
 obtain a list of vertices in topological order.
+
+The methods `stronglyConnectedComponents()` and `shortestPath` are provided for convenience
+only as they are simply calling the homonymously named functions provided by the package [graphs].
 
 The program can be run in a terminal by navigating to the
 folder *directed_graph/example* in your local copy of this library and using the command:
