@@ -5,26 +5,26 @@
 
 ## Introduction
 
-An integral part to storing, manipulating, and retrieving numerical data are data structures or as they are called in Dart collections.
+An integral part of storing, manipulating, and retrieving numerical data are data structures or as they are called in Dart collections.
 Arguably the most common data structure is the list. It enables efficient storage and retrieval of sequential data that can be associated with an index.
 
 A more general (non-linear) data structure where an element may be connected to one, several, or none of the other elements is called a **graph**.
+
+
 Graphs are useful when keeping track of elements that are linked to or are dependent on other elements.
 Examples include: Hyperlinks in a web page that point to other pages, foreign keys in a relational database that link entries in one table to entries in another table,
 include file dependencies, etc.
 
-The package [directed_graph] contains a rudimentary implementation of a Dart graph that follows the recommendations [graphs examples] and is compatible with
+The package [directed_graph] contains a rudimentary implementation of a Dart graph that follows the recommendations found in [graphs-examples] and is compatible with
 the algorithms provided by [graphs]. It is simple to use, includes methods that enable manipulating vertices and edges and access to algorithms
-for the calculation of the shortest-path between vertices, detection of cycles, or the retrieval of a topological ordering of vertices.
+for the calculation of the shortest path between vertices, detection of cycles, or the retrieval of a topological ordering of vertices.
 
 ## Terminology
 
 Elements of a graph are called **vertices** (or nodes) and neighbouring vertices are connected by **edges**.
 The figure below shows a **directed graph** with unidirectional edges depicted as arrows.
 The edges are emanating from a vertex and ending at a vertex. A self-loop is an edge that is connecting a vertex to itself.
-
 ![Directed Graph Image](images/directed_graph.png)
-
 Terminology:
 - **Root**: A vertex with in-degree zero.
 - **Edge**: A pair of vertices (vertex1, vertex2). The edge is starting at vertex1 and ends at vertex2.
@@ -92,5 +92,5 @@ Please file feature requests and bugs at the [issue tracker].
 
 [issue tracker]: https://github.com/simphotonics/directed_graph/issues
 [example]: example
-[graphs examples]: https://pub.dev/packages/graphs#-example-tab-
+[graphs-examples]: https://pub.dev/packages/graphs#-example-tab-
 [graphs]: https://pub.dev/packages/graphs
