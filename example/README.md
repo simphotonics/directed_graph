@@ -2,7 +2,7 @@
 
 
 ## Example
-The program `example.dart` (see folder *bin*) demonstrates how to create
+The file `example.dart` (see folder *bin*) demonstrates how to create
 a [directed_graph], manipulate its vertices, determine if the graph is acyclic, or
 obtain a list of vertices in topological order.
 
