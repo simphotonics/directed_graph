@@ -1,5 +1,7 @@
 # Directed Graph
 
+[![Build Status](https://travis-ci.com/simphotonics/directed_graph.svg?branch=master)](https://travis-ci.com/simphotonics/directed_graph)
+
 ## Test Graph
 To set up the benchmark, the following directed graph is initialized:
 ```Dart

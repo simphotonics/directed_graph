@@ -1,5 +1,6 @@
 # Directed Graph
 
+[![Build Status](https://travis-ci.com/simphotonics/directed_graph.svg?branch=master)](https://travis-ci.com/simphotonics/directed_graph)
 
 ## Example
 The file `example.dart` (see folder *bin*) demonstrates how to create
