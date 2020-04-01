@@ -1,7 +1,7 @@
 
 # Directed Graph
 
-[![Build Status](https://travis-ci.com/simphotonics/generic_enum.svg?branch=master)](https://travis-ci.com/simphotonics/generic_enum)
+[![Build Status](https://travis-ci.com/simphotonics/directed_graph.svg?branch=master)](https://travis-ci.com/simphotonics/directed_graph)
 
 ## Introduction
 
@@ -27,14 +27,14 @@ The edges are emanating from a vertex and ending at a vertex. A self-loop is an 
 
 ![Directed Graph Image](images/directed_graph.png)
 
-- **Root**: A vertex with in-degree zero.
+- **Root**: A vertex with in-degree zero. Vertices A and D in the graph above are roots.
 - **Edge**: A pair of vertices (vertex1, vertex2). The edge is starting at vertex1 and ends at vertex2.
 - **Path**: One or more connected edges.
 - **Cycle**: A path that starts and ends at the same vertex. For example, a self-loop is a cycle. The dashed edges in the figure indicate a cycle.
 - **DAG**: An acronym for **Directed Acyclic Graph**, a directed graph without cycles.
 - **In-degree** of a vertex: Number of edges ending at this vertex. For example, vertex H has in-degree 3.
 - **Out-degree** of a vertex: Number of edges starting at this vertex. For example, vertex F has out-degree 1.
-- **Topological ordering**: An ordered list of vertices such that vertex1 occurs before vertex2 if there is an edge pointing from vertex1 to vertex2.
+- **Topological ordering**: An ordered list of all vertices in a graph such that vertex1 occurs before vertex2 if there is an edge pointing from vertex1 to vertex2.
 A topological ordering of the graph above is: [A, D, B, C, E, K, F, G, H, I, L]. Hereby, we have disregarded dashed edges as a cyclic graph does
 not have a topological ordering.
 
@@ -43,6 +43,9 @@ not have a topological ordering.
 To use this library include [directed_graph] as adependency in your pubspec.yaml file.
 
 The example below shows how to construct a graph. The constructor takes an optional edges map as parameter.
+Note: Several edges can be specified with one map entry. The key contains the vertex1 where the edges start
+and the value contains a list of vertices connected to vertex1 where the edges end.
+
 If a comparator is specified, vertices are sorted accordingly.
 ```Dart
 var red = Vertex<String>('red');
