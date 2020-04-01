@@ -1,8 +1,7 @@
-# Generic Graph
+# Directed Graph
 
 
 ## Benchmark
-
 To run the benchmark program, navigate to the folder *directed_graph* in your downloaded
 copy of this library and use
 the following command:
@@ -84,12 +83,10 @@ The method `topologicalOrderingDFS()`, based on a depth-first search algorithm, 
 but `topologicalOrdering()` takes an optional comparator function as argument
 and is able to generate a sorted topological ordering.
 
-
-The method `stronglyConnectedComponents()` is provided for convenience only as it is simply calling the homonymously named function provided by the package [graphs].
+The methods `stronglyConnectedComponents()` and `shortestPath()` are provided for convenience only as they are simply calling the homonymously named functions provided by the package [graphs].
 
 
 ## Features and bugs
-
 Please file feature requests and bugs at the [issue tracker].
 
 [issue tracker]: https://github.com/simphotonics/directed_graph/issues
