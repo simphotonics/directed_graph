@@ -1,9 +1,10 @@
 name: directed_graph
 
 description:
-  Directed graph with topological sorting methods.
+  Directed graph with algorithms enabling topological ordering and sorting
+  of vertices.
 
-version: 0.0.1
+version: 0.0.2
 
 homepage: https://github.com/simphotonics/directed_graph
 
