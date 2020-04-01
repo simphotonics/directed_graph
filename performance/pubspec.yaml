@@ -2,7 +2,6 @@ name: performance
 description:
   Benchmark of directed_graph utility functions.
 
-
 environment:
   sdk: '>=2.7.0 <3.0.0'
 
