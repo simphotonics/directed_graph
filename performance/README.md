@@ -45,26 +45,22 @@ This is the default setting provided by the package [benchmark_harness].
 To run the benchmark program, navigate to the folder *directed_graph* in your downloaded
 copy of this library and use
 the following command:
-```shell
+```console
 # dart performance/bin/benchmark.dart
 ```
 
 A typical shell output for a benchmark run on a machine with a Intel Core Dual i5-6260U CPU @ 1.80GHz is listed below:
-```shell
-Topological Ordering DFS ...
-[Wimbledon, Court 1, Tournament, Point, Game, Set, Match, Umpire, Team, Player]
-Topological Ordering DFS:(RunTime): 27.160012493549527 us.
-
+```json
 Topological Ordering Kahn ...
-[Wimbledon, Court 1, Tournament, Point, Game, Set, Match, Team, Player, Umpire]
-Topological Ordering Kahn(RunTime): 32.10741519641682 us.
+[GrandSlam, Court 1, Tournament, Point, Game, Set, Match, Team, Player, Umpire]
+Topological Ordering Kahn(RunTime): 31.97857439800454 us.
 
 Strongly Connected Components Tarjan ...
-[[Player], [Team], [Umpire], [Match], [Set], [Game], [Point], [Tournament], [Court 1], [Wimbledon]]
-Strongly Connected Componets Tarjan:(RunTime): 34.78822772260006 us.
+[[Player], [Team], [Umpire], [Match], [Set], [Game], [Point], [Tournament], [Court 1], [GrandSlam]]
+Strongly Connected Componets Tarjan:(RunTime): 42.83619618762047 us.
 
 This is the test graph:
-Wimbledon ->
+GrandSlam ->
   Tournament, Court 1
 Tournament ->
   Team, Player, Match, Set, Game, Point, Umpire
@@ -78,7 +74,6 @@ Game ->
   Player, Set
 Point ->
   Player, Game
-
 ```
 The method `topologicalOrderingDFS()`, based on a depth-first search algorithm, executes marginaly faster
 but `topologicalOrdering()`, based on Kahn's algorithm, takes an optional comparator function as argument
