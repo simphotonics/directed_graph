@@ -5,19 +5,18 @@
 
 ## Introduction
 
-An integral part of storing, manipulating, and retrieving numerical data are data structures or as they are called in Dart collections.
+An integral part of storing, manipulating, and retrieving numerical data are *data structures* or as they are called in Dart: *collections*.
 Arguably the most common data structure is the list. It enables efficient storage and retrieval of sequential data that can be associated with an index.
 
 A more general (non-linear) data structure where an element may be connected to one, several, or none of the other elements is called a **graph**.
 
 
 Graphs are useful when keeping track of elements that are linked to or are dependent on other elements.
-Examples include: Hyperlinks in a web page that point to other pages, foreign keys in a relational database that link entries in one table to entries in another table,
-include file dependencies, etc.
+Examples include: network connections, links in a document pointing to other paragraphs or documents, foreign keys in a relational database, file dependencies in a build system, etc.
 
 The package [directed_graph] contains a rudimentary implementation of a Dart graph that follows the recommendations found in [graphs-examples] and is compatible with
-the algorithms provided by [graphs]. It is simple to use, includes methods that enable manipulating vertices and edges and access to algorithms
-for the calculation of the shortest path between vertices, detection of cycles, or the retrieval of a topological ordering of vertices.
+the algorithms provided by [graphs]. It is simple to use and includes methods that enable manipulating vertices and edges. The library provides access to algorithms
+for the calculation of the *shortest path between vertices*, *detection of cycles*, or the *retrieval of a topological ordering of the graph vertices*.
 
 ## Terminology
 
@@ -27,13 +26,13 @@ The edges are emanating from a vertex and ending at a vertex. A self-loop is an 
 
 ![Directed Graph Image](images/directed_graph.png)
 
+- **In-degree** of a vertex: Number of edges ending at this vertex. For example, vertex H has in-degree 3.
+- **Out-degree** of a vertex: Number of edges starting at this vertex. For example, vertex F has out-degree 1.
 - **Root**: A vertex with in-degree zero. Vertices A and D in the graph above are roots.
 - **Edge**: A pair of vertices (vertex1, vertex2). The edge is starting at vertex1 and ends at vertex2.
 - **Path**: One or more connected edges.
 - **Cycle**: A path that starts and ends at the same vertex. For example, a self-loop is a cycle. The dashed edges in the figure indicate a cycle.
 - **DAG**: An acronym for **Directed Acyclic Graph**, a directed graph without cycles.
-- **In-degree** of a vertex: Number of edges ending at this vertex. For example, vertex H has in-degree 3.
-- **Out-degree** of a vertex: Number of edges starting at this vertex. For example, vertex F has out-degree 1.
 - **Topological ordering**: An ordered list of all vertices in a graph such that vertex1 occurs before vertex2 if there is an edge pointing from vertex1 to vertex2.
 A topological ordering of the graph above is: [A, D, B, C, E, K, F, G, H, I, L]. Hereby, we have disregarded dashed edges as a cyclic graph does
 not have a topological ordering.
@@ -101,3 +100,4 @@ Please file feature requests and bugs at the [issue tracker].
 [example]: example
 [graphs-examples]: https://pub.dev/packages/graphs#-example-tab-
 [graphs]: https://pub.dev/packages/graphs
+[directed_graph]: https://pub.dev/packages/directed_graph
