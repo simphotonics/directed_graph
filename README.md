@@ -40,7 +40,7 @@ not have a topological ordering.
 
 ## Usage
 
-To use this library include [directed_graph] as adependency in your pubspec.yaml file.
+To use this library include [directed_graph] as a dependency in your pubspec.yaml file.
 
 The example below shows how to construct a graph. The constructor takes an optional edges map as parameter.
 Note: Several edges can be specified with one map entry. The key contains the vertex1 where the edges start
