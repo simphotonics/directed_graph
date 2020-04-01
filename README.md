@@ -40,14 +40,16 @@ not have a topological ordering.
 
 ## Usage
 
-To use this library include [directed_graph] as a dependency in your pubspec.yaml file.
+To use this library include [directed_graph] as a dependency in your pubspec.yaml file. The
+example below shows how to construct a graph. The constructor takes an optional edges map as parameter.
 
-The example below shows how to construct a graph. The constructor takes an optional edges map as parameter.
+If a comparator is specified, vertices are sorted accordingly. For more information about comparators see
+[comparator].
 
 Note: Several edges can be specified with one map entry. The key contains the vertex1 where the edges start
 and the value contains a list of vertices connected to vertex1 where the edges end.
 
-If a comparator is specified, vertices are sorted accordingly.
+
 ```Dart
 var red = Vertex<String>('red');
   var yellow = Vertex<String>('yellow');
@@ -95,6 +97,7 @@ For further information on how to generate a topological sorting of vertices see
 
 Please file feature requests and bugs at the [issue tracker].
 
+[comparator]: https://api.flutter.dev/flutter/dart-core/Comparator.html
 [issue tracker]: https://github.com/simphotonics/directed_graph/issues
 [example]: example
 [graphs-examples]: https://pub.dev/packages/graphs#-example-tab-
