@@ -25,7 +25,7 @@ Elements of a graph are called **vertices** (or nodes) and neighbouring vertices
 The figure below shows a **directed graph** with unidirectional edges depicted as arrows.
 The edges are emanating from a vertex and ending at a vertex. A self-loop is an edge that is connecting a vertex to itself.
 ![Directed Graph Image](images/directed_graph.png)
-Terminology:
+
 - **Root**: A vertex with in-degree zero.
 - **Edge**: A pair of vertices (vertex1, vertex2). The edge is starting at vertex1 and ends at vertex2.
 - **Path**: One or more connected edges.
