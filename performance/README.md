@@ -50,7 +50,11 @@ the following command:
 ```
 
 A typical shell output for a benchmark run on a machine with a Intel Core Dual i5-6260U CPU @ 1.80GHz is listed below:
-```json
+```console
+Topological Ordering DFS ...
+[GrandSlam, Court 1, Tournament, Point, Game, Set, Match, Team, Player, Umpire]
+Topological Ordering DFS:(RunTime): 27.15276005321893 us.
+
 Topological Ordering Kahn ...
 [GrandSlam, Court 1, Tournament, Point, Game, Set, Match, Team, Player, Umpire]
 Topological Ordering Kahn(RunTime): 31.97857439800454 us.
