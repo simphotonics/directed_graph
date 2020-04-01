@@ -32,7 +32,7 @@ var graph = DirectedGraph<String>({
   _set: [player, match],
   game: [player, _set],
   point: [player, game]
-}, comparator: comparator);
+});
 ```
 ## Benchmark
 The benchmark compares the average execution time of the functions:
@@ -52,16 +52,16 @@ the following command:
 A typical shell output for a benchmark run on a machine with a Intel Core Dual i5-6260U CPU @ 1.80GHz is listed below:
 ```console
 Topological Ordering DFS ...
-[GrandSlam, Court 1, Tournament, Point, Game, Set, Match, Team, Player, Umpire]
-Topological Ordering DFS:(RunTime): 27.15276005321893 us.
+[GrandSlam, Tournament, Court 1, Team, Point, Game, Set, Match, Player, Umpire]
+Topological Ordering DFS:(RunTime): 26.991969985289554 us.
 
 Topological Ordering Kahn ...
 [GrandSlam, Court 1, Tournament, Point, Game, Set, Match, Team, Player, Umpire]
-Topological Ordering Kahn(RunTime): 31.97857439800454 us.
+Topological Ordering Kahn(RunTime): 32.20623188405797 us.
 
 Strongly Connected Components Tarjan ...
 [[Player], [Team], [Umpire], [Match], [Set], [Game], [Point], [Tournament], [Court 1], [GrandSlam]]
-Strongly Connected Componets Tarjan:(RunTime): 42.83619618762047 us.
+Strongly Connected Componets Tarjan:(RunTime): 36.057962392052936 us.
 
 This is the test graph:
 GrandSlam ->
