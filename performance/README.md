@@ -1,16 +1,7 @@
 # Directed Graph
 
-
-## Benchmark
-To run the benchmark program, navigate to the folder *directed_graph* in your downloaded
-copy of this library and use
-the following command:
-```shell
-# dart performance/bin/benchmark.dart
-```
-
-The program runs the benchmarked methods 10 times repeatedly for a minimum duration of
-2000 milliseconds.
+## Test Graph
+To set up the benchmark, the following directed graph is initialized:
 ```Dart
 import 'package:directed_graph/directed_graph.dart';
 
@@ -42,13 +33,23 @@ var graph = DirectedGraph<String>({
   game: [player, _set],
   point: [player, game]
 }, comparator: comparator);
-
-// Benchmarked functions:
-graph.topologicalOrdering(comparator);
-graph.topologicalOrderingDFS();
-graph.stronglyConnectedComponents();
 ```
-A typical output for a benchmark run on a machine with a Intel Core Dual i5-6260U CPU @ 1.80GHz is listed below:
+## Benchmark
+The benchmark compares the average execution time of the functions:
+`graph.topologicalOrdering(comparator)`,
+`graph.topologicalOrderingDFS()` and
+`graph.stronglyConnectedComponents()`.
+Each function is run 10 times in a loop for a minimum duration of 2000 milliseconds.
+This is the default setting provided by the package [benchmark_harness].
+
+To run the benchmark program, navigate to the folder *directed_graph* in your downloaded
+copy of this library and use
+the following command:
+```shell
+# dart performance/bin/benchmark.dart
+```
+
+A typical shell output for a benchmark run on a machine with a Intel Core Dual i5-6260U CPU @ 1.80GHz is listed below:
 ```shell
 Topological Ordering DFS ...
 [Wimbledon, Court 1, Tournament, Point, Game, Set, Match, Umpire, Team, Player]
@@ -80,14 +81,17 @@ Point ->
 
 ```
 The method `topologicalOrderingDFS()`, based on a depth-first search algorithm, executes marginaly faster
-but `topologicalOrdering()` takes an optional comparator function as argument
-and is able to generate a sorted topological ordering.
+but `topologicalOrdering()`, based on Kahn's algorithm, takes an optional comparator function as argument
+and is able to generate a sorted topological ordering. In the example above the vertices are sorted in
+topological and lexicographical order.
 
-The methods `stronglyConnectedComponents()` and `shortestPath()` are provided for convenience only as they are simply calling the homonymously named functions provided by the package [graphs].
+The method `stronglyConnectedComponents()` is provided for convenience
+only as it is simply calling the homonymously named function provided by the package [graphs].
 
 
 ## Features and bugs
 Please file feature requests and bugs at the [issue tracker].
 
+[benchmark_harness]: https://pub.dev/packages/benchmark_harness
 [issue tracker]: https://github.com/simphotonics/directed_graph/issues
 [graphs]: https://pub.dev/packages/graphs
