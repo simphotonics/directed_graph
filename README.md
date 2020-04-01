@@ -24,6 +24,7 @@ for the calculation of the shortest path between vertices, detection of cycles, 
 Elements of a graph are called **vertices** (or nodes) and neighbouring vertices are connected by **edges**.
 The figure below shows a **directed graph** with unidirectional edges depicted as arrows.
 The edges are emanating from a vertex and ending at a vertex. A self-loop is an edge that is connecting a vertex to itself.
+
 ![Directed Graph Image](images/directed_graph.png)
 
 - **Root**: A vertex with in-degree zero.
