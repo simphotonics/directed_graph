@@ -6,7 +6,7 @@
 ## Introduction
 
 An integral part of storing, manipulating, and retrieving numerical data are *data structures* or as they are called in Dart: *collections*.
-Arguably the most common data structure is the list. It enables efficient storage and retrieval of sequential data that can be associated with an index.
+Arguably the most common data structure is the *list*. It enables efficient storage and retrieval of sequential data that can be associated with an index.
 
 A more general (non-linear) data structure where an element may be connected to one, several, or none of the other elements is called a **graph**.
 

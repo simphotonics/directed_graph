@@ -8,4 +8,4 @@ Amended package description.
 
 # 0.0.3
 
-Amended README.md. 
+Amended README.md, included travis icon.
