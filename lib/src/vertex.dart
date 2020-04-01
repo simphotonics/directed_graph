@@ -1,5 +1,5 @@
 /// Generic object representing a vertex in a graph.
-/// Holds data of type [T]. 
+/// Holds data of type [T].
 class Vertex<T> {
   final int _id;
 
