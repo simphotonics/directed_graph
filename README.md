@@ -45,7 +45,7 @@ example below shows how to construct a graph. The constructor takes an optional 
 
 If a comparator is specified, vertices are sorted accordingly. For more information see [comparator].
 
-Note: Several edges can be specified with one map entry. The key contains the vertex1 where the edges start
+Note: Several edges can be specified with one map entry. The key contains vertex1 where the edges start
 and the value contains a list of vertices connected to vertex1 where the edges end.
 
 
