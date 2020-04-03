@@ -29,9 +29,9 @@ The edges are emanating from a vertex and ending at a vertex. A self-loop is an 
 - **In-degree** of a vertex: Number of edges ending at this vertex. For example, vertex H has in-degree 3.
 - **Out-degree** of a vertex: Number of edges starting at this vertex. For example, vertex F has out-degree 1.
 - **Source**: A vertex with in-degree zero is called (local) source. Vertices A and D in the graph above are local sources.
-- **Edge**: A pair of vertices (vertex1, vertex2). The edge is starting at vertex1 and ends at vertex2.
-- **Path**: One or more connected edges.
-- **Cycle**: A path that starts and ends at the same vertex. For example, a self-loop is a cycle. The dashed edges in the figure indicate a cycle.
+- **Edge**: An ordered pair of vertices (vertex-1, vertex-2). The edge (vertex-1, vertex-2) starts at vertex-1 and ends at vertex-2.
+- **Path**: A directed path is an ordered list of at least two connected vertices. The path (vertex-i, vertex-j, ..., vertex-n) starts at vertex-i and ends at vertex-n.
+- **Cycle**: A path that starts and ends at the same vertex. For example, a self-loop is a cycle. The dashed edges in the figure complete a cycle.
 - **DAG**: An acronym for **Directed Acyclic Graph**, a directed graph without cycles.
 - **Topological ordering**: An ordered list of all vertices in a graph such that vertex1 occurs before vertex2 if there is an edge pointing from vertex1 to vertex2.
 A topological ordering of the graph above is: [A, D, B, C, E, K, F, G, H, I, L]. Hereby, we have disregarded dashed edges as a cyclic graph does
@@ -44,47 +44,47 @@ example below shows how to construct a graph. The constructor takes an optional 
 
 If a comparator is specified, vertices are sorted accordingly. For more information see [comparator].
 
-Note: Several edges can be specified with one map entry. The key contains vertex1 where the edges start
-and the value contains a list of vertices connected to vertex1 where the edges end.
+Note: To define edges starting from vertex-i and ending at vertex-k, vertex-l, vertex-m, respectively,
+we use vertex-i as map key and \[vertex-k, vertex-l, vertex-m\] as map value.
 
 
 ```Dart
+import 'package:directed_graph/directed_graph.dart';
+
 var red = Vertex<String>('red');
-  var yellow = Vertex<String>('yellow');
-  var orange = Vertex<String>('orange');
-  var green = Vertex<String>('green');
-  var blue = Vertex<String>('blue');
-  var violet = Vertex<String>('violet');
-  var gray = Vertex<String>('gray');
-  var darkRed = Vertex<String>('darkRed');
+var yellow = Vertex<String>('yellow');
+var orange = Vertex<String>('orange');
+var green = Vertex<String>('green');
+var blue = Vertex<String>('blue');
+var violet = Vertex<String>('violet');
+var gray = Vertex<String>('gray');
+var darkRed = Vertex<String>('darkRed');
 
-  int comparator(
-    Vertex<String> vertex1,
-    Vertex<String> vertex2,
-  ) {
-    return vertex1.data.compareTo(vertex2.data);
-  }
+// Function used to compare vertices.
+int comparator(
+  Vertex<String> vertex1,
+  Vertex<String> vertex2,
+) {
+  return vertex1.data.compareTo(vertex2.data);
+}
+var graph = DirectedGraph<String>(
+  {
+    orange: [red, yellow],
+    green: [yellow, blue],
+    violet: [red, blue],
+    gray: [red, yellow, blue],
+  },
+  comparator: comparator,
+);
+// To add one or several edges use:
+graph.addEdges(red, [darkRed]);
 
-  var graph = DirectedGraph<String>(
-    {
-      orange: [red, yellow],
-      green: [yellow, blue],
-      violet: [red, blue],
-      gray: [red, yellow, blue],
-    },
-    comparator: comparator,
-  );
+// To remove one or several edges use:
+graph.removeEdges(green, [blue]);
 
-  // To add one or several edges use:
-  graph.addEdges(red, [darkRed]);
-
-  // To remove one or several edges use:
-  graph.removeEdges(green, [blue]);
-
-  // Access (sorted) vertices:
-  // Note: This getter returns a non-modifiable list-view.
-  var vertices = graph.vertices;
-
+// Access (sorted) vertices:
+// Note: This getter returns a non-modifiable list-view.
+var vertices = graph.vertices;
 ```
 
 ## Examples
