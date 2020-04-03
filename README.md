@@ -28,7 +28,7 @@ The edges are emanating from a vertex and ending at a vertex. A self-loop is an 
 
 - **In-degree** of a vertex: Number of edges ending at this vertex. For example, vertex H has in-degree 3.
 - **Out-degree** of a vertex: Number of edges starting at this vertex. For example, vertex F has out-degree 1.
-- **Root**: A vertex with in-degree zero. Vertices A and D in the graph above are roots.
+- **Source**: A vertex with in-degree zero is called (local) source. Vertices A and D in the graph above are local sources.
 - **Edge**: A pair of vertices (vertex1, vertex2). The edge is starting at vertex1 and ends at vertex2.
 - **Path**: One or more connected edges.
 - **Cycle**: A path that starts and ends at the same vertex. For example, a self-loop is a cycle. The dashed edges in the figure indicate a cycle.
