@@ -32,6 +32,7 @@ void main() {
       violet: [red, blue],
       gray: [red, yellow, blue],
       red: [darkRed],
+
     },
     comparator: comparator,
   );
@@ -49,7 +50,7 @@ void main() {
   print(bluePen('\nStrongly connected components:'));
   print(graph.stronglyConnectedComponents());
 
-  print(bluePen('\nShortestPath(orange,red):'));
+  print(bluePen('\nShortestPath(orange,darkRed):'));
   print(graph.shortestPath(orange, darkRed));
 
   print(bluePen('\nInDegree(red):'));
@@ -66,4 +67,7 @@ void main() {
 
   print(bluePen('\nTopologicalOrderingDFS:'));
   print(graph.topologicalOrderingDFS());
+
+  print(bluePen('\nLocal Sources:'));
+  print(graph.localSources());
 }
