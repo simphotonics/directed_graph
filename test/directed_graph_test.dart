@@ -1,6 +1,11 @@
 import 'package:directed_graph/directed_graph.dart';
 import 'package:test/test.dart';
 
+/// To run the test, navigate to the folder 'directed_graph'
+/// in your local copy of this library and use the command:
+///
+/// # pub run test -r expanded --test-randomize-ordering-seed=random
+///
 void main() {
   var red = Vertex<String>('red');
   var yellow = Vertex<String>('yellow');
@@ -33,35 +38,40 @@ void main() {
     test('toString():', () {
       expect(
           graph.toString(),
-          'orange -> \n'
-          '  red, yellow\n'
-          'green -> \n'
-          '  yellow, blue\n'
-          'violet -> \n'
-          '  red, blue\n'
-          'gray -> \n'
-          '  red, yellow, blue\n'
-          'red -> \n'
-          '  darkRed\n'
-          '');
+          '{\n'
+          ' blue: [],\n'
+          ' darkRed: [],\n'
+          ' gray: [red, yellow, blue],\n'
+          ' green: [yellow, blue],\n'
+          ' orange: [red, yellow],\n'
+          ' red: [darkRed],\n'
+          ' violet: [red, blue],\n'
+          ' yellow: [],\n'
+          '}');
     });
   });
-  group('Graph:', () {
-    test('addLinks():', () {
+  group('Manipulating edges/vertices:', () {
+    test('addEdges():', () {
       graph.addEdges(red, [green]);
       expect(graph.edges(red), [darkRed, green]);
       graph.removeEdges(red, [green]);
     });
-    test('removeLinks():', () {
+    test('removeEdges():', () {
       graph.removeEdges(orange, [yellow]);
       expect(graph.edges(orange), [red]);
       graph.addEdges(orange, [yellow]);
     });
-    test('unLink():', () {
-      graph.unLink(red);
-      expect(graph.edges(red), []);
-      graph.addEdges(red, [darkRed]);
+    test('remove():', () {
+      graph.remove(gray);
+      expect(graph.edges(gray), []);
+      expect(graph.vertices.contains(gray), false);
+      // Restore graph:
+      graph.addEdges(gray, [red, yellow, blue]);
+      expect(graph.vertices.contains(gray), true);
+      expect(graph.edges(gray), [red, yellow, blue]);
     });
+  });
+  group('Graph data:', () {
     test('edges():', () {
       expect(graph.edges(orange), [red, yellow]);
     });
@@ -75,18 +85,18 @@ void main() {
       expect(graph.inDegree(red), 3);
     });
     test('outDegree():', () {
-      expect(graph.outDegree(orange), 2);
+      expect(graph.outDegree(gray), 3);
     });
-    test('outDegreeMap:', () {
+    test('outDegreeMap():', () {
       expect(graph.outDegreeMap(), {
+        blue: 0,
+        darkRed: 0,
+        green: 2,
         orange: 2,
         red: 1,
-        yellow: 0,
-        green: 2,
-        blue: 0,
         violet: 2,
         gray: 3,
-        darkRed: 0,
+        yellow: 0,
       });
     });
     test('inDegreeMap:', () {
@@ -115,6 +125,8 @@ void main() {
         yellow,
       ]);
     });
+  });
+  group('Topological ordering:', () {
     test('stronglyConnectedComponents():', () {
       expect(graph.stronglyConnectedComponents(), [
         [darkRed],
@@ -181,6 +193,13 @@ void main() {
     });
     test('topologicalOrdering(): empty graph', () {
       expect(DirectedGraph<int>({}).topologicalOrderingDFS(), []);
+    });
+    test('localSource():', () {
+      expect(graph.localSources(), [
+        [orange, green, violet, gray],
+        [red, yellow, blue],
+        [darkRed],
+      ]);
     });
   });
 }
