@@ -29,13 +29,16 @@ The edges are emanating from a vertex and ending at a vertex. A self-loop is an 
 - **In-degree** of a vertex: Number of edges ending at this vertex. For example, vertex H has in-degree 3.
 - **Out-degree** of a vertex: Number of edges starting at this vertex. For example, vertex F has out-degree 1.
 - **Source**: A vertex with in-degree zero is called (local) source. Vertices A and D in the graph above are local sources.
-- **Edge**: An ordered pair of vertices (vertex-1, vertex-2). The edge (vertex-1, vertex-2) starts at vertex-1 and ends at vertex-2.
-- **Path**: A directed path is an ordered list of at least two connected vertices. The path (vertex-i, vertex-j, ..., vertex-n) starts at vertex-i and ends at vertex-n.
+- **Edge**: An ordered pair of connected vertices. For example, the edge (A, C) starts at A and ends at C.
+- **Path**: A directed path is an ordered list of at least two connected vertices. The path (A, E, G) starts at A and ends at G.
 - **Cycle**: A path that starts and ends at the same vertex. For example, a self-loop is a cycle. The dashed edges in the figure complete a cycle.
 - **DAG**: An acronym for **Directed Acyclic Graph**, a directed graph without cycles.
 - **Topological ordering**: An ordered list of all vertices in a graph such that vertex1 occurs before vertex2 if there is an edge pointing from vertex1 to vertex2.
 A topological ordering of the graph above is: [A, D, B, C, E, K, F, G, H, I, L]. Hereby, we have disregarded dashed edges as a cyclic graph does
 not have a topological ordering.
+
+**Note**: In the context of this package the definition of *edge* might be more lax compared to a rigorous mathematical definition.
+For example, there is nothing preventing the insertion of multiple edges between two vertices. Internally, edges are stored in a structure of type `Map<Vertex<T>, List<Vertex<T>>>`. However, this does not affect the algorithms calculating a topological ordering of vertices.
 
 ## Usage
 
