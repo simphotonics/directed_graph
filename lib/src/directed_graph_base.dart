@@ -1,4 +1,4 @@
-import 'dart:collection';
+import 'dart:collection' show UnmodifiableListView;
 
 import 'package:graphs/graphs.dart' as graphs;
 import 'package:directed_graph/src/vertex.dart';
@@ -25,6 +25,10 @@ class DirectedGraph<T> {
     _vertices = MutableLazy<UnmodifiableListView<Vertex<T>>>(_sortedVertices);
   }
 
+  /// Constructs a directed graph from another directed graph.
+  DirectedGraph.from(DirectedGraph<T> directedGraph)
+      : this(directedGraph._edges, comparator: directedGraph.comparator);
+
   /// Sorts vertices using the comparator provided during graph construction.
   UnmodifiableListView<Vertex<T>> _sortedVertices() {
     var vertices = _inDegreeMap.keys.toList();
@@ -49,7 +53,7 @@ class DirectedGraph<T> {
 
   /// Adds edges (connections) pointing from [vertex] to [connectedVertices].
   /// If the graph does not contain [vertex] it will be added.
-  addEdges(Vertex<T> vertex, List<Vertex<T>> connectedVertices) {
+  void addEdges(Vertex<T> vertex, List<Vertex<T>> connectedVertices) {
     // Check if vertex exists.
     if (_edges[vertex] == null) {
       _edges[vertex] = connectedVertices;
@@ -62,33 +66,54 @@ class DirectedGraph<T> {
           ? 1
           : _inDegreeMap[connectedVertex] + 1;
     }
+    // Check if [vertex] is new to the graph.
+    if (_inDegreeMap[vertex] == null) {
+      _inDegreeMap[vertex] = 0;
+    }
     // Update lazy fields
     _updateLazyFields();
   }
 
   /// Removes edges (connections) pointing from [vertex] to [connectedVertices].
-  removeEdges(Vertex<T> vertex, List<Vertex<T>> connectedVertices) {
-    _edges[vertex].removeWhere(
-      (connectedVertex) => connectedVertices.contains(connectedVertex),
-    );
-    // Update inDegreeMap.
-    for (final connectedVertex in connectedVertices) {
-      _inDegreeMap[connectedVertex] -= 1;
-    }
-    if (_edges[vertex].isEmpty) {
+  /// If connectedVertices is not specified all outgoing edges are removed from the graph.
+  void removeEdges(Vertex<T> vertex,
+      [List<Vertex<T>> connectedVertices = const []]) {
+    // Handle default case: Remove all outgoing edges if connectedVertices is empty.
+    if (connectedVertices.isEmpty) {
+      // Update inDegreeMap.
+      for (final connectedVertex in _edges[vertex]) {
+        _inDegreeMap[connectedVertex] -= 1;
+      }
       _edges.remove(vertex);
+    } else {
+      // Remove only specified outgoing edges.
+      _edges[vertex].removeWhere(
+        (connectedVertex) => connectedVertices.contains(connectedVertex),
+      );
+      // Update inDegreeMap.
+      for (final connectedVertex in connectedVertices) {
+        _inDegreeMap[connectedVertex] -= 1;
+      }
+      if (_edges[vertex].isEmpty) {
+        _edges.remove(vertex);
+      }
     }
     _updateLazyFields();
   }
 
-  /// Removes all edges (connections) pointing from [vertex] to its neighbouring vertices.
-  unLink(Vertex<T> vertex) {
-    // Update inDegreeMap.
-    for (final connectedVertex in _edges[vertex]) {
-      _inDegreeMap[connectedVertex] -= 1;
+  /// Removes edges ending at [vertex] from the graph.
+  void removeIncomingEdges(Vertex<T> vertex) {
+    // Remove incoming edges
+    for (final startVertex in _edges.keys ?? []) {
+      _edges[startVertex].removeWhere((item) => item == vertex);
     }
-    _edges.remove(vertex);
-    _updateLazyFields();
+  }
+
+  /// Completely remove [vertex] from the graph, including outgoing and incoming edges.
+  void remove(Vertex<T> vertex) {
+    removeIncomingEdges(vertex);
+    _inDegreeMap.remove(vertex);
+    removeEdges(vertex);
   }
 
   /// Returns a valid reverse topological order ordering of the strongly connected components.
@@ -108,6 +133,75 @@ class DirectedGraph<T> {
     return (topologicalOrdering() == null) ? false : true;
   }
 
+  /// Returns a list of type [List<List<Vertex<T>>>].
+  /// The first entry contains the
+  /// local source vertices of the graph.
+  /// Subsequent entries contain the local source vertices of the reduced graph.
+  /// The reduced graph is obtained by removing all vertices listed in
+  /// previous entries from the original graph.
+  ///
+  /// Note: Concatenating the entries of [localSources()] in sequential order
+  ///       results in a topological ordering of the graph vertices.
+  ///
+  /// Note: There is no topological ordering if the
+  /// graph is cyclic. In that case the function returns [null].
+  List<List<Vertex<T>>> localSources() {
+    List<List<Vertex<T>>> result = [];
+
+    // Get modifiable in-degree map.
+    final inDegreeMap = this.inDegreeMap;
+    final vertices = List.from(inDegreeMap.keys);
+
+    bool hasSources = false;
+    int count = 0;
+
+    // Note: In an acyclic directed graph at least one vertex has outDegree zero.
+    do {
+      // Storing local sources.
+      final List<Vertex<T>> sources = [];
+
+      // Storing locations of local sources.
+      final List<int> locations = [];
+
+      // Find sources and their locations.
+      for (var i = 0; i < vertices.length; i++) {
+        if (inDegreeMap[vertices[i]] == 0) {
+          sources.add(vertices[i]);
+          locations.add(i);
+          ++count;
+        }
+      }
+      // for (final vertex in vertices ?? []) {
+      //   if (inDegreeMap[vertex] == 0) {
+      //     sources.add(vertex);
+      //     ++count;
+      //   }
+      // }
+
+      // Add sources to result:
+      if (sources.isNotEmpty) result.add(sources);
+
+      // Remove local sources from list of vertices.
+      // Note: This method is slightly more efficient compared to
+      // the code line below:
+      // vertices.removeWhere((item) => inDegreeMap[item] == 0);
+      for (var i = 0; i < locations.length; i++) {
+        vertices.removeAt(locations[i] - i);
+      }
+
+      // Simulate the removal of detected local sources.
+      for (var source in sources) {
+        for (final connectedVertex in _edges[source] ?? []) {
+          inDegreeMap[connectedVertex] -= 1;
+        }
+      }
+      // Check if local source were found.
+      hasSources = sources.isNotEmpty;
+    } while (hasSources);
+
+    return (count == this.inDegreeMap.keys.length) ? result : null;
+  }
+
   /// Returns [List<Vertex<T>>], a list of all vertices in topological order.
   /// For every directed edge: (vertex1 -> vertex2), vertex1
   /// is listed before vertex2.
@@ -122,13 +216,13 @@ class DirectedGraph<T> {
     // Get modifiable in-degree map.
     final inDegreeMap = this.inDegreeMap;
 
-    // Add all roots (vertices with inDegree == 0) to queue.
+    // Add all sources (vertices with inDegree == 0) to queue.
     // Note: In an acyclic directed graph there is at least
     //       one vertex with inDegree equal to zero.
-    List<Vertex<T>> roots = [];
+    List<Vertex<T>> sources = [];
     for (final vertex in this.vertices) {
       if (inDegreeMap[vertex] == 0) {
-        roots.add(vertex);
+        sources.add(vertex);
       }
     }
 
@@ -136,10 +230,10 @@ class DirectedGraph<T> {
     int count = 0;
 
     // Note: In an acyclic directed graph at least one vertex has outDegree zero.
-    while (roots.isNotEmpty) {
-      // Sort root vertices:
-      if (comparator != null) roots.sort(comparator);
-      var current = roots.removeAt(0);
+    while (sources.isNotEmpty) {
+      // Sort source vertices:
+      if (comparator != null) sources.sort(comparator);
+      var current = sources.removeAt(0);
       result.add(current);
 
       // Simulate removing the current vertex from the
@@ -147,9 +241,9 @@ class DirectedGraph<T> {
       for (final vertex in _edges[current] ?? []) {
         inDegreeMap[vertex] -= 1;
 
-        // Add new root vertices of the remaining graph to the queue.
+        // Add new source vertices of the remaining graph to the queue.
         if (inDegreeMap[vertex] == 0) {
-          roots.add(vertex);
+          sources.add(vertex);
         }
       }
       // Increment count of visited vertices.
@@ -260,13 +354,15 @@ class DirectedGraph<T> {
   @override
   String toString() {
     var b = StringBuffer();
-    var tab = '  ';
-    for (var vertex in _edges.keys) {
-      b.writeln('$vertex -> ');
-      b.write(tab);
-      b.writeAll(_edges[vertex], ', ');
+    b.writeln('{');
+    for (var vertex in _vertices.value) {
+      b.write(' $vertex: ');
+      b.write('[');
+      b.writeAll(_edges[vertex] ?? [], ', ');
+      b.write('],');
       b.writeln('');
     }
+    b.write('}');
     return b.toString();
   }
 
