@@ -19,21 +19,20 @@ class DirectedGraphBenchmark extends BenchmarkBase {
 
   final String name;
   DirectedGraph<String> graph;
+  var player = Vertex<String>('Player');
+  var match = Vertex<String>('Match');
+  var _set = Vertex<String>('Set');
+  var game = Vertex<String>('Game');
+  var point = Vertex<String>('Point');
+  var team = Vertex<String>('Team');
+  var tournament = Vertex<String>('Tournament');
+  var umpire = Vertex<String>('Umpire');
+  var court1 = Vertex<String>('Court-1');
+  var grandSlam = Vertex<String>('GrandSlam');
 
   /// Not measured setup code executed prior to the benchmark runs.
   @override
   void setup() {
-    var player = Vertex<String>('Player');
-    var match = Vertex<String>('Match');
-    var _set = Vertex<String>('Set');
-    var game = Vertex<String>('Game');
-    var point = Vertex<String>('Point');
-    var team = Vertex<String>('Team');
-    var tournament = Vertex<String>('Tournament');
-    var umpire = Vertex<String>('Umpire');
-    var court1 = Vertex<String>('Court 1');
-    var grandSlam = Vertex<String>('GrandSlam');
-
     this.graph = DirectedGraph({
       grandSlam: [tournament, court1],
       tournament: [team, player, match, _set, game, point, umpire],
@@ -110,17 +109,61 @@ class StronglyConnectedComponents extends DirectedGraphBenchmark {
   }
 }
 
+class LocalSources extends DirectedGraphBenchmark {
+  LocalSources(String name) : super(name);
+
+  List<List<Vertex<String>>> localSources;
+
+  /// The benchmark code.
+  @override
+  void run() {
+    this.localSources = this.graph.localSources();
+  }
+
+  /// Not measures teardown code executed after the benchmark runs.
+  @override
+  void teardown() {
+    print(magenta('\nLocal Sources ... '));
+    print(green(this.localSources.toString()));
+  }
+}
+
+class GraphManipulation extends DirectedGraphBenchmark {
+  GraphManipulation(String name) : super(name);
+
+  /// The benchmark code.
+  @override
+  void run() {
+    this.graph.remove(super.tournament);
+    this.graph.addEdges(tournament, [
+      team,
+      player,
+      match,
+      _set,
+      game,
+      point,
+      umpire,
+    ]);
+  }
+
+  /// Not measures teardown code executed after the benchmark runs.
+  @override
+  void teardown() {
+    print(magenta('\nTest Graph ... '));
+    print(green(this.graph.toString()));
+  }
+}
+
 void main() {
   var topDFSBenchmark = TopologicalOrderDFS('Topological Ordering DFS:');
   var topKahnBenchmark = TopologicalOrderKahn('Topological Ordering Kahn');
   var sccBenchmark =
       StronglyConnectedComponents('Strongly Connected Componets Tarjan:');
-
+  var localSourcesBenchmark = LocalSources('Local Sources:');
+  var graphManipulation = GraphManipulation('Removing/Adding Vertices');
   topDFSBenchmark.report();
   topKahnBenchmark.report();
   sccBenchmark.report();
-
-  print(blue('\nThis is the test graph:'));
-  print(green(sccBenchmark.graph.toString()));
-  print('\n');
+  localSourcesBenchmark.report();
+  graphManipulation.report();
 }
