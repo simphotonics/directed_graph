@@ -50,7 +50,7 @@ echo
 
 # Only run if libary has test dependency
 grep -q test pubspec.yaml && \
-pub run test
+pub run test -r expanded --test-randomize-ordering-seed=random
 
 
 # ==============================

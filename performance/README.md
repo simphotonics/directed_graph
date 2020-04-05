@@ -38,10 +38,14 @@ var graph = DirectedGraph<String>({
 ```
 ## Benchmark
 The benchmark compares the average execution time of the functions:
+`graph.topologicalOrderingDFS()`,
 `graph.topologicalOrdering(comparator)`,
-`graph.topologicalOrderingDFS()` and
-`graph.stronglyConnectedComponents()`.
-Each function is run 10 times in a loop for a minimum duration of 2000 milliseconds.
+`graph.stronglyConnectedComponents()`,
+`graph.localSource()`,
+`graph.remove(tournament)` followed by
+```graph.addEdges(tournament, [team, player, match, _set, game, point, umpire,])```.
+
+Each test is run 10 times in a loop for a minimum duration of 2000 milliseconds.
 This is the default setting provided by the package [benchmark_harness].
 
 To run the benchmark program, navigate to the folder *directed_graph* in your downloaded
@@ -54,32 +58,35 @@ the following command:
 A typical shell output for a benchmark run on a machine with a Intel Core Dual i5-6260U CPU @ 1.80GHz is listed below:
 ```console
 Topological Ordering DFS ...
-[GrandSlam, Tournament, Court 1, Team, Point, Game, Set, Match, Player, Umpire]
-Topological Ordering DFS:(RunTime): 26.991969985289554 us.
+[GrandSlam, Tournament, Court-1, Team, Point, Game, Set, Match, Player, Umpire]
+Topological Ordering DFS:(RunTime): 26.77705479910565 us.
 
 Topological Ordering Kahn ...
-[GrandSlam, Court 1, Tournament, Point, Game, Set, Match, Team, Player, Umpire]
-Topological Ordering Kahn(RunTime): 32.20623188405797 us.
+[GrandSlam, Court-1, Tournament, Point, Game, Set, Match, Team, Player, Umpire]
+Topological Ordering Kahn(RunTime): 32.720698907139585 us.
 
 Strongly Connected Components Tarjan ...
-[[Player], [Team], [Umpire], [Match], [Set], [Game], [Point], [Tournament], [Court 1], [GrandSlam]]
-Strongly Connected Componets Tarjan:(RunTime): 36.057962392052936 us.
+[[Player], [Team], [Umpire], [Match], [Set], [Game], [Point], [Tournament], [Court-1], [GrandSlam]]
+Strongly Connected Componets Tarjan:(RunTime): 35.91507892326755 us.
 
-This is the test graph:
-GrandSlam ->
-  Tournament, Court 1
-Tournament ->
-  Team, Player, Match, Set, Game, Point, Umpire
-Team ->
-  Player
-Match ->
-  Player, Umpire
-Set ->
-  Player, Match
-Game ->
-  Player, Set
-Point ->
-  Player, Game
+Local Sources ...
+[[GrandSlam], [Tournament, Court-1], [Team, Point], [Game], [Set], [Match], [Player, Umpire]]
+Local Sources:(RunTime): 47.74295194671887 us.
+
+Test Graph ...
+{
+ GrandSlam: [Court-1],
+ Court-1: [],
+ Team: [Player],
+ Player: [],
+ Match: [Player, Umpire],
+ Set: [Player, Match],
+ Game: [Player, Set],
+ Point: [Player, Game],
+ Umpire: [],
+ Tournament: [Team, Player, Match, Set, Game, Point, Umpire],
+}
+Removing/Adding Vertices(RunTime): 17.798565440646442 us.
 ```
 The method `topologicalOrderingDFS()`, based on a depth-first search algorithm, executes marginaly faster
 but `topologicalOrdering()`, based on Kahn's algorithm, takes an optional comparator function as argument

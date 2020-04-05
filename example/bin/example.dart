@@ -32,7 +32,6 @@ void main() {
       violet: [red, blue],
       gray: [red, yellow, blue],
       red: [darkRed],
-
     },
     comparator: comparator,
   );
