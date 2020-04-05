@@ -22,7 +22,7 @@ for the calculation of the *shortest path between vertices*, *detection of cycle
 
 Elements of a graph are called **vertices** (or nodes) and neighbouring vertices are connected by **edges**.
 The figure below shows a **directed graph** with unidirectional edges depicted as arrows.
-The edges are emanating from a vertex and ending at a vertex. A self-loop is an edge that is connecting a vertex to itself.
+Graph edges are emanating from a vertex and ending at a vertex.
 
 ![Directed Graph Image](images/directed_graph.png)
 
@@ -34,10 +34,12 @@ The edges are emanating from a vertex and ending at a vertex. A self-loop is an 
 - **Cycle**: A path that starts and ends at the same vertex. For example, a self-loop is a cycle. The dashed edges in the figure complete a cycle.
 - **DAG**: An acronym for **Directed Acyclic Graph**, a directed graph without cycles.
 - **Topological ordering**: An ordered list of all vertices in a graph such that vertex1 occurs before vertex2 if there is an edge pointing from vertex1 to vertex2.
-A topological ordering of the graph above is: [A, D, B, C, E, K, F, G, H, I, L]. Hereby, we have disregarded dashed edges as a cyclic graph does
+A topological ordering of the graph above is: [A, D, B, C, E, K, F, G, H, I, L]. Hereby, dashed edges were disregarded since a cyclic graph does
 not have a topological ordering.
 
 **Note**: In the context of this package the definition of *edge* might be more lax compared to a rigorous mathematical definition.
+For example, self-loops, that is edges connecting a vertex to itself are explicitly allowed.
+
 For simplicity, edges are (internally) stored in a structure of type `Map<Vertex<T>, List<Vertex<T>>>` and there is nothing preventing a user from
 inserting self-loops or multiple edges between the same nodes. While self-loops will render a graph cyclic, multiple entries of the same edge
 does not affect the algorithms calculating a topological ordering of vertices.
