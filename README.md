@@ -42,7 +42,7 @@ For example, self-loops, that is edges connecting a vertex to itself are explici
 
 For simplicity, edges are (internally) stored in a structure of type `Map<Vertex<T>, List<Vertex<T>>>` and there is nothing preventing a user from
 inserting self-loops or multiple edges between the same nodes. While self-loops will render a graph cyclic, multiple entries of the same edge
-does not affect the algorithms calculating a topological ordering of vertices.
+do not affect the algorithms calculating a topological ordering of vertices.
 
 ## Usage
 
