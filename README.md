@@ -52,7 +52,7 @@ example below shows how to construct a graph. The constructor takes an optional 
 If a comparator is specified, vertices are sorted accordingly. For more information see [comparator].
 
 Note: To define edges starting from vertex `gray` and ending at vertices `red`, `yellow`, and `blue`, respectively,
-we use vertex `gray` map *key* and vertices `\[red, yellow, blue\]` as map *value*.
+we use vertex `gray` map *key* and vertices `[red, yellow, blue]` as map *value*.
 
 
 ```Dart
