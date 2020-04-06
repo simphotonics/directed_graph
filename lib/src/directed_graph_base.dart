@@ -1,4 +1,4 @@
-import 'dart:collection' show UnmodifiableListView;
+import 'dart:collection' show UnmodifiableListView, Queue;
 
 import 'package:graphs/graphs.dart' as graphs;
 import 'package:directed_graph/src/vertex.dart';
@@ -8,20 +8,21 @@ import 'package:lazy_evaluation/lazy_evaluation.dart';
 /// Data of type [T] is stored in vertices of type [Vertex<T>].
 /// The graph consists of a mapping [_edges] of each
 /// [Vertex<T>] to a list of connected vertices [List<Vertex<T>>].
-class DirectedGraph<T> extends Iterable{
+class DirectedGraph<T> extends Iterable {
   Map<Vertex<T>, List<Vertex<T>>> _edges;
   MutableLazy<UnmodifiableListView<Vertex<T>>> _vertices;
   Map<Vertex<T>, int> _inDegreeMap;
-  Comparator<Vertex<T>> comparator;
+  Comparator<Vertex<T>> _comparator;
 
   /// Constructs a directed graph.
   /// [edges] is of type [Map<Vertex<T>, List<Vertex<T>>>],
   /// mapping each vertex to a list of connected vertices.
   DirectedGraph(
     Map<Vertex<T>, List<Vertex<T>>> edges, {
-    this.comparator,
-  }) : _edges = edges ?? {} {
-    _inDegreeMap = calculateInDegreeMap();
+    comparator,
+  })  : _edges = edges ?? {},
+        _comparator = comparator {
+    _inDegreeMap = _createInDegreeMap();
     _vertices = MutableLazy<UnmodifiableListView<Vertex<T>>>(_sortedVertices);
   }
 
@@ -29,11 +30,19 @@ class DirectedGraph<T> extends Iterable{
   DirectedGraph.from(DirectedGraph<T> directedGraph)
       : this(directedGraph._edges, comparator: directedGraph.comparator);
 
-  /// Sorts vertices using the comparator provided during graph construction.
+  /// Returns an unmodifiable list-view of sorted vertices.
+  /// Vertices are sorted if a comparator was specified.
   UnmodifiableListView<Vertex<T>> _sortedVertices() {
     var vertices = _inDegreeMap.keys.toList();
-    if (comparator != null) vertices.sort(comparator);
+    if (_comparator != null) vertices.sort(_comparator);
     return UnmodifiableListView(vertices);
+  }
+
+  Comparator<Vertex<T>> get comparator => _comparator;
+
+  set comparator(Comparator<Vertex<T>> comparator) {
+    _comparator = comparator;
+    _vertices.notifyChange();
   }
 
   /// Mapping [Vertex<T>] to a list of connected vertices [List<Vertex<T>>].
@@ -45,7 +54,7 @@ class DirectedGraph<T> extends Iterable{
 
   /// Unmodifiable ListView of all vertices in the graph.
   /// The vertices will be sorted if a vertex comparator was
-  /// specified when creating the graph.
+  /// specified during instantiation of the graph or by invoking the `comparator` setter.
   UnmodifiableListView<Vertex<T>> get vertices => _vertices.value;
 
   /// Returns a (modifiable) copy of the inDegreeMap.
@@ -76,24 +85,23 @@ class DirectedGraph<T> extends Iterable{
 
   /// Removes edges (connections) pointing from [vertex] to [connectedVertices].
   /// If connectedVertices is not specified all outgoing edges are removed from the graph.
-  void removeEdges(Vertex<T> vertex,
-      [List<Vertex<T>> connectedVertices = const []]) {
-    // Handle default case: Remove all outgoing edges if connectedVertices is empty.
-    if (connectedVertices.isEmpty) {
+  void removeEdges(Vertex<T> vertex, [List<Vertex<T>> connectedVertices]) {
+    // Handle default case: Remove all outgoing edges if connectedVertices is not specified.
+    if (connectedVertices == null) {
       // Update inDegreeMap.
-      for (final connectedVertex in _edges[vertex]) {
+      for (final connectedVertex in _edges[vertex] ?? []) {
         _inDegreeMap[connectedVertex] -= 1;
       }
       _edges.remove(vertex);
     } else {
-      // Remove only specified outgoing edges.
-      _edges[vertex].removeWhere(
-        (connectedVertex) => connectedVertices.contains(connectedVertex),
-      );
-      // Update inDegreeMap.
+      if (_edges[vertex] == null) return;
       for (final connectedVertex in connectedVertices) {
-        _inDegreeMap[connectedVertex] -= 1;
+        // Check if connectedVertex is indeed connected to vertex.
+        if (_edges[vertex].remove(connectedVertex)) {
+          _inDegreeMap[connectedVertex] -= 1;
+        }
       }
+      // Remove entry if vertex has no outgoing edges.
       if (_edges[vertex].isEmpty) {
         _edges.remove(vertex);
       }
@@ -144,13 +152,13 @@ class DirectedGraph<T> extends Iterable{
   ///       results in a topological ordering of the graph vertices.
   ///
   /// Note: There is no topological ordering if the
-  /// graph is cyclic. In that case the function returns [null].
+  /// graph is cyclic. In that case the function returns [null].----*-
   List<List<Vertex<T>>> localSources() {
     List<List<Vertex<T>>> result = [];
 
     // Get modifiable in-degree map.
     final inDegreeMap = this.inDegreeMap;
-    final vertices = List.from(inDegreeMap.keys);
+    final vertices = List.from(this._vertices.value);
 
     bool hasSources = false;
     int count = 0;
@@ -206,11 +214,14 @@ class DirectedGraph<T> extends Iterable{
   /// For every directed edge: (vertex1 -> vertex2), vertex1
   /// is listed before vertex2.
   ///
+  /// If a vertex comparator is specified, the sorting will be applied
+  /// in addition to the topological order.
+  ///
   /// Note: There is no topological ordering if the
   /// graph is cyclic. In that case the function returns [null].
   /// Any self-loop (e.g. vertex1 -> vertex1) renders a directed graph cyclic.
   /// Based on Kahn's algorithm.
-  List<Vertex<T>> topologicalOrdering([Comparator<Vertex<T>> comparator]) {
+  List<Vertex<T>> sortedTopologicalOrdering() {
     List<Vertex<T>> result = [];
 
     // Get modifiable in-degree map.
@@ -220,7 +231,8 @@ class DirectedGraph<T> extends Iterable{
     // Note: In an acyclic directed graph there is at least
     //       one vertex with inDegree equal to zero.
     List<Vertex<T>> sources = [];
-    for (final vertex in this.vertices) {
+
+    for (final vertex in _edges.keys) {
       if (inDegreeMap[vertex] == 0) {
         sources.add(vertex);
       }
@@ -232,7 +244,7 @@ class DirectedGraph<T> extends Iterable{
     // Note: In an acyclic directed graph at least one vertex has outDegree zero.
     while (sources.isNotEmpty) {
       // Sort source vertices:
-      if (comparator != null) sources.sort(comparator);
+      if (_comparator != null) sources.sort(_comparator);
       var current = sources.removeAt(0);
       result.add(current);
 
@@ -249,7 +261,7 @@ class DirectedGraph<T> extends Iterable{
       // Increment count of visited vertices.
       count++;
     }
-    return (count != vertices.length) ? null : result;
+    return (count != _inDegreeMap.length) ? null : result;
   }
 
   /// Returns [List<Vertex<T>>], a list of all vertices in topological order.
@@ -260,11 +272,12 @@ class DirectedGraph<T> extends Iterable{
   /// graph is cyclic. In that case the function returns [null].
   /// Any self-loop (e.g. vertex1 -> vertex1) renders a directed graph cyclic.
   /// Based on a depth-first search algorithm (Cormen 2001, Tarjan 1976).
-  List<Vertex<T>> topologicalOrderingDFS() {
+  List<Vertex<T>> topologicalOrdering() {
     final List<Vertex<T>> result = [];
 
     /// Add all nodes to queue.
-    List<Vertex<T>> vertices = List.from(this.vertices);
+    //List<Vertex<T>> vertices = List.from(this._inDegreeMap.keys);
+    Queue<Vertex<T>> vertices = Queue.from(this._vertices.value.reversed);
 
     // Map keeping a tab on visited vertices.
     //     1 => temporary mark.
@@ -302,7 +315,8 @@ class DirectedGraph<T> extends Iterable{
     }
 
     // Main loop
-    for (var current in vertices.reversed) {
+    //for (var current in vertices.reversed) {
+    for (var current in vertices) {
       if (isCyclic) break;
       visit(current);
     }
@@ -312,7 +326,7 @@ class DirectedGraph<T> extends Iterable{
 
   /// Returns a mapping between vertex and number of
   /// incoming connections.
-  Map<Vertex<T>, int> calculateInDegreeMap() {
+  Map<Vertex<T>, int> _createInDegreeMap() {
     var map = Map<Vertex<T>, int>();
     for (final vertex in _edges.keys) {
       // Entry might already exist.
