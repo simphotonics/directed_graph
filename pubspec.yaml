@@ -4,7 +4,7 @@ description:
   Directed graph with algorithms enabling topological ordering and sorting
   of vertices.
 
-version: 0.1.0
+version: 0.1.1
 
 homepage: https://github.com/simphotonics/directed_graph
 

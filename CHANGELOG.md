@@ -24,3 +24,7 @@ Edited image url.
 Fixed logic in removeEdges().
 The field [comparator] is no longer final, it can
 be set to trigger a resort of the graph [vertices].
+
+# 0.1.1
+
+Amended section #Usage in README.md.
