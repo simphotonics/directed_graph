@@ -30,7 +30,7 @@ class Vertex<T> {
 }
 
 /// Object representing a constant vertex.
-class ConstantVertex<T>{
+class ConstantVertex<T> {
   /// Vertex data of type [T].
   final T data;
 
