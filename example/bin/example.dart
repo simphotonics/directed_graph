@@ -86,5 +86,4 @@ void main() {
   print(bluePen('\nLocal Sources:'));
   print(graph.localSources());
 
-  print('${a.hashCode}');
 }
