@@ -58,74 +58,87 @@ we use vertex `gray` as map *key* and vertices `[red, yellow, blue]` as map *val
 ```Dart
 import 'package:directed_graph/directed_graph.dart';
 
-var red = Vertex<String>('red');
-var yellow = Vertex<String>('yellow');
-var orange = Vertex<String>('orange');
-var green = Vertex<String>('green');
-var blue = Vertex<String>('blue');
-var violet = Vertex<String>('violet');
-var gray = Vertex<String>('gray');
-var darkRed = Vertex<String>('darkRed');
+// To run this program navigate to
+// the folder 'directed_graph/example'
+// in your terminal and type:
+//
+// # dart bin/example.dart
+//
+// followed by enter.
+void main() {
+  var a = Vertex<String>('A');
+  var b = Vertex<String>('B');
+  var c = Vertex<String>('C');
+  var d = Vertex<String>('D');
+  var e = Vertex<String>('E');
+  var f = Vertex<String>('F');
+  var g = Vertex<String>('G');
+  var h = Vertex<String>('H');
+  var i = Vertex<String>('I');
+  var k = Vertex<String>('K');
+  var l = Vertex<String>('L');
 
-// Function used to compare vertices.
-int comparator(
-  Vertex<String> vertex1,
-  Vertex<String> vertex2,
-) {
-  return vertex1.data.compareTo(vertex2.data);
-}
-var graph = DirectedGraph<String>(
-  {
-    orange: [red, yellow],
-    green: [yellow, blue],
-    violet: [red, blue],
-    gray: [red, yellow, blue],
-  },
-  comparator: comparator,
-);
-// To add one or several edges use:
-graph.addEdges(red, [darkRed]);
+  int comparator(
+    Vertex<String> vertex1,
+    Vertex<String> vertex2,
+  ) {
+    return vertex1.data.compareTo(vertex2.data);
+  }
 
-// To remove one or several edges use:
-graph.removeEdges(green, [blue]);
+  int inverseComparator(Vertex<String> vertex1, Vertex<String> vertex2) =>
+      -comparator(vertex1, vertex2);
 
-// Access (sorted) vertices:
-// Note: This getter returns a non-modifiable list-view.
-var vertices = graph.vertices;
+  var graph = DirectedGraph<String>(
+    {
+      a: [b, h, c, e],
+      d: [e, f],
+      b: [h],
+      c: [h, g],
+      f: [i],
+      i: [l],
+      k: [g, f]
+    },
+    comparator: comparator,
+  );
 
-// Iterate over all vertices.
-//   (If a comparator is passed when
-//    creating the graph, the vertices will be sorted accordingly.)
-for (var vertex in graph){
-  print(vertex);
-}
+  print('Example Directed Graph...');
+  print('\n graph.toString():');
+  print(graph);
 
-print('Is Acylic:');
-print(graph.isAcyclic());
+  print('\n Is Acylic:');
+  print(graph.isAcyclic());
 
-print('Strongly connected components:');
-print(graph.stronglyConnectedComponents();
+  print('\n Strongly connected components:');
+  print(graph.stronglyConnectedComponents());
 
-print('ShortestPath(orange,darkRed):');
-print(graph.shortestPath(orange, darkRed);
+  print('\n ShortestPath(orange,darkRed):');
+  print(graph.shortestPath(d, l));
 
-print('InDegree(red):');
-print(graph.inDegree(red);
+  print('\n InDegree(C):');
+  print(graph.inDegree(c));
 
-print('Vertices sorted in lexicographical order:');
-print(graph.vertices);
+  print('\n OutDegree(C)');
+  print(graph.outDegree(c));
 
-print('InDegreeMap:');
-print(graph.inDegreeMap);
+  print('\n Vertices sorted in lexicographical order:');
+  print(graph.vertices);
 
-print('Print a list of vertices in topological and sorted order:');
-print(graph.topologicalOrdering(comparator);
+  print('\n Vertices sorted in inverse lexicographical order:');
+  graph.comparator = inverseComparator;
+  print(graph.vertices);
+  graph.comparator = comparator;
 
-print('TopologicalOrderingDFS:');
-print(graph.topologicalOrderingDFS();
+  print('\n InDegreeMap:');
+  print(graph.inDegreeMap);
 
-print('Local Sources:');
-print(graph.localSources();
+  print('\n Sorted Topological Ordering:');
+  print(graph.sortedTopologicalOrdering());
+
+  print('\n Topological Ordering:');
+  print(graph.topologicalOrdering());
+
+  print('\n Local Sources:');
+  print(graph.localSources());
 ```
 
 ## Examples
