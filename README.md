@@ -101,7 +101,7 @@ for (var vertex in graph){
 }
 
 print('Is Acylic:');
-print(graph.isAcyclic();
+print(graph.isAcyclic());
 
 print('Strongly connected components:');
 print(graph.stronglyConnectedComponents();
