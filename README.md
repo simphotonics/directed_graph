@@ -47,13 +47,8 @@ do not affect the algorithms calculating a topological ordering of vertices.
 ## Usage
 
 To use this library include [directed_graph] as a dependency in your pubspec.yaml file. The
-example below shows how to construct a graph. The constructor takes an optional edges map as parameter.
-
-If a comparator is specified, vertices are sorted accordingly. For more information see [comparator].
-
-Note: To define edges starting from vertex `gray` and ending at vertices `red`, `yellow`, and `blue`, respectively,
-we use vertex `gray` as map *key* and vertices `[red, yellow, blue]` as map *value*.
-
+example below shows how to construct a graph. The constructor takes an optional comparator function
+as parameter. If a comparator is specified, vertices are sorted accordingly. For more information see [comparator].
 
 ```Dart
 import 'package:directed_graph/directed_graph.dart';
