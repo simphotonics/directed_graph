@@ -12,5 +12,9 @@ Amended README.md, included travis icon.
 
 # 0.0.4
 
-Added method localSource().
-Graph now extends iterator. 
+Added method localSources().
+DirectedGraph now extends Iterator.
+
+# 0.0.5
+
+Edited image url.
