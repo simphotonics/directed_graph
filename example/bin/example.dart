@@ -9,14 +9,17 @@ import 'package:ansicolor/ansicolor.dart';
 //
 // followed by enter.
 void main() {
-  var red = Vertex<String>('red');
-  var yellow = Vertex<String>('yellow');
-  var orange = Vertex<String>('orange');
-  var green = Vertex<String>('green');
-  var blue = Vertex<String>('blue');
-  var violet = Vertex<String>('violet');
-  var gray = Vertex<String>('gray');
-  var darkRed = Vertex<String>('darkRed');
+  var a = Vertex<String>('A');
+  var b = Vertex<String>('B');
+  var c = Vertex<String>('C');
+  var d = Vertex<String>('D');
+  var e = Vertex<String>('E');
+  var f = Vertex<String>('F');
+  var g = Vertex<String>('G');
+  var h = Vertex<String>('H');
+  var i = Vertex<String>('I');
+  var k = Vertex<String>('K');
+  var l = Vertex<String>('L');
 
   int comparator(
     Vertex<String> vertex1,
@@ -25,13 +28,18 @@ void main() {
     return vertex1.data.compareTo(vertex2.data);
   }
 
+  int inverseComparator(Vertex<String> vertex1, Vertex<String> vertex2) =>
+      -comparator(vertex1, vertex2);
+
   var graph = DirectedGraph<String>(
     {
-      orange: [red, yellow],
-      green: [yellow, blue],
-      violet: [red, blue],
-      gray: [red, yellow, blue],
-      red: [darkRed],
+      a: [b, h, c, e],
+      d: [e, f],
+      b: [h],
+      c: [h, g],
+      f: [i],
+      i: [l],
+      k: [g, f]
     },
     comparator: comparator,
   );
@@ -40,7 +48,7 @@ void main() {
   AnsiPen magentaPen = AnsiPen()..magenta(bold: true);
 
   print(magentaPen('Example Directed Graph...'));
-  print(bluePen('\nPrimary colour graph:'));
+  print(bluePen('\ngraph.toString():'));
   print(graph);
 
   print(bluePen('\nIs Acylic:'));
@@ -50,23 +58,33 @@ void main() {
   print(graph.stronglyConnectedComponents());
 
   print(bluePen('\nShortestPath(orange,darkRed):'));
-  print(graph.shortestPath(orange, darkRed));
+  print(graph.shortestPath(d, l));
 
-  print(bluePen('\nInDegree(red):'));
-  print(graph.inDegree(red));
+  print(bluePen('\nInDegree(C):'));
+  print(graph.inDegree(c));
+
+  print(bluePen('\nOutDegree(C)'));
+  print(graph.outDegree(c));
 
   print(bluePen('\nVertices sorted in lexicographical order:'));
   print(graph.vertices);
 
+  print(bluePen('\nVertices sorted in inverse lexicographical order:'));
+  graph.comparator = inverseComparator;
+  print(graph.vertices);
+  graph.comparator = comparator;
+
   print(bluePen('\nInDegreeMap:'));
   print(graph.inDegreeMap);
 
-  print(bluePen('\nTopologicalOrdering:'));
-  print(graph.topologicalOrdering(comparator));
+  print(bluePen('\nSorted Topological Ordering:'));
+  print(graph.sortedTopologicalOrdering());
 
-  print(bluePen('\nTopologicalOrderingDFS:'));
-  print(graph.topologicalOrderingDFS());
+  print(bluePen('\nTopological Ordering:'));
+  print(graph.topologicalOrdering());
 
   print(bluePen('\nLocal Sources:'));
   print(graph.localSources());
+
+  print('${a.hashCode}');
 }
