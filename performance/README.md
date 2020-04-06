@@ -16,25 +16,29 @@ int comparator(
 }
 
 // Directed graph
-var player = Vertex<String>('Player');
-var match = Vertex<String>('Match');
-var _set = Vertex<String>('Set');
-var game = Vertex<String>('Game');
-var point = Vertex<String>('Point');
-var team = Vertex<String>('Team');
-var tournament = Vertex<String>('Tournament');
-var umpire = Vertex<String>('Umpire');
-var court1 = Vertex<String>('Court 1');
-var grandSlam = Vertex<String>('GrandSlam');
-var graph = DirectedGraph<String>({
-  grandSlam: [tournament, court1],
-  tournament: [team, player, match, _set, game, point, umpire],
-  team: [player],
-  match: [player, umpire],
-  _set: [player, match],
-  game: [player, _set],
-  point: [player, game]
-});
+var a = Vertex<String>('A');
+var b = Vertex<String>('B');
+var c = Vertex<String>('C');
+var d = Vertex<String>('D');
+var e = Vertex<String>('E');
+var f = Vertex<String>('F');
+var g = Vertex<String>('G');
+var h = Vertex<String>('H');
+var i = Vertex<String>('I');
+var k = Vertex<String>('K');
+var l = Vertex<String>('L');
+var graph = DirectedGraph<String>(
+  {
+    a: [b, h, c, e],
+    d: [e, f],
+    b: [h],
+    c: [h, g],
+    f: [i],
+    i: [l],
+    k: [g, f]
+  },
+  comparator: comparator,
+);
 ```
 ## Benchmark
 The benchmark compares the average execution time of the functions:
@@ -42,8 +46,8 @@ The benchmark compares the average execution time of the functions:
 `graph.topologicalOrdering(comparator)`,
 `graph.stronglyConnectedComponents()`,
 `graph.localSource()`,
-`graph.remove(tournament)` followed by
-```graph.addEdges(tournament, [team, player, match, _set, game, point, umpire,])```.
+`graph.remove(h)` followed by
+```graph.addEdges(a, [h]), graph.addEdges(b, [h]) , graph.addEdges(c, [h])```.
 
 Each test is run 10 times in a loop for a minimum duration of 2000 milliseconds.
 This is the default setting provided by the package [benchmark_harness].
@@ -58,35 +62,37 @@ the following command:
 A typical shell output for a benchmark run on a machine with a Intel Core Dual i5-6260U CPU @ 1.80GHz is listed below:
 ```console
 Topological Ordering DFS ...
-[GrandSlam, Tournament, Court-1, Team, Point, Game, Set, Match, Player, Umpire]
-Topological Ordering DFS:(RunTime): 26.77705479910565 us.
+[A, B, C, D, E, H, K, F, I, G, L]
+Topological Ordering DFS:(RunTime): 28.846092826030517 us.
 
 Topological Ordering Kahn ...
-[GrandSlam, Court-1, Tournament, Point, Game, Set, Match, Team, Player, Umpire]
-Topological Ordering Kahn(RunTime): 32.720698907139585 us.
+[A, B, C, D, E, H, K, F, G, I, L]
+Topological Ordering Kahn(RunTime): 31.065672569120846 us.
 
 Strongly Connected Components Tarjan ...
-[[Player], [Team], [Umpire], [Match], [Set], [Game], [Point], [Tournament], [Court-1], [GrandSlam]]
-Strongly Connected Componets Tarjan:(RunTime): 35.91507892326755 us.
+[[H], [B], [G], [C], [E], [A], [L], [I], [F], [D], [K]]
+Strongly Connected Componets Tarjan:(RunTime): 34.84978219201952 us.
 
 Local Sources ...
-[[GrandSlam], [Tournament, Court-1], [Team, Point], [Game], [Set], [Match], [Player, Umpire]]
-Local Sources:(RunTime): 47.74295194671887 us.
+[[A, D, K], [B, C, E, F], [G, H, I], [L]]
+Local Sources:(RunTime): 41.22659905592315 us.
 
 Test Graph ...
 {
- GrandSlam: [Court-1],
- Court-1: [],
- Team: [Player],
- Player: [],
- Match: [Player, Umpire],
- Set: [Player, Match],
- Game: [Player, Set],
- Point: [Player, Game],
- Umpire: [],
- Tournament: [Team, Player, Match, Set, Game, Point, Umpire],
+ A: [B, C, E, H],
+ B: [H],
+ C: [G, H],
+ D: [E, F],
+ E: [],
+ F: [I],
+ G: [],
+ H: [],
+ I: [L],
+ K: [G, F],
+ L: [],
 }
-Removing/Adding Vertices(RunTime): 17.798565440646442 us.
+Removing/Adding Vertices(RunTime): 12.399947920218736 us.
+
 ```
 The method `topologicalOrderingDFS()`, based on a depth-first search algorithm, executes marginaly faster
 but `topologicalOrdering()`, based on Kahn's algorithm, takes an optional comparator function as argument
