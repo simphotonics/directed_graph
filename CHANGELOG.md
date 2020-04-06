@@ -18,3 +18,9 @@ DirectedGraph now extends Iterator.
 # 0.0.5
 
 Edited image url.
+
+# 0.1.0
+
+Fixed logic in removeEdges().
+The field [comparator] is no longer final, it can
+be set to trigger a resort of the graph [vertices].
