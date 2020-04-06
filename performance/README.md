@@ -43,7 +43,7 @@ var graph = DirectedGraph<String>(
 ## Benchmark
 The benchmark compares the average execution time of the functions:
 `graph.topologicalOrderingDFS()`,
-`graph.topologicalOrdering(comparator)`,
+`graph.topologicalOrdering()`,
 `graph.stronglyConnectedComponents()`,
 `graph.localSource()`,
 `graph.remove(h)` followed by
