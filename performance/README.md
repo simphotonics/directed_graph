@@ -62,7 +62,7 @@ the following command:
 # dart performance/bin/benchmark.dart
 ```
 
-A typical shell output for a benchmark run on a machine with a Intel Core Dual i5-6260U CPU @ 1.80GHz is listed below:
+A typical shell output for a benchmark run on a machine with an Intel Core Dual i5-6260U CPU @ 1.80GHz is listed below:
 ```console
 Topological Ordering DFS ...
 [A, B, C, D, E, H, K, F, I, G, L]
