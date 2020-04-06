@@ -45,8 +45,8 @@ var graph = DirectedGraph<String>(
 ```
 ## Benchmark
 The benchmark compares the average execution time of the functions:
-`graph.topologicalOrderingDFS()`,
 `graph.topologicalOrdering()`,
+`graph.sortedTopologicalOrdering()`,
 `graph.stronglyConnectedComponents()`,
 `graph.localSource()`,
 `graph.remove(h)` followed by
@@ -97,9 +97,9 @@ Test Graph ...
 Removing/Adding Vertices(RunTime): 12.399947920218736 us.
 
 ```
-The method `topologicalOrderingDFS()`, based on a depth-first search algorithm, executes marginaly faster
-but `topologicalOrdering()`, based on Kahn's algorithm, takes an optional comparator function as argument
-and is able to generate a sorted topological ordering. In the example above the vertices are sorted in
+The method `topologicalOrdering()`, based on a depth-first search algorithm, executes marginaly faster
+but `sortedTopologicalOrdering()`, based on Kahn's algorithm is able to generate
+a sorted topological ordering. In the example above the vertices are sorted in
 topological and lexicographical order.
 
 The method `stronglyConnectedComponents()` is provided for convenience
