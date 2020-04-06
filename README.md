@@ -24,7 +24,7 @@ Elements of a graph are called **vertices** (or nodes) and neighbouring vertices
 The figure below shows a **directed graph** with unidirectional edges depicted as arrows.
 Graph edges are emanating from a vertex and ending at a vertex.
 
-![Directed Graph Image](images/directed_graph.svg)
+![Directed Graph Image](https://raw.githubusercontent.com/simphotonics/directed_graph/master/images/directed_graph.svg?sanitize=true)
 
 - **In-degree** of a vertex: Number of edges ending at this vertex. For example, vertex H has in-degree 3.
 - **Out-degree** of a vertex: Number of edges starting at this vertex. For example, vertex F has out-degree 1.
