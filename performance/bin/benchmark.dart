@@ -19,29 +19,30 @@ class DirectedGraphBenchmark extends BenchmarkBase {
 
   final String name;
   DirectedGraph<String> graph;
-  var player = Vertex<String>('Player');
-  var match = Vertex<String>('Match');
-  var _set = Vertex<String>('Set');
-  var game = Vertex<String>('Game');
-  var point = Vertex<String>('Point');
-  var team = Vertex<String>('Team');
-  var tournament = Vertex<String>('Tournament');
-  var umpire = Vertex<String>('Umpire');
-  var court1 = Vertex<String>('Court-1');
-  var grandSlam = Vertex<String>('GrandSlam');
+  var a = Vertex<String>('A');
+  var b = Vertex<String>('B');
+  var c = Vertex<String>('C');
+  var d = Vertex<String>('D');
+  var e = Vertex<String>('E');
+  var f = Vertex<String>('F');
+  var g = Vertex<String>('G');
+  var h = Vertex<String>('H');
+  var i = Vertex<String>('I');
+  var k = Vertex<String>('K');
+  var l = Vertex<String>('L');
 
   /// Not measured setup code executed prior to the benchmark runs.
   @override
   void setup() {
     this.graph = DirectedGraph({
-      grandSlam: [tournament, court1],
-      tournament: [team, player, match, _set, game, point, umpire],
-      team: [player],
-      match: [player, umpire],
-      _set: [player, match],
-      game: [player, _set],
-      point: [player, game]
-    });
+      a: [b, h, c, e],
+      d: [e, f],
+      b: [h],
+      c: [h, g],
+      f: [i],
+      i: [l],
+      k: [g, f]
+    }, comparator: comparator);
   }
 
   /// Not measured teardown code executed after the benchmark runs.
@@ -60,7 +61,7 @@ class TopologicalOrderKahn extends DirectedGraphBenchmark {
   /// The benchmark code.
   @override
   void run() {
-    this.topologicalOrdering = this.graph.topologicalOrdering(comparator);
+    this.topologicalOrdering = this.graph.sortedTopologicalOrdering();
   }
 
   /// Not measures teardown code executed after the benchmark runs.
@@ -79,7 +80,7 @@ class TopologicalOrderDFS extends DirectedGraphBenchmark {
   /// The benchmark code.
   @override
   void run() {
-    this.topologicalOrdering = this.graph.topologicalOrderingDFS();
+    this.topologicalOrdering = this.graph.topologicalOrdering();
   }
 
   /// Not measures teardown code executed after the benchmark runs.
@@ -134,16 +135,10 @@ class GraphManipulation extends DirectedGraphBenchmark {
   /// The benchmark code.
   @override
   void run() {
-    this.graph.remove(super.tournament);
-    this.graph.addEdges(tournament, [
-      team,
-      player,
-      match,
-      _set,
-      game,
-      point,
-      umpire,
-    ]);
+    this.graph.remove(super.h);
+    this.graph.addEdges(a, [h]);
+    this.graph.addEdges(b, [h]);
+    this.graph.addEdges(c, [h]);
   }
 
   /// Not measures teardown code executed after the benchmark runs.
