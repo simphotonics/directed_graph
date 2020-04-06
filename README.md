@@ -92,6 +92,40 @@ graph.removeEdges(green, [blue]);
 // Access (sorted) vertices:
 // Note: This getter returns a non-modifiable list-view.
 var vertices = graph.vertices;
+
+// Iterate over all vertices.
+//   (If a comparator is passed when
+//    creating the graph, the vertices will be sorted accordingly.)
+for (var vertex in graph){
+  print(vertex);
+}
+
+print('Is Acylic:');
+print(graph.isAcyclic();
+
+print('Strongly connected components:');
+print(graph.stronglyConnectedComponents();
+
+print('ShortestPath(orange,darkRed):');
+print(graph.shortestPath(orange, darkRed);
+
+print('InDegree(red):');
+print(graph.inDegree(red);
+
+print('Vertices sorted in lexicographical order:');
+print(graph.vertices);
+
+print('InDegreeMap:');
+print(graph.inDegreeMap);
+
+print('Print a list of vertices in topological and sorted order:');
+print(graph.topologicalOrdering(comparator);
+
+print('TopologicalOrderingDFS:');
+print(graph.topologicalOrderingDFS();
+
+print('Local Sources:');
+print(graph.localSources();
 ```
 
 ## Examples
