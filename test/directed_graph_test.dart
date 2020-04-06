@@ -49,6 +49,13 @@ void main() {
           ' yellow: [],\n'
           '}');
     });
+    test('for loop:', () {
+      int index = 0;
+      for (var vertex in graph) {
+        expect(vertex, graph.vertices[index]);
+        ++index;
+      }
+    });
   });
   group('Manipulating edges/vertices:', () {
     test('addEdges():', () {
