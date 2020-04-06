@@ -9,3 +9,8 @@ Amended package description.
 # 0.0.3
 
 Amended README.md, included travis icon.
+
+# 0.0.4
+
+Added method localSource().
+Graph now extends iterator. 
