@@ -8,7 +8,7 @@ import 'package:lazy_evaluation/lazy_evaluation.dart';
 /// Data of type [T] is stored in vertices of type [Vertex<T>].
 /// The graph consists of a mapping [_edges] of each
 /// [Vertex<T>] to a list of connected vertices [List<Vertex<T>>].
-class DirectedGraph<T> {
+class DirectedGraph<T> extends Iterable{
   Map<Vertex<T>, List<Vertex<T>>> _edges;
   MutableLazy<UnmodifiableListView<Vertex<T>>> _vertices;
   Map<Vertex<T>, int> _inDegreeMap;
@@ -370,4 +370,7 @@ class DirectedGraph<T> {
   _updateLazyFields() {
     _vertices.notifyChange();
   }
+
+  @override
+  Iterator get iterator => _vertices.value.iterator;
 }
