@@ -39,7 +39,7 @@ class ConstantVertex<T> {
 
   @override
   bool operator ==(Object other) =>
-      other is Vertex<T> && other.hashCode == hashCode;
+      other is ConstantVertex<T> && other.hashCode == hashCode;
 
   @override
   int get hashCode => super.hashCode;
