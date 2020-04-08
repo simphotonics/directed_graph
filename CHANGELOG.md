@@ -22,9 +22,13 @@ Edited image url.
 # 0.1.0
 
 Fixed logic in removeEdges().
-The field [comparator] is no longer final, it can
-be set to trigger a resort of the graph [vertices].
+The field comparator is no longer final, it can
+be set to trigger a resort of the graph vertices.
 
 # 0.1.1
 
 Amended section #Usage in README.md.
+
+# 0.1.2
+
+Amended equality operator of ConstantVertex.
