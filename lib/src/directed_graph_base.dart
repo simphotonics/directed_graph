@@ -19,7 +19,7 @@ class DirectedGraph<T> extends Iterable {
   /// mapping each vertex to a list of connected vertices.
   DirectedGraph(
     Map<Vertex<T>, List<Vertex<T>>> edges, {
-    comparator,
+    Comparator<Vertex<T>> comparator,
   })  : _edges = edges ?? {},
         _comparator = comparator {
     _inDegreeMap = _createInDegreeMap();
