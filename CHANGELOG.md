@@ -32,3 +32,7 @@ Amended section #Usage in README.md.
 # 0.1.2
 
 Amended equality operator of ConstantVertex.
+
+# 0.1.3
+
+Specified type of parameter comparator in DirectedGraph constructor.
