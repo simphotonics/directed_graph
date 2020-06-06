@@ -320,9 +320,12 @@ class DirectedGraph<T> extends Iterable {
     for (final current in this.vertices.reversed) {
       if (isCyclic) break;
       visit(current);
-      // Clearing vertex marks.
-      // Important! Otherwise method won't be idempotent.
-      current._mark = Mark.NOT_SET;
+    }
+
+    // Clearing vertex marks.
+    // Important! Otherwise method won't be idempotent.
+    for (final vertex in this.vertices) {
+      vertex._mark = Mark.NOT_SET;
     }
 
     // Return null if graph is not a DAG.
@@ -372,8 +375,11 @@ class DirectedGraph<T> extends Iterable {
     for (final vertex in vertices) {
       if (isCyclic) break;
       visit(vertex);
-      // Reset vertex mark.
-      // Important! Otherwise method is not idempotent.
+    }
+
+    // Reset vertex mark.
+    // Important! Otherwise method is not idempotent.
+    for (final vertex in vertices) {
       vertex._mark = Mark.NOT_SET;
     }
 
@@ -474,7 +480,7 @@ class DirectedGraph<T> extends Iterable {
 }
 
 /// Vertex Mark used by sorting algorythms.
-enum Mark{PERMANENT, TEMPORARY, NOT_SET}
+enum Mark { PERMANENT, TEMPORARY, NOT_SET }
 
 /// Generic object representing a vertex in a graph.
 /// Holds data of type [T].
