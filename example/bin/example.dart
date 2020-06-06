@@ -92,5 +92,4 @@ void main() {
 
   print(bluePen('\nCycle:'));
   print(graph.cycle);
-
 }
