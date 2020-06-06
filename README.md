@@ -15,8 +15,8 @@ Graphs are useful when keeping track of elements that are linked to or are depen
 Examples include: network connections, links in a document pointing to other paragraphs or documents, foreign keys in a relational database, file dependencies in a build system, etc.
 
 The package [directed_graph] contains a rudimentary implementation of a Dart graph that follows the recommendations found in [graphs-examples] and is compatible with
-the algorithms provided by [graphs]. It is simple to use and includes methods that enable manipulating vertices and edges. The library provides access to algorithms
-for the calculation of the *shortest path between vertices*, *detection of cycles*, or the *retrieval of a topological ordering of the graph vertices*.
+the algorithms provided by [graphs]. It is simple to use and includes methods that enable **manipulating vertices** and edges. The library provides access to algorithms
+for the calculation of the **shortest path between vertices**, **sorting of vertices**, **detection of cycles**, or the **retrieval of a topological ordering of the graph vertices**.
 
 ## Terminology
 
@@ -46,12 +46,13 @@ do not affect the algorithms calculating a topological ordering of vertices.
 
 ## Usage
 
-To use this library include [directed_graph] as a dependency in your pubspec.yaml file. The
+To use this library include [`directed_graph`][directed_graph] as a dependency in your pubspec.yaml file. The
 example below shows how to construct a graph. The constructor takes an optional comparator function
 as parameter. If a comparator is specified, vertices are sorted accordingly. For more information see [comparator].
 
 ```Dart
 import 'package:directed_graph/directed_graph.dart';
+import 'package:ansicolor/ansicolor.dart';
 
 // To run this program navigate to
 // the folder 'directed_graph/example'
@@ -86,9 +87,10 @@ void main() {
   var graph = DirectedGraph<String>(
     {
       a: [b, h, c, e],
-      d: [e, f],
       b: [h],
       c: [h, g],
+      d: [e, f],
+      e: [g],
       f: [i],
       i: [l],
       k: [g, f]
@@ -96,44 +98,54 @@ void main() {
     comparator: comparator,
   );
 
-  print('Example Directed Graph...');
-  print('\n graph.toString():');
+  AnsiPen bluePen = AnsiPen()..blue(bold: true);
+  AnsiPen magentaPen = AnsiPen()..magenta(bold: true);
+
+  print(magentaPen('Example Directed Graph...'));
+  print(bluePen('\ngraph.toString():'));
   print(graph);
 
-  print('\n Is Acylic:');
-  print(graph.isAcyclic());
+  print(bluePen('\nIs Acylic:'));
+  print(graph.isAcyclic);
 
-  print('\n Strongly connected components:');
-  print(graph.stronglyConnectedComponents());
+  print(bluePen('\nStrongly connected components:'));
+  print(graph.stronglyConnectedComponents);
 
-  print('\n ShortestPath(orange,darkRed):');
+  print(bluePen('\nShortestPath(orange,darkRed):'));
   print(graph.shortestPath(d, l));
 
-  print('\n InDegree(C):');
+  print(bluePen('\nInDegree(C):'));
   print(graph.inDegree(c));
 
-  print('\n OutDegree(C)');
+  print(bluePen('\nOutDegree(C)'));
   print(graph.outDegree(c));
 
-  print('\n Vertices sorted in lexicographical order:');
+  print(bluePen('\nVertices sorted in lexicographical order:'));
   print(graph.vertices);
 
-  print('\n Vertices sorted in inverse lexicographical order:');
+  print(bluePen('\nVertices sorted in inverse lexicographical order:'));
   graph.comparator = inverseComparator;
   print(graph.vertices);
   graph.comparator = comparator;
 
-  print('\n InDegreeMap:');
+  print(bluePen('\nInDegreeMap:'));
   print(graph.inDegreeMap);
 
-  print('\n Sorted Topological Ordering:');
-  print(graph.sortedTopologicalOrdering());
+  print(bluePen('\nSorted Topological Ordering:'));
+  print(graph.sortedTopologicalOrdering);
 
-  print('\n Topological Ordering:');
-  print(graph.topologicalOrdering());
+  print(bluePen('\nTopological Ordering:'));
+  print(graph.topologicalOrdering);
 
-  print('\n Local Sources:');
-  print(graph.localSources());
+  print(bluePen('\nLocal Sources:'));
+  print(graph.localSources);
+
+  // Add edge to render the graph cyclic
+  graph.addEdges(i, [k]);
+
+  print(bluePen('\nCycle:'));
+  print(graph.cycle);
+}
 ```
 
 ## Examples
