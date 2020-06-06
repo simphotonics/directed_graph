@@ -6,8 +6,9 @@ environment:
   sdk: '>=2.7.0 <3.0.0'
 
 dependencies:
+  ansicolor: ^1.0.2
+  benchmark_harness: ^1.0.5
   directed_graph:
     path: ../
-  benchmark_harness: ^1.0.5
-  ansicolor: ^1.0.2
+  meta: ^1.1.8
   graphs: ^0.2.0
