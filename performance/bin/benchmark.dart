@@ -215,7 +215,7 @@ class GraphCycle extends DirectedGraphBenchmark {
   /// Not measured teardown code executed after the benchmark runs.
   @override
   void teardown() {
-    print(magenta('\n graph.cycle ... '));
+    print(magenta('\ngraph.cycle ... '));
     print(green(paths.toString()));
     this.graph.removeEdges(i, [k]);
   }
@@ -240,7 +240,7 @@ class GraphFindCycle extends DirectedGraphBenchmark {
   /// Not measured teardown code executed after the benchmark runs.
   @override
   void teardown() {
-    print(magenta('\n graph.findCycle() ... '));
+    print(magenta('\ngraph.findCycle() ... '));
     print(green(paths.toString()));
     this.graph.removeEdges(i, [k]);
   }

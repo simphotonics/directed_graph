@@ -105,11 +105,11 @@ A typical shell output for a benchmark run on a machine with an Intel Core Dual 
   [[D, F, I, L]]
   CrawlerTest(RunTime): 8.46654869953942 us.
 
-   graph.cycle ...
+  graph.cycle ...
   [F, I, K, F]
   GraphCycle(RunTime): 15.832469146552885 us.
 
-   graph.findCycle() ...
+  graph.findCycle() ...
   [F, I, K, F]
   GraphFindCycle(RunTime): 23.307411723575342 us
 ```
