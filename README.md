@@ -147,9 +147,10 @@ void main() {
   print(graph.cycle);
 }
 ```
-   <details> <summary> Click to show the console output. </summary>
 
-    ```Console
+<details> <summary> Click to show the console output. </summary>
+
+  ```Console
       Example Directed Graph...
 
       graph.toString():
@@ -202,9 +203,9 @@ void main() {
 
       Cycle:
       [F, I, K, F]
-    ```
+  ```
 
-   </details>
+</details>
 
 
 ## Examples
