@@ -21,7 +21,7 @@ Edited image url.
 
 # 0.1.0
 
-Fixed logic in removeEdges().
+Fixed logic in `removeEdges()`.
 The field comparator is no longer final, it can
 be set to trigger a resort of the graph vertices.
 
@@ -31,8 +31,24 @@ Amended section #Usage in README.md.
 
 # 0.1.2
 
-Amended equality operator of ConstantVertex.
+Amended equality operator of `ConstantVertex`.
 
 # 0.1.3
 
-Specified type of parameter comparator in DirectedGraph constructor.
+Specified type of the parameter `comparator` in `DirectedGraph` constructor.
+
+# 0.1.4
+
+Added class `GraphCrawler`.
+
+Transformed the following `DirectedGraph` methods to getters:
+- `isAcyclic`,
+- `localSources`,
+- `outDegreeMap`,
+- `sortedTopologicalOrdering`,
+- `stronglyConnectedComponents`,
+- `topologicalOrdering`.
+
+Added methods for finding cycles in cyclic graphs:
+- `cycle`
+- `findCycle()`
