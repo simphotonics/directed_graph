@@ -115,7 +115,7 @@ void main() {
       expect(graph.outDegree(d), 2);
     });
     test('outDegreeMap():', () {
-      expect(graph.outDegreeMap(),
+      expect(graph.outDegreeMap,
           {a: 4, b: 1, c: 2, d: 2, e: 0, f: 1, g: 0, h: 0, i: 1, k: 2, l: 0});
     });
     test('inDegreeMap:', () {
@@ -128,7 +128,7 @@ void main() {
   });
   group('Topological ordering:', () {
     test('stronglyConnectedComponents():', () {
-      expect(graph.stronglyConnectedComponents(), [
+      expect(graph.stronglyConnectedComponents, [
         [h],
         [b],
         [g],
@@ -149,37 +149,37 @@ void main() {
     test('isAcyclic(): self-loop', () {
       graph.addEdges(l, [l]);
       expect(
-        graph.isAcyclic(),
+        graph.isAcyclic,
         false,
       );
       graph.removeEdges(l, [l]);
     });
     test('isAcyclic(): without cycles', () {
-      expect(graph.isAcyclic(), true);
+      expect(graph.isAcyclic, true);
     });
 
     test('topologicalOrdering(): self-loop', () {
       graph.addEdges(l, [l]);
-      expect(graph.topologicalOrdering(), null);
+      expect(graph.topologicalOrdering, null);
       graph.removeEdges(l, [l]);
     });
     test('topologicalOrdering(): cycle', () {
       graph.addEdges(i, [k]);
-      expect(graph.topologicalOrdering(), null);
+      expect(graph.topologicalOrdering, null);
       graph.removeEdges(i, [k]);
     });
     test('sortedTopologicalOrdering():', () {
       expect(
-          graph.sortedTopologicalOrdering(), [a, b, c, d, e, h, k, f, g, i, l]);
+          graph.sortedTopologicalOrdering, [a, b, c, d, e, h, k, f, g, i, l]);
     });
     test('topologicalOrdering():', () {
-      expect(graph.topologicalOrdering(), [a, b, c, d, e, h, k, f, i, g, l]);
+      expect(graph.topologicalOrdering, [a, b, c, d, e, h, k, f, i, g, l]);
     });
     test('topologicalOrdering(): empty graph', () {
-      expect(DirectedGraph<int>({}).topologicalOrdering(), []);
+      expect(DirectedGraph<int>({}).topologicalOrdering, []);
     });
     test('localSources():', () {
-      expect(graph.localSources(), [
+      expect(graph.localSources, [
         [a, d, k],
         [b, c, e, f],
         [g, h, i],
