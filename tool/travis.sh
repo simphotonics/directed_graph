@@ -1,6 +1,4 @@
 #!/bin/bash --
-# Adapted from https://github.com/google/built_value.dart/blob/master/tool/presubmit
-# BSD-3 Clause License file: https://github.com/google/built_value.dart/blob/master/LICENSE
 
 # Defining colours
 BLUE='\033[1;34m'
@@ -47,9 +45,6 @@ dartanalyzer \
 echo
 echo -e "${CYAN}=== Testing $PWD...${RESET}"
 echo
-
-# Only run if libary has test dependency
-grep -q test pubspec.yaml && \
 pub run test -r expanded --test-randomize-ordering-seed=random
 
 
