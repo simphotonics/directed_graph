@@ -206,7 +206,7 @@ void main() {
     });
     test('graph.cycle | non-trivial cycle.', () {
       graph.addEdges(i, [k]);
-      expect(graph.cycle, [f,i,k,f]);
+      expect(graph.cycle, [f, i, k, f]);
       graph.removeEdges(i, [k]);
     });
   });
