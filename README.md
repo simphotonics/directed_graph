@@ -15,8 +15,8 @@ Graphs are useful when keeping track of elements that are linked to or are depen
 Examples include: network connections, links in a document pointing to other paragraphs or documents, foreign keys in a relational database, file dependencies in a build system, etc.
 
 The package [directed_graph] contains a rudimentary implementation of a Dart graph that follows the recommendations found in [graphs-examples] and is compatible with
-the algorithms provided by [graphs]. It is simple to use and includes methods that enable **manipulating vertices** and edges. The library provides access to algorithms
-for the calculation of the **shortest path between vertices**, **sorting of vertices**, **detection of cycles**, or the **retrieval of a topological ordering of the graph vertices**.
+the algorithms provided by [graphs]. It is simple to use and includes methods that enable *manipulating vertices* and edges. The library provides access to algorithms
+for the calculation of the *shortest path between vertices*, *sorting of vertices*, *detection of cycles*, or the *retrieval of a topological ordering of the graph vertices*.
 
 ## Terminology
 
@@ -147,6 +147,66 @@ void main() {
   print(graph.cycle);
 }
 ```
+   <details> <summary> Click to show the console output. </summary>
+
+    ```console
+    Example Directed Graph...
+    
+    graph.toString():
+    {
+     A: [B, H, C, E],
+     B: [H],
+     C: [H, G],
+     D: [E, F],
+     E: [G],
+     F: [I],
+     G: [],
+     H: [],
+     I: [L],
+     K: [G, F],
+     L: [],
+    }
+    
+    Is Acylic:
+    true
+    
+    Strongly connected components:
+    [[H], [B], [G], [C], [E], [A], [L], [I], [F], [D], [K]]
+    
+    ShortestPath(orange,darkRed):
+    [F, I, L]
+    
+    InDegree(C):
+    1
+    
+    OutDegree(C)
+    2
+    
+    Vertices sorted in lexicographical order:
+    [A, B, C, D, E, F, G, H, I, K, L]
+    
+    Vertices sorted in inverse lexicographical order:
+    [L, K, I, H, G, F, E, D, C, B, A]
+    
+    InDegreeMap:
+    {A: 0, B: 1, H: 3, C: 1, E: 2, G: 3, D: 0, F: 2, I: 1, L: 1, K: 0}
+    
+    Sorted Topological Ordering:
+    [A, B, C, D, E, H, K, F, G, I, L]
+    
+    Topological Ordering:
+    [A, B, C, D, E, H, K, F, I, G, L]
+    
+    Local Sources:
+    [[A, D, K], [B, C, E, F], [G, H, I], [L]]
+    
+    Cycle:
+    [F, I, K, F]
+
+    ```
+
+   </details>
+
 
 ## Examples
 
