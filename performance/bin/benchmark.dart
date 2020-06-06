@@ -36,12 +36,13 @@ class DirectedGraphBenchmark extends BenchmarkBase {
   void setup() {
     this.graph = DirectedGraph({
       a: [b, h, c, e],
-      d: [e, f],
       b: [h],
       c: [h, g],
+      d: [e, f],
+      e: [g],
       f: [i],
       i: [l],
-      k: [g, f]
+      k: [g, f],
     }, comparator: comparator);
   }
 
@@ -61,10 +62,10 @@ class TopologicalOrderKahn extends DirectedGraphBenchmark {
   /// The benchmark code.
   @override
   void run() {
-    this.topologicalOrdering = this.graph.sortedTopologicalOrdering();
+    this.topologicalOrdering = this.graph.sortedTopologicalOrdering;
   }
 
-  /// Not measures teardown code executed after the benchmark runs.
+  /// Not measured teardown code executed after the benchmark runs.
   @override
   void teardown() {
     print(magenta('\nTopological Ordering Kahn ... '));
@@ -80,10 +81,10 @@ class TopologicalOrderDFS extends DirectedGraphBenchmark {
   /// The benchmark code.
   @override
   void run() {
-    this.topologicalOrdering = this.graph.topologicalOrdering();
+    this.topologicalOrdering = this.graph.topologicalOrdering;
   }
 
-  /// Not measures teardown code executed after the benchmark runs.
+  /// Not measured teardown code executed after the benchmark runs.
   @override
   void teardown() {
     print(magenta('\nTopological Ordering DFS ... '));
@@ -99,10 +100,10 @@ class StronglyConnectedComponents extends DirectedGraphBenchmark {
   /// The benchmark code.
   @override
   void run() {
-    this.stronglyConnectedComponents = this.graph.stronglyConnectedComponents();
+    this.stronglyConnectedComponents = this.graph.stronglyConnectedComponents;
   }
 
-  /// Not measures teardown code executed after the benchmark runs.
+  /// Not measured teardown code executed after the benchmark runs.
   @override
   void teardown() {
     print(magenta('\nStrongly Connected Components Tarjan ... '));
@@ -118,10 +119,10 @@ class LocalSources extends DirectedGraphBenchmark {
   /// The benchmark code.
   @override
   void run() {
-    this.localSources = this.graph.localSources();
+    this.localSources = this.graph.localSources;
   }
 
-  /// Not measures teardown code executed after the benchmark runs.
+  /// Not measured teardown code executed after the benchmark runs.
   @override
   void teardown() {
     print(magenta('\nLocal Sources ... '));
@@ -141,11 +142,107 @@ class GraphManipulation extends DirectedGraphBenchmark {
     this.graph.addEdges(c, [h]);
   }
 
-  /// Not measures teardown code executed after the benchmark runs.
+  /// Not measured teardown code executed after the benchmark runs.
   @override
   void teardown() {
     print(magenta('\nTest Graph ... '));
     print(green(this.graph.toString()));
+  }
+}
+
+class ShortestPath extends DirectedGraphBenchmark {
+  ShortestPath(String name) : super(name);
+
+  /// The benchmark code.
+  @override
+  void run() {
+    this.graph.shortestPath(d, l);
+  }
+
+  /// Not measured teardown code executed after the benchmark runs.
+  @override
+  void teardown() {
+    print(magenta('\nShortest Path (graphs) ... '));
+    print(green(this.graph.shortestPath(d, l).toString()));
+  }
+}
+
+class CrawlerTest extends DirectedGraphBenchmark {
+  CrawlerTest(String name) : super(name);
+
+  GraphCrawler<String> crawler;
+
+  @override
+  void setup() {
+    super.setup();
+    crawler = GraphCrawler<String>(edges: this.graph.edges);
+  }
+
+  List<List<Vertex<String>>> paths;
+
+  /// The benchmark code.
+  void run() {
+    paths = crawler.paths(d, l);
+  }
+
+  /// Not measured teardown code executed after the benchmark runs.
+  @override
+  void teardown() {
+    print(magenta('\nCrawler.paths($d, $l) ... '));
+    print(green(paths.toString()));
+  }
+}
+
+class GraphCycle extends DirectedGraphBenchmark {
+  GraphCycle(String name) : super(name);
+
+  GraphCrawler<String> crawler;
+
+  List<Vertex<String>> paths;
+
+  @override
+  void setup() {
+    super.setup();
+    this.graph.addEdges(i, [k]);
+    crawler = GraphCrawler<String>(edges: this.graph.edges);
+  }
+
+  /// The benchmark code.
+  void run() {
+    paths = graph.cycle;
+  }
+
+  /// Not measured teardown code executed after the benchmark runs.
+  @override
+  void teardown() {
+    print(magenta('\n graph.cycle ... '));
+    print(green(paths.toString()));
+    this.graph.removeEdges(i, [k]);
+  }
+}
+
+class GraphFindCycle extends DirectedGraphBenchmark {
+  GraphFindCycle(String name) : super(name);
+
+  List<Vertex<String>> paths;
+
+  @override
+  void setup() {
+    super.setup();
+    this.graph.addEdges(i, [k]);
+  }
+
+  /// The benchmark code.
+  void run() {
+    paths = graph.findCycle();
+  }
+
+  /// Not measured teardown code executed after the benchmark runs.
+  @override
+  void teardown() {
+    print(magenta('\n graph.findCycle() ... '));
+    print(green(paths.toString()));
+    this.graph.removeEdges(i, [k]);
   }
 }
 
@@ -156,9 +253,18 @@ void main() {
       StronglyConnectedComponents('Strongly Connected Componets Tarjan:');
   var localSourcesBenchmark = LocalSources('Local Sources:');
   var graphManipulation = GraphManipulation('Removing/Adding Vertices');
+  var shortestPath = ShortestPath('ShortestPath');
+  var crawlerTest = CrawlerTest('CrawlerTest');
+  var graphCycle = GraphCycle('GraphCycle');
+  var graphFindCycle = GraphFindCycle('GraphFindCycle');
+
   topDFSBenchmark.report();
   topKahnBenchmark.report();
   sccBenchmark.report();
   localSourcesBenchmark.report();
   graphManipulation.report();
+  shortestPath.report();
+  crawlerTest.report();
+  graphCycle.report();
+  graphFindCycle.report();
 }
