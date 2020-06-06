@@ -187,4 +187,27 @@ void main() {
       ]);
     });
   });
+  group('Cycles', () {
+    test('graph.cycle | acyclic graph.', () {
+      expect(graph.cycle, []);
+    });
+    test('graph.findCycle() | acyclic graph.', () {
+      expect(graph.findCycle(), []);
+    });
+    test('graph.cycle | cyclic graph.', () {
+      graph.addEdges(l, [l]);
+      expect(graph.cycle, [l, l]);
+      graph.removeEdges(l, [l]);
+    });
+    test('graph.findCycle() | cyclic graph.', () {
+      graph.addEdges(l, [l]);
+      expect(graph.findCycle(), [l, l]);
+      graph.removeEdges(l, [l]);
+    });
+    test('graph.cycle | non-trivial cycle.', () {
+      graph.addEdges(i, [k]);
+      expect(graph.cycle, [f,i,k,f]);
+      graph.removeEdges(i, [k]);
+    });
+  });
 }
