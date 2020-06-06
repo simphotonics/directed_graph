@@ -552,7 +552,7 @@ typedef List<Vertex<T>> Edges<T>(Vertex<T> vertex);
 class GraphCrawler<T> {
   GraphCrawler({
     @required this.edges,
-  }) {}
+  });
 
   /// Function returning a list of edge vertices or [].
   /// It must never return [null].
