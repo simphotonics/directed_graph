@@ -34,9 +34,10 @@ void main() {
   var graph = DirectedGraph<String>(
     {
       a: [b, h, c, e],
-      d: [e, f],
       b: [h],
       c: [h, g],
+      d: [e, f],
+      e: [g],
       f: [i],
       i: [l],
       k: [g, f]
@@ -52,10 +53,10 @@ void main() {
   print(graph);
 
   print(bluePen('\nIs Acylic:'));
-  print(graph.isAcyclic());
+  print(graph.isAcyclic);
 
   print(bluePen('\nStrongly connected components:'));
-  print(graph.stronglyConnectedComponents());
+  print(graph.stronglyConnectedComponents);
 
   print(bluePen('\nShortestPath(orange,darkRed):'));
   print(graph.shortestPath(d, l));
@@ -78,11 +79,18 @@ void main() {
   print(graph.inDegreeMap);
 
   print(bluePen('\nSorted Topological Ordering:'));
-  print(graph.sortedTopologicalOrdering());
+  print(graph.sortedTopologicalOrdering);
 
   print(bluePen('\nTopological Ordering:'));
-  print(graph.topologicalOrdering());
+  print(graph.topologicalOrdering);
 
   print(bluePen('\nLocal Sources:'));
-  print(graph.localSources());
+  print(graph.localSources);
+
+  // Add edge to render the graph cyclic
+  graph.addEdges(i, [k]);
+
+  print(bluePen('\nCycle:'));
+  print(graph.cycle);
+
 }
