@@ -1,6 +1,10 @@
+## 0.1.6
+
+Added info about class [`GraphCrawler`][GraphCrawler].
+
 ## 0.1.5
 
-* Added explicit generic type parameter to graph getter `iterator`.
+Added explicit generic type parameter to graph getter `iterator`.
 
 ## 0.1.4
 
@@ -56,3 +60,6 @@ Amended package description.
 ## 0.0.1
 
 Initial version of the library.
+
+
+[GraphCrawler]: https://pub.dev/documentation/directed_graph/latest/directed_graph/GraphCrawler-class.html

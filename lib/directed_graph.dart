@@ -562,16 +562,16 @@ class ConstantVertex<T> {
 typedef List<Vertex<T>> Edges<T>(Vertex<T> vertex);
 
 /// Crawls a graph defined by [edges] and records
-/// every path from [start] to [target].
+/// every path from `start` to `target`.
 /// The result is available via the getter [paths]
-/// which returns a list with entries of type [<List<Vertex<T>>].
+/// which returns a list with entries of type `<List<Vertex<T>>`.
 class GraphCrawler<T> {
   GraphCrawler({
     @required this.edges,
   });
 
-  /// Function returning a list of edge vertices or [].
-  /// It must never return [null].
+  /// Function returning a list of edge vertices or an empty list.
+  /// It must never return `null`.
   final Edges<T> edges;
 
   /// Returns all paths from [start] vertex to [target] vertex.

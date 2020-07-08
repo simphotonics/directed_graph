@@ -13,12 +13,18 @@ A more general (non-linear) data structure where an element may be connected to 
 Graphs are useful when keeping track of elements that are linked to or are dependent on other elements.
 Examples include: network connections, links in a document pointing to other paragraphs or documents, foreign keys in a relational database, file dependencies in a build system, etc.
 
-The package [directed_graph][directed_graph] contains an implementation of a Dart graph that follows the recommendations found in [graphs-examples] and is compatible with the algorithms provided by [graphs][graphs]. It is simple to use and includes methods that enable *manipulating vertices* and edges.
+The package [`directed_graph`][directed_graph] contains an implementation of a Dart graph that follows the recommendations found in [graphs-examples] and is compatible with the algorithms provided by [`graphs`][graphs]. It is simple to use and includes methods that enable
+* adding/removing vertices and edges,
+* sorting vertices.
 
 The library provides access to algorithms
-for the calculation of the *shortest path between vertices*, *sorting of vertices*, *detection of cycles*, or the *retrieval of a topological ordering of the graph vertices*.
+for finding
+* the shortest path between vertices,
+* all paths connecting two vertices,
+* cycles,
+* a topological ordering of the graph vertices.
 
-The class [GraphCrawler][GraphCrawler] can be used to find all paths between two vertices.
+The class [GraphCrawler][GraphCrawler] can be used to find all paths connecting two vertices.
 
 ## Terminology
 
