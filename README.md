@@ -10,13 +10,15 @@ Arguably the most common data structure is the *list*. It enables efficient stor
 
 A more general (non-linear) data structure where an element may be connected to one, several, or none of the other elements is called a **graph**.
 
-
 Graphs are useful when keeping track of elements that are linked to or are dependent on other elements.
 Examples include: network connections, links in a document pointing to other paragraphs or documents, foreign keys in a relational database, file dependencies in a build system, etc.
 
-The package [directed_graph] contains a rudimentary implementation of a Dart graph that follows the recommendations found in [graphs-examples] and is compatible with
-the algorithms provided by [graphs]. It is simple to use and includes methods that enable *manipulating vertices* and edges. The library provides access to algorithms
+The package [directed_graph][directed_graph] contains an implementation of a Dart graph that follows the recommendations found in [graphs-examples] and is compatible with the algorithms provided by [graphs][graphs]. It is simple to use and includes methods that enable *manipulating vertices* and edges.
+
+The library provides access to algorithms
 for the calculation of the *shortest path between vertices*, *sorting of vertices*, *detection of cycles*, or the *retrieval of a topological ordering of the graph vertices*.
+
+The class [GraphCrawler][GraphCrawler] can be used to find all paths between two vertices.
 
 ## Terminology
 
@@ -145,6 +147,11 @@ void main() {
 
   print(bluePen('\nCycle:'));
   print(graph.cycle);
+
+  // Create graph crawler.
+  final crawler = GraphCrawler<String>(edges: graph.edges);
+  print(bluePen('\nPaths from A to H.'));
+  print(crawler.paths(a, h));
 }
 ```
 
@@ -204,6 +211,9 @@ void main() {
 
     Cycle:
     [F, I, K, F]
+
+    Paths from A to H.
+    [[A, B, H], [A, H], [A, C, H]]
   ```
 
 </details>
@@ -223,3 +233,4 @@ Please file feature requests and bugs at the [issue tracker].
 [graphs-examples]: https://pub.dev/packages/graphs#-example-tab-
 [graphs]: https://pub.dev/packages/graphs
 [directed_graph]: https://pub.dev/packages/directed_graph
+[GraphCrawler]: https://pub.dev/documentation/directed_graph/latest/directed_graph/GraphCrawler-class.html

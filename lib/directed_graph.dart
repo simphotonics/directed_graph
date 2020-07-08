@@ -1,6 +1,9 @@
 /// Dart implementation of a directed graph.
-/// Provides methods to add/remove edges, check if the graph is acyclic,
-/// and retrieve a list of vertices in topological order.
+/// Provides methods to
+/// * add/remove edges,
+/// * check if the graph is acyclic,
+/// * retrieve cycles,
+/// * retrieve a list of vertices in topological order.
 library directed_graph;
 
 import 'dart:collection' show UnmodifiableListView, Queue;
@@ -53,12 +56,14 @@ class DirectedGraph<T> extends Iterable {
   Map<Vertex<T>, List<Vertex<T>>> get edgeMap => _edges;
 
   /// Returns a list of the connected vertices of [vertex].
-  /// Note: Mathematically, an edge is an ordered pair (vertex, connected-vertex).
+  /// Note: Mathematically, an edge is an ordered pair
+  /// (vertex, connected-vertex).
   List<Vertex<T>> edges(Vertex<T> vertex) => _edges[vertex] ?? [];
 
   /// Unmodifiable ListView of all vertices in the graph.
   /// The vertices will be sorted if a vertex comparator was
-  /// specified during instantiation of the graph or by invoking the `comparator` setter.
+  /// specified during instantiation of the graph or
+  /// by invoking the `comparator` setter.
   UnmodifiableListView<Vertex<T>> get vertices => _vertices.value;
 
   /// Returns a (modifiable) copy of the inDegreeMap.
@@ -88,9 +93,11 @@ class DirectedGraph<T> extends Iterable {
   }
 
   /// Removes edges (connections) pointing from [vertex] to [connectedVertices].
-  /// If connectedVertices is not specified all outgoing edges are removed from the graph.
+  /// If connectedVertices is not specified all outgoing
+  /// edges are removed from the graph.
   void removeEdges(Vertex<T> vertex, [List<Vertex<T>> connectedVertices]) {
-    // Handle default case: Remove all outgoing edges if connectedVertices is not specified.
+    // Handle default case: Remove all outgoing edges if
+    // connectedVertices is not specified.
     if (connectedVertices == null) {
       // Update inDegreeMap.
       for (final connectedVertex in _edges[vertex] ?? []) {
@@ -121,14 +128,16 @@ class DirectedGraph<T> extends Iterable {
     }
   }
 
-  /// Completely remove [vertex] from the graph, including outgoing and incoming edges.
+  /// Completely remove [vertex] from the graph, including outgoing
+  /// and incoming edges.
   void remove(Vertex<T> vertex) {
     removeIncomingEdges(vertex);
     _inDegreeMap.remove(vertex);
     removeEdges(vertex);
   }
 
-  /// Returns a valid reverse topological order ordering of the strongly connected components.
+  /// Returns a valid reverse topological order ordering of the
+  /// strongly connected components.
   /// Acyclic graphs will yield components containing one vertex only.
   List<List<Vertex<T>>> get stronglyConnectedComponents {
     return graphs.stronglyConnectedComponents<Vertex<T>>(_edges.keys, edges);
@@ -175,7 +184,8 @@ class DirectedGraph<T> extends Iterable {
     bool hasSources = false;
     int count = 0;
 
-    // Note: In an acyclic directed graph at least one vertex has outDegree zero.
+    // Note: In an acyclic directed graph at least one
+    // vertex has outDegree zero.
     do {
       // Storing local sources.
       final List<Vertex<T>> sources = [];
@@ -246,7 +256,8 @@ class DirectedGraph<T> extends Iterable {
     // Initialize count of visited vertices.
     int count = 0;
 
-    // Note: In an acyclic directed graph at least one vertex has outDegree zero.
+    // Note: In an acyclic directed graph at least
+    // one vertex has outDegree zero.
     while (sources.isNotEmpty) {
       // Sort source vertices:
       sources.sort(_comparator);
@@ -285,15 +296,16 @@ class DirectedGraph<T> extends Iterable {
 
     // Recursive function
     void visit(Vertex<T> vertex) {
-      /// Graph is not a Directed Acyclic Graph (DAG).
-      /// Terminate iteration.
+      // Graph is not a Directed Acyclic Graph (DAG).
+      // Terminate iteration.
       if (isCyclic) return;
 
-      /// Vertex has permanent mark.
-      /// => This vertex and its neighbouring vertices have already been visited.
+      // Vertex has permanent mark.
+      // => This vertex and its neighbouring vertices
+      // have already been visited.
       if (vertex._mark == Mark.PERMANENT) return;
 
-      /// A cycle has been detected. Mark graph as acyclic.
+      // A cycle has been detected. Mark graph as acyclic.
       if (vertex._mark == Mark.TEMPORARY) {
         isCyclic = true;
         return;
@@ -312,9 +324,12 @@ class DirectedGraph<T> extends Iterable {
     }
 
     // Main loop
-    // Note: Iterating in reverse order of [vertices] (approximately) preserves the
+    // Note: Iterating in reverse order of [vertices]
+    // (approximately) preserves the
     // sorting of vertices (on top of the topological sorting.)
-    // For a sorted topological ordering use the getter: [sortedTopologicalOrdering].
+    // For a sorted topological ordering use
+    // the getter: [sortedTopologicalOrdering].
+    //
     // Iterating in normal order of [vertices] yields a different
     // valid topological sorting.
     for (final current in this.vertices.reversed) {
@@ -346,15 +361,15 @@ class DirectedGraph<T> extends Iterable {
 
     // Recursive function
     void visit(Vertex<T> vertex) {
-      /// Graph is not a Directed Acyclic Graph (DAG).
-      /// Terminate iteration.
+      // Graph is not a Directed Acyclic Graph (DAG).
+      // Terminate iteration.
       if (isCyclic) return;
 
-      /// Vertex has permanent mark.
-      /// => This vertex and its neighbouring vertices have already been visited.
+      // Vertex has permanent mark.
+      // => This vertex and its neighbouring vertices have already been visited.
       if (vertex._mark == Mark.PERMANENT) return;
 
-      /// A cycle has been detected. Mark graph as acyclic.
+      // A cycle has been detected. Mark graph as acyclic.
       if (vertex._mark == Mark.TEMPORARY) {
         start = vertex;
         isCyclic = true;
@@ -394,7 +409,7 @@ class DirectedGraph<T> extends Iterable {
 
   /// Returns the first cycle detected or an empty list
   /// if the graph is acyclic.
-  /// In general, the getter method [this.cycle] is faster, but
+  /// In general, the getter method [cycle] is faster, but
   /// [findCycle()] is efficient if the graph is sparcely
   /// connected.
   ///
@@ -503,7 +518,8 @@ class Vertex<T> {
   /// Returns the (internal) integer [id] of the vertex.
   int get id => _id;
 
-  /// A tab storing a list of walked edges (as vertex ids). Used by [GraphCrawler].
+  /// A tab storing a list of walked edges (as vertex ids).
+  /// Used by [GraphCrawler].
   final List<int> _visited = [];
 
   /// Mark used by sorting algorithms.
@@ -547,8 +563,8 @@ typedef List<Vertex<T>> Edges<T>(Vertex<T> vertex);
 
 /// Crawls a graph defined by [edges] and records
 /// every path from [start] to [target].
-/// The result is available via the getter [pathList],
-/// a list with entries of type [<List<Vertex<T>>].
+/// The result is available via the getter [paths]
+/// which returns a list with entries of type [<List<Vertex<T>>].
 class GraphCrawler<T> {
   GraphCrawler({
     @required this.edges,

@@ -92,4 +92,9 @@ void main() {
 
   print(bluePen('\nCycle:'));
   print(graph.cycle);
+
+  // Create graph crawler.
+  final crawler = GraphCrawler<String>(edges: graph.edges);
+  print(bluePen('\nPaths from A to H.'));
+  print(crawler.paths(a, h));
 }
