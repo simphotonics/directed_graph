@@ -111,7 +111,7 @@ void main() {
   print(bluePen('\nStrongly connected components:'));
   print(graph.stronglyConnectedComponents);
 
-  print(bluePen('\nShortestPath(orange,darkRed):'));
+  print(bluePen('\nShortestPath(d,l):'));
   print(graph.shortestPath(d, l));
 
   print(bluePen('\nInDegree(C):'));
@@ -175,7 +175,7 @@ void main() {
     Strongly connected components:
     [[H], [B], [G], [C], [E], [A], [L], [I], [F], [D], [K]]
 
-    ShortestPath(orange,darkRed):
+    ShortestPath(f,l):
     [F, I, L]
 
     InDegree(C):

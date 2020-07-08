@@ -58,7 +58,7 @@ void main() {
   print(bluePen('\nStrongly connected components:'));
   print(graph.stronglyConnectedComponents);
 
-  print(bluePen('\nShortestPath(orange,darkRed):'));
+  print(bluePen('\nShortestPath(d, l):'));
   print(graph.shortestPath(d, l));
 
   print(bluePen('\nInDegree(C):'));

@@ -476,10 +476,10 @@ class DirectedGraph<T> extends Iterable {
   }
 
   @override
-  Iterator get iterator => _vertices.value.iterator;
+  Iterator<Vertex<T>> get iterator => _vertices.value.iterator;
 }
 
-/// Vertex Mark used by sorting algorythms.
+/// Vertex mark used by sorting algorithms.
 enum Mark { PERMANENT, TEMPORARY, NOT_SET }
 
 /// Generic object representing a vertex in a graph.

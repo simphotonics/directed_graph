@@ -10,5 +10,5 @@ dependencies:
   benchmark_harness: ^1.0.5
   directed_graph:
     path: ../
-  meta: ^1.1.8
+  meta: ^1.2.1
   graphs: ^0.2.0
