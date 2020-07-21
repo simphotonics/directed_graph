@@ -1,3 +1,7 @@
+## 0.1.7
+Incorporated pedantic lint suggestions.
+Updated docs. 
+
 ## 0.1.6
 
 Added info about class [`GraphCrawler`][GraphCrawler].
@@ -10,7 +14,7 @@ Added explicit generic type parameter to graph getter `iterator`.
 
 Added class `GraphCrawler`.
 
-Transformed the following `DirectedGraph` methods to getters:
+Converted the following `DirectedGraph` methods to getters:
 - `isAcyclic`,
 - `localSources`,
 - `outDegreeMap`,
