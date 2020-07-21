@@ -39,7 +39,7 @@ dartanalyzer \
     --fatal-warnings \
     --fatal-infos \
     --packages="$PWD/.packages" \
-    $(find bin lib test -name \*.dart 2>/dev/null)
+    $(find bin lib test benchmark example -name \*.dart 2>/dev/null)
 
 # Running tests
 echo
@@ -53,7 +53,7 @@ pub run test -r expanded --test-randomize-ordering-seed=random
 # ===============================
 
 # Directories to be processed
-directories="example performance"
+directories="example benchmark"
 
 for directory in $directories; do
   cd $directory
