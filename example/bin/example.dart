@@ -45,8 +45,8 @@ void main() {
     comparator: comparator,
   );
 
-  AnsiPen bluePen = AnsiPen()..blue(bold: true);
-  AnsiPen magentaPen = AnsiPen()..magenta(bold: true);
+  final bluePen = AnsiPen()..blue(bold: true);
+  final magentaPen = AnsiPen()..magenta(bold: true);
 
   print(magentaPen('Example Directed Graph...'));
   print(bluePen('\ngraph.toString():'));
@@ -95,6 +95,10 @@ void main() {
 
   // Create graph crawler.
   final crawler = GraphCrawler<String>(edges: graph.edges);
+
+  print(bluePen('\nPaths from D to L.'));
+  print(crawler.paths(d, l));
+
   print(bluePen('\nPaths from A to H.'));
   print(crawler.paths(a, h));
 }
