@@ -63,7 +63,7 @@ This is the default setting provided by the package [benchmark_harness].
 To run the benchmark program, navigate to the folder *directed_graph* in your downloaded copy of this library and use
 the following command:
 ```console
-  # dart performance/bin/benchmark.dart
+  # dart benchmark/bin/benchmark.dart
 ```
 A typical shell output for a benchmark run on a machine with an Intel Core Dual i5-6260U CPU @ 1.80GHz is listed below:
 ```console
@@ -110,18 +110,18 @@ A typical shell output for a benchmark run on a machine with an Intel Core Dual 
  Crawler.paths(D, L) ...
  [[D, F, I, L]]
  CrawlerTest(RunTime): 7.973674977873107 us.
- 
+
  graph.cycle ...
  [F, I, K, F]
  GraphCycle(RunTime): 14.154252269976858 us.
- 
+
  graph.findCycle() ...
  [F, I, K, F]
  GraphFindCycle(RunTime): 20.847191386013737 us.
 ```
-The method `topologicalOrdering()`, based on a depth-first search algorithm, executes marginaly faster
-but `sortedTopologicalOrdering()`, based on Kahn's algorithm is able to generate
-a sorted topological ordering. In the example above the vertices are sorted in
+The method `topologicalOrdering`(based on a depth-first search algorithm)
+executes significantly faster than `sortedTopologicalOrdering`(based on Kahn's algorithm).
+In the example above, see "Topological Ordering Kahn", the vertices are sorted in
 topological and lexicographical order.
 
 The method `stronglyConnectedComponents()` is provided for convenience
