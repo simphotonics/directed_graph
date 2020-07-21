@@ -5,7 +5,7 @@
 
 ## Introduction
 
-An integral part of storing, manipulating, and retrieving numerical data are *data structures* or as they are called in Dart: *collections*.
+An integral part of storing, manipulating, and retrieving numerical data are *data structures* or as they are called in Dart: [collections].
 Arguably the most common data structure is the *list*. It enables efficient storage and retrieval of sequential data that can be associated with an index.
 
 A more general (non-linear) data structure where an element may be connected to one, several, or none of the other elements is called a **graph**.
@@ -13,7 +13,9 @@ A more general (non-linear) data structure where an element may be connected to 
 Graphs are useful when keeping track of elements that are linked to or are dependent on other elements.
 Examples include: network connections, links in a document pointing to other paragraphs or documents, foreign keys in a relational database, file dependencies in a build system, etc.
 
-The package [`directed_graph`][directed_graph] contains an implementation of a Dart graph that follows the recommendations found in [graphs-examples] and is compatible with the algorithms provided by [`graphs`][graphs]. It is simple to use and includes methods that enable:
+The package [`directed_graph`][directed_graph] contains an implementation of a Dart graph that follows the
+recommendations found in [graphs-examples] and is compatible with the algorithms provided by [`graphs`][graphs].
+It is simple to use and includes methods that enable:
 * adding/removing vertices and edges,
 * the sorting of vertices.
 
@@ -24,7 +26,7 @@ for finding:
 * cycles,
 * a topological ordering of the graph vertices.
 
-The class [GraphCrawler][GraphCrawler] can be used to find all paths connecting two vertices.
+The class [`GraphCrawler`][GraphCrawler] can be used to find all paths connecting two vertices.
 
 ## Terminology
 
@@ -156,6 +158,10 @@ void main() {
 
   // Create graph crawler.
   final crawler = GraphCrawler<String>(edges: graph.edges);
+
+  print(bluePen('\nPaths from D to L.'));
+  print(crawler.paths(d, l));
+
   print(bluePen('\nPaths from A to H.'));
   print(crawler.paths(a, h));
 }
@@ -218,6 +224,9 @@ void main() {
     Cycle:
     [F, I, K, F]
 
+    Paths from D to L.
+    [[D, F, I, L]]
+
     Paths from A to H.
     [[A, B, H], [A, H], [A, C, H]]
   ```
@@ -235,6 +244,8 @@ Please file feature requests and bugs at the [issue tracker].
 
 [comparator]: https://api.flutter.dev/flutter/dart-core/Comparator.html
 [issue tracker]: https://github.com/simphotonics/directed_graph/issues
+
+[collections]: https://api.dart.dev/stable/2.8.4/dart-collection/dart-collection-library.html
 [example]: example
 [graphs-examples]: https://pub.dev/packages/graphs#-example-tab-
 [graphs]: https://pub.dev/packages/graphs

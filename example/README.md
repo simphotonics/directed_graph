@@ -1,10 +1,10 @@
-# Directed Graph
+
 
 [![Build Status](https://travis-ci.com/simphotonics/directed_graph.svg?branch=master)](https://travis-ci.com/simphotonics/directed_graph)
 
-## Example
-The file [example.dart] (see folder *bin*) contains a short program that demonstrates how to create
-a numerical representation of the directed graph shown in the figure below using the package [directed_graph].
+## Directed Graph - Example
+The file [`example.dart`][example.dart] (see folder *bin*) contains a short program that demonstrates how to create
+a numerical representation of the directed graph shown in the figure below using the package [`directed_graph`][directed_graph].
 
 The program also shows how to add/remove vertices and edges, determine if the graph is acyclic, or
 obtain a list of vertices in topological order.
@@ -12,11 +12,11 @@ obtain a list of vertices in topological order.
 ![Directed Graph Image](https://raw.githubusercontent.com/simphotonics/directed_graph/master/images/directed_graph.svg?sanitize=true)
 
 The methods `stronglyConnectedComponents` and `shortestPath` are provided for convenience
-only as they are simply calling the homonymously named functions provided by the package [graphs].
+only as they are simply calling the homonymously named functions provided by the package [`graphs`][graphs].
 
 The program can be run in a terminal by navigating to the
 folder *directed_graph/example* in your local copy of this library and using the command:
-```Shell
+```Console
 $ dart bin/example.dart
 ```
 
