@@ -6,10 +6,78 @@
 /// * retrieve a list of vertices in topological order.
 library directed_graph;
 
-import 'dart:collection' show UnmodifiableListView, Queue;
+import 'dart:collection' show HashSet, Queue, UnmodifiableListView;
 import 'package:graphs/graphs.dart' as graphs;
 import 'package:lazy_evaluation/lazy_evaluation.dart';
 import 'package:meta/meta.dart';
+
+/// Function returning a list of edge vertices.
+/// If a vertex has no neighbours it should return
+/// an empty list.
+///
+/// Note: The function should never return null.
+typedef Edges<T> = List<Vertex<T>> Function(Vertex<T> vertex);
+
+/// Vertex mark used by sorting algorithms.
+enum _Mark { PERMANENT, TEMPORARY }
+
+/// Generic object representing a vertex in a graph.
+/// Holds data of type [T].
+class Vertex<T> {
+  /// Vertex id.
+  final int _id;
+
+  /// Vertex data of type [T].
+  final T data;
+
+  /// Vertex counter.
+  static int _counter = 0;
+
+  /// Creates a vertex holding generic data of type [T].
+  Vertex(this.data) : _id = ++_counter;
+
+  Vertex.fromConstantVertex(ConstantVertex vertex)
+      : _id = ++_counter,
+        data = vertex.data;
+
+  /// Returns the integer [id] of the vertex.
+  int get id => _id;
+
+  @override
+  bool operator ==(Object other) => other is Vertex<T> && other.id == _id;
+
+  @override
+  int get hashCode => _id.hashCode;
+
+  @override
+  String toString() => '$data';
+
+  /// Private field used by DFS algorithms.
+  _Mark _mark;
+
+  /// Private field used by [GraphCrawler].
+  /// Keeps a tab of visited neighbouring vertices.
+  final _visited = HashSet<Vertex<T>>();
+}
+
+/// Object representing a constant vertex.
+class ConstantVertex<T> {
+  /// Vertex data of type [T].
+  final T data;
+
+  /// Creates a vertex holding generic data of type [T].
+  const ConstantVertex(this.data);
+
+  @override
+  bool operator ==(Object other) =>
+      other is ConstantVertex<T> && other.hashCode == hashCode;
+
+  @override
+  int get hashCode => super.hashCode;
+
+  @override
+  String toString() => '$data';
+}
 
 /// Generic directed graph.
 /// Data of type [T] is stored in vertices of type [Vertex<T>].
@@ -52,7 +120,7 @@ class DirectedGraph<T> extends Iterable {
     _vertices.notifyChange();
   }
 
-  /// Mapping [Vertex<T>] to a list of connected vertices [List<Vertex<T>>].
+  /// Mapping each graph vertex to a list of connected vertice.
   Map<Vertex<T>, List<Vertex<T>>> get edgeMap => _edges;
 
   /// Returns a list of the connected vertices of [vertex].
@@ -68,6 +136,11 @@ class DirectedGraph<T> extends Iterable {
 
   /// Returns a (modifiable) copy of the inDegreeMap.
   Map<Vertex<T>, int> get inDegreeMap => Map<Vertex<T>, int>.from(_inDegreeMap);
+
+  /// Call this method whenever vertices or edges are added to the graph.
+  void _updateLazyFields() {
+    _vertices.notifyChange();
+  }
 
   /// Adds edges (connections) pointing from [vertex] to [connectedVertices].
   /// If the graph does not contain [vertex] it will be added.
@@ -157,7 +230,7 @@ class DirectedGraph<T> extends Iterable {
 
   /// Returns true if the graph is a directed acyclic graph.
   bool get isAcyclic {
-    return (this.topologicalOrdering == null) ? false : true;
+    return (topologicalOrdering == null) ? false : true;
   }
 
   /// Returns a list of type [List<List<Vertex<T>>>].
@@ -173,25 +246,25 @@ class DirectedGraph<T> extends Iterable {
   /// Note: There is no topological ordering if the
   /// graph is cyclic. In that case the function returns [null].
   List<List<Vertex<T>>> get localSources {
-    List<List<Vertex<T>>> result = [];
+    final result = <List<Vertex<T>>>[];
 
     // Get modifiable in-degree map.
-    final _inDegreeMap = this.inDegreeMap;
+    final _inDegreeMap = inDegreeMap;
 
-    // Get modifiable list of vertices
-    final List<Vertex<T>> _vertices = List.from(this.vertices);
+    // Get modifiable list of the graph vertices
+    final _vertices = List.from(vertices);
 
-    bool hasSources = false;
-    int count = 0;
+    var hasSources = false;
+    var count = 0;
 
     // Note: In an acyclic directed graph at least one
     // vertex has outDegree zero.
     do {
       // Storing local sources.
-      final List<Vertex<T>> sources = [];
+      final sources = <Vertex<T>>[];
 
       // Storing remaining vertices.
-      final List<Vertex<T>> remainingVertices = [];
+      final remainingVertices = <Vertex<T>>[];
 
       // Find local sources.
       for (final vertex in _vertices) {
@@ -207,7 +280,7 @@ class DirectedGraph<T> extends Iterable {
       if (sources.isNotEmpty) result.add(sources);
 
       // Simulate the removal of detected local sources.
-      for (var source in sources) {
+      for (final source in sources) {
         for (final connectedVertex in _edges[source] ?? []) {
           _inDegreeMap[connectedVertex] -= 1;
         }
@@ -220,7 +293,7 @@ class DirectedGraph<T> extends Iterable {
       _vertices.addAll(remainingVertices);
     } while (hasSources);
 
-    return (count == this.inDegreeMap.keys.length) ? result : null;
+    return (count == inDegreeMap.keys.length) ? result : null;
   }
 
   /// Returns [List<Vertex<T>>], a list of all vertices in topological order.
@@ -235,26 +308,26 @@ class DirectedGraph<T> extends Iterable {
   /// Any self-loop (e.g. vertex1 -> vertex1) renders a directed graph cyclic.
   /// Based on Kahn's algorithm.
   List<Vertex<T>> get sortedTopologicalOrdering {
-    if (_comparator == null) return this.topologicalOrdering;
+    if (_comparator == null) return topologicalOrdering;
 
-    List<Vertex<T>> result = [];
+    final result = <Vertex<T>>[];
 
     // Get modifiable in-degree map.
-    Map<Vertex<T>, int> inDegreeMap = this.inDegreeMap;
+    final inDegreeMap = this.inDegreeMap;
 
     // Add all sources (vertices with inDegree == 0) to queue.
     // Using a list instead of a queue to enable sorting of [sources].
     //
     // Note: In an acyclic directed graph there is at least
     //       one vertex with inDegree equal to zero.
-    List<Vertex<T>> sources = [];
+    final sources = <Vertex<T>>[];
     for (final vertex in _edges.keys) {
       if (inDegreeMap[vertex] == 0) {
         sources.add(vertex);
       }
     }
     // Initialize count of visited vertices.
-    int count = 0;
+    var count = 0;
 
     // Note: In an acyclic directed graph at least
     // one vertex has outDegree zero.
@@ -292,7 +365,7 @@ class DirectedGraph<T> extends Iterable {
     final queue = Queue<Vertex<T>>();
 
     // Marks [this] graph as cyclic.
-    bool isCyclic = false;
+    var isCyclic = false;
 
     // Recursive function
     void visit(Vertex<T> vertex) {
@@ -303,23 +376,23 @@ class DirectedGraph<T> extends Iterable {
       // Vertex has permanent mark.
       // => This vertex and its neighbouring vertices
       // have already been visited.
-      if (vertex._mark == Mark.PERMANENT) return;
+      if (vertex._mark == _Mark.PERMANENT) return;
 
       // A cycle has been detected. Mark graph as acyclic.
-      if (vertex._mark == Mark.TEMPORARY) {
+      if (vertex._mark == _Mark.TEMPORARY) {
         isCyclic = true;
         return;
       }
 
       // Temporary mark. Marks current vertex as visited.
-      vertex._mark = Mark.TEMPORARY;
-      for (var connectedVertex in _edges[vertex] ?? []) {
+      vertex._mark = _Mark.TEMPORARY;
+      for (final connectedVertex in _edges[vertex] ?? <Vertex<T>>[]) {
         visit(connectedVertex);
       }
       // Permanent mark, indicating that there is no path from
       // neighbouring vertices back to the current vertex.
       // We tried all options.
-      vertex._mark = Mark.PERMANENT;
+      vertex._mark = _Mark.PERMANENT;
       queue.addFirst(vertex);
     }
 
@@ -332,16 +405,17 @@ class DirectedGraph<T> extends Iterable {
     //
     // Iterating in normal order of [vertices] yields a different
     // valid topological sorting.
-    for (final current in this.vertices.reversed) {
+    for (final current in vertices.reversed) {
       if (isCyclic) break;
       visit(current);
     }
 
     // Clearing vertex marks.
     // Important! Otherwise method won't be idempotent.
-    for (final vertex in this.vertices) {
-      vertex._mark = Mark.NOT_SET;
+    for (final vertex in vertices) {
+      vertex._mark = null;
     }
+    //_VertexMarker.vertexMarks.clear();
 
     // Return null if graph is not a DAG.
     return (isCyclic) ? null : queue.toList();
@@ -357,7 +431,7 @@ class DirectedGraph<T> extends Iterable {
     Vertex<T> start;
 
     // Marks [this] graph as acyclic.
-    bool isCyclic = false;
+    var isCyclic = false;
 
     // Recursive function
     void visit(Vertex<T> vertex) {
@@ -367,23 +441,23 @@ class DirectedGraph<T> extends Iterable {
 
       // Vertex has permanent mark.
       // => This vertex and its neighbouring vertices have already been visited.
-      if (vertex._mark == Mark.PERMANENT) return;
+      if (vertex._mark == _Mark.PERMANENT) return;
 
       // A cycle has been detected. Mark graph as acyclic.
-      if (vertex._mark == Mark.TEMPORARY) {
+      if (vertex._mark == _Mark.TEMPORARY) {
         start = vertex;
         isCyclic = true;
         return;
       }
 
       // Temporary mark. Marks current vertex as visited.
-      vertex._mark = Mark.TEMPORARY;
-      for (var connectedVertex in _edges[vertex] ?? []) {
+      vertex._mark = _Mark.TEMPORARY;
+      for (final connectedVertex in _edges[vertex] ?? <Vertex<T>>[]) {
         visit(connectedVertex);
       }
       // Permanent mark, indicating that there is no path from
       // neighbouring vertices back to the current vertex.
-      vertex._mark = Mark.PERMANENT;
+      vertex._mark = _Mark.PERMANENT;
     }
 
     // Main loop
@@ -395,12 +469,12 @@ class DirectedGraph<T> extends Iterable {
     // Reset vertex mark.
     // Important! Otherwise method is not idempotent.
     for (final vertex in vertices) {
-      vertex._mark = Mark.NOT_SET;
+      vertex._mark = null;
     }
 
     // Find cycle path.
     if (isCyclic) {
-      final GraphCrawler crawler = GraphCrawler<T>(edges: this.edges);
+      final GraphCrawler crawler = GraphCrawler<T>(edges: edges);
       return crawler.paths(start, start)?.first ?? [];
     } else {
       return [];
@@ -416,7 +490,7 @@ class DirectedGraph<T> extends Iterable {
   /// Note: A cycle is a path that starts and ends with
   /// the same vertex.
   List<Vertex<T>> findCycle() {
-    final GraphCrawler crawler = GraphCrawler<T>(edges: this.edges);
+    final GraphCrawler crawler = GraphCrawler<T>(edges: edges);
     List<List<Vertex<T>>> cycle;
 
     // Main loop
@@ -432,7 +506,7 @@ class DirectedGraph<T> extends Iterable {
   /// Returns a mapping between vertex and number of
   /// incoming connections.
   Map<Vertex<T>, int> _createInDegreeMap() {
-    var map = Map<Vertex<T>, int>();
+    var map = <Vertex<T>, int>{};
     for (final vertex in _edges.keys) {
       // Entry might already exist.
       map[vertex] ??= 0;
@@ -446,7 +520,7 @@ class DirectedGraph<T> extends Iterable {
 
   /// Returns the number of incoming directed edges for [vertex].
   int inDegree(Vertex<T> vertex) {
-    int inDegree = 0;
+    var inDegree = 0;
     for (final connectedVertices in _edges.values) {
       inDegree =
           inDegree + connectedVertices.where((value) => value == vertex).length;
@@ -462,7 +536,7 @@ class DirectedGraph<T> extends Iterable {
   /// Returns a mapping between vertex and number of
   /// outgoing connections (edges).
   Map<Vertex<T>, int> get outDegreeMap {
-    var map = Map<Vertex<T>, int>();
+    var map = <Vertex<T>, int>{};
     for (var vertex in vertices) {
       map[vertex] = _edges[vertex]?.length ?? 0;
     }
@@ -485,81 +559,21 @@ class DirectedGraph<T> extends Iterable {
     return b.toString();
   }
 
-  /// Call this method whenever vertices or edges are added to the graph.
-  _updateLazyFields() {
-    _vertices.notifyChange();
-  }
-
   @override
   Iterator<Vertex<T>> get iterator => _vertices.value.iterator;
 }
 
-/// Vertex mark used by sorting algorithms.
-enum Mark { PERMANENT, TEMPORARY, NOT_SET }
+// /// Extension on Vertex<T> providing
+// /// the field [mark].
+// extension _VertexMarker<T> on Vertex<T> {
+//   static final vertexMarks = <int, _Mark>{};
 
-/// Generic object representing a vertex in a graph.
-/// Holds data of type [T].
-class Vertex<T> {
-  // Internal vertex counter.
-  final int _id;
+//   _Mark get mark => vertexMarks[id];
 
-  /// Vertex data of type [T].
-  final T data;
-
-  static int _counter = 0;
-
-  /// Creates a vertex holding generic data of type [T].
-  Vertex(this.data) : _id = ++_counter;
-
-  Vertex.fromConstantVertex(ConstantVertex vertex)
-      : _id = ++_counter,
-        data = vertex.data;
-
-  /// Returns the (internal) integer [id] of the vertex.
-  int get id => _id;
-
-  /// A tab storing a list of walked edges (as vertex ids).
-  /// Used by [GraphCrawler].
-  final List<int> _visited = [];
-
-  /// Mark used by sorting algorithms.
-  Mark _mark = Mark.NOT_SET;
-
-  @override
-  bool operator ==(Object other) => other is Vertex<T> && other.id == _id;
-
-  @override
-  int get hashCode => _id.hashCode;
-
-  @override
-  String toString() => '$data';
-}
-
-/// Object representing a constant vertex.
-class ConstantVertex<T> {
-  /// Vertex data of type [T].
-  final T data;
-
-  /// Creates a vertex holding generic data of type [T].
-  const ConstantVertex(this.data);
-
-  @override
-  bool operator ==(Object other) =>
-      other is ConstantVertex<T> && other.hashCode == hashCode;
-
-  @override
-  int get hashCode => super.hashCode;
-
-  @override
-  String toString() => '$data';
-}
-
-/// Function returning a list of edge vertices.
-/// If a vertex has no neighbours it should return
-/// an empty list.
-///
-/// Note: The function should never return null.
-typedef List<Vertex<T>> Edges<T>(Vertex<T> vertex);
+//   set mark(_Mark mark) {
+//     vertexMarks[id] = mark;
+//   }
+// }
 
 /// Crawls a graph defined by [edges] and records
 /// every path from `start` to `target`.
@@ -581,11 +595,11 @@ class GraphCrawler<T> {
   /// The algorithm keeps track of the edges already walked to avoid an
   /// infinite loop when encountering a cycle.
   List<List<Vertex<T>>> paths(Vertex<T> start, Vertex<T> target) {
-    final List<List<Vertex<T>>> _pathList = [];
-    final Queue<Vertex<T>> _queue = Queue();
+    final _pathList = <List<Vertex<T>>>[];
+    final _queue = Queue<Vertex<T>>();
 
     /// Add [this.target] to [path] and appends the result to [_paths].
-    _addPath(List<Vertex<T>> path) {
+    void _addPath(List<Vertex<T>> path) {
       // Add target vertex.
       path.add(target);
       _pathList.add(path);
@@ -596,36 +610,37 @@ class GraphCrawler<T> {
     void _crawl(Vertex<T> start, Vertex<T> target) {
       _queue.addLast(start);
       for (final vertex in edges(start)) {
-        // print('$start -> $vertex');
+        //print('$start:${start.id} -> $vertex:${vertex.id}');
+        //sleep(Duration(seconds: 1));
         if (vertex == target) {
-          // print('|=======> Found target: recording result: $_queue');
+          //print('|=======> Found target: recording result: $_queue');
           _addPath(_queue.toList());
         } else {
-          // print('$start._visited: ${start._visited} '
           // 'containts $vertex: ${start._visited.contains(vertex)}');
-          if (start._visited.contains(vertex.id)) {
-            // print('$start ===================================\-> $vertex');
+          if (start._visited.contains(vertex)) {
+            //print('$start === has visited ===>  $vertex');
             continue;
           } else {
-            //print('crawl($vertex:$target}, ${start}._visited:${start._visited})');
-            start._visited.add(vertex.id);
+            start._visited.add(vertex);
             _crawl(vertex, target);
-            //print('crawl($vertex:$target}, ${start}._visited:${start._visited})');
           }
         }
       }
       // Stepping back along the path.
       if (_queue.isNotEmpty && _queue.last != target) {
+        // print('Stepping back');
         // print('$_queue: removing: ${_queue.last}');
         _queue.removeLast()._visited.clear();
       }
     }
 
     _crawl(start, target);
-    // Clear marked vertices.
+
+    // Clear visited vertices to make _crawl() idempotent.
     for (final vertex in _queue) {
       vertex._visited.clear();
     }
+
     return _pathList;
   }
 }
