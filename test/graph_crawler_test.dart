@@ -47,15 +47,15 @@ void main() {
   final cyclicGraphCrawler = GraphCrawler<String>(edges: cyclicGraph.edges);
 
   group('Acyclic graph:', () {
-    test('no path:', () {
+    test('no path: a->l', () {
       expect(graphCrawler.paths(a, l), []);
     });
-    test('simple path:', () {
+    test('simple path: d->i', () {
       expect(graphCrawler.paths(d, i), [
         [d, f, i]
       ]);
     });
-    test('complex path:', () {
+    test('complex path a->h:', () {
       expect(graphCrawler.paths(a, h), [
         [a, b, h],
         [a, h],
@@ -64,15 +64,15 @@ void main() {
     });
   });
   group('Cyclic graph:', () {
-    test('no path:', () {
+    test('no path:a->l', () {
       expect(cyclicGraphCrawler.paths(a, l), []);
     });
-    test('simple path:', () {
+    test('simple path: d->i', () {
       expect(cyclicGraphCrawler.paths(d, i), [
         [d, f, i]
       ]);
     });
-    test('complex path:', () {
+    test('complex path: a->h', () {
       expect(cyclicGraphCrawler.paths(a, h), [
         [a, b, h],
         [a, h],
@@ -80,18 +80,18 @@ void main() {
       ]);
     });
 
-    test('cycle:', () {
+    test('cycle: d->l', () {
       expect(cyclicGraphCrawler.paths(d, l), [
         [d, f, i, l],
       ]);
     });
-    test('cycle:', () {
+    test('cycle: f->f', () {
       expect(cyclicGraphCrawler.paths(f, f), [
         [f, i, k, f],
       ]);
     });
 
-    test('trivial cycle:', () {
+    test('trivial cycle: l->l:', () {
       expect(cyclicGraphCrawler.paths(l, l), [
         [l, l],
       ]);

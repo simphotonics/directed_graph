@@ -74,7 +74,7 @@ void main() {
       graph.comparator = comparator;
     });
     test('for loop:', () {
-      int index = 0;
+      var index = 0;
       for (var vertex in graph) {
         expect(vertex, graph.vertices[index]);
         ++index;
