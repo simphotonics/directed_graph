@@ -1,0 +1,9 @@
+include: package:pedantic/analysis_options.yaml
+analyzer:
+  #exclude: [build/**]
+  #strong-mode:
+    #implicit-casts: false
+
+linter:
+  rules:
+    - camel_case_types
