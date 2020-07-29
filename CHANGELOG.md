@@ -1,6 +1,11 @@
+## 0.1.8
+
+Corrected missing links in dartdocs.
+
 ## 0.1.7
+
 Incorporated pedantic lint suggestions.
-Updated docs. 
+Updated docs.
 
 ## 0.1.6
 

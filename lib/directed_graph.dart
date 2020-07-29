@@ -80,9 +80,9 @@ class ConstantVertex<T> {
 }
 
 /// Generic directed graph.
-/// Data of type [T] is stored in vertices of type [Vertex<T>].
+/// Data of type [T] is stored in vertices of type [Vertex].
 /// The graph consists of a mapping [_edges] of each
-/// [Vertex<T>] to a list of connected vertices [List<Vertex<T>>].
+/// `Vertex<T>` to a list of connected vertices `List<Vertex<T>>`.
 class DirectedGraph<T> extends Iterable {
   Map<Vertex<T>, List<Vertex<T>>> _edges;
   MutableLazy<UnmodifiableListView<Vertex<T>>> _vertices;
@@ -217,7 +217,7 @@ class DirectedGraph<T> extends Iterable {
   }
 
   /// Returns the shortest path between [start] and [target].
-  /// Returns [null] if [start] is not connected to [target].
+  /// Returns `null` if [start] is not connected to [target].
   List<Vertex<T>> shortestPath(Vertex<T> start, Vertex<T> target) {
     return graphs.shortestPath<Vertex<T>>(start, target, edges);
   }
@@ -233,7 +233,7 @@ class DirectedGraph<T> extends Iterable {
     return (topologicalOrdering == null) ? false : true;
   }
 
-  /// Returns a list of type [List<List<Vertex<T>>>].
+  /// Returns a list of type `List<List<Vertex<T>>>`.
   /// The first entry contains the
   /// local source vertices of the graph.
   /// Subsequent entries contain the local source vertices of the reduced graph.
@@ -244,7 +244,7 @@ class DirectedGraph<T> extends Iterable {
   ///       results in a topological ordering of the graph vertices.
   ///
   /// Note: There is no topological ordering if the
-  /// graph is cyclic. In that case the function returns [null].
+  /// graph is cyclic. In that case the function returns `null`.
   List<List<Vertex<T>>> get localSources {
     final result = <List<Vertex<T>>>[];
 
@@ -296,17 +296,17 @@ class DirectedGraph<T> extends Iterable {
     return (count == inDegreeMap.keys.length) ? result : null;
   }
 
-  /// Returns [List<Vertex<T>>], a list of all vertices in topological order.
-  /// For every directed edge: (vertex1 -> vertex2), vertex1
+  /// Returns a list of all vertices in topological order.
+  /// * For every directed edge: (vertex1 -> vertex2), vertex1
   /// is listed before vertex2.
   ///
-  /// If a vertex comparator is specified, the sorting will be applied
+  /// * If a vertex comparator is specified, the sorting will be applied
   /// in addition to the topological order. If
   ///
-  /// Note: There is no topological ordering if the
-  /// graph is cyclic. In that case the function returns [null].
-  /// Any self-loop (e.g. vertex1 -> vertex1) renders a directed graph cyclic.
-  /// Based on Kahn's algorithm.
+  /// * Note: There is no topological ordering if the
+  /// graph is cyclic. In that case the function returns `null`.
+  /// * Any self-loop (e.g. vertex1 -> vertex1) renders a directed graph cyclic.
+  /// * Based on Kahn's algorithm.
   List<Vertex<T>> get sortedTopologicalOrdering {
     if (_comparator == null) return topologicalOrdering;
 
@@ -353,14 +353,14 @@ class DirectedGraph<T> extends Iterable {
     return (count != _inDegreeMap.length) ? null : result;
   }
 
-  /// Returns [List<Vertex<T>>], a list of all vertices in topological order.
-  /// For every directed edge: (vertex1 -> vertex2), vertex1
+  /// Returns `List<Vertex<T>>`, a list of all vertices in topological order.
+  /// * For every directed edge: (vertex1 -> vertex2), vertex1
   /// is listed before vertex2.
   ///
-  /// Note: There is no topological ordering if the
-  /// graph is cyclic. In that case the function returns [null].
-  /// Any self-loop (e.g. vertex1 -> vertex1) renders a directed graph cyclic.
-  /// Based on a depth-first search algorithm (Cormen 2001, Tarjan 1976).
+  /// * Note: There is no topological ordering if the
+  /// graph is cyclic. In that case the function returns `null`.
+  /// * Any self-loop (e.g. vertex1 -> vertex1) renders a directed graph cyclic.
+  /// * Based on a depth-first search algorithm (Cormen 2001, Tarjan 1976).
   List<Vertex<T>> get topologicalOrdering {
     final queue = Queue<Vertex<T>>();
 
@@ -578,7 +578,7 @@ class DirectedGraph<T> extends Iterable {
 /// Crawls a graph defined by [edges] and records
 /// every path from `start` to `target`.
 /// The result is available via the getter [paths]
-/// which returns a list with entries of type `<List<Vertex<T>>`.
+/// which returns a list with entries of type `List<Vertex<T>`.
 class GraphCrawler<T> {
   GraphCrawler({
     @required this.edges,
