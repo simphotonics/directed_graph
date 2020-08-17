@@ -1,6 +1,7 @@
 import 'package:ansicolor/ansicolor.dart';
 import 'package:benchmark_harness/benchmark_harness.dart';
 import 'package:directed_graph/directed_graph.dart';
+import 'package:directed_graph/graph_crawler.dart';
 
 AnsiPen magenta = AnsiPen()..magenta(bold: true);
 AnsiPen green = AnsiPen()..green(bold: true);
