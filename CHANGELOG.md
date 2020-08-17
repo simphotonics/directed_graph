@@ -1,3 +1,9 @@
+## 0.1.9
+
+* Moved `GraphCrawler` to a separate file.
+* Amended graph crawler method `paths`.
+* Added `DirectedGraph` constructor `.fromData`.
+
 ## 0.1.8
 
 Corrected missing links in dartdocs.
