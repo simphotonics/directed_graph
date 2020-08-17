@@ -1,4 +1,5 @@
 import 'package:directed_graph/directed_graph.dart';
+import 'package:directed_graph/graph_crawler.dart';
 import 'package:test/test.dart';
 
 /// To run the test, navigate to the folder 'directed_graph'
@@ -29,72 +30,71 @@ void main() {
   final graph = DirectedGraph<String>(
     {
       a: [b, h, c, e],
-      d: [e, f],
       b: [h],
       c: [h, g],
+      d: [e, f],
+      e: [g],
       f: [i],
-      i: [l],
-      k: [g, f]
+      i: [k, l],
+      k: [g, f],
+      l: [l]
     },
     comparator: comparator,
   );
 
-  final cyclicGraph = DirectedGraph<String>.from(graph);
-  cyclicGraph.addEdges(i, [k]);
-  cyclicGraph.addEdges(l, [l]);
+  final crawler = GraphCrawler<String>(edges: graph.edges);
 
-  final graphCrawler = GraphCrawler<String>(edges: graph.edges);
-  final cyclicGraphCrawler = GraphCrawler<String>(edges: cyclicGraph.edges);
-
-  group('Acyclic graph:', () {
+  group('Simple paths:', () {
     test('no path: a->l', () {
-      expect(graphCrawler.paths(a, l), []);
+      expect(crawler.paths(a, l), []);
+      expect(crawler.path(a, l), []);
     });
-    test('simple path: d->i', () {
-      expect(graphCrawler.paths(d, i), [
+    test('d->i', () {
+      expect(crawler.paths(d, i), [
         [d, f, i]
       ]);
+      expect(crawler.path(d, i), [d, f, i]);
     });
-    test('complex path a->h:', () {
-      expect(graphCrawler.paths(a, h), [
+    test('a->h:', () {
+      expect(crawler.paths(a, h), [
         [a, b, h],
         [a, h],
         [a, c, h],
       ]);
+      expect(crawler.path(a, h), [a, b, h]);
     });
   });
-  group('Cyclic graph:', () {
-    test('no path:a->l', () {
-      expect(cyclicGraphCrawler.paths(a, l), []);
-    });
+  group('Cyclic paths:', () {
     test('simple path: d->i', () {
-      expect(cyclicGraphCrawler.paths(d, i), [
+      expect(crawler.paths(d, i), [
         [d, f, i]
       ]);
+      expect(crawler.path(d, i), [d, f, i]);
     });
-    test('complex path: a->h', () {
-      expect(cyclicGraphCrawler.paths(a, h), [
-        [a, b, h],
-        [a, h],
-        [a, c, h],
-      ]);
-    });
-
     test('cycle: d->l', () {
-      expect(cyclicGraphCrawler.paths(d, l), [
+      expect(crawler.paths(d, l), [
         [d, f, i, l],
       ]);
+      expect(crawler.path(d, l), [d, f, i, l]);
     });
     test('cycle: f->f', () {
-      expect(cyclicGraphCrawler.paths(f, f), [
+      expect(crawler.paths(f, f), [
         [f, i, k, f],
       ]);
+      expect(
+        crawler.path(f, f),
+        [f, i, k, f],
+      );
     });
 
     test('trivial cycle: l->l:', () {
-      expect(cyclicGraphCrawler.paths(l, l), [
+      expect(crawler.paths(l, l), [
         [l, l],
       ]);
+      expect(
+        crawler.path(l, l),
+        [l, l],
+      );
     });
   });
 }
