@@ -110,7 +110,7 @@ void main() {
     comparator: comparator,
   );
 
-  // Construction a graph from data.
+  // Constructing a graph from data.
   // Note: Each object is converted to a vertex.
   var graphII = DirectedGraph<String>.fromData({
     'A': ['B', 'H', 'C', 'E'],
@@ -130,7 +130,6 @@ void main() {
   print(bluePen('\ngraph.toString():'));
   print(graph);
 
-  print(magentaPen('Example Directed Graph...'));
   print(bluePen('\ngraphII.toString():'));
   print(graphII);
 
@@ -203,77 +202,95 @@ void main() {
 <details> <summary> Click to show the console output. </summary>
 
   ```Console
-    # dart example/bin/example.dart
-    Example Directed Graph...
+  $ dart example/bin/example.dart
+  Example Directed Graph...
 
-    graph.toString():
-    {
-     A: [B, H, C, E],
-     B: [H],
-     C: [H, G],
-     D: [E, F],
-     E: [G],
-     F: [I],
-     G: [],
-     H: [],
-     I: [L],
-     K: [G, F],
-     L: [],
-    }
+  graph.toString():
+  {
+   A: [B, H, C, E],
+   B: [H],
+   C: [H, G],
+   D: [E, F],
+   E: [G],
+   F: [I],
+   G: [],
+   H: [],
+   I: [L],
+   K: [G, F],
+   L: [],
+  }
 
-    Is Acylic:
-    true
+  Example Directed Graph...
 
-    Strongly connected components:
-    [[H], [B], [G], [C], [E], [A], [L], [I], [F], [D], [K]]
+  graphII.toString():
+  {
+   A: [B, H, C, E],
+   B: [H],
+   C: [H, G],
+   D: [E, F],
+   E: [G],
+   F: [I],
+   G: [],
+   H: [],
+   I: [L],
+   K: [G, F],
+   L: [],
+  }
 
-    ShortestPath(f,l):
-    [F, I, L]
+  Is Acylic:
+  true
 
-    InDegree(C):
-    1
+  Strongly connected components:
+  [[H], [B], [G], [C], [E], [A], [L], [I], [F], [D], [K]]
 
-    OutDegree(C)
-    2
+  ShortestPath(d, l):
+  [F, I, L]
 
-    Vertices sorted in lexicographical order:
-    [A, B, C, D, E, F, G, H, I, K, L]
+  InDegree(C):
+  1
 
-    Vertices sorted in inverse lexicographical order:
-    [L, K, I, H, G, F, E, D, C, B, A]
+  OutDegree(C)
+  2
 
-    InDegreeMap:
-    {A: 0, B: 1, H: 3, C: 1, E: 2, G: 3, D: 0, F: 2, I: 1, L: 1, K: 0}
+  Vertices sorted in lexicographical order:
+  [A, B, C, D, E, F, G, H, I, K, L]
 
-    Sorted Topological Ordering:
-    [A, B, C, D, E, H, K, F, G, I, L]
+  Vertices sorted in inverse lexicographical order:
+  [L, K, I, H, G, F, E, D, C, B, A]
 
-    Topological Ordering:
-    [A, B, C, D, E, H, K, F, I, G, L]
+  InDegreeMap:
+  {A: 0, B: 1, H: 3, C: 1, E: 2, G: 3, D: 0, F: 2, I: 1, L: 1, K: 0}
 
-    Local Sources:
-    [[A, D, K], [B, C, E, F], [G, H, I], [L]]
+  Sorted Topological Ordering:
+  [A, B, C, D, E, H, K, F, G, I, L]
 
-    Cycle:
-    [F, I, K, F]
+  Topological Ordering:
+  [A, B, C, D, E, H, K, F, I, G, L]
 
-    Paths from D to L.
-    [[D, F, I, L]]
+  Local Sources:
+  [[A, D, K], [B, C, E, F], [G, H, I], [L]]
 
-    Paths from D to I.
-    [[D, F, I]]
+  Cycle:
+  [L, L]
 
-    Paths from A to H.
-    [[A, B, H], [A, H], [A, C, H]]
+  Paths from D to L.
+  [[D, F, I, L]]
 
-    Paths from L to L.
-    [[L, L]]
+  Paths from D to I.
+  [[D, F, I]]
 
-    Path from F to F.
-    [F, I, K, F]
+  Paths from A to H.
+  [[A, B, H], [A, H], [A, C, H]]
 
-    Path from A to H.
-    [A, B, H]
+  Paths from L to L.
+  [[L, L]]
+
+  Path from F to F.
+  [F, I, K, F]
+
+  Path from A to H.
+  [A, B, H]
+
   ```
 
 </details>

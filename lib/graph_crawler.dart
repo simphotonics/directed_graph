@@ -1,4 +1,4 @@
-/// Library providing the `GraphCrawler`,
+/// Library providing `GraphCrawler`,
 /// a utility class for finding paths connecting
 /// two vertices.
 library graph_crawler;
@@ -10,7 +10,7 @@ import 'directed_graph.dart';
 
 /// Crawls a graph defined by [edges] and records
 /// the paths from `start` to `target`.
-/// * Directed edges are walked only once.
+/// - Note: Directed edges are walked only once.
 class GraphCrawler<T> {
   GraphCrawler({
     @required this.edges,
@@ -75,9 +75,8 @@ class GraphCrawler<T> {
   ///
   /// * Each directed edge is walked only once.
   /// * The paths returned may include cycles if the graph is cyclic.
-  ///
-  /// The algorithm keeps track of the edges already walked to avoid an
-  /// infinite loop when encountering a cycle.
+  /// * The algorithm keeps track of the edges already walked to avoid an
+  ///    infinite loop when encountering a cycle.
   List<List<Vertex<T>>> paths(Vertex<T> start, Vertex<T> target) {
     final _visited = <int, HashSet<int>>{};
     final _pathList = <List<Vertex<T>>>[];

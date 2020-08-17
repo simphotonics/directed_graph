@@ -47,7 +47,7 @@ void main() {
     comparator: comparator,
   );
 
-  // Construction a graph from data.
+  // Constructing a graph from data.
   // Note: Each object is converted to a vertex.
   var graphII = DirectedGraph<String>.fromData({
     'A': ['B', 'H', 'C', 'E'],
