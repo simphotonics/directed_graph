@@ -64,11 +64,10 @@ void main() {
   final magentaPen = AnsiPen()..magenta(bold: true);
 
   print(magentaPen('Example Directed Graph...'));
-  print(bluePen('\ngraph.toString():'));
+  print(bluePen('graph.toString():'));
   print(graph);
 
-  print(magentaPen('Example Directed Graph...'));
-  print(bluePen('\ngraphII.toString():'));
+    print(bluePen('\ngraphII.toString():'));
   print(graphII);
 
   print(bluePen('\nIs Acylic:'));
