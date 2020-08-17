@@ -112,4 +112,7 @@ void main() {
 
   print(bluePen('\nPath from F to F.'));
   print(crawler.path(f, f));
+
+  print(bluePen('\nPath from A to H.'));
+  print(crawler.path(a, h));
 }
