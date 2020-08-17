@@ -47,7 +47,7 @@ void main() {
   );
 
   group('Basic:', () {
-    test('toString():', () {
+    test('toString().', () {
       expect(
           graph.toString(),
           '{\n'
@@ -64,31 +64,77 @@ void main() {
           ' l: [],\n'
           '}');
     });
-    test('get comparator:', () {
+    test('get comparator', () {
       expect(graph.comparator, comparator);
     });
-    test('set comparator:', () {
+    test('set comparator.', () {
       graph.comparator = inverseComparator;
       expect(graph.comparator, inverseComparator);
       expect(graph.vertices, [l, k, i, h, g, f, e, d, c, b, a]);
       graph.comparator = comparator;
     });
-    test('for loop:', () {
+    test('for loop.', () {
       var index = 0;
       for (var vertex in graph) {
         expect(vertex, graph.vertices[index]);
         ++index;
       }
     });
+    test('.fromData constructor.', () {
+      final graphCopy = DirectedGraph<String>.fromData(
+        {
+          'a': ['b', 'h', 'c', 'e'],
+          'b': ['h'],
+          'c': ['h', 'g'],
+          'd': ['e', 'f'],
+          'e': [],
+          'f': ['i'],
+          'g': [],
+          'h': [],
+          'i': ['l'],
+          'k': ['g', 'f'],
+          'l': [],
+        },
+        comparator: comparator,
+      );
+      expect(
+          graphCopy.toString(),
+          '{\n'
+          ' a: [b, h, c, e],\n'
+          ' b: [h],\n'
+          ' c: [h, g],\n'
+          ' d: [e, f],\n'
+          ' e: [],\n'
+          ' f: [i],\n'
+          ' g: [],\n'
+          ' h: [],\n'
+          ' i: [l],\n'
+          ' k: [g, f],\n'
+          ' l: [],\n'
+          '}');
+    });
   });
-  group('Manipulating edges/vertices:', () {
+  group('Manipulating edges/vertices.', () {
     test('addEdges():', () {
       graph.addEdges(i, [k]);
       expect(graph.edges(i), [l, k]);
+      '{\n'
+          ' a: [b, h, c, e],\n'
+          ' b: [h],\n'
+          ' c: [h, g],\n'
+          ' d: [e, f],\n'
+          ' e: [],\n'
+          ' f: [i],\n'
+          ' g: [],\n'
+          ' h: [],\n'
+          ' i: [l],\n'
+          ' k: [g, f],\n'
+          ' l: [],\n'
+          '}';
       graph.removeEdges(i, [k]);
       expect(graph.edges(i), [l]);
     });
-    test('remove():', () {
+    test('remove().', () {
       graph.remove(l);
       expect(graph.edges(i), []);
       expect(graph.vertices.contains(l), false);
@@ -99,35 +145,35 @@ void main() {
     });
   });
   group('Graph data:', () {
-    test('edges():', () {
+    test('edges().', () {
       expect(graph.edges(a), [b, h, c, e]);
     });
-    test('indegree():', () {
+    test('indegree().', () {
       expect(graph.inDegree(h), 3);
     });
-    test('indegree vertex with self-loop:', () {
+    test('indegree vertex with self-loop.', () {
       graph.addEdges(l, [l]);
       expect(graph.inDegree(l), 2);
       graph.removeEdges(l, [l]);
       expect(graph.inDegree(l), 1);
     });
-    test('outDegree():', () {
+    test('outDegree().', () {
       expect(graph.outDegree(d), 2);
     });
-    test('outDegreeMap():', () {
+    test('outDegreeMap().', () {
       expect(graph.outDegreeMap,
           {a: 4, b: 1, c: 2, d: 2, e: 0, f: 1, g: 0, h: 0, i: 1, k: 2, l: 0});
     });
-    test('inDegreeMap:', () {
+    test('inDegreeMap.', () {
       expect(graph.inDegreeMap,
           {a: 0, b: 1, h: 3, c: 1, e: 2, d: 0, f: 2, g: 2, i: 1, l: 1, k: 0});
     });
-    test('vertices():', () {
+    test('vertices().', () {
       expect(graph.vertices, [a, b, c, d, e, f, g, h, i, k, l]);
     });
   });
   group('Topological ordering:', () {
-    test('stronglyConnectedComponents():', () {
+    test('stronglyConnectedComponents().', () {
       expect(graph.stronglyConnectedComponents, [
         [h],
         [b],
@@ -142,11 +188,11 @@ void main() {
         [k]
       ]);
     });
-    test('shortestPath():', () {
+    test('shortestPath().', () {
       expect(graph.shortestPath(d, l), [f, i, l]);
     });
 
-    test('isAcyclic(): self-loop', () {
+    test('isAcyclic(): self-loop.', () {
       graph.addEdges(l, [l]);
       expect(
         graph.isAcyclic,
@@ -178,7 +224,7 @@ void main() {
     test('topologicalOrdering(): empty graph', () {
       expect(DirectedGraph<int>({}).topologicalOrdering, []);
     });
-    test('localSources():', () {
+    test('localSources().', () {
       expect(graph.localSources, [
         [a, d, k],
         [b, c, e, f],
