@@ -32,6 +32,7 @@ void main() {
   int inverseComparator(Vertex<String> vertex1, Vertex<String> vertex2) =>
       -comparator(vertex1, vertex2);
 
+  // Constructing a graph from vertices.
   var graph = DirectedGraph<String>(
     {
       a: [b, h, c, e],
@@ -46,12 +47,29 @@ void main() {
     comparator: comparator,
   );
 
+  // Construction a graph from data.
+  // Note: Each object is converted to a vertex.
+  var graphII = DirectedGraph<String>.fromData({
+    'A': ['B', 'H', 'C', 'E'],
+    'B': ['H'],
+    'C': ['H', 'G'],
+    'D': ['E', 'F'],
+    'E': ['G'],
+    'F': ['I'],
+    'I': ['L'],
+    'K': ['G', 'F'],
+  }, comparator: comparator);
+
   final bluePen = AnsiPen()..blue(bold: true);
   final magentaPen = AnsiPen()..magenta(bold: true);
 
   print(magentaPen('Example Directed Graph...'));
   print(bluePen('\ngraph.toString():'));
   print(graph);
+
+  print(magentaPen('Example Directed Graph...'));
+  print(bluePen('\ngraphII.toString():'));
+  print(graphII);
 
   print(bluePen('\nIs Acylic:'));
   print(graph.isAcyclic);
