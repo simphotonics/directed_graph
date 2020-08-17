@@ -1,3 +1,7 @@
+## 0.2.0
+
+Amended `README.md`.
+
 ## 0.1.9
 
 * Moved `GraphCrawler` to a separate file.

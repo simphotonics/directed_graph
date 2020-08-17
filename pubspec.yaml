@@ -4,7 +4,7 @@ description: Directed graph with algorithms enabling topological ordering and
   sorting of vertices. The package provides a graph crawler for finding the
   paths connecting two vertices.
 
-version: 0.1.9
+version: 0.2.0
 
 homepage: https://github.com/simphotonics/directed_graph
 
