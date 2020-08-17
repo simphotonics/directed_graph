@@ -63,6 +63,7 @@ as parameter. If a comparator is specified, vertices are sorted accordingly. For
 ```Dart
 import 'package:directed_graph/directed_graph.dart';
 import 'package:ansicolor/ansicolor.dart';
+import 'package:directed_graph/graph_crawler.dart';
 
 // To run this program navigate to
 // the folder 'directed_graph/example'
@@ -94,6 +95,7 @@ void main() {
   int inverseComparator(Vertex<String> vertex1, Vertex<String> vertex2) =>
       -comparator(vertex1, vertex2);
 
+  // Constructing a graph from vertices.
   var graph = DirectedGraph<String>(
     {
       a: [b, h, c, e],
@@ -108,12 +110,29 @@ void main() {
     comparator: comparator,
   );
 
-  AnsiPen bluePen = AnsiPen()..blue(bold: true);
-  AnsiPen magentaPen = AnsiPen()..magenta(bold: true);
+  // Construction a graph from data.
+  // Note: Each object is converted to a vertex.
+  var graphII = DirectedGraph<String>.fromData({
+    'A': ['B', 'H', 'C', 'E'],
+    'B': ['H'],
+    'C': ['H', 'G'],
+    'D': ['E', 'F'],
+    'E': ['G'],
+    'F': ['I'],
+    'I': ['L'],
+    'K': ['G', 'F'],
+  }, comparator: comparator);
+
+  final bluePen = AnsiPen()..blue(bold: true);
+  final magentaPen = AnsiPen()..magenta(bold: true);
 
   print(magentaPen('Example Directed Graph...'));
   print(bluePen('\ngraph.toString():'));
   print(graph);
+
+  print(magentaPen('Example Directed Graph...'));
+  print(bluePen('\ngraphII.toString():'));
+  print(graphII);
 
   print(bluePen('\nIs Acylic:'));
   print(graph.isAcyclic);
@@ -121,7 +140,7 @@ void main() {
   print(bluePen('\nStrongly connected components:'));
   print(graph.stronglyConnectedComponents);
 
-  print(bluePen('\nShortestPath(d,l):'));
+  print(bluePen('\nShortestPath(d, l):'));
   print(graph.shortestPath(d, l));
 
   print(bluePen('\nInDegree(C):'));
@@ -152,6 +171,7 @@ void main() {
 
   // Add edge to render the graph cyclic
   graph.addEdges(i, [k]);
+  graph.addEdges(l, [l]);
 
   print(bluePen('\nCycle:'));
   print(graph.cycle);
@@ -162,15 +182,28 @@ void main() {
   print(bluePen('\nPaths from D to L.'));
   print(crawler.paths(d, l));
 
+  print(bluePen('\nPaths from D to I.'));
+  print(crawler.paths(d, i));
+
   print(bluePen('\nPaths from A to H.'));
   print(crawler.paths(a, h));
+
+  print(bluePen('\nPaths from L to L.'));
+  print(crawler.paths(l, l));
+
+  print(bluePen('\nPath from F to F.'));
+  print(crawler.path(f, f));
+
+  print(bluePen('\nPath from A to H.'));
+  print(crawler.path(a, h));
 }
+
 ```
 
 <details> <summary> Click to show the console output. </summary>
 
   ```Console
-  # dart example/bin/example.dart
+    # dart example/bin/example.dart
     Example Directed Graph...
 
     graph.toString():
@@ -227,8 +260,20 @@ void main() {
     Paths from D to L.
     [[D, F, I, L]]
 
+    Paths from D to I.
+    [[D, F, I]]
+
     Paths from A to H.
     [[A, B, H], [A, H], [A, C, H]]
+
+    Paths from L to L.
+    [[L, L]]
+
+    Path from F to F.
+    [F, I, K, F]
+
+    Path from A to H.
+    [A, B, H]
   ```
 
 </details>
