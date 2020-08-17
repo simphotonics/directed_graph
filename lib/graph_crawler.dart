@@ -1,3 +1,6 @@
+/// Library providing the `GraphCrawler`,
+/// a utility class for finding paths connecting
+/// two vertices.
 library graph_crawler;
 
 import 'dart:collection';
