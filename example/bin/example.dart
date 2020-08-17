@@ -1,5 +1,6 @@
 import 'package:directed_graph/directed_graph.dart';
 import 'package:ansicolor/ansicolor.dart';
+import 'package:directed_graph/graph_crawler.dart';
 
 // To run this program navigate to
 // the folder 'directed_graph/example'
@@ -89,6 +90,7 @@ void main() {
 
   // Add edge to render the graph cyclic
   graph.addEdges(i, [k]);
+  graph.addEdges(l, [l]);
 
   print(bluePen('\nCycle:'));
   print(graph.cycle);
@@ -99,6 +101,15 @@ void main() {
   print(bluePen('\nPaths from D to L.'));
   print(crawler.paths(d, l));
 
+  print(bluePen('\nPaths from D to I.'));
+  print(crawler.paths(d, i));
+
   print(bluePen('\nPaths from A to H.'));
   print(crawler.paths(a, h));
+
+  print(bluePen('\nPaths from L to L.'));
+  print(crawler.paths(l, l));
+
+  print(bluePen('\nPath from F to F.'));
+  print(crawler.path(f, f));
 }
