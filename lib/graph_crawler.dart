@@ -21,17 +21,23 @@ class GraphCrawler<T> {
   List<Vertex<T>> path(Vertex<T> start, Vertex<T> target) {
     final _visited = <int, HashSet<int>>{};
     final _queue = Queue<Vertex<T>>();
-    final result = <Vertex<T>>[];
+    var path = <Vertex<T>>[];
+    var pathFound = false;
 
     /// Recursive function that crawls the graph defined by
     /// `edges` and records the first path from [start] to [target].
     void _crawl(Vertex<T> start, Vertex<T> target) {
-      /// Tab of visited edges.
+      // Return if a path has already been found.
+      if (pathFound) {
+        print('returning early');
+        return;
+      }
       _queue.addLast(start);
       for (final vertex in edges(start)) {
         if (vertex == target) {
           // Store result.
-          result.addAll(_queue);
+          path = List<Vertex<T>>.from(_queue);
+          pathFound = true;
           return;
         } else {
           if (_visited[start.id] == null) {
@@ -55,10 +61,10 @@ class GraphCrawler<T> {
 
     _crawl(start, target);
 
-    if (result.isEmpty) {
-      return result;
+    if (path.isEmpty) {
+      return path;
     } else {
-      return result..add(target);
+      return path..add(target);
     }
   }
 
