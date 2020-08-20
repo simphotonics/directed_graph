@@ -34,15 +34,15 @@ class DirectedGraphBenchmark extends BenchmarkBase {
   /// Not measured setup code executed prior to the benchmark runs.
   @override
   void setup() {
-    graph = DirectedGraph({
-      a: [b, h, c, e],
-      b: [h],
-      c: [h, g],
-      d: [e, f],
-      e: [g],
-      f: [i],
-      i: [l],
-      k: [g, f],
+    graph = DirectedGraph.fromData({
+      'a': ['b', 'h', 'c', 'e'],
+      'b': ['h'],
+      'c': ['h', 'g'],
+      'd': ['e', 'f'],
+      'e': ['g'],
+      'f': ['i'],
+      'i': ['l'],
+      'k': ['g', 'f'],
     }, comparator: comparator);
   }
 
