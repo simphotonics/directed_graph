@@ -1,0 +1,516 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   id="svg1320"
+   version="1.1"
+   viewBox="0 0 926.49175 369.5"
+   height="370pt"
+   width="927pt">
+  <metadata
+     id="metadata1326">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <defs
+     id="defs1324" />
+  <polygon
+     transform="translate(4,365.5)"
+     stroke="transparent"
+     points="-4,4 -4,-365.5 907.5,-365.5 907.5,4 "
+     id="polygon1119"
+     style="fill:#ffffff" />
+  <g
+     transform="translate(4,365.5)"
+     id="clust1"
+     class="cluster">
+    <title
+       id="title1121">cluster~</title>
+    <path
+       d="m 20,-8 c 0,0 750,0 750,0 6,0 12,-6 12,-12 0,0 0,-321.5 0,-321.5 0,-6 -6,-12 -12,-12 0,0 -750,0 -750,0 -6,0 -12,6 -12,12 0,0 0,321.5 0,321.5 0,6 6,12 12,12"
+       id="path1123"
+       style="fill:none;stroke:#000000" />
+    <text
+       x="395"
+       y="-338.29999"
+       font-size="14.00"
+       id="text1125"
+       style="font-size:14px;font-family:Times, serif;text-anchor:middle;fill:#000000">directed_graph</text>
+  </g>
+  <g
+     transform="translate(4,365.5)"
+     id="clust2"
+     class="cluster">
+    <title
+       id="title1128">cluster~/benchmark</title>
+    <path
+       d="m 654,-208.5 c 0,0 108,0 108,0 6,0 12,-6 12,-12 0,0 0,-90 0,-90 0,-6 -6,-12 -12,-12 0,0 -108,0 -108,0 -6,0 -12,6 -12,12 0,0 0,90 0,90 0,6 6,12 12,12"
+       id="path1130"
+       style="fill:none;stroke:#000000" />
+    <text
+       x="708"
+       y="-307.29999"
+       font-size="14.00"
+       id="text1132"
+       style="font-size:14px;font-family:Times, serif;text-anchor:middle;fill:#000000">benchmark</text>
+  </g>
+  <g
+     transform="translate(4,365.5)"
+     id="clust3"
+     class="cluster">
+    <title
+       id="title1135">cluster~/benchmark/bin</title>
+    <path
+       d="m 662,-216.5 c 0,0 92,0 92,0 6,0 12,-6 12,-12 0,0 0,-51 0,-51 0,-6 -6,-12 -12,-12 0,0 -92,0 -92,0 -6,0 -12,6 -12,12 0,0 0,51 0,51 0,6 6,12 12,12"
+       id="path1137"
+       style="fill:none;stroke:#000000" />
+    <text
+       x="708"
+       y="-276.29999"
+       font-size="14.00"
+       id="text1139"
+       style="font-size:14px;font-family:Times, serif;text-anchor:middle;fill:#000000">bin</text>
+  </g>
+  <g
+     transform="translate(4,365.5)"
+     id="clust4"
+     class="cluster">
+    <title
+       id="title1142">cluster~/test</title>
+    <path
+       d="m 296,-216.5 c 0,0 326,0 326,0 6,0 12,-6 12,-12 0,0 0,-51 0,-51 0,-6 -6,-12 -12,-12 0,0 -326,0 -326,0 -6,0 -12,6 -12,12 0,0 0,51 0,51 0,6 6,12 12,12"
+       id="path1144"
+       style="fill:none;stroke:#000000" />
+    <text
+       x="459"
+       y="-276.29999"
+       font-size="14.00"
+       id="text1146"
+       style="font-size:14px;font-family:Times, serif;text-anchor:middle;fill:#000000">test</text>
+  </g>
+  <g
+     transform="translate(4,365.5)"
+     id="clust5"
+     class="cluster">
+    <title
+       id="title1149">cluster~/example</title>
+    <path
+       d="m 28,-208.5 c 0,0 236,0 236,0 6,0 12,-6 12,-12 0,0 0,-90 0,-90 0,-6 -6,-12 -12,-12 0,0 -236,0 -236,0 -6,0 -12,6 -12,12 0,0 0,90 0,90 0,6 6,12 12,12"
+       id="path1151"
+       style="fill:none;stroke:#000000" />
+    <text
+       x="146"
+       y="-307.29999"
+       font-size="14.00"
+       id="text1153"
+       style="font-size:14px;font-family:Times, serif;text-anchor:middle;fill:#000000">example</text>
+  </g>
+  <g
+     transform="translate(4,365.5)"
+     id="clust6"
+     class="cluster">
+    <title
+       id="title1156">cluster~/example/bin</title>
+    <path
+       d="m 36,-216.5 c 0,0 220,0 220,0 6,0 12,-6 12,-12 0,0 0,-51 0,-51 0,-6 -6,-12 -12,-12 0,0 -220,0 -220,0 -6,0 -12,6 -12,12 0,0 0,51 0,51 0,6 6,12 12,12"
+       id="path1158"
+       style="fill:none;stroke:#000000" />
+    <text
+       x="146"
+       y="-276.29999"
+       font-size="14.00"
+       id="text1160"
+       style="font-size:14px;font-family:Times, serif;text-anchor:middle;fill:#000000">bin</text>
+  </g>
+  <g
+     transform="translate(4,365.5)"
+     id="clust7"
+     class="cluster">
+    <title
+       id="title1163">cluster~/lib</title>
+    <path
+       d="m 312,-16 c 0,0 120,0 120,0 6,0 12,-6 12,-12 0,0 0,-123 0,-123 0,-6 -6,-12 -12,-12 0,0 -120,0 -120,0 -6,0 -12,6 -12,12 0,0 0,123 0,123 0,6 6,12 12,12"
+       id="path1165"
+       style="fill:none;stroke:#000000" />
+    <text
+       x="372"
+       y="-147.8"
+       font-size="14.00"
+       id="text1167"
+       style="font-size:14px;font-family:Times, serif;text-anchor:middle;fill:#000000">lib</text>
+  </g>
+  <g
+     transform="translate(4,365.5)"
+     id="node1"
+     class="node">
+    <title
+       id="title1170">/benchmark/bin/benchmark.dart</title>
+    <ellipse
+       cx="708"
+       cy="-242.5"
+       rx="50.091202"
+       ry="18"
+       id="ellipse1172"
+       style="fill:none;stroke:#000000" />
+    <text
+       x="708"
+       y="-238.8"
+       font-size="14.00"
+       id="text1174"
+       style="font-size:14px;font-family:Times, serif;text-anchor:middle;fill:#000000">benchmark</text>
+  </g>
+  <g
+     transform="translate(4,365.5)"
+     id="node6"
+     class="node">
+    <title
+       id="title1177">/lib/directed_graph.dart</title>
+    <ellipse
+       cx="372"
+       cy="-114"
+       rx="63.889301"
+       ry="18"
+       id="ellipse1179"
+       style="fill:none;stroke:#000000" />
+    <text
+       x="372"
+       y="-110.3"
+       font-size="14.00"
+       id="text1181"
+       style="font-size:14px;font-family:Times, serif;text-anchor:middle;fill:#000000">directed_graph</text>
+  </g>
+  <g
+     transform="translate(4,365.5)"
+     id="edge1"
+     class="edge">
+    <title
+       id="title1184">/benchmark/bin/benchmark.dart-&gt;/lib/directed_graph.dart</title>
+    <path
+       d="M 695.6485,-224.9109 C 683.0704,-208.376 662.0405,-184.2443 638,-171 c -8.9694,4.9414 -127.9103,29.3563 -203.6744,44.5861"
+       id="path1186"
+       style="fill:none;stroke:#000000" />
+    <polygon
+       points="433.5113,-129.8203 434.8889,-122.9572 424.3957,-124.4207 "
+       id="polygon1188"
+       style="fill:#000000;stroke:#000000" />
+  </g>
+  <g
+     transform="translate(4,365.5)"
+     id="node7"
+     class="node">
+    <title
+       id="title1191">/lib/graph_crawler.dart</title>
+    <ellipse
+       cx="372"
+       cy="-42"
+       rx="61.990002"
+       ry="18"
+       id="ellipse1193"
+       style="fill:none;stroke:#000000" />
+    <text
+       x="372"
+       y="-38.299999"
+       font-size="14.00"
+       id="text1195"
+       style="font-size:14px;font-family:Times, serif;text-anchor:middle;fill:#000000">graph_crawler</text>
+  </g>
+  <g
+     transform="translate(4,365.5)"
+     id="edge2"
+     class="edge">
+    <title
+       id="title1198">/benchmark/bin/benchmark.dart-&gt;/lib/graph_crawler.dart</title>
+    <path
+       d="M 693.8591,-224.9348 C 680.6351,-209.3263 659.7145,-186.6261 638,-171 568.4397,-120.9431 476.4575,-81.3053 420.8951,-59.7904"
+       id="path1200"
+       style="fill:none;stroke:#000000" />
+    <polygon
+       points="419.3801,-62.9581 421.884,-56.4212 411.2936,-56.1127 "
+       id="polygon1202"
+       style="fill:#000000;stroke:#000000" />
+  </g>
+  <g
+     transform="translate(4,365.5)"
+     id="node2"
+     class="node">
+    <title
+       id="title1205">/test/graph_crawler_test.dart</title>
+    <ellipse
+       cx="548"
+       cy="-242.5"
+       rx="77.986198"
+       ry="18"
+       id="ellipse1207"
+       style="fill:none;stroke:#000000" />
+    <text
+       x="548"
+       y="-238.8"
+       font-size="14.00"
+       id="text1209"
+       style="font-size:14px;font-family:Times, serif;text-anchor:middle;fill:#000000">graph_crawler_test</text>
+  </g>
+  <g
+     transform="translate(4,365.5)"
+     id="edge3"
+     class="edge">
+    <title
+       id="title1212">/test/graph_crawler_test.dart-&gt;/lib/directed_graph.dart</title>
+    <path
+       d="M 528.1479,-225.0449 C 510.8539,-210.1191 484.8753,-188.3631 461,-171 c -16.9031,12.2926 -36.3842,24.9308 -52.8028,35.1734"
+       id="path1214"
+       style="fill:none;stroke:#000000" />
+    <polygon
+       points="406.0891,-138.6381 409.7722,-132.6853 399.4267,-130.4001 "
+       id="polygon1216"
+       style="fill:#000000;stroke:#000000" />
+  </g>
+  <g
+     transform="translate(4,365.5)"
+     id="edge4"
+     class="edge">
+    <title
+       id="title1219">/test/graph_crawler_test.dart-&gt;/lib/graph_crawler.dart</title>
+    <path
+       d="M 537.898,-224.4423 C 521.0764,-195.3374 485.1785,-137.159 445,-96 c -11.3628,11.6401 -25.4258,22.6699 -38.1661,31.6903"
+       id="path1221"
+       style="fill:none;stroke:#000000" />
+    <polygon
+       points="404.5171,-66.9635 408.4929,-61.2021 398.2744,-58.4031 "
+       id="polygon1223"
+       style="fill:#000000;stroke:#000000" />
+  </g>
+  <g
+     transform="translate(4,365.5)"
+     id="node3"
+     class="node">
+    <title
+       id="title1226">/test/directed_graph_test.dart</title>
+    <ellipse
+       cx="372"
+       cy="-242.5"
+       rx="79.885902"
+       ry="18"
+       id="ellipse1228"
+       style="fill:none;stroke:#000000" />
+    <text
+       x="372"
+       y="-238.8"
+       font-size="14.00"
+       id="text1230"
+       style="font-size:14px;font-family:Times, serif;text-anchor:middle;fill:#000000">directed_graph_test</text>
+  </g>
+  <g
+     transform="translate(4,365.5)"
+     id="edge5"
+     class="edge">
+    <title
+       id="title1233">/test/directed_graph_test.dart-&gt;/lib/directed_graph.dart</title>
+    <path
+       d="m 372,-224.3616 c 0,21.3334 0,57.0021 0,81.9999"
+       id="path1235"
+       style="fill:none;stroke:#000000" />
+    <polygon
+       points="368.5001,-142.0461 375.5001,-142.0461 372,-132.0461 "
+       id="polygon1237"
+       style="fill:#000000;stroke:#000000" />
+  </g>
+  <g
+     transform="translate(4,365.5)"
+     id="node4"
+     class="node">
+    <title
+       id="title1240">/example/bin/example_cycle.dart</title>
+    <ellipse
+       cx="96"
+       cy="-242.5"
+       rx="63.889301"
+       ry="18"
+       id="ellipse1242"
+       style="fill:none;stroke:#000000" />
+    <text
+       x="96"
+       y="-238.8"
+       font-size="14.00"
+       id="text1244"
+       style="font-size:14px;font-family:Times, serif;text-anchor:middle;fill:#000000">example_cycle</text>
+  </g>
+  <g
+     transform="translate(4,365.5)"
+     id="edge6"
+     class="edge">
+    <title
+       id="title1247">/example/bin/example_cycle.dart-&gt;/lib/directed_graph.dart</title>
+    <path
+       d="m 109.7483,-224.6361 c 13.4285,16.2605 35.2958,39.7802 59.2517,53.6361 41.8615,24.2123 94.5775,38.6146 135.7974,46.8838"
+       id="path1249"
+       style="fill:none;stroke:#000000" />
+    <polygon
+       points="304.264,-120.6546 305.5921,-127.5274 314.7464,-122.1937 "
+       id="polygon1251"
+       style="fill:#000000;stroke:#000000" />
+  </g>
+  <g
+     transform="translate(4,365.5)"
+     id="edge7"
+     class="edge">
+    <title
+       id="title1254">/example/bin/example_cycle.dart-&gt;/lib/graph_crawler.dart</title>
+    <path
+       d="M 113.5372,-224.9918 C 128.223,-210.4106 149.803,-189.1703 169,-171 c 35.8695,33.9512 40.6957,47.9211 82,75 22.3043,14.6226 49.2234,27.0761 72.0028,36.326"
+       id="path1256"
+       style="fill:none;stroke:#000000" />
+    <polygon
+       points="321.9006,-56.3459 324.4836,-62.8519 332.4865,-55.9089 "
+       id="polygon1258"
+       style="fill:#000000;stroke:#000000" />
+  </g>
+  <g
+     transform="translate(4,365.5)"
+     id="node5"
+     class="node">
+    <title
+       id="title1261">/example/bin/example.dart</title>
+    <ellipse
+       cx="219"
+       cy="-242.5"
+       rx="40.892799"
+       ry="18"
+       id="ellipse1263"
+       style="fill:none;stroke:#000000" />
+    <text
+       x="219"
+       y="-238.8"
+       font-size="14.00"
+       id="text1265"
+       style="font-size:14px;font-family:Times, serif;text-anchor:middle;fill:#000000">example</text>
+  </g>
+  <g
+     transform="translate(4,365.5)"
+     id="edge8"
+     class="edge">
+    <title
+       id="title1268">/example/bin/example.dart-&gt;/lib/directed_graph.dart</title>
+    <path
+       d="m 231.2559,-225.2897 c 11.4787,15.3696 29.6811,37.9184 48.7441,54.2897 15.8757,13.634 35.3511,26.1936 52.2891,36.033"
+       id="path1270"
+       style="fill:none;stroke:#000000" />
+    <polygon
+       points="330.9754,-131.6879 334.4335,-137.7742 341.3991,-129.791 "
+       id="polygon1272"
+       style="fill:#000000;stroke:#000000" />
+  </g>
+  <g
+     transform="translate(4,365.5)"
+     id="edge9"
+     class="edge">
+    <title
+       id="title1275">/example/bin/example.dart-&gt;/lib/graph_crawler.dart</title>
+    <path
+       d="m 225.7296,-224.7441 c 11.6717,29.1858 37.856,88.1096 73.2704,128.7441 10.5193,12.0699 24.1817,23.0621 36.8377,31.932"
+       id="path1277"
+       style="fill:none;stroke:#000000" />
+    <polygon
+       points="334.1448,-60.9875 338.0693,-66.7839 344.3877,-58.2793 "
+       id="polygon1279"
+       style="fill:#000000;stroke:#000000" />
+  </g>
+  <g
+     transform="translate(4,365.5)"
+     id="edge10"
+     class="edge">
+    <title
+       id="title1282">/lib/directed_graph.dart-&gt;/lib/graph_crawler.dart</title>
+    <path
+       d="m 366.0476,-95.8314 c -0.7504,7.7004 -0.9713,16.8571 -0.6627,25.4148"
+       id="path1284"
+       style="fill:none;stroke:#000000" />
+    <polygon
+       points="361.8935,-70.1697 368.8792,-70.6161 366.024,-60.4133 "
+       id="polygon1286"
+       style="fill:#000000;stroke:#000000" />
+  </g>
+  <g
+     transform="translate(4,365.5)"
+     id="edge11"
+     class="edge">
+    <title
+       id="title1289">/lib/graph_crawler.dart-&gt;/lib/directed_graph.dart</title>
+    <path
+       d="m 377.976,-60.4133 c 0.7311,-7.646 0.9443,-16.6951 0.6395,-25.1593"
+       id="path1291"
+       style="fill:none;stroke:#000000" />
+    <polygon
+       points="382.0902,-86.078 375.1048,-85.6264 377.9524,-95.8314 "
+       id="polygon1293"
+       style="fill:#000000;stroke:#000000" />
+  </g>
+  <polygon
+     transform="matrix(1.1184648,0,0,1.0861562,-89.646375,386.39287)"
+     style="fill:none;stroke:#000000;stroke-width:0.90728289"
+     id="polygon1298"
+     points="790.5,-171 903.5,-171 903.5,-314 790.5,-314 " />
+  <text
+     style="font-size:14px;font-family:Times, serif;text-anchor:start;fill:#000000"
+     id="text1300"
+     font-size="14.00"
+     y="66.700012"
+     x="802.5">isAcyclic: false</text>
+  <text
+     style="font-size:14px;font-family:Times, serif;text-anchor:start;fill:#000000"
+     id="text1302"
+     font-size="14.00"
+     y="81.700012"
+     x="802.5">numNodes: 7</text>
+  <text
+     style="font-size:14px;font-family:Times, serif;text-anchor:start;fill:#000000"
+     id="text1304"
+     font-size="14.00"
+     y="96.700012"
+     x="802.5">numOrphans: 0</text>
+  <text
+     style="font-size:14px;font-family:Times, serif;text-anchor:start;fill:#000000"
+     id="text1306"
+     font-size="14.00"
+     y="111.7"
+     x="802.5">ccd: 19</text>
+  <text
+     style="font-size:14px;font-family:Times, serif;text-anchor:start;fill:#000000"
+     id="text1308"
+     font-size="14.00"
+     y="126.7"
+     x="802.5">acd: 2.71</text>
+  <text
+     style="font-size:14px;font-family:Times, serif;text-anchor:start;fill:#000000"
+     id="text1310"
+     font-size="14.00"
+     y="141.7"
+     x="802.5">acdp: 38.78%</text>
+  <text
+     style="font-size:14px;font-family:Times, serif;text-anchor:start;fill:#000000"
+     id="text1312"
+     font-size="14.00"
+     y="156.7"
+     x="802.5">nccd: 1.12</text>
+  <text
+     style="font-size:14px;font-family:Times, serif;text-anchor:start;fill:#000000"
+     id="text1314"
+     font-size="14.00"
+     y="171.7"
+     x="802.5">totalSloc: 1105</text>
+  <text
+     style="font-size:14px;font-family:Times, serif;text-anchor:start;fill:#000000"
+     id="text1316"
+     font-size="14.00"
+     y="186.7"
+     x="802.5">avgSloc: 157.86</text>
+</svg>

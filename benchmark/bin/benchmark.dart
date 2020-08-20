@@ -1,50 +1,55 @@
 import 'package:ansicolor/ansicolor.dart';
 import 'package:benchmark_harness/benchmark_harness.dart';
 import 'package:directed_graph/directed_graph.dart';
-import 'package:directed_graph/graph_crawler.dart';
 
 AnsiPen magenta = AnsiPen()..magenta(bold: true);
 AnsiPen green = AnsiPen()..green(bold: true);
 AnsiPen blue = AnsiPen()..blue(bold: true);
 
 int comparator(
-  Vertex<String> vertex1,
-  Vertex<String> vertex2,
+  String s1,
+  String s2,
 ) {
-  return vertex1.data.compareTo(vertex2.data);
+  return s1.compareTo(s2);
 }
 
 /// Directed graph benchmark graph setup.
 class DirectedGraphBenchmark extends BenchmarkBase {
-  DirectedGraphBenchmark(String name) : super(name);
+  DirectedGraphBenchmark(String name)
+      : graph = DirectedGraph({
+          'a': ['b', 'h', 'c', 'e'],
+          'b': ['h'],
+          'c': ['h', 'g'],
+          'd': ['e', 'f'],
+          'e': ['g'],
+          'f': ['i'],
+          'i': ['l'],
+          'k': ['g', 'f'],
+          'a1': ['b', 'h', 'c', 'e'],
+          'b1': ['h'],
+          'c1': ['h', 'g'],
+          'd1': ['e', 'f'],
+          'e1': ['g'],
+          'f1': ['i'],
+          'i1': ['l'],
+          'k1': ['g', 'f'],
+          'a12': ['b', 'h', 'c', 'e'],
+          'b12': ['h'],
+          'c12': ['h', 'g'],
+          'd12': ['e', 'f'],
+          'e12': ['g'],
+          'f12': ['i'],
+          'i12': ['l'],
+          'k12': ['g', 'f'],
+
+        }, comparator: comparator),
+        super(name);
 
   DirectedGraph<String> graph;
-  var a = Vertex<String>('A');
-  var b = Vertex<String>('B');
-  var c = Vertex<String>('C');
-  var d = Vertex<String>('D');
-  var e = Vertex<String>('E');
-  var f = Vertex<String>('F');
-  var g = Vertex<String>('G');
-  var h = Vertex<String>('H');
-  var i = Vertex<String>('I');
-  var k = Vertex<String>('K');
-  var l = Vertex<String>('L');
 
   /// Not measured setup code executed prior to the benchmark runs.
   @override
-  void setup() {
-    graph = DirectedGraph({
-      a: [b, h, c, e],
-      b: [h],
-      c: [h, g],
-      d: [e, f],
-      e: [g],
-      f: [i],
-      i: [l],
-      k: [g, f],
-    }, comparator: comparator);
-  }
+  void setup() {}
 
   /// Not measured teardown code executed after the benchmark runs.
   @override
@@ -57,7 +62,7 @@ class DirectedGraphBenchmark extends BenchmarkBase {
 class TopologicalOrderKahn extends DirectedGraphBenchmark {
   TopologicalOrderKahn(String name) : super(name);
 
-  List<Vertex<String>> topologicalOrdering = [];
+  List<String>? topologicalOrdering = [];
 
   /// The benchmark code.
   @override
@@ -76,12 +81,12 @@ class TopologicalOrderKahn extends DirectedGraphBenchmark {
 class TopologicalOrderDFS extends DirectedGraphBenchmark {
   TopologicalOrderDFS(String name) : super(name);
 
-  List<Vertex<String>> topologicalOrdering = [];
+  List<String>? topologicalOrdering = [];
 
   /// The benchmark code.
   @override
   void run() {
-    topologicalOrdering = graph.topologicalOrdering;
+    topologicalOrdering = graph.topologicalOrderingII;
   }
 
   /// Not measured teardown code executed after the benchmark runs.
@@ -92,29 +97,29 @@ class TopologicalOrderDFS extends DirectedGraphBenchmark {
   }
 }
 
-class StronglyConnectedComponents extends DirectedGraphBenchmark {
-  StronglyConnectedComponents(String name) : super(name);
+// class StronglyConnectedComponents extends DirectedGraphBenchmark {
+//   StronglyConnectedComponents(String name) : super(name);
 
-  List<List<Vertex<String>>> stronglyConnectedComponents;
+//   List<List<String>> stronglyConnectedComponents;
 
-  /// The benchmark code.
-  @override
-  void run() {
-    stronglyConnectedComponents = graph.stronglyConnectedComponents;
-  }
+//   /// The benchmark code.
+//   @override
+//   void run() {
+//     stronglyConnectedComponents = graph.stronglyConnectedComponents;
+//   }
 
-  /// Not measured teardown code executed after the benchmark runs.
-  @override
-  void teardown() {
-    print(magenta('\nStrongly Connected Components Tarjan ... '));
-    print(green(stronglyConnectedComponents.toString()));
-  }
-}
+//   /// Not measured teardown code executed after the benchmark runs.
+//   @override
+//   void teardown() {
+//     print(magenta('\nStrongly Connected Components Tarjan ... '));
+//     print(green(stronglyConnectedComponents.toString()));
+//   }
+// }
 
 class LocalSources extends DirectedGraphBenchmark {
   LocalSources(String name) : super(name);
 
-  List<List<Vertex<String>>> localSources;
+  List<List<String>>? localSources;
 
   /// The benchmark code.
   @override
@@ -136,10 +141,10 @@ class GraphManipulation extends DirectedGraphBenchmark {
   /// The benchmark code.
   @override
   void run() {
-    graph.remove(super.h);
-    graph.addEdges(a, [h]);
-    graph.addEdges(b, [h]);
-    graph.addEdges(c, [h]);
+    graph.remove('h');
+    graph.addEdges('a', ['h']);
+    graph.addEdges('b', ['h']);
+    graph.addEdges('c', ['h']);
   }
 
   /// Not measured teardown code executed after the benchmark runs.
@@ -150,46 +155,43 @@ class GraphManipulation extends DirectedGraphBenchmark {
   }
 }
 
-class ShortestPath extends DirectedGraphBenchmark {
-  ShortestPath(String name) : super(name);
+// class ShortestPath extends DirectedGraphBenchmark {
+//   ShortestPath(String name) : super(name);
 
-  /// The benchmark code.
-  @override
-  void run() {
-    graph.shortestPath(d, l);
-  }
+//   /// The benchmark code.
+//   @override
+//   void run() {
+//     graph.shortestPath('d', 'l');
+//   }
 
-  /// Not measured teardown code executed after the benchmark runs.
-  @override
-  void teardown() {
-    print(magenta('\nShortest Path (graphs) ... '));
-    print(green(graph.shortestPath(d, l).toString()));
-  }
-}
+//   /// Not measured teardown code executed after the benchmark runs.
+//   @override
+//   void teardown() {
+//     print(magenta('\nShortest Path (graphs) ... '));
+//     print(green(graph.shortestPath('d', 'l').toString()));
+//   }
+// }
 
-class CrawlerTest extends DirectedGraphBenchmark {
-  CrawlerTest(String name) : super(name);
-
-  GraphCrawler<String> crawler;
+class PathsTest extends DirectedGraphBenchmark {
+  PathsTest(String name) : super(name);
 
   @override
   void setup() {
     super.setup();
-    crawler = GraphCrawler<String>(edges: graph.edges);
   }
 
-  List<List<Vertex<String>>> paths;
+  List<List<String>>? paths;
 
   /// The benchmark code.
   @override
   void run() {
-    paths = crawler.paths(d, l);
+    paths = graph.paths('d', 'l');
   }
 
   /// Not measured teardown code executed after the benchmark runs.
   @override
   void teardown() {
-    print(magenta('\nCrawler.paths($d, $l) ... '));
+    print(magenta('\ngraph.paths(d, l) ... '));
     print(green(paths.toString()));
   }
 }
@@ -197,15 +199,12 @@ class CrawlerTest extends DirectedGraphBenchmark {
 class GraphCycle extends DirectedGraphBenchmark {
   GraphCycle(String name) : super(name);
 
-  GraphCrawler<String> crawler;
-
-  List<Vertex<String>> paths;
+  List<String>? paths;
 
   @override
   void setup() {
     super.setup();
-    graph.addEdges(i, [k]);
-    crawler = GraphCrawler<String>(edges: graph.edges);
+    graph.addEdges('i', ['k']);
   }
 
   /// The benchmark code.
@@ -219,19 +218,19 @@ class GraphCycle extends DirectedGraphBenchmark {
   void teardown() {
     print(magenta('\ngraph.cycle ... '));
     print(green(paths.toString()));
-    graph.removeEdges(i, [k]);
+    graph.removeEdges('i', ['k']);
   }
 }
 
 class GraphFindCycle extends DirectedGraphBenchmark {
   GraphFindCycle(String name) : super(name);
 
-  List<Vertex<String>> paths;
+  List<String>? paths;
 
   @override
   void setup() {
     super.setup();
-    graph.addEdges(i, [k]);
+    graph.addEdges('i', ['k']);
   }
 
   /// The benchmark code.
@@ -245,7 +244,7 @@ class GraphFindCycle extends DirectedGraphBenchmark {
   void teardown() {
     print(magenta('\ngraph.findCycle() ... '));
     print(green(paths.toString()));
-    graph.removeEdges(i, [k]);
+    graph.removeEdges('i', ['k']);
   }
 }
 
@@ -253,22 +252,22 @@ void main() {
   var inDegreeBenchmark = DirectedGraphBenchmark('InDegreeMap:');
   var topDFSBenchmark = TopologicalOrderDFS('Topological Ordering DFS:');
   var topKahnBenchmark = TopologicalOrderKahn('Topological Ordering Kahn');
-  var sccBenchmark =
-      StronglyConnectedComponents('Strongly Connected Componets Tarjan:');
+  // var sccBenchmark =
+  //     StronglyConnectedComponents('Strongly Connected Componets Tarjan:');
   var localSourcesBenchmark = LocalSources('Local Sources:');
   var graphManipulation = GraphManipulation('Removing/Adding Vertices');
-  var shortestPath = ShortestPath('ShortestPath');
-  var crawlerTest = CrawlerTest('CrawlerTest');
+  // var shortestPath = ShortestPath('ShortestPath');
+  var crawlerTest = PathsTest('PathsTest');
   var graphCycle = GraphCycle('GraphCycle');
   var graphFindCycle = GraphFindCycle('GraphFindCycle');
 
   inDegreeBenchmark.report();
   topDFSBenchmark.report();
   topKahnBenchmark.report();
-  sccBenchmark.report();
+  // sccBenchmark.report();
   localSourcesBenchmark.report();
   graphManipulation.report();
-  shortestPath.report();
+  // shortestPath.report();
   crawlerTest.report();
   graphCycle.report();
   graphFindCycle.report();

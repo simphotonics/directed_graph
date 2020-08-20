@@ -1,0 +1,41 @@
+digraph "" {
+  style=rounded;
+  rankdir=TB;
+  "/benchmark/bin/benchmark.dart" [label="benchmark"];
+  "/example/bin/example_cycle.dart" [label="example_cycle"];
+  "/example/bin/example.dart" [label="example"];
+  "/lib/directed_graph.dart" [label="directed_graph"];
+  "/lib/graph_crawler.dart" [label="graph_crawler"];
+  subgraph "cluster~" {
+    label="directed_graph";
+    subgraph "cluster~/benchmark" {
+      label="benchmark";
+      subgraph "cluster~/benchmark/bin" {
+        label="bin";
+        "/benchmark/bin/benchmark.dart";
+      }
+    }
+    subgraph "cluster~/example" {
+      label="example";
+      subgraph "cluster~/example/bin" {
+        label="bin";
+        "/example/bin/example_cycle.dart";
+        "/example/bin/example.dart";
+      }
+    }
+    subgraph "cluster~/lib" {
+      label="lib";
+      "/lib/directed_graph.dart";
+      "/lib/graph_crawler.dart";
+    }
+  }
+  "/benchmark/bin/benchmark.dart" -> "/lib/directed_graph.dart";
+  "/benchmark/bin/benchmark.dart" -> "/lib/graph_crawler.dart";
+  "/example/bin/example_cycle.dart" -> "/lib/directed_graph.dart";
+  "/example/bin/example_cycle.dart" -> "/lib/graph_crawler.dart";
+  "/example/bin/example.dart" -> "/lib/directed_graph.dart";
+  "/example/bin/example.dart" -> "/lib/graph_crawler.dart";
+  "/lib/directed_graph.dart" -> "/lib/graph_crawler.dart";
+  "/lib/graph_crawler.dart" -> "/lib/directed_graph.dart";
+  "metrics" [label=" isAcyclic: false \l numNodes: 5 \l numOrphans: 0 \l ccd: 13 \l acd: 2.6 \l acdp: 52.0% \l nccd: 1.24 \l totalSloc: 770 \l avgSloc: 154.0 \l", shape=rect];
+}

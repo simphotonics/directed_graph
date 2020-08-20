@@ -1,8 +1,11 @@
 include: package:pedantic/analysis_options.yaml
 analyzer:
+  enable-experiment:
+    - non-nullable
   #exclude: [build/**]
   #strong-mode:
     #implicit-casts: false
+
 
 linter:
   rules:

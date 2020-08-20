@@ -6,259 +6,208 @@
 /// * retrieve a list of vertices in topological order.
 library directed_graph;
 
-import 'dart:collection' show Queue, UnmodifiableListView;
+import 'dart:collection' show HashSet, Queue, SplayTreeMap;
 
-import 'package:graphs/graphs.dart' as graphs;
-import 'package:lazy_evaluation/lazy_evaluation.dart';
-
-import 'graph_crawler.dart';
+// import 'package:graphs/graphs.dart' as graphs;
 
 /// Function returning a list of edge vertices.
 /// If a vertex has no neighbours it should return
 /// an empty list.
 ///
 /// Note: The function must never return null.
-typedef Edges<T> = List<Vertex<T>> Function(Vertex<T> vertex);
+typedef Edges<T> = List<T> Function(T vertex);
 
-/// Vertex mark used by sorting algorithms.
+/// _Vertex mark used by sorting algorithms.
 enum _Mark { PERMANENT, TEMPORARY }
 
 /// Generic object representing a vertex in a graph.
 /// Holds data of type [T].
 class Vertex<T> {
-  /// Vertex id.
-  final int _id;
+  /// _Vertex id.
+  final int id;
 
-  /// Vertex data of type [T].
+  /// _Vertex data of type [T].
   final T data;
 
-  /// Vertex counter.
+  /// _Vertex counter.
   static int _counter = 0;
 
   /// Creates a vertex holding generic data of type [T].
-  Vertex(this.data) : _id = ++_counter;
+  Vertex._(this.data) : id = ++_counter;
 
-  Vertex.fromConstantVertex(ConstantVertex vertex)
-      : _id = ++_counter,
-        data = vertex.data;
+  /// Returns the number of vertices connected by
+  /// outgoing directed edges.
+  int get inDegree => inConnections.length;
 
-  /// Returns the integer [id] of the vertex.
-  int get id => _id;
-
-  @override
-  bool operator ==(Object other) => other is Vertex<T> && other.id == _id;
+  /// Return the number of vertices connected by incoming
+  /// directed edges.
+  int get outDegree => outConnections.length;
 
   @override
-  int get hashCode => _id.hashCode;
+  bool operator ==(Object other) => other is Vertex<T> && other.id == id;
+
+  @override
+  int get hashCode => id.hashCode;
 
   @override
   String toString() => '$data';
 
   /// Private field used by DFS algorithms.
-  _Mark _mark;
+  _Mark? _mark;
+
+  /// Outgoing vertices
+  final outConnections = HashSet<Vertex<T>>();
+
+  /// Incoming directed edges
+  final inConnections = HashSet<Vertex<T>>();
 }
 
-/// Object representing a constant vertex.
-class ConstantVertex<T> {
-  /// Vertex data of type [T].
-  final T data;
-
-  /// Creates a vertex holding generic data of type [T].
-  const ConstantVertex(this.data);
-
-  @override
-  bool operator ==(Object other) =>
-      other is ConstantVertex<T> && other.hashCode == hashCode;
-
-  @override
-  int get hashCode => super.hashCode;
-
-  @override
-  String toString() => '$data';
-}
-
-/// Generic directed graph.
-/// Data of type [T] is stored in vertices of type [Vertex].
-/// The graph consists of a mapping [_edges] of each
-/// `Vertex<T>` to a list of connected vertices `List<Vertex<T>>`.
+/// Generic directed graph storing vertices of type `T`.
+/// * `T` should be usable as map keys.
 class DirectedGraph<T> extends Iterable {
-  /// Constructs a directed graph.
-  /// [edges] is of type `Map<Vertex<T>, List<Vertex<T>>>`,
-  /// mapping each vertex to a list of connected vertices.
-  DirectedGraph(
-    Map<Vertex<T>, List<Vertex<T>>> edges, {
-    Comparator<Vertex<T>> comparator,
-  })  : _edges = edges ?? {},
-        _comparator = comparator {
-    _inDegreeMap = _createInDegreeMap();
-    _vertices = MutableLazy<UnmodifiableListView<Vertex<T>>>(_sortedVertices);
-  }
-
   /// Constructs a directed graph from a map of type `Map<T, List<T>>`.
-  /// * Each key and list entry of type `T` is converted to a `Vertex<T>`.
-  DirectedGraph.fromData(
+  DirectedGraph(
     Map<T, List<T>> data, {
-    Comparator<Vertex<T>> comparator,
-  }) : _comparator = comparator {
-    // Map each distinct data object to a vertex.
-    final vertexMap = <T, Vertex<T>>{};
-    data ??= {};
-    _edges = {};
+    Comparator<T>? comparator,
+  })  : _comparator = comparator,
+        _vertexMap = SplayTreeMap<T, Vertex<T>>(comparator) {
+    // Transform data to vertices.
     data.forEach((key, value) {
-      vertexMap[key] = Vertex<T>(key);
-      for (final t in value ?? <T>[]) {
-        vertexMap[t] ??= Vertex<T>(t);
+      _vertexMap[key] = Vertex<T>._(key);
+      for (final t in value) {
+        _vertexMap[t] ??= Vertex<T>._(t);
       }
     });
     // Construct the map of graph edges.
     data.forEach((key, value) {
-      _edges[vertexMap[key]] = [];
-      for (final t in value ?? <T>[]) {
-        _edges[vertexMap[key]].add(vertexMap[t]);
+      for (final t in value) {
+        _vertexMap[key]!.outConnections.add(_vertexMap[t]!);
+        _vertexMap[t]!.inConnections.add(_vertexMap[key]!);
       }
     });
-    _inDegreeMap = _createInDegreeMap();
-    _vertices = MutableLazy<UnmodifiableListView<Vertex<T>>>(_sortedVertices);
   }
 
-  /// Constructs a directed graph from another directed graph.
-  DirectedGraph.from(DirectedGraph<T> directedGraph)
-      : this(directedGraph._edges, comparator: directedGraph.comparator);
+  /// Factory constructor that returns a copy of [directedGraph]
+  /// containing new instances of vertices.
+  /// - Note: _Vertex data is shallow copied.
+  factory DirectedGraph.from(DirectedGraph<T> directedGraph) => DirectedGraph(
+        directedGraph.data,
+        comparator: directedGraph.comparator,
+      );
 
-  Map<Vertex<T>, List<Vertex<T>>> _edges;
-  MutableLazy<UnmodifiableListView<Vertex<T>>> _vertices;
-  Map<Vertex<T>, int> _inDegreeMap;
-  Comparator<Vertex<T>> _comparator;
+  /// Maps each distinct object of type `T` to a vertex of type `Vertex<T>`.
+  SplayTreeMap<T, Vertex<T>> _vertexMap;
 
-  /// Returns an unmodifiable list-view of sorted vertices.
-  /// Vertices are sorted if a comparator was specified.
-  UnmodifiableListView<Vertex<T>> _sortedVertices() {
-    var vertices = _inDegreeMap.keys.toList();
-    if (_comparator != null) vertices.sort(_comparator);
-    return UnmodifiableListView(vertices);
-  }
+  /// The comparator used to sort vertices.
+  Comparator<T>? _comparator;
 
-  Comparator<Vertex<T>> get comparator => _comparator;
+  /// Returns a list of graph vertices.
+  Iterable<Vertex<T>> get vertices => _vertexMap.values;
 
-  set comparator(Comparator<Vertex<T>> comparator) {
+  /// Returns the comparator used to sort graph vertices.
+  Comparator<T>? get comparator => _comparator;
+
+  /// Sets the comparator used to sort graph vertices.
+  set comparator(Comparator<T>? comparator) {
     _comparator = comparator;
-    _vertices.notifyChange();
+    if (comparator == null) {
+      _vertexMap = SplayTreeMap.from(_vertexMap);
+    }
+    _vertexMap = SplayTreeMap.from(_vertexMap, comparator);
   }
 
-  /// Mapping each graph vertex to a list of connected vertice.
-  Map<Vertex<T>, List<Vertex<T>>> get edgeMap => _edges;
+  /// Returns the underlying graph data as a map of type `Map<T, List<T>>`.
+  Map<T, List<T>> get data {
+    final data = <T, List<T>>{};
+    for (final vertex in _vertexMap.values) {
+      data[vertex.data] =
+          vertex.outConnections.map<T>((item) => item.data).toList();
+    }
+    return data;
+  }
 
-  /// Returns a list of the connected vertices of [vertex].
+  /// Returns list of vertices connected to [vertex].
   /// Note: Mathematically, an edge is an ordered pair
   /// (vertex, connected-vertex).
-  List<Vertex<T>> edges(Vertex<T> vertex) => _edges[vertex] ?? [];
-
-  /// Unmodifiable ListView of all vertices in the graph.
-  /// The vertices will be sorted if a vertex comparator was
-  /// specified during instantiation of the graph or
-  /// by invoking the `comparator` setter.
-  UnmodifiableListView<Vertex<T>> get vertices => _vertices.value;
-
-  /// Returns a (modifiable) copy of the inDegreeMap.
-  Map<Vertex<T>, int> get inDegreeMap => Map<Vertex<T>, int>.from(_inDegreeMap);
-
-  /// Call this method whenever vertices or edges are added to the graph.
-  void _updateLazyFields() {
-    _vertices.notifyChange();
-  }
+  Iterable<T> edges(T vertex) =>
+      _vertexMap[vertex]?.outConnections.map<T>((item) => item.data) ?? <T>[];
 
   /// Adds edges (connections) pointing from [vertex] to [connectedVertices].
-  /// If the graph does not contain [vertex] it will be added.
-  void addEdges(Vertex<T> vertex, List<Vertex<T>> connectedVertices) {
-    // Check if vertex exists.
-    if (_edges[vertex] == null) {
-      _edges[vertex] = connectedVertices;
-    } else {
-      _edges[vertex].addAll(connectedVertices);
-    }
-    // Update inDegreeMap
+  void addEdges(T vertex, List<T> connectedVertices) {
+    // Add vertices to graph.
+    _vertexMap[vertex] ??= Vertex._(vertex);
     for (final connectedVertex in connectedVertices) {
-      _inDegreeMap[connectedVertex] = (_inDegreeMap[connectedVertex] == null)
-          ? 1
-          : _inDegreeMap[connectedVertex] + 1;
+      _vertexMap[connectedVertex] ??= Vertex._(connectedVertex);
+      _vertexMap[vertex]!.outConnections.add(_vertexMap[connectedVertex]!);
+      _vertexMap[connectedVertex]!.inConnections.add(_vertexMap[vertex]!);
     }
-    // Check if [vertex] is new to the graph.
-    if (_inDegreeMap[vertex] == null) {
-      _inDegreeMap[vertex] = 0;
-    }
-    // Update lazy fields
-    _updateLazyFields();
   }
 
   /// Removes edges (connections) pointing from [vertex] to [connectedVertices].
   /// If connectedVertices is not specified all outgoing
   /// edges are removed from the graph.
-  void removeEdges(Vertex<T> vertex, [List<Vertex<T>> connectedVertices]) {
-    // Handle default case: Remove all outgoing edges if
-    // connectedVertices is not specified.
+  void removeEdges(T vertex, [List<T>? connectedVertices]) {
+    if (_vertexMap[vertex] == null) return;
+    // Remove all edges.
     if (connectedVertices == null) {
-      // Update inDegreeMap.
-      for (final connectedVertex in _edges[vertex] ?? []) {
-        _inDegreeMap[connectedVertex] -= 1;
-      }
-      _edges.remove(vertex);
-    } else {
-      if (_edges[vertex] == null) return;
-      for (final connectedVertex in connectedVertices) {
-        // Check if connectedVertex is indeed connected to vertex.
-        if (_edges[vertex].remove(connectedVertex)) {
-          _inDegreeMap[connectedVertex] -= 1;
-        }
-      }
-      // Remove entry if vertex has no outgoing edges.
-      if (_edges[vertex].isEmpty) {
-        _edges.remove(vertex);
+      _vertexMap[vertex]!
+          .outConnections
+          .forEach((item) => item.inConnections.remove(vertex));
+      _vertexMap[vertex]!.outConnections.clear();
+      return;
+    }
+    // Remove specified edges.
+    for (final connectedVertex in connectedVertices) {
+      if (_vertexMap[vertex]!.outConnections.remove(connectedVertex)) {
+        _vertexMap[connectedVertex]!.inConnections.remove(vertex);
       }
     }
-    _updateLazyFields();
   }
 
   /// Removes edges ending at [vertex] from the graph.
-  void removeIncomingEdges(Vertex<T> vertex) {
-    // Remove incoming edges
-    for (final startVertex in _edges.keys ?? []) {
-      _edges[startVertex].removeWhere((item) => item == vertex);
+  void removeIncomingEdges(T vertex) {
+    if (_vertexMap[vertex] == null) return;
+    for (final sourceVertex in _vertexMap[vertex]!.inConnections) {
+      sourceVertex.outConnections.remove(_vertexMap[vertex]);
     }
+    _vertexMap[vertex]!.inConnections.clear();
   }
 
   /// Completely remove [vertex] from the graph, including outgoing
   /// and incoming edges.
-  void remove(Vertex<T> vertex) {
-    removeIncomingEdges(vertex);
-    _inDegreeMap.remove(vertex);
+  void remove(T vertex) {
+    if (_vertexMap[vertex] == null) return;
     removeEdges(vertex);
+    removeIncomingEdges(vertex);
+    _vertexMap.remove(vertex);
   }
 
-  /// Returns a valid reverse topological order ordering of the
-  /// strongly connected components.
-  /// Acyclic graphs will yield components containing one vertex only.
-  List<List<Vertex<T>>> get stronglyConnectedComponents {
-    return graphs.stronglyConnectedComponents<Vertex<T>>(_edges.keys, edges);
-  }
+  // /// Returns a valid reverse topological ordering of the
+  // /// strongly connected components.
+  // /// Acyclic graphs will yield components containing one vertex only.
+  // List<List<T>> get stronglyConnectedComponents {
+  //   return graphs.stronglyConnectedComponents<T>(_vertexMap.keys, edges);
+  // }
 
-  /// Returns the shortest path between [start] and [target].
-  /// Returns `null` if [start] is not connected to [target].
-  List<Vertex<T>> shortestPath(Vertex<T> start, Vertex<T> target) {
-    return graphs.shortestPath<Vertex<T>>(start, target, edges);
-  }
+  // /// Returns the shortest path between [start] and [target].
+  // /// * Returns `null` if [start] is not connected to [target].
+  // /// * Return an empty list if [start] is equal to [target].
+  // List<T> shortestPath(T start, T target) {
+  //   return graphs.shortestPath<T>(start, target, edges);
+  // }
 
-  /// Returns a [Map] of the shortest paths from [start] to each node
-  /// in the directed graph defined by [edges].
-  Map<Vertex<T>, List<Vertex<T>>> shortestPaths(Vertex<T> start) {
-    return graphs.shortestPaths<Vertex<T>>(start, edges);
-  }
+  // /// Returns a `Map` of the shortest paths from [start] to each node
+  // /// in the directed graph defined by [edges].
+  // Map<T, List<T>> shortestPaths(T start) {
+  //   return graphs.shortestPaths<T>(start, edges);
+  // }
 
   /// Returns true if the graph is a directed acyclic graph.
   bool get isAcyclic {
     return (topologicalOrdering == null) ? false : true;
   }
 
-  /// Returns a list of type `List<List<Vertex<T>>>`.
+  /// Returns a list of type `List<List<_Vertex<T>>>`.
   /// The first entry contains the
   /// local source vertices of the graph.
   /// Subsequent entries contain the local source vertices of the reduced graph.
@@ -270,14 +219,14 @@ class DirectedGraph<T> extends Iterable {
   ///
   /// Note: There is no topological ordering if the
   /// graph is cyclic. In that case the function returns `null`.
-  List<List<Vertex<T>>> get localSources {
+  List<List<T>>? get localSources {
     final result = <List<Vertex<T>>>[];
 
     // Get modifiable in-degree map.
     final _inDegreeMap = inDegreeMap;
 
     // Get modifiable list of the graph vertices
-    final _vertices = List.from(vertices);
+    var vertices = this.vertices;
 
     var hasSources = false;
     var count = 0;
@@ -292,7 +241,7 @@ class DirectedGraph<T> extends Iterable {
       final remainingVertices = <Vertex<T>>[];
 
       // Find local sources.
-      for (final vertex in _vertices) {
+      for (final vertex in vertices) {
         if (_inDegreeMap[vertex] == 0) {
           sources.add(vertex);
           ++count;
@@ -306,19 +255,28 @@ class DirectedGraph<T> extends Iterable {
 
       // Simulate the removal of detected local sources.
       for (final source in sources) {
-        for (final connectedVertex in _edges[source] ?? []) {
-          _inDegreeMap[connectedVertex] -= 1;
+        for (final connectedVertex in source.outConnections) {
+          _inDegreeMap[connectedVertex] = inDegreeMap[connectedVertex]! - 1;
         }
       }
       // Check if local source were found.
       hasSources = sources.isNotEmpty;
 
       // Replacing vertices with remaining vertices.
-      _vertices.clear();
-      _vertices.addAll(remainingVertices);
+      vertices = remainingVertices;
     } while (hasSources);
 
-    return (count == inDegreeMap.keys.length) ? result : null;
+    return result
+        .map<List<T>>(
+            (vertexList) => vertexList.map<T>((vertex) => vertex.data).toList())
+        .toList();
+
+    return (count == _inDegreeMap.length)
+        ? result
+            .map<List<T>>((vertexList) =>
+                vertexList.map<T>((vertex) => vertex.data).toList())
+            .toList()
+        : null;
   }
 
   /// Returns a list of all vertices in topological order.
@@ -332,8 +290,11 @@ class DirectedGraph<T> extends Iterable {
   /// graph is cyclic. In that case the function returns `null`.
   /// * Any self-loop (e.g. vertex1 -> vertex1) renders a directed graph cyclic.
   /// * Based on Kahn's algorithm.
-  List<Vertex<T>> get sortedTopologicalOrdering {
+  List<T>? get sortedTopologicalOrdering {
     if (_comparator == null) return topologicalOrdering;
+
+    int vertexComparator(Vertex<T> v1, Vertex<T> v2) =>
+        comparator!(v1.data, v2.data);
 
     final result = <Vertex<T>>[];
 
@@ -346,7 +307,7 @@ class DirectedGraph<T> extends Iterable {
     // Note: In an acyclic directed graph there is at least
     //       one vertex with inDegree equal to zero.
     final sources = <Vertex<T>>[];
-    for (final vertex in _edges.keys) {
+    for (final vertex in vertices) {
       if (inDegreeMap[vertex] == 0) {
         sources.add(vertex);
       }
@@ -358,14 +319,14 @@ class DirectedGraph<T> extends Iterable {
     // one vertex has outDegree zero.
     while (sources.isNotEmpty) {
       // Sort source vertices:
-      sources.sort(_comparator);
+      sources.sort(vertexComparator);
       var current = sources.removeAt(0);
       result.add(current);
 
       // Simulate removing the current vertex from the
       //   graph. => Connected vertices with have inDegree = inDegree - 1.
-      for (final vertex in _edges[current] ?? []) {
-        inDegreeMap[vertex] -= 1;
+      for (final vertex in current.outConnections) {
+        inDegreeMap[vertex] = inDegreeMap[vertex]! - 1;
 
         // Add new local source vertices of the remaining graph to the queue.
         if (inDegreeMap[vertex] == 0) {
@@ -375,10 +336,12 @@ class DirectedGraph<T> extends Iterable {
       // Increment count of visited vertices.
       count++;
     }
-    return (count != _inDegreeMap.length) ? null : result;
+    return (count != vertices.length)
+        ? null
+        : result.map<T>((item) => item.data).toList();
   }
 
-  /// Returns `List<Vertex<T>>`, a list of all vertices in topological order.
+  /// Returns `List<_Vertex<T>>`, a list of all vertices in topological order.
   /// * For every directed edge: (vertex1 -> vertex2), vertex1
   /// is listed before vertex2.
   ///
@@ -386,7 +349,7 @@ class DirectedGraph<T> extends Iterable {
   /// graph is cyclic. In that case the function returns `null`.
   /// * Any self-loop (e.g. vertex1 -> vertex1) renders a directed graph cyclic.
   /// * Based on a depth-first search algorithm (Cormen 2001, Tarjan 1976).
-  List<Vertex<T>> get topologicalOrdering {
+  List<T>? get topologicalOrdering {
     final queue = Queue<Vertex<T>>();
 
     // Marks [this] graph as cyclic.
@@ -398,9 +361,9 @@ class DirectedGraph<T> extends Iterable {
       // Terminate iteration.
       if (isCyclic) return;
 
-      // Vertex has permanent mark.
+      // _Vertex has permanent mark.
       // => This vertex and its neighbouring vertices
-      // have already been visited.
+      //    have already been visited.
       if (vertex._mark == _Mark.PERMANENT) return;
 
       // A cycle has been detected. Mark graph as acyclic.
@@ -411,8 +374,8 @@ class DirectedGraph<T> extends Iterable {
 
       // Temporary mark. Marks current vertex as visited.
       vertex._mark = _Mark.TEMPORARY;
-      for (final connectedVertex in _edges[vertex] ?? <Vertex<T>>[]) {
-        visit(connectedVertex);
+      for (final connected_Vertex in vertex.outConnections) {
+        visit(connected_Vertex);
       }
       // Permanent mark, indicating that there is no path from
       // neighbouring vertices back to the current vertex.
@@ -430,7 +393,7 @@ class DirectedGraph<T> extends Iterable {
     //
     // Iterating in normal order of [vertices] yields a different
     // valid topological sorting.
-    for (final current in vertices.reversed) {
+    for (final current in vertices) {
       if (isCyclic) break;
       visit(current);
     }
@@ -442,7 +405,71 @@ class DirectedGraph<T> extends Iterable {
     }
 
     // Return null if graph is not a DAG.
-    return (isCyclic) ? null : queue.toList();
+    return (isCyclic) ? null : queue.map<T>((item) => item.data).toList();
+  }
+
+  /// Returns `List<_Vertex<T>>`, a list of all vertices in topological order.
+  /// * For every directed edge: (vertex1 -> vertex2), vertex1
+  /// is listed before vertex2.
+  ///
+  /// * Note: There is no topological ordering if the
+  /// graph is cyclic. In that case the function returns `null`.
+  /// * Any self-loop (e.g. vertex1 -> vertex1) renders a directed graph cyclic.
+  /// * Based on a depth-first search algorithm (Cormen 2001, Tarjan 1976).
+  List<T>? get topologicalOrderingII {
+    final queue = Queue<Vertex<T>>();
+
+    final temp = HashSet<int>();
+    final perm = HashSet<int>();
+
+    // Marks graph as cyclic.
+    var isCyclic = false;
+
+    // Recursive function
+    void visit(Vertex<T> vertex) {
+      // Graph is not a Directed Acyclic Graph (DAG).
+      // Terminate iteration.
+      if (isCyclic) return;
+
+      // _Vertex has permanent mark.
+      // => This vertex and its neighbouring vertices
+      // have already been visited.
+      if (perm.contains(vertex.id)) return;
+
+      // A cycle has been detected. Mark graph as acyclic.
+      if (temp.contains(vertex.id)) {
+        isCyclic = true;
+        return;
+      }
+
+      // Temporary mark. Marks current vertex as visited.
+      temp.add(vertex.id);
+      for (final connected_Vertex in vertex.outConnections) {
+        visit(connected_Vertex);
+      }
+      // Permanent mark, indicating that there is no path from
+      // neighbouring vertices back to the current vertex.
+      // We tried all options.
+      perm.add(vertex.id);
+      queue.addFirst(vertex);
+    }
+
+    // Main loop
+    // Note: Iterating in reverse order of [vertices]
+    // (approximately) preserves the
+    // sorting of vertices (on top of the topological sorting.)
+    // For a sorted topological ordering use
+    // the getter: [sortedTopologicalOrdering].
+    //
+    // Iterating in normal order of [vertices] yields a different
+    // valid topological sorting.
+    for (final current in vertices.toList().reversed) {
+      if (isCyclic) break;
+      visit(current);
+    }
+
+    // Return null if graph is not a DAG.
+    return (isCyclic) ? null : queue.map<T>((item) => item.data).toList();
   }
 
   /// Returns the first cycle detected or an empty list
@@ -450,9 +477,9 @@ class DirectedGraph<T> extends Iterable {
   ///
   /// Note: A cycle is a path that starts and ends with
   /// the same vertex.
-  List<Vertex<T>> get cycle {
+  List<T> get cycle {
     /// Start vertex of the cycle.
-    Vertex<T> start;
+    Vertex<T>? start;
 
     // Marks [this] graph as acyclic.
     var isCyclic = false;
@@ -463,7 +490,7 @@ class DirectedGraph<T> extends Iterable {
       // Terminate iteration.
       if (isCyclic) return;
 
-      // Vertex has permanent mark.
+      // _Vertex has permanent mark.
       // => This vertex and its neighbouring vertices have already been visited.
       if (vertex._mark == _Mark.PERMANENT) return;
 
@@ -476,8 +503,8 @@ class DirectedGraph<T> extends Iterable {
 
       // Temporary mark. Marks current vertex as visited.
       vertex._mark = _Mark.TEMPORARY;
-      for (final connectedVertex in _edges[vertex] ?? <Vertex<T>>[]) {
-        visit(connectedVertex);
+      for (final connected_Vertex in vertex.outConnections) {
+        visit(connected_Vertex);
       }
       // Permanent mark, indicating that there is no path from
       // neighbouring vertices back to the current vertex.
@@ -498,8 +525,7 @@ class DirectedGraph<T> extends Iterable {
 
     // Find cycle path.
     if (isCyclic) {
-      final GraphCrawler crawler = GraphCrawler<T>(edges: edges);
-      return crawler.path(start, start);
+      return path(start!.data, start!.data);
     } else {
       return [];
     }
@@ -513,15 +539,14 @@ class DirectedGraph<T> extends Iterable {
   ///
   /// Note: A cycle is a path that starts and ends with
   /// the same vertex.
-  List<Vertex<T>> findCycle() {
-    final GraphCrawler crawler = GraphCrawler<T>(edges: edges);
-    List<Vertex<T>> cycle;
+  List<T> findCycle() {
+    List<T> cycle;
 
     // Main loop
     for (final vertex in vertices) {
-      if (_inDegreeMap[vertex] == 0) continue;
-      if (outDegree(vertex) == 0) continue;
-      cycle = crawler.path(vertex, vertex);
+      if (vertex.inDegree == 0) continue;
+      if (vertex.outDegree == 0) continue;
+      cycle = path(vertex.data, vertex.data);
       if (cycle.isNotEmpty) return cycle;
     }
     return [];
@@ -529,40 +554,30 @@ class DirectedGraph<T> extends Iterable {
 
   /// Returns a mapping between vertex and number of
   /// incoming connections.
-  Map<Vertex<T>, int> _createInDegreeMap() {
-    var map = <Vertex<T>, int>{};
-    for (final vertex in _edges.keys) {
-      // Entry might already exist.
-      map[vertex] ??= 0;
-      for (final connectedVertex in _edges[vertex]) {
-        map[connectedVertex] =
-            (map[connectedVertex] == null) ? 1 : map[connectedVertex] + 1;
-      }
+  Map<Vertex<T>, int> get inDegreeMap {
+    final map = <Vertex<T>, int>{};
+    for (final vertex in vertices) {
+      map[vertex] = vertex.inConnections.length;
     }
     return map;
   }
 
   /// Returns the number of incoming directed edges for [vertex].
-  int inDegree(Vertex<T> vertex) {
-    var inDegree = 0;
-    for (final connectedVertices in _edges.values) {
-      inDegree =
-          inDegree + connectedVertices.where((value) => value == vertex).length;
-    }
-    return inDegree;
+  int? inDegree(T vertex) {
+    return _vertexMap[vertex]?.inConnections.length;
   }
 
   /// Returns the number of outgoing directed edges for [vertex].
-  int outDegree(Vertex<T> vertex) {
-    return _edges[vertex]?.length ?? 0;
+  int? outDegree(T vertex) {
+    return _vertexMap[vertex]?.outConnections.length;
   }
 
   /// Returns a mapping between vertex and number of
   /// outgoing connections (edges).
   Map<Vertex<T>, int> get outDegreeMap {
-    var map = <Vertex<T>, int>{};
-    for (var vertex in vertices) {
-      map[vertex] = _edges[vertex]?.length ?? 0;
+    final map = <Vertex<T>, int>{};
+    for (final vertex in vertices) {
+      map[vertex] = vertex.outConnections.length;
     }
     return map;
   }
@@ -572,10 +587,10 @@ class DirectedGraph<T> extends Iterable {
   String toString() {
     var b = StringBuffer();
     b.writeln('{');
-    for (var vertex in _vertices.value) {
+    for (final vertex in vertices) {
       b.write(' $vertex: ');
       b.write('[');
-      b.writeAll(_edges[vertex] ?? [], ', ');
+      b.writeAll(vertex.outConnections, ', ');
       b.write('],');
       b.writeln('');
     }
@@ -588,10 +603,10 @@ class DirectedGraph<T> extends Iterable {
   String get displayStructure {
     var b = StringBuffer();
     b.writeln('{');
-    for (var vertex in _vertices.value) {
+    for (var vertex in vertices) {
       b.write(' ${vertex.id}: ');
       b.write('[');
-      b.writeAll(_edges[vertex].map<int>((item) => item.id) ?? [], ', ');
+      b.writeAll(vertex.outConnections.map<int>((item) => item.id), ', ');
       b.write('],');
       b.writeln('');
     }
@@ -600,17 +615,139 @@ class DirectedGraph<T> extends Iterable {
   }
 
   @override
-  Iterator<Vertex<T>> get iterator => _vertices.value.iterator;
+  Iterator<T> get iterator => _vertexMap.keys.iterator;
+
+  /// Returns the first detected path from [start] to [target].
+  List<T> path(T start, T target) {
+    final _visited = <int, HashSet<int>>{};
+    final _queue = Queue<Vertex<T>>();
+    var path = <Vertex<T>>[];
+    var pathFound = false;
+
+    final startVertex = _vertexMap[start];
+    final targetVertex = _vertexMap[target];
+
+    if (startVertex == null || targetVertex == null) {
+      return <T>[];
+    }
+
+    /// Recursive function that crawls the graph defined by
+    /// `edges` and records the first path from [start] to [target].
+    void _crawl(Vertex<T> startVertex, Vertex<T> targetVertex) {
+      // Return if a path has already been found.
+      if (pathFound) {
+        return;
+      }
+      _queue.addLast(startVertex);
+      for (final vertex in startVertex.outConnections) {
+        if (vertex == targetVertex) {
+          // Store result.
+          path = List<Vertex<T>>.from(_queue);
+          pathFound = true;
+          return;
+        } else {
+          if (_visited[startVertex.id] == null) {
+            _visited[startVertex.id] = HashSet();
+            _visited[startVertex.id]!.add(vertex.id);
+            _crawl(vertex, targetVertex);
+          }
+          if (_visited[startVertex.id]!.contains(vertex.id)) {
+            continue;
+          } else {
+            _visited[startVertex.id]!.add(vertex.id);
+            _crawl(vertex, targetVertex);
+          }
+        }
+      }
+      // Stepping back along the path.
+      if (_queue.isNotEmpty) {
+        _queue.removeLast();
+      }
+    }
+
+    _crawl(startVertex, targetVertex);
+
+    if (path.isEmpty) {
+      return <T>[];
+    } else {
+      path.add(targetVertex);
+      return path.map<T>((item) => item.data).toList();
+    }
+  }
+
+  /// Returns the paths from [start] vertex to [target] vertex.
+  ///
+  /// * Each directed edge is walked only once.
+  /// * The paths returned may include cycles if the graph is cyclic.
+  /// * The algorithm keeps track of the edges already walked to avoid an
+  ///    infinite loop when encountering a cycle.
+  List<List<T>> paths(T start, T target) {
+    final _visited = <int, HashSet<int>>{};
+    final _pathList = <List<Vertex<T>>>[];
+    final _queue = Queue<Vertex<T>>();
+    final startVertex = _vertexMap[start];
+    final targetVertex = _vertexMap[target];
+
+    if (startVertex == null || targetVertex == null) {
+      return <List<T>>[];
+    }
+
+    /// Adds [this.target] to [path] and appends the result to [_paths].
+    void _addPath(List<Vertex<T>> path) {
+      // Add target vertex.
+      path.add(targetVertex);
+      _pathList.add(path);
+    }
+
+    /// Recursive function that crawls the graph defined by
+    /// the function [edges] and records any path from [start] to [target].
+    void _crawl(Vertex<T> start, Vertex<T> target) {
+      // print('-----------------------');
+      // print('Queue: $_queue');
+      // print('Start: ${start} => target: ${target}.');
+      _queue.addLast(start);
+      for (final vertex in start.outConnections) {
+        // print('$start:${start.id} -> $vertex:${vertex.id}');
+        // print('${start} -> ${vertex}');
+        //stdin.readLineSync();
+        //sleep(Duration(seconds: 2));
+        if (vertex == target) {
+          // print('|=======> Found target: recording '
+          //     'result: $_queue');
+          _addPath(_queue.toList());
+        } else {
+          if (_visited[start.id] == null) {
+            _visited[start.id] = HashSet();
+            _visited[start.id]!.add(vertex.id);
+            _crawl(vertex, target);
+          }
+          if (_visited[start.id]!.contains(vertex.id)) {
+            // print('${start} has visited ${vertex}');
+            // print('Choose next vertex:');
+            continue;
+          } else {
+            _visited[start.id]!.add(vertex.id);
+            // print('$vertex added to visited.');
+            _crawl(vertex, target);
+          }
+        }
+      }
+      // Stepping back along the path.
+      if (_queue.isNotEmpty && _queue.last != target) {
+        // print('Stepping back');
+        // print('$_queue: removing: ${_queue.last}');
+        // print('Clearing visited of ${_queue.last}: ${_queue.last._visited}');
+        //_queue.removeLast()._visited.clear();
+        _queue.removeLast();
+      }
+    }
+
+    _crawl(startVertex, targetVertex);
+
+    return _pathList
+        .map<List<T>>(
+          (vertexList) => vertexList.map<T>((vertex) => vertex.data).toList(),
+        )
+        .toList();
+  }
 }
-
-// /// Extension on Vertex<T> providing
-// /// the field [mark].
-// extension _VertexMarker<T> on Vertex<T> {
-//   static final vertexMarks = <int, _Mark>{};
-
-//   _Mark get mark => vertexMarks[id];
-
-//   set mark(_Mark mark) {
-//     vertexMarks[id] = mark;
-//   }
-// }
