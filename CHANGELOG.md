@@ -1,3 +1,7 @@
+## 0.2.1
+
+Removed debug print statement. 
+
 ## 0.2.0
 
 Amended `README.md`.
