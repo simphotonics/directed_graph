@@ -23,11 +23,15 @@ dev_dependencies:
   test: ^1.15.3
 
 dependency_overrides:
+  ansicolor:
+    git:
+      url: git://github.com/simphotonics/ansicolor-dart.git
+      ref: null_safety
   benchmark_harness:
     git:
       url: git://github.com/dart-lang/benchmark_harness.git
       ref: null_safety
-  ansicolor:
+  lazy_evaluation:
     git:
-      url: git://github.com/simphotonics/ansicolor-dart.git
+      url: git://github.com/simphotonics/lazy_evaluation.git
       ref: null_safety
