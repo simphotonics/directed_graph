@@ -64,6 +64,17 @@ void main() {
           ' l: [],\n'
           '}');
     });
+    test('graph data', () {
+      expect(graph.data, {
+        'a': ['b', 'h', 'c', 'e'],
+        'b': ['h'],
+        'c': ['h', 'g'],
+        'd': ['e', 'f'],
+        'f': ['i'],
+        'i': ['l'],
+        'k': ['g', 'f']
+      });
+    });
     test('get comparator', () {
       expect(graph.comparator, comparator);
     });
