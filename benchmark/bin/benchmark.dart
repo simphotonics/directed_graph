@@ -17,14 +17,14 @@ int comparator(
 class DirectedGraphBenchmark extends BenchmarkBase {
   DirectedGraphBenchmark(String name)
       : graph = DirectedGraph({
-          'a': ['b', 'h', 'c', 'e'],
-          'b': ['h'],
-          'c': ['h', 'g'],
-          'd': ['e', 'f'],
-          'e': ['g'],
-          'f': ['i'],
-          'i': ['l'],
-          'k': ['g', 'f'],
+          'a': {'b', 'h', 'c', 'e'},
+          'b': {'h'},
+          'c': {'h', 'g'},
+          'd': {'e', 'f'},
+          'e': {'g'},
+          'f': {'i'},
+          'i': {'l'},
+          'k': {'g', 'f'},
           // 'a1': ['b', 'h', 'c', 'e'],
           // 'b1': ['h'],
           // 'c1': ['h', 'g'],
@@ -85,7 +85,7 @@ class TopologicalOrderDFS extends DirectedGraphBenchmark {
   /// The benchmark code.
   @override
   void run() {
-    topologicalOrdering = graph.topologicalOrderingII;
+    topologicalOrdering = graph.topologicalOrdering;
   }
 
   /// Not measured teardown code executed after the benchmark runs.
@@ -141,9 +141,9 @@ class GraphManipulation extends DirectedGraphBenchmark {
   @override
   void run() {
     graph.remove('h');
-    graph.addEdges('a', ['h']);
-    graph.addEdges('b', ['h']);
-    graph.addEdges('c', ['h']);
+    graph.addEdges('a', {'h'});
+    graph.addEdges('b', {'h'});
+    graph.addEdges('c', {'h'});
   }
 
   /// Not measured teardown code executed after the benchmark runs.
@@ -203,7 +203,7 @@ class GraphCycle extends DirectedGraphBenchmark {
   @override
   void setup() {
     super.setup();
-    graph.addEdges('i', ['k']);
+    graph.addEdges('i', {'k'});
   }
 
   /// The benchmark code.
@@ -217,7 +217,7 @@ class GraphCycle extends DirectedGraphBenchmark {
   void teardown() {
     print(magenta('\ngraph.cycle ... '));
     print(green(paths.toString()));
-    graph.removeEdges('i', ['k']);
+    graph.removeEdges('i', {'k'});
   }
 }
 
@@ -229,7 +229,7 @@ class GraphFindCycle extends DirectedGraphBenchmark {
   @override
   void setup() {
     super.setup();
-    graph.addEdges('i', ['k']);
+    graph.addEdges('i', {'k'});
   }
 
   /// The benchmark code.
@@ -243,7 +243,7 @@ class GraphFindCycle extends DirectedGraphBenchmark {
   void teardown() {
     print(magenta('\ngraph.findCycle() ... '));
     print(green(paths.toString()));
-    graph.removeEdges('i', ['k']);
+    graph.removeEdges('i', {'k'});
   }
 }
 

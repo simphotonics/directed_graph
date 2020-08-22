@@ -8,40 +8,40 @@ import 'package:test/test.dart';
 ///
 void main() {
   int comparator(
-    Vertex<String> vertex1,
-    Vertex<String> vertex2,
+    String s1,
+    String s2,
   ) {
-    return vertex1.data.compareTo(vertex2.data);
+    return s1.compareTo(s2);
   }
 
   int inverseComparator(
-    Vertex<String> vertex1,
-    Vertex<String> vertex2,
+    String s1,
+    String s2,
   ) {
-    return -vertex1.data.compareTo(vertex2.data);
+    return -s1.compareTo(s2);
   }
 
-  var a = Vertex<String>('a');
-  var b = Vertex<String>('b');
-  var c = Vertex<String>('c');
-  var d = Vertex<String>('d');
-  var e = Vertex<String>('e');
-  var f = Vertex<String>('f');
-  var g = Vertex<String>('g');
-  var h = Vertex<String>('h');
-  var i = Vertex<String>('i');
-  var k = Vertex<String>('k');
-  var l = Vertex<String>('l');
+  var a = 'a';
+  var b = 'b';
+  var c = 'c';
+  var d = 'd';
+  var e = 'e';
+  var f = 'f';
+  var g = 'g';
+  var h = 'h';
+  var i = 'i';
+  var k = 'k';
+  var l = 'l';
 
   var graph = DirectedGraph<String>(
     {
-      a: [b, h, c, e],
-      d: [e, f],
-      b: [h],
-      c: [h, g],
-      f: [i],
-      i: [l],
-      k: [g, f]
+      a: {b, h, c, e},
+      d: {e, f},
+      b: {h},
+      c: {h, g},
+      f: {i},
+      i: {l},
+      k: {g, f}
     },
     comparator: comparator,
   );
@@ -80,44 +80,11 @@ void main() {
         ++index;
       }
     });
-    test('.fromData constructor.', () {
-      final graphCopy = DirectedGraph<String>.fromData(
-        {
-          'a': ['b', 'h', 'c', 'e'],
-          'b': ['h'],
-          'c': ['h', 'g'],
-          'd': ['e', 'f'],
-          'e': [],
-          'f': ['i'],
-          'g': [],
-          'h': [],
-          'i': ['l'],
-          'k': ['g', 'f'],
-          'l': [],
-        },
-        comparator: comparator,
-      );
-      expect(
-          graphCopy.toString(),
-          '{\n'
-          ' a: [b, h, c, e],\n'
-          ' b: [h],\n'
-          ' c: [h, g],\n'
-          ' d: [e, f],\n'
-          ' e: [],\n'
-          ' f: [i],\n'
-          ' g: [],\n'
-          ' h: [],\n'
-          ' i: [l],\n'
-          ' k: [g, f],\n'
-          ' l: [],\n'
-          '}');
-    });
-  });
+
   group('Manipulating edges/vertices.', () {
     test('addEdges():', () {
-      graph.addEdges(i, [k]);
-      expect(graph.edges(i), [l, k]);
+      graph.addEdges(i, {k});
+      expect(graph.edges(i), {l, k});
       '{\n'
           ' a: [b, h, c, e],\n'
           ' b: [h],\n'
@@ -131,8 +98,8 @@ void main() {
           ' k: [g, f],\n'
           ' l: [],\n'
           '}';
-      graph.removeEdges(i, [k]);
-      expect(graph.edges(i), [l]);
+      graph.removeEdges(i, {k});
+      expect(graph.edges(i), {l});
     });
     test('remove().', () {
       graph.remove(l);

@@ -15,14 +15,14 @@ void main() {
   // Constructing a graph from vertices.
   var graph = DirectedGraph<String>(
     {
-      'a': ['b', 'h', 'c', 'e'],
-      'b': ['h'],
-      'c': ['h', 'g'],
-      'd': ['e', 'f'],
-      'e': ['g'],
-      'f': ['i'],
-      'i': ['l'],
-      'k': ['g', 'f']
+      'a': {'b', 'h', 'c', 'e'},
+      'b': {'h'},
+      'c': {'h', 'g'},
+      'd': {'e', 'f'},
+      'e': {'g'},
+      'f': {'i'},
+      'i': {'l'},
+      'k': {'g', 'f'}
     },
     comparator: comparator,
   );
@@ -38,10 +38,10 @@ void main() {
   print(graph.isAcyclic);
 
   print(bluePen('\nStrongly connected components:'));
-  print(graph.stronglyConnectedComponents);
+  //print(graph.stronglyConnectedComponents);
 
   print(bluePen('\nShortestPath(d, l):'));
-  print(graph.shortestPath('d', 'l'));
+  //print(graph.shortestPath('d', 'l'));
 
   print(bluePen('\nInDegree(C):'));
   print(graph.inDegree('c'));
@@ -70,9 +70,9 @@ void main() {
   print(graph.localSources);
 
   // Add edge to render the graph cyclic
-  graph.addEdges('i', ['k']);
-  graph.addEdges('l', ['l']);
-  graph.addEdges('i', ['d']);
+graph.addEdges('i', {'k'});
+graph.addEdges('l', {'l'});
+graph.addEdges('i', {'d'});
 
   print(bluePen('\nCycle:'));
   print(graph.cycle);
@@ -93,6 +93,6 @@ void main() {
   print(graph.path('f', 'f'));
 
   print(bluePen('\nPaths from A to H.'));
-  print(graph.shortestPath('a', 'h'));
+  //print(graph.shortestPath('a', 'h'));
   //print(graph.shortestPath(d, k));
 }
