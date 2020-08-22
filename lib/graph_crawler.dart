@@ -31,10 +31,7 @@ class GraphCrawler<T> {
     /// `edges` and records the first path from [start] to [target].
     void _crawl(Vertex<T> start, Vertex<T> target) {
       // Return if a path has already been found.
-      if (pathFound) {
-        print('returning early');
-        return;
-      }
+      if (pathFound) return;
       _queue.addLast(start);
       for (final vertex in edges(start)) {
         if (vertex == target) {
