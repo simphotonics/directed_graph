@@ -47,7 +47,7 @@ class DirectedGraph<T> extends Iterable {
   final Map<T, HashSet<T>> _edges = {};
 
   late MutableLazy<UnmodifiableListView<T>> _vertices;
-  
+
   UnmodifiableListView<T> get vertices => _vertices.value;
 
   /// Returns an unmodifiable list-view of sorted vertices.
@@ -68,7 +68,6 @@ class DirectedGraph<T> extends Iterable {
   set comparator(Comparator<T>? comparator) {
     _comparator = comparator;
     final data = this.data;
-    // _edges = SplayTreeMap<T, Set<T>>(comparator);
     data.forEach((vertex, connectedVertices) {
       _edges[vertex] = HashSet.of(connectedVertices);
     });
