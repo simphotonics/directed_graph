@@ -1,6 +1,10 @@
+## 0.2.2
+
+Added the getter `data`.
+
 ## 0.2.1
 
-Removed debug print statement. 
+Removed debug print statement.
 
 ## 0.2.0
 
