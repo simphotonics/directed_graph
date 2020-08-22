@@ -125,6 +125,16 @@ class DirectedGraph<T> extends Iterable {
   DirectedGraph.from(DirectedGraph<T> directedGraph)
       : this(directedGraph._edges, comparator: directedGraph.comparator);
 
+  /// Returns the underlying graph data as a map of type `Map<T, List<T>>`.
+  Map<T, List<T>> get data {
+    final data = <T, List<T>>{};
+    for (final vertex in vertices) {
+      if (_edges[vertex] == null) continue;
+      data[vertex.data] = _edges[vertex]?.map<T>((item) => item.data)?.toList();
+    }
+    return data;
+  }
+
   Map<Vertex<T>, List<Vertex<T>>> _edges;
   MutableLazy<UnmodifiableListView<Vertex<T>>> _vertices;
   Map<Vertex<T>, int> _inDegreeMap;
