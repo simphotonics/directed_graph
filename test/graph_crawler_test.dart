@@ -57,11 +57,11 @@ void main() {
     });
     test('a->h:', () {
       expect(crawler.paths(a, h), [
-        [a, b, h],
         [a, h],
+        [a, b, h],
         [a, c, h],
       ]);
-      expect(crawler.path(a, h), [a, b, h]);
+      expect(crawler.path(a, h), [a, h]);
     });
   });
   group('Cyclic paths:', () {
@@ -69,11 +69,16 @@ void main() {
       expect(crawler.paths(d, i), [
         [d, f, i]
       ]);
+      expect(crawler.paths(d, i, maxWalkCount: 2), [
+        [d, f, i],
+        [d, f, i, k, f, i]
+      ]);
       expect(crawler.path(d, i), [d, f, i]);
     });
     test('cycle: d->l', () {
       expect(crawler.paths(d, l), [
         [d, f, i, l],
+        [d, f, i, l, l]
       ]);
       expect(crawler.path(d, l), [d, f, i, l]);
     });
@@ -87,14 +92,54 @@ void main() {
       );
     });
 
-    test('trivial cycle: l->l:', () {
+    test('trivial cycle: l->l', () {
       expect(crawler.paths(l, l), [
         [l, l],
       ]);
+      expect(crawler.paths(l, l, maxWalkCount: 2), [
+        [l, l],
+        [l, l, l]
+      ]);
+
       expect(
         crawler.path(l, l),
         [l, l],
       );
+    });
+  });
+  group('Tree:', () {
+    test('Root A', () {
+      expect(crawler.tree(a), [
+        [a],
+        [a, b],
+        [a, h],
+        [a, c],
+        [a, e],
+        [a, b, h],
+        [a, c, h],
+        [a, c, g],
+        [a, e, g]
+      ]);
+    });
+    test('Root A', () {
+      expect(crawler.tree(a), [
+        [a],
+        [a, b],
+        [a, h],
+        [a, c],
+        [a, e],
+        [a, b, h],
+        [a, c, h],
+        [a, c, g],
+        [a, e, g]
+      ]);
+    });
+    test('Root A, Target H', () {
+      expect(crawler.tree(a, target: h), [
+        [a],
+        [a, b],
+        [a, h],
+      ]);
     });
   });
 }
