@@ -4,7 +4,6 @@
 library graph_crawler;
 
 import 'dart:collection';
-import 'dart:io';
 import 'package:meta/meta.dart';
 
 import 'directed_graph.dart';
