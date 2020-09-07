@@ -508,8 +508,9 @@ class DirectedGraph<T> extends Iterable {
 
     // Find cycle path.
     if (isCyclic) {
-      final GraphCrawler crawler = GraphCrawler<T>(edges: edges);
-      return crawler.path(start, start);
+      final crawler = GraphCrawler<T>(edges: edges);
+      final cycles = crawler.fastPaths(start, start);
+      return (cycles.isNotEmpty) ? cycles.first : [];
     } else {
       return [];
     }
@@ -524,15 +525,16 @@ class DirectedGraph<T> extends Iterable {
   /// Note: A cycle is a path that starts and ends with
   /// the same vertex.
   List<Vertex<T>> findCycle() {
-    final GraphCrawler crawler = GraphCrawler<T>(edges: edges);
-    List<Vertex<T>> cycle;
+    final crawler = GraphCrawler<T>(edges: edges);
+    List<List<Vertex<T>>> cycles;
 
     // Main loop
     for (final vertex in vertices) {
       if (_inDegreeMap[vertex] == 0) continue;
       if (outDegree(vertex) == 0) continue;
-      cycle = crawler.path(vertex, vertex);
-      if (cycle.isNotEmpty) return cycle;
+      cycles = crawler.fastPaths(vertex, vertex, stopEarly: true);
+
+      if (cycles.isNotEmpty) return cycles.first;
     }
     return [];
   }
