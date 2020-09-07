@@ -99,7 +99,7 @@ class GraphCrawler<T> {
       for (final vertex in edges(start)) {
         // print('$start:${start.id} -> $vertex:${vertex.id}');
         // print('${start} -> ${vertex}');
-        stdin.readLineSync();
+        // stdin.readLineSync();
         //sleep(Duration(seconds: 2));
         if (vertex == target) {
           // print('|=======> Found target: recording '
@@ -113,7 +113,7 @@ class GraphCrawler<T> {
             _crawl(vertex, target);
           }
           if (_visited[start.id].contains(vertex.id)) {
-            print('$start -> $vertex was visited.');
+            // print('$start -> $vertex was visited.');
             // print('Choose next vertex:');
             continue;
           } else {
