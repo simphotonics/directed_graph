@@ -42,8 +42,8 @@ void main() {
   print(bluePen('\nPaths from D to C.'));
   print(crawler.paths(graph.vertices[3], graph.vertices[2]));
 
-  print(bluePen('\nPaths from D to C. Old method.'));
-  print(crawler.pathsOld(graph.vertices[3], graph.vertices[2]));
+  //print(bluePen('\nPaths from D to C. Old method.'));
+  //print(crawler.pathsOld(graph.vertices[3], graph.vertices[2]));
 
 
   print(bluePen('\nPaths from D to C, maxWalkCount: 2'));
