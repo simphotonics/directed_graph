@@ -195,6 +195,18 @@ void main() {
 
   print(bluePen('\nPath from A to H.'));
   print(crawler.path(a, h));
+
+  print(bluePen('\nTree with root L.'));
+  print(crawler.tree(l));
+
+  print(bluePen('\nTree with root A, target H.'));
+  print(crawler.tree(a, target: h));
+
+  print(bluePen('\nTree with root A, target G.'));
+  print(crawler.tree(a, target: g));
+
+  print(bluePen('\nPaths from L to L.'));
+  print(crawler.paths(l, l));
 }
 
 ```
@@ -289,7 +301,19 @@ void main() {
   [F, I, K, F]
 
   Path from A to H.
-  [A, B, H]
+  [A, H]
+
+  Tree with root L.
+  [[L], [L, L]]
+  
+  Tree with root A, target H.
+  [[A], [A, B], [A, H]]
+  
+  Tree with root A, target G.
+  [[A], [A, B], [A, H], [A, C], [A, E], [A, B, H], [A, C, H], [A, C, G]]
+  
+  Paths from L to L.
+  [[L, L]]
 
   ```
 
