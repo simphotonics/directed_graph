@@ -1,10 +1,10 @@
 name: directed_graph
 
 description: Directed graph with algorithms enabling topological ordering and
-  sorting of vertices. The package provides a graph crawler for finding the
+  sorting of vertices. The package provides a graph crawler for finding 
   paths connecting two vertices.
 
-version: 0.2.2
+version: 0.2.3
 
 homepage: https://github.com/simphotonics/directed_graph
 

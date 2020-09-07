@@ -1,3 +1,8 @@
+## 0.2.3
+
+Added [`GraphCrawler`][GraphCrawler] method `tree`.
+Amended methods `path` and `paths`.
+
 ## 0.2.2
 
 Added the getter `data`.
@@ -12,9 +17,9 @@ Amended `README.md`.
 
 ## 0.1.9
 
-* Moved `GraphCrawler` to a separate file.
+* Moved [`GraphCrawler`][GraphCrawler] to a separate file.
 * Amended graph crawler method `paths`.
-* Added `DirectedGraph` constructor `.fromData`.
+* Added [`DirectedGraph`][DirectedGraph] constructor `.fromData`.
 
 ## 0.1.8
 
@@ -27,7 +32,7 @@ Updated docs.
 
 ## 0.1.6
 
-Added info about class [`GraphCrawler`][GraphCrawler].
+Added info about class [[`GraphCrawler`][GraphCrawler]][GraphCrawler].
 
 ## 0.1.5
 
@@ -35,9 +40,9 @@ Added explicit generic type parameter to graph getter `iterator`.
 
 ## 0.1.4
 
-Added class `GraphCrawler`.
+Added class [`GraphCrawler`][GraphCrawler].
 
-Converted the following `DirectedGraph` methods to getters:
+Converted the following [`DirectedGraph`][DirectedGraph] methods to getters:
 - `isAcyclic`,
 - `localSources`,
 - `outDegreeMap`,
@@ -51,7 +56,7 @@ Added methods for finding cycles in cyclic graphs:
 
 ## 0.1.3
 
-Specified type of the parameter `comparator` in `DirectedGraph` constructor.
+Specified type of the parameter `comparator` in [`DirectedGraph`][DirectedGraph] constructor.
 
 ## 0.1.2
 
@@ -88,5 +93,5 @@ Amended package description.
 
 Initial version of the library.
 
-
+[DirectedGraph]: https://pub.dev/documentation/directed_graph/latest/directed_graph/DirectedGraph-class.html
 [GraphCrawler]: https://pub.dev/documentation/directed_graph/latest/directed_graph/GraphCrawler-class.html
