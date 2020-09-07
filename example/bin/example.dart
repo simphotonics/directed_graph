@@ -67,7 +67,7 @@ void main() {
   print(bluePen('graph.toString():'));
   print(graph);
 
-    print(bluePen('\ngraphII.toString():'));
+  print(bluePen('\ngraphII.toString():'));
   print(graphII);
 
   print(bluePen('\nIs Acylic:'));
@@ -132,4 +132,17 @@ void main() {
 
   print(bluePen('\nPath from A to H.'));
   print(crawler.path(a, h));
+
+  print(bluePen('\nTree with root L.'));
+  print(crawler.tree(l));
+
+  print(bluePen('\nTree with root A, target H.'));
+  print(crawler.tree(a, target: h));
+
+  print(bluePen('\nTree with root A, target G.'));
+  print(crawler.tree(a, target: g));
+
+  print(bluePen('\nPaths from L to L.'));
+  print(crawler.paths(l, l));
+
 }
