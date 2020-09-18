@@ -1,5 +1,5 @@
-import 'package:directed_graph/directed_graph.dart';
-import 'package:test/test.dart';
+import 'package:directed_graph/src/base/directed_graph_base.dart';
+import 'package:minimal_test/minimal_test.dart';
 
 /// To run the test, navigate to the folder 'directed_graph'
 /// in your local copy of this library and use the command:
@@ -80,6 +80,7 @@ void main() {
         ++index;
       }
     });
+  });
 
   group('Manipulating edges/vertices.', () {
     test('addEdges():', () {
@@ -94,7 +95,7 @@ void main() {
           ' f: [i],\n'
           ' g: [],\n'
           ' h: [],\n'
-          ' i: [l],\n'
+          ' i: {l},\n'
           ' k: [g, f],\n'
           ' l: [],\n'
           '}';
@@ -103,25 +104,25 @@ void main() {
     });
     test('remove().', () {
       graph.remove(l);
-      expect(graph.edges(i), []);
+      expect(graph.edges(i), <String>{});
       expect(graph.vertices.contains(l), false);
       // Restore graph:
-      graph.addEdges(i, [l]);
+      graph.addEdges(i, {l});
       expect(graph.vertices.contains(l), true);
-      expect(graph.edges(i), [l]);
+      expect(graph.edges(i), {l});
     });
   });
   group('Graph data:', () {
     test('edges().', () {
-      expect(graph.edges(a), [b, h, c, e]);
+      expect(graph.edges(a), {b, h, c, e});
     });
     test('indegree().', () {
       expect(graph.inDegree(h), 3);
     });
     test('indegree vertex with self-loop.', () {
-      graph.addEdges(l, [l]);
+      graph.addEdges(l, {l});
       expect(graph.inDegree(l), 2);
-      graph.removeEdges(l, [l]);
+      graph.removeEdges(l, {l});
       expect(graph.inDegree(l), 1);
     });
     test('outDegree().', () {
@@ -140,46 +141,46 @@ void main() {
     });
   });
   group('Topological ordering:', () {
-    test('stronglyConnectedComponents().', () {
-      expect(graph.stronglyConnectedComponents, [
-        [h],
-        [b],
-        [g],
-        [c],
-        [e],
-        [a],
-        [l],
-        [i],
-        [f],
-        [d],
-        [k]
-      ]);
-    });
-    test('shortestPath().', () {
-      expect(graph.shortestPath(d, l), [f, i, l]);
-    });
+    // test('stronglyConnectedComponents().', () {
+    //   expect(graph.stronglyConnectedComponents, [
+    //     [h],
+    //     [b],
+    //     [g],
+    //     [c],
+    //     [e],
+    //     [a],
+    //     {l},
+    //     [i],
+    //     [f],
+    //     [d],
+    //     {k}
+    //   ]);
+    // });
+    // test('shortestPath().', () {
+    //   expect(graph.shortestPath(d, l), [f, i, l]);
+    // });
 
     test('isAcyclic(): self-loop.', () {
-      graph.addEdges(l, [l]);
+      graph.addEdges(l, {l});
       expect(
         graph.isAcyclic,
         false,
       );
-      graph.removeEdges(l, [l]);
+      graph.removeEdges(l, {l});
     });
     test('isAcyclic(): without cycles', () {
       expect(graph.isAcyclic, true);
     });
 
     test('topologicalOrdering(): self-loop', () {
-      graph.addEdges(l, [l]);
+      graph.addEdges(l, {l});
       expect(graph.topologicalOrdering, null);
-      graph.removeEdges(l, [l]);
+      graph.removeEdges(l, {l});
     });
     test('topologicalOrdering(): cycle', () {
-      graph.addEdges(i, [k]);
+      graph.addEdges(i, {k});
       expect(graph.topologicalOrdering, null);
-      graph.removeEdges(i, [k]);
+      graph.removeEdges(i, {k});
     });
     test('sortedTopologicalOrdering():', () {
       expect(
@@ -189,7 +190,7 @@ void main() {
       expect(graph.topologicalOrdering, [a, b, c, d, e, h, k, f, i, g, l]);
     });
     test('topologicalOrdering(): empty graph', () {
-      expect(DirectedGraph<int>({}).topologicalOrdering, []);
+      expect(DirectedGraph<int>({}).topologicalOrdering, <int>[]);
     });
     test('localSources().', () {
       expect(graph.localSources, [
@@ -202,25 +203,19 @@ void main() {
   });
   group('Cycles', () {
     test('graph.cycle | acyclic graph.', () {
-      expect(graph.cycle, []);
+      expect(graph.cycle, <String>[]);
     });
-    test('graph.findCycle() | acyclic graph.', () {
-      expect(graph.findCycle(), []);
-    });
+
     test('graph.cycle | cyclic graph.', () {
-      graph.addEdges(l, [l]);
+      graph.addEdges(l, {l});
       expect(graph.cycle, [l, l]);
-      graph.removeEdges(l, [l]);
+      graph.removeEdges(l, {l});
     });
-    test('graph.findCycle() | cyclic graph.', () {
-      graph.addEdges(l, [l]);
-      expect(graph.findCycle(), [l, l]);
-      graph.removeEdges(l, [l]);
-    });
+
     test('graph.cycle | non-trivial cycle.', () {
-      graph.addEdges(i, [k]);
+      graph.addEdges(i, {k});
       expect(graph.cycle, [f, i, k, f]);
-      graph.removeEdges(i, [k]);
+      graph.removeEdges(i, {k});
     });
   });
 }
