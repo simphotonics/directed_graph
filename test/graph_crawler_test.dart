@@ -1,6 +1,6 @@
-import 'package:directed_graph/directed_graph.dart';
-import 'package:directed_graph/graph_crawler.dart';
-import 'package:test/test.dart';
+import 'package:directed_graph/src/base/directed_graph_base.dart';
+import 'package:directed_graph/src/base/graph_crawler_base.dart';
+import 'package:minimal_test/minimal_test.dart';
 
 /// To run the test, navigate to the folder 'directed_graph'
 /// in your local copy of this library and use the command:
@@ -9,45 +9,44 @@ import 'package:test/test.dart';
 ///
 void main() {
   int comparator(
-    Vertex<String> vertex1,
-    Vertex<String> vertex2,
+    String s1,
+    String s2,
   ) {
-    return vertex1.data.compareTo(vertex2.data);
+    return s1.compareTo(s2);
   }
 
-  var a = Vertex<String>('a');
-  var b = Vertex<String>('b');
-  var c = Vertex<String>('c');
-  var d = Vertex<String>('d');
-  var e = Vertex<String>('e');
-  var f = Vertex<String>('f');
-  var g = Vertex<String>('g');
-  var h = Vertex<String>('h');
-  var i = Vertex<String>('i');
-  var k = Vertex<String>('k');
-  var l = Vertex<String>('l');
+  var a = 'a';
+  var b = 'b';
+  var c = 'c';
+  var d = 'd';
+  var e = 'e';
+  var f = 'f';
+  var g = 'g';
+  var h = 'h';
+  var i = 'i';
+  var k = 'k';
+  var l = 'l';
 
-  final graph = DirectedGraph<String>(
+  var graph = DirectedGraph<String>(
     {
-      a: [b, h, c, e],
-      b: [h],
-      c: [h, g],
-      d: [e, f],
-      e: [g],
-      f: [i],
-      i: [k, l],
-      k: [g, f],
-      l: [l]
+      a: {b, h, c, e},
+      d: {e, f},
+      b: {h},
+      c: {h, g},
+      f: {i},
+      i: {l, k},
+      k: {g, f},
+      l: {l}
     },
     comparator: comparator,
   );
 
-  final crawler = GraphCrawler<String>(edges: graph.edges);
+  final crawler = GraphCrawler<String>(graph.edges);
 
   group('Simple paths:', () {
     test('no path: a->l', () {
-      expect(crawler.paths(a, l), []);
-      expect(crawler.path(a, l), []);
+      expect(crawler.paths(a, l), <List<String>>[]);
+      expect(crawler.path(a, l), <String>[]);
     });
     test('d->i', () {
       expect(crawler.paths(d, i), [
@@ -56,12 +55,15 @@ void main() {
       expect(crawler.path(d, i), [d, f, i]);
     });
     test('a->h:', () {
-      expect(crawler.paths(a, h), [
-        [a, b, h],
-        [a, h],
-        [a, c, h],
-      ]);
-      expect(crawler.path(a, h), [a, b, h]);
+      expect(
+        crawler.paths(a, h),
+        [
+          [a, h],
+          [a, b, h],
+          [a, c, h],
+        ],
+      );
+      expect(crawler.path(a, h), [a, h]);
     });
   });
   group('Cyclic paths:', () {
@@ -95,6 +97,66 @@ void main() {
         crawler.path(l, l),
         [l, l],
       );
+    });
+  });
+  group('SimpleTree', () {
+    test('Root: a', () {
+      expect(crawler.simpleTree('a'), {
+        {'a'},
+        {'a', 'b'},
+        {'a', 'h'},
+        {'a', 'c'},
+        {'a', 'e'},
+        {'a', 'b', 'h'},
+        {'a', 'c', 'h'},
+        {'a', 'c', 'g'},
+      });
+    });
+    test('Root: a, target: h', () {
+      expect(crawler.simpleTree('a', target: 'h'), {
+        {'a'},
+        {'a', 'b'},
+        {'a', 'h'},
+      });
+    });
+  });
+  group('Tree:', () {
+    test('Root: a', () {
+      expect(crawler.tree('a'), [
+        ['a'],
+        ['a', 'b'],
+        ['a', 'h'],
+        ['a', 'c'],
+        ['a', 'e'],
+        ['a', 'b', 'h'],
+        ['a', 'c', 'h'],
+        ['a', 'c', 'g'],
+      ]);
+    });
+    test('Root: a, target: h', () {
+      expect(crawler.tree('a', target: 'h'), [
+        ['a'],
+        ['a', 'b'],
+        ['a', 'h'],
+      ]);
+    });
+    test('Root: d, maxCount: 2', () {
+      expect(crawler.tree('d', maxCount: 2), [
+        [d],
+        [d, e],
+        [d, f],
+        [d, f, i],
+        [d, f, i, l],
+        [d, f, i, k],
+        [d, f, i, l, l],
+        [d, f, i, k, g],
+        [d, f, i, k, f],
+        [d, f, i, k, f, i],
+        [d, f, i, k, f, i, l],
+        [d, f, i, k, f, i, k],
+        [d, f, i, k, f, i, l, l],
+        [d, f, i, k, f, i, k, g],
+      ]);
     });
   });
 }
