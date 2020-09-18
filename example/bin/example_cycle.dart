@@ -1,4 +1,4 @@
-import 'package:directed_graph/directed_graph.dart';
+import 'package:directed_graph/src/base/directed_graph_base.dart';
 
 // // To run this program navigate to
 // // the folder 'directed_graph/example'
@@ -9,10 +9,10 @@ import 'package:directed_graph/directed_graph.dart';
 // // followed by enter.
 void main() {
   var graph = DirectedGraph<String>({
-    'a': ['b', 'c', 'd'],
-    'b': ['a', 'c', 'd'],
-    'c': ['a', 'b', 'd'],
-    'd': ['a', 'b', 'c'],
+    'a': {'b', 'c', 'd'},
+    'b': {'a', 'c', 'd'},
+    'c': {'a', 'b', 'd'},
+    'd': {'a', 'b', 'c'},
   });
 
   // graph.addEdges('e', ['a']);
@@ -23,7 +23,6 @@ void main() {
   print(graph.outDegreeMap);
 
   print(graph);
-  print(graph.findCycle());
-
+  print(graph.cycle);
   print(graph.localSources);
 }
