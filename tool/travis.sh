@@ -36,6 +36,7 @@ echo -e "${BLUE}=== Analyzing $PWD...${RESET}"
 echo
 
 dartanalyzer \
+    --enable-experiment=non-nullable \
     --fatal-warnings \
     --fatal-infos \
     --packages="$PWD/.packages" \
@@ -45,7 +46,9 @@ dartanalyzer \
 echo
 echo -e "${CYAN}=== Testing $PWD...${RESET}"
 echo
-pub run test -r expanded --test-randomize-ordering-seed=random
+#pub run test -r expanded --test-randomize-ordering-seed=random
+pub run --enable-experiment=non-nullable minimal_test:minimal_test.dart
+
 
 
 # ==============================
