@@ -40,19 +40,18 @@ Graph edges are emanating from a vertex and ending at a vertex.
 - **Out-degree** of a vertex: Number of edges starting at this vertex. For example, vertex F has out-degree 1.
 - **Source**: A vertex with in-degree zero is called (local) source. Vertices A and D in the graph above are local sources.
 - **Edge**: An ordered pair of connected vertices. For example, the edge (A, C) starts at vertex A and ends at vertex C.
-- **Path**: A directed path is an ordered list of at least two connected vertices. The path (A, E, G) starts at vertex A and ends at vertex G.
+- **Path**: A path is an ordered list of at least two connected vertices, where each *inner* vertex is **distinct**.  (except possibly the
+first and last vertex). The path (A, E, G) starts at vertex A and ends at vertex G. The path (F, I, K, F) completes a cycle.
+- **Walk**: A walk is an ordered list of at least two connected vertices. A cyclic path contains an infinite number of walks.
+(D, F, I, K, F) is a walk but not a path since the vertex F is listed twice.
 - **Cycle**: A path that starts and ends at the same vertex. For example, a self-loop is a cycle. The dashed edges in the figure complete a cycle.
 - **DAG**: An acronym for **Directed Acyclic Graph**, a directed graph without cycles.
 - **Topological ordering**: An ordered list of all vertices in a graph such that vertex1 occurs before vertex2 if there is an edge pointing from vertex1 to vertex2.
 A topological ordering of the graph above is: [A, D, B, C, E, K, F, G, H, I, L]. Hereby, dashed edges were disregarded since a cyclic graph does
 not have a topological ordering.
 
-**Note**: In the context of this package the definition of *edge* might be more lax compared to a rigorous mathematical definition.
-For example, self-loops, that is edges connecting a vertex to itself are explicitly allowed.
-
-For simplicity, edges are (internally) stored in a structure of type `Map<Vertex<T>, List<Vertex<T>>>` and there is nothing preventing a user from
-inserting self-loops or multiple edges between the same nodes. While self-loops will render a graph cyclic, multiple entries of the same edge
-do not affect the algorithms calculating a topological ordering of vertices.
+**Note**: In the context of this package the definition of *edge* might be more lax compared to a rigorous mathematical
+definition. For example, self-loops, that is edges connecting a vertex to itself are explicitly allowed.
 
 ## Usage
 
