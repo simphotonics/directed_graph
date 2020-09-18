@@ -40,8 +40,8 @@ Graph edges are emanating from a vertex and ending at a vertex.
 - **Out-degree** of a vertex: Number of edges starting at this vertex. For example, vertex F has out-degree 1.
 - **Source**: A vertex with in-degree zero is called (local) source. Vertices A and D in the graph above are local sources.
 - **Edge**: An ordered pair of connected vertices. For example, the edge (A, C) starts at vertex A and ends at vertex C.
-- **Path**: A path is an ordered list of at least two connected vertices, where each *inner* vertex is **distinct**.  (except possibly the
-first and last vertex). The path (A, E, G) starts at vertex A and ends at vertex G. The path (F, I, K, F) completes a cycle.
+- **Path**: A path is an ordered list of at least two connected vertices, where each *inner* vertex is **distinct**.
+   The path (A, E, G) starts at vertex A and ends at vertex G. The path (F, I, K, F) completes a cycle.
 - **Walk**: A walk is an ordered list of at least two connected vertices. A cyclic path contains an infinite number of walks.
 (D, F, I, K, F) is a walk but not a path since the vertex F is listed twice.
 - **Cycle**: A path that starts and ends at the same vertex. For example, a self-loop is a cycle. The dashed edges in the figure complete a cycle.
