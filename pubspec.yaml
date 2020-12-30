@@ -4,21 +4,23 @@ description: Directed graph with algorithms enabling topological ordering and
   sorting of vertices. The package provides a graph crawler for finding the
   paths connecting two vertices.
 
-version: 0.2.4.null_safety
+version: 0.3.0-nullsafety
 
 homepage: https://github.com/simphotonics/directed_graph
 
 environment:
-  sdk: '>=2.9.0 <3.0.0'
+  sdk: '>=2.10.0 <3.0.0'
 
 dependencies:
   #graphs: ^0.2.0
+  exception_templates: ^0.1.1-nullsafety
+  quote_buffer: ^0.2.2-nullsafety
   #collection: ^1.14.13
 
 dev_dependencies:
   benchmark_harness: ^1.0.5
   pedantic: ^1.9.2
-  minimal_test: ^0.0.9
+  minimal_test: ^0.1.0-nullsafety
 
 dependency_overrides:
   # ansicolor:
@@ -29,7 +31,3 @@ dependency_overrides:
     git:
       url: git://github.com/dart-lang/benchmark_harness.git
       ref: null_safety
-  # lazy_evaluation:
-  #   git:
-  #     url: git://github.com/simphotonics/lazy_evaluation.git
-  #     ref: null_safety
