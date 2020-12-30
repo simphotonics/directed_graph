@@ -18,7 +18,7 @@ dependencies:
   #collection: ^1.14.13
 
 dev_dependencies:
-  benchmark_harness: ^1.0.5
+  # benchmark_harness: ^1.0.5
   pedantic: ^1.9.2
   minimal_test: ^0.1.0-nullsafety
 
@@ -27,7 +27,7 @@ dependency_overrides:
   #   git:
   #     url: git://github.com/simphotonics/ansicolor-dart.git
   #     ref: null_safety
-  benchmark_harness:
-    git:
-      url: git://github.com/dart-lang/benchmark_harness.git
-      ref: null_safety
+  # benchmark_harness:
+  #   git:
+  #     url: git://github.com/dart-lang/benchmark_harness.git
+  #     ref: null_safety
