@@ -26,7 +26,7 @@ for finding:
 * cycles,
 * a topological ordering of the graph vertices.
 
-The class [`GraphCrawler`][GraphCrawler] can be used to find all paths connecting two vertices.
+The class [`GraphCrawler`][GraphCrawler] can be used to retrieve *paths* or *walks* connecting two vertices.
 
 ## Terminology
 
@@ -39,16 +39,16 @@ Graph edges are emanating from a vertex and ending at a vertex.
 - **In-degree** of a vertex: Number of edges ending at this vertex. For example, vertex H has in-degree 3.
 - **Out-degree** of a vertex: Number of edges starting at this vertex. For example, vertex F has out-degree 1.
 - **Source**: A vertex with in-degree zero is called (local) source. Vertices A and D in the graph above are local sources.
-- **Edge**: An ordered pair of connected vertices. For example, the edge (A, C) starts at vertex A and ends at vertex C.
-- **Path**: A path is an ordered list of at least two connected vertices, where each *inner* vertex is **distinct**.
-   The path (A, E, G) starts at vertex A and ends at vertex G. The path (F, I, K, F) completes a cycle.
-- **Walk**: A walk is an ordered list of at least two connected vertices. A cyclic path contains an infinite number of walks.
-(D, F, I, K, F) is a walk but not a path since the vertex F is listed twice.
-- **Cycle**: A path that starts and ends at the same vertex. For example, a self-loop is a cycle. The dashed edges in the figure complete a cycle.
+- **Directed Edge**: An ordered pair of connected vertices (v<sub>i</sub>, v<sub>j</sub>). For example, the edge (A, C) starts at vertex A and ends at vertex C.
+- **Path**: A path {v<sub>i</sub>, ...,   v<sub>n</sub>} is an ordered *set* of at least two connected vertices where each vertex is **distinct**.
+   The path \{A, E, G\} starts at vertex A and ends at vertex G.
+- **Cycle**: A cycle is an ordered *list* of connected vertices where each inner vertex is distinct and the
+first and last vertices are identical. The sequence \[F, I, K, F\] completes a cycle.
+- **Walk**: A walk is an ordered *list* of at least two connected vertices.
+\[D, F, I, K, F\] is a walk but not a path since the vertex F is listed twice.
 - **DAG**: An acronym for **Directed Acyclic Graph**, a directed graph without cycles.
-- **Topological ordering**: An ordered list of all vertices in a graph such that vertex1 occurs before vertex2 if there is an edge pointing from vertex1 to vertex2.
-A topological ordering of the graph above is: [A, D, B, C, E, K, F, G, H, I, L]. Hereby, dashed edges were disregarded since a cyclic graph does
-not have a topological ordering.
+- **Topological ordering**: An ordered *set* of all vertices in a graph such that v<sub>i</sub> occurs before v<sub>j</sub> if there is a directed edge (v<sub>i</sub>, v<sub>j</sub>).
+A topological ordering of the graph above is: \{A, D, B, C, E, K, F, G, H, I, L\}. Hereby, dashed edges were disregarded since a cyclic graph does not have a topological ordering.
 
 **Note**: In the context of this package the definition of *edge* might be more lax compared to a rigorous mathematical
 definition. For example, self-loops, that is edges connecting a vertex to itself are explicitly allowed.
@@ -203,92 +203,58 @@ void main() {
   ```Console
   $ dart example/bin/example.dart
   Example Directed Graph...
-
   graph.toString():
   {
-   A: [B, H, C, E],
-   B: [H],
-   C: [H, G],
-   D: [E, F],
-   E: [G],
-   F: [I],
-   G: [],
-   H: [],
-   I: [L],
-   K: [G, F],
-   L: [],
+   'a': {'b', 'h', 'c', 'e'},
+   'b': {'h'},
+   'c': {'h', 'g'},
+   'd': {'e', 'f'},
+   'e': {'g'},
+   'f': {'i'},
+   'g': {},
+   'h': {},
+   'i': {'l'},
+   'k': {'g', 'f'},
+   'l': {},
   }
-
-  Example Directed Graph...
-
-  graphII.toString():
-  {
-   A: [B, H, C, E],
-   B: [H],
-   C: [H, G],
-   D: [E, F],
-   E: [G],
-   F: [I],
-   G: [],
-   H: [],
-   I: [L],
-   K: [G, F],
-   L: [],
-  }
-
+  
   Is Acylic:
   true
-
+  
   Strongly connected components:
-  [[H], [B], [G], [C], [E], [A], [L], [I], [F], [D], [K]]
-
+  [[h], [b], [g], [c], [e], [a], [l], [i], [f], [d], [k]]
+  
   ShortestPath(d, l):
-  [F, I, L]
-
+  
   InDegree(C):
   1
-
+  
   OutDegree(C)
   2
-
+  
   Vertices sorted in lexicographical order:
-  [A, B, C, D, E, F, G, H, I, K, L]
-
+  [a, b, c, d, e, f, g, h, i, k, l]
+  
   Vertices sorted in inverse lexicographical order:
-  [L, K, I, H, G, F, E, D, C, B, A]
-
+  [l, k, i, h, g, f, e, d, c, b, a]
+  
   InDegreeMap:
-  {A: 0, B: 1, H: 3, C: 1, E: 2, G: 3, D: 0, F: 2, I: 1, L: 1, K: 0}
-
+  {a: 0, b: 1, h: 3, c: 1, e: 2, g: 3, d: 0, f: 2, i: 1, l: 1, k: 0}
+  
   Sorted Topological Ordering:
-  [A, B, C, D, E, H, K, F, G, I, L]
-
+  {a, b, c, d, e, h, k, f, g, i, l}
+  
   Topological Ordering:
-  [A, B, C, D, E, H, K, F, I, G, L]
-
+  {a, b, c, d, e, h, k, f, i, g, l}
+  
   Local Sources:
-  [[A, D, K], [B, C, E, F], [G, H, I], [L]]
-
+  [[a, d, k], [b, c, e, f], [g, h, i], [l]]
+  
   Cycle:
-  [L, L]
-
-  Paths from D to L.
-  [[D, F, I, L]]
-
-  Paths from D to I.
-  [[D, F, I]]
-
-  Paths from A to H.
-  [[A, B, H], [A, H], [A, C, H]]
-
-  Paths from L to L.
-  [[L, L]]
-
-  Path from F to F.
-  [F, I, K, F]
-
-  Path from A to H.
-  [A, B, H]
+  [l, l]
+  
+  Shortest Paths:
+  {a: [], b: [b], h: [h], c: [c], e: [e], g: [c, g]}
 
   ```
 
