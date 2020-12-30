@@ -415,11 +415,11 @@ class DirectedGraph<T> extends Iterable {
   /// the same vertex while inner vertices are distinct.
   List<T> get cycle {
     final start = cycleStartVertex;
-    if (start == null){
+    if (start == null) {
       return <T>[];
-    }else{
-    final crawler = GraphCrawler<T>(edges);
-    return crawler.path(start, start);
+    } else {
+      final crawler = GraphCrawler<T>(edges);
+      return crawler.path(start, start);
     }
   }
 
