@@ -56,7 +56,7 @@ pub run --enable-experiment=non-nullable minimal_test:minimal_test.dart
 # ===============================
 
 # Directories to be processed
-directories="example benchmark"
+directories="example"
 
 for directory in $directories; do
   cd $directory
