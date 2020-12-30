@@ -1,5 +1,4 @@
-import 'package:directed_graph/src/base/directed_graph_base.dart';
-import 'package:directed_graph/src/base/graph_crawler_base.dart';
+import 'package:directed_graph/directed_graph.dart';
 import 'package:minimal_test/minimal_test.dart';
 
 /// To run the test, navigate to the folder 'directed_graph'
@@ -101,23 +100,18 @@ void main() {
   });
   group('SimpleTree', () {
     test('Root: a', () {
-      expect(crawler.simpleTree('a'), {
+      graph.addEdges('a', {'a'});
+      expect(crawler.simpleTree('a'), [
+        {'b'},
+        {'h'},
+        {'c'},
+        {'e'},
         {'a'},
-        {'a', 'b'},
-        {'a', 'h'},
-        {'a', 'c'},
-        {'a', 'e'},
-        {'a', 'b', 'h'},
-        {'a', 'c', 'h'},
-        {'a', 'c', 'g'},
-      });
-    });
-    test('Root: a, target: h', () {
-      expect(crawler.simpleTree('a', target: 'h'), {
-        {'a'},
-        {'a', 'b'},
-        {'a', 'h'},
-      });
+        {'b', 'h'},
+        {'c', 'h'},
+        {'c', 'g'},
+      ]);
+      graph.removeEdges('a', {'a'});
     });
   });
   group('Tree:', () {

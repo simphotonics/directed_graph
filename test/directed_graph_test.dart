@@ -1,4 +1,4 @@
-import 'package:directed_graph/src/base/directed_graph_base.dart';
+import 'package:directed_graph/directed_graph.dart';
 import 'package:minimal_test/minimal_test.dart';
 
 /// To run the test, navigate to the folder 'directed_graph'
@@ -51,17 +51,17 @@ void main() {
       expect(
           graph.toString(),
           '{\n'
-          ' a: [b, h, c, e],\n'
-          ' b: [h],\n'
-          ' c: [h, g],\n'
-          ' d: [e, f],\n'
-          ' e: [],\n'
-          ' f: [i],\n'
-          ' g: [],\n'
-          ' h: [],\n'
-          ' i: [l],\n'
-          ' k: [g, f],\n'
-          ' l: [],\n'
+          ' \'a\': {\'b\', \'h\', \'c\', \'e\'},\n'
+          ' \'b\': {\'h\'},\n'
+          ' \'c\': {\'h\', \'g\'},\n'
+          ' \'d\': {\'e\', \'f\'},\n'
+          ' \'e\': {},\n'
+          ' \'f\': {\'i\'},\n'
+          ' \'g\': {},\n'
+          ' \'h\': {},\n'
+          ' \'i\': {\'l\'},\n'
+          ' \'k\': {\'g\', \'f\'},\n'
+          ' \'l\': {},\n'
           '}');
     });
     test('get comparator', () {
@@ -184,13 +184,13 @@ void main() {
     });
     test('sortedTopologicalOrdering():', () {
       expect(
-          graph.sortedTopologicalOrdering, [a, b, c, d, e, h, k, f, g, i, l]);
+          graph.sortedTopologicalOrdering, {a, b, c, d, e, h, k, f, g, i, l});
     });
     test('topologicalOrdering():', () {
-      expect(graph.topologicalOrdering, [a, b, c, d, e, h, k, f, i, g, l]);
+      expect(graph.topologicalOrdering, {a, b, c, d, e, h, k, f, i, g, l});
     });
     test('topologicalOrdering(): empty graph', () {
-      expect(DirectedGraph<int>({}).topologicalOrdering, <int>[]);
+      expect(DirectedGraph<int>({}).topologicalOrdering, <int>{});
     });
     test('localSources().', () {
       expect(graph.localSources, [
@@ -216,6 +216,25 @@ void main() {
       graph.addEdges(i, {k});
       expect(graph.cycle, [f, i, k, f]);
       graph.removeEdges(i, {k});
+    });
+  });
+  group('TransitiveClosure', () {
+    test('acyclic graph', () {
+      expect(
+          DirectedGraph.transitiveClosure(graph).graphData,
+          <String, Set<String>>{
+            a: {b, h, c, g, e},
+            b: {h},
+            c: {h, g},
+            d: {e, f, i, l},
+            e: {},
+            f: {i, l},
+            g: {},
+            h: {},
+            i: {l},
+            k: {g, f, i, l},
+            l: {},
+          });
     });
   });
 }

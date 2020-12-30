@@ -1,4 +1,4 @@
-import 'package:directed_graph/src/base/directed_graph_base.dart';
+import 'package:directed_graph/directed_graph.dart';
 
 // // To run this program navigate to
 // // the folder 'directed_graph/example'
