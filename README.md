@@ -47,8 +47,10 @@ first and last vertices are identical. The sequence \[F, I, K, F\] completes a c
 - **Walk**: A walk is an ordered *list* of at least two connected vertices.
 \[D, F, I, K, F\] is a walk but not a path since the vertex F is listed twice.
 - **DAG**: An acronym for **Directed Acyclic Graph**, a directed graph without cycles.
-- **Topological ordering**: An ordered *set* of all vertices in a graph such that v<sub>i</sub> occurs before v<sub>j</sub> if there is a directed edge (v<sub>i</sub>, v<sub>j</sub>).
-A topological ordering of the graph above is: \{A, D, B, C, E, K, F, G, H, I, L\}. Hereby, dashed edges were disregarded since a cyclic graph does not have a topological ordering.
+- **Topological ordering**: An ordered *set* of all vertices in a graph such that v<sub>i</sub>
+occurs before v<sub>j</sub> if there is a directed edge (v<sub>i</sub>, v<sub>j</sub>).
+A topological ordering of the graph above is: \{A, D, B, C, E, K, F, G, H, I, L\}.
+Hereby, dashed edges were disregarded since a cyclic graph does not have a topological ordering.
 
 **Note**: In the context of this package the definition of *edge* might be more lax compared to a rigorous mathematical
 definition. For example, self-loops, that is edges connecting a vertex to itself are explicitly allowed.
@@ -60,9 +62,9 @@ example below shows how to construct a graph. The constructor takes an optional 
 as parameter. If a comparator is specified, vertices are sorted accordingly. For more information see [comparator].
 
 ```Dart
-import 'package:directed_graph/directed_graph.dart';
-import 'package:ansicolor/ansicolor.dart';
-import 'package:directed_graph/graph_crawler.dart';
+
+import 'package:directed_graph/src/graphs/directed_graph.dart';
+import 'package:directed_graph/src/utils/color_utils.dart';
 
 // To run this program navigate to
 // the folder 'directed_graph/example'
@@ -72,129 +74,75 @@ import 'package:directed_graph/graph_crawler.dart';
 //
 // followed by enter.
 void main() {
-  var a = Vertex<String>('A');
-  var b = Vertex<String>('B');
-  var c = Vertex<String>('C');
-  var d = Vertex<String>('D');
-  var e = Vertex<String>('E');
-  var f = Vertex<String>('F');
-  var g = Vertex<String>('G');
-  var h = Vertex<String>('H');
-  var i = Vertex<String>('I');
-  var k = Vertex<String>('K');
-  var l = Vertex<String>('L');
-
-  int comparator(
-    Vertex<String> vertex1,
-    Vertex<String> vertex2,
-  ) {
-    return vertex1.data.compareTo(vertex2.data);
-  }
-
-  int inverseComparator(Vertex<String> vertex1, Vertex<String> vertex2) =>
-      -comparator(vertex1, vertex2);
+  int comparator(String s1, String s2) => s1.compareTo(s2);
+  int inverseComparator(String s1, String s2) => -comparator(s1, s2);
 
   // Constructing a graph from vertices.
-  var graph = DirectedGraph<String>(
+  final graph = DirectedGraph<String>(
     {
-      a: [b, h, c, e],
-      b: [h],
-      c: [h, g],
-      d: [e, f],
-      e: [g],
-      f: [i],
-      i: [l],
-      k: [g, f]
+      'a': {'b', 'h', 'c', 'e'},
+      'b': {'h'},
+      'c': {'h', 'g'},
+      'd': {'e', 'f'},
+      'e': {'g'},
+      'f': {'i'},
+      'i': {'l'},
+      'k': {'g', 'f'}
     },
     comparator: comparator,
   );
 
-  // Constructing a graph from data.
-  // Note: Each object is converted to a vertex.
-  var graphII = DirectedGraph<String>.fromData({
-    'A': ['B', 'H', 'C', 'E'],
-    'B': ['H'],
-    'C': ['H', 'G'],
-    'D': ['E', 'F'],
-    'E': ['G'],
-    'F': ['I'],
-    'I': ['L'],
-    'K': ['G', 'F'],
-  }, comparator: comparator);
-
-  final bluePen = AnsiPen()..blue(bold: true);
-  final magentaPen = AnsiPen()..magenta(bold: true);
-
-  print(magentaPen('Example Directed Graph...'));
-  print(bluePen('\ngraph.toString():'));
+  print(magenta('Example Directed Graph...'));
+  print(blue('graph.toString():'));
   print(graph);
 
-  print(bluePen('\ngraphII.toString():'));
-  print(graphII);
-
-  print(bluePen('\nIs Acylic:'));
+  print(blue('\nIs Acylic:'));
   print(graph.isAcyclic);
 
-  print(bluePen('\nStrongly connected components:'));
+  print(blue('\nStrongly connected components:'));
   print(graph.stronglyConnectedComponents);
 
-  print(bluePen('\nShortestPath(d, l):'));
-  print(graph.shortestPath(d, l));
+  print(blue('\nShortestPath(d, l):'));
+  //print(graph.shortestPath('d', 'l'));
 
-  print(bluePen('\nInDegree(C):'));
-  print(graph.inDegree(c));
+  print(blue('\nInDegree(C):'));
+  print(graph.inDegree('c'));
 
-  print(bluePen('\nOutDegree(C)'));
-  print(graph.outDegree(c));
+  print(blue('\nOutDegree(C)'));
+  print(graph.outDegree('c'));
 
-  print(bluePen('\nVertices sorted in lexicographical order:'));
+  print(blue('\nVertices sorted in lexicographical order:'));
   print(graph.vertices);
 
-  print(bluePen('\nVertices sorted in inverse lexicographical order:'));
+  print(blue('\nVertices sorted in inverse lexicographical order:'));
   graph.comparator = inverseComparator;
   print(graph.vertices);
   graph.comparator = comparator;
 
-  print(bluePen('\nInDegreeMap:'));
+  print(blue('\nInDegreeMap:'));
   print(graph.inDegreeMap);
 
-  print(bluePen('\nSorted Topological Ordering:'));
+  print(blue('\nSorted Topological Ordering:'));
   print(graph.sortedTopologicalOrdering);
 
-  print(bluePen('\nTopological Ordering:'));
+  print(blue('\nTopological Ordering:'));
   print(graph.topologicalOrdering);
 
-  print(bluePen('\nLocal Sources:'));
+  print(blue('\nLocal Sources:'));
   print(graph.localSources);
 
   // Add edge to render the graph cyclic
-  graph.addEdges(i, [k]);
-  graph.addEdges(l, [l]);
+  graph.addEdges('i', {'k'});
+  graph.addEdges('l', {'l'});
+  graph.addEdges('i', {'d'});
 
-  print(bluePen('\nCycle:'));
+  print(blue('\nCycle:'));
   print(graph.cycle);
 
-  // Create graph crawler.
-  final crawler = GraphCrawler<String>(edges: graph.edges);
-
-  print(bluePen('\nPaths from D to L.'));
-  print(crawler.paths(d, l));
-
-  print(bluePen('\nPaths from D to I.'));
-  print(crawler.paths(d, i));
-
-  print(bluePen('\nPaths from A to H.'));
-  print(crawler.paths(a, h));
-
-  print(bluePen('\nPaths from L to L.'));
-  print(crawler.paths(l, l));
-
-  print(bluePen('\nPath from F to F.'));
-  print(crawler.path(f, f));
-
-  print(bluePen('\nPath from A to H.'));
-  print(crawler.path(a, h));
+  print(blue('\nShortest Paths:'));
+  print(graph.shortestPaths('a', target: 'g'));
 }
+
 
 ```
 
@@ -217,42 +165,42 @@ void main() {
    'k': {'g', 'f'},
    'l': {},
   }
-  
+
   Is Acylic:
   true
-  
+
   Strongly connected components:
   [[h], [b], [g], [c], [e], [a], [l], [i], [f], [d], [k]]
-  
+
   ShortestPath(d, l):
-  
+
   InDegree(C):
   1
-  
+
   OutDegree(C)
   2
-  
+
   Vertices sorted in lexicographical order:
   [a, b, c, d, e, f, g, h, i, k, l]
-  
+
   Vertices sorted in inverse lexicographical order:
   [l, k, i, h, g, f, e, d, c, b, a]
-  
+
   InDegreeMap:
   {a: 0, b: 1, h: 3, c: 1, e: 2, g: 3, d: 0, f: 2, i: 1, l: 1, k: 0}
-  
+
   Sorted Topological Ordering:
   {a, b, c, d, e, h, k, f, g, i, l}
-  
+
   Topological Ordering:
   {a, b, c, d, e, h, k, f, i, g, l}
-  
+
   Local Sources:
   [[a, d, k], [b, c, e, f], [g, h, i], [l]]
-  
+
   Cycle:
   [l, l]
-  
+
   Shortest Paths:
   {a: [], b: [b], h: [h], c: [c], e: [e], g: [c, g]}
 
