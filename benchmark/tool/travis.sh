@@ -12,4 +12,4 @@ echo
 echo -e "${GREEN}=== Running Benchmark $PWD...${RESET}"
 echo
 
-dart ./bin/benchmark.dart
+dart --enable-experiment=non-nullable ./bin/benchmark.dart

@@ -11,6 +11,6 @@ echo
 echo -e "${BLUE}=== Running Example $PWD...${RESET}"
 echo
 
-dart ./bin/example.dart
+dart --enable-experiment=non-nullable ./bin/example.dart
 
 echo
