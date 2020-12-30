@@ -1,3 +1,13 @@
+## 0.3.0
+
+* Added null-safety features.
+* Functions returning a path now return an (ordered) set of vertices.
+  (All vertices along a connected path must be distinct).
+* Functions returning a topological ordering now return an ordered set of vertices.
+* Added the classes `WeightedDirectedGraph` and `BiDirectedGraph`.
+* Overhaul of class `GraphCrawler`.
+
+
 ## 0.2.0
 
 Amended `README.md`.
