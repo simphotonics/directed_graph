@@ -11,8 +11,8 @@ obtain a list of vertices in topological order.
 
 ![Directed Graph Image](https://raw.githubusercontent.com/simphotonics/directed_graph/master/images/directed_graph.svg?sanitize=true)
 
-The methods `stronglyConnectedComponents` and `shortestPath` are provided for convenience
-only as they are simply calling the homonymously named functions provided by the package [`graphs`][graphs].
+<!-- The methods `stronglyConnectedComponents` and `shortestPath` are provided for convenience
+only as they are simply calling the homonymously named functions provided by the package [`graphs`][graphs]. -->
 
 The program can be run in a terminal by navigating to the
 folder *directed_graph/example* in your local copy of this library and using the command:
