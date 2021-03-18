@@ -330,7 +330,7 @@ For further information on how to generate a topological sorting of vertices see
 
 Please file feature requests and bugs at the [issue tracker].
 
-[comparator]: https://api.flutter.dev/flutter/dart-core/Comparator.html
+[comparator]: https://api.dart.dev/stable/dart-core/Comparator.html
 [issue tracker]: https://github.com/simphotonics/directed_graph/issues
 
 [collections]: https://api.dart.dev/stable/2.8.4/dart-collection/dart-collection-library.html
