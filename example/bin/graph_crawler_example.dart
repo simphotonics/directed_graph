@@ -43,9 +43,11 @@ void main(List<String> args) {
   print(graph);
 
   final crawler = GraphCrawler<String>(graph.edges);
-  final treeMap = crawler.mappedTree('a', target: 'g');
+  final treeMap = crawler.mappedTree('a', 'g');
 
-  print('\nTree map:');
+  print('\nTree with root vertex a:');
+  print(crawler.tree(a));
+
+  print('\nMapped tree with root vertex a:');
   print(treeMap);
-  print(graph.shortestPaths('a'));
 }
