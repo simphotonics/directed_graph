@@ -333,7 +333,7 @@ Please file feature requests and bugs at the [issue tracker].
 [comparator]: https://api.dart.dev/stable/dart-core/Comparator.html
 [issue tracker]: https://github.com/simphotonics/directed_graph/issues
 
-[collections]: https://api.dart.dev/stable/2.8.4/dart-collection/dart-collection-library.html
+[collections]: https://api.dart.dev/stable/dart-collection/dart-collection-library.html
 [example]: https://github.com/simphotonics/directed_graph/tree/master/example
 [graphs-examples]: https://pub.dev/packages/graphs#-example-tab-
 [graphs]: https://pub.dev/packages/graphs
