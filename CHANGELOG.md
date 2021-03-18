@@ -1,3 +1,7 @@
+## 0.3.2
+
+- Amended factory constructor `DirectedGraph.transitiveClosure()`.
+
 ## 0.3.1
 
 * Amended documentation.
