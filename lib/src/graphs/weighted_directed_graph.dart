@@ -4,16 +4,14 @@ import 'package:lazy_memo/lazy_memo.dart';
 import '../exceptions/error_types.dart';
 import '../extensions/sort.dart';
 import '../extensions/weighted_graph_utils.dart';
+//import '../extensions/graph_utils.dart';
 import 'directed_graph_base.dart';
 
 /// Function used to sum edge weights.
 typedef Summation<W> = W Function(W left, W right);
 
-int defaultComparator<W extends Comparable>(W left, W right) =>
-    left.compareTo(right);
-
-/// A directed graph with vertices of type `T` and weights of type
-/// `W` attached to each directed edges.
+/// A directed graph with vertices of type `T` and a weight of type
+/// `W` associated with each directed edges.
 ///
 /// * `T` must be usable as a map key.
 class WeightedDirectedGraph<T extends Object, W extends Comparable>
@@ -53,6 +51,18 @@ class WeightedDirectedGraph<T extends Object, W extends Comparable>
   factory WeightedDirectedGraph.transitiveClosure(
       WeightedDirectedGraph<T, W> graph) {
     final tcEdges = <T, Map<T, W>>{};
+
+    // for (final vertex in graph.sortedVertices) {
+    //   final weightedEdges = {
+    //     for (var connectedVertex in graph.reachableVertices(vertex))
+    //       connectedVertex: graph.weightAlong(graph.lightestPath(
+    //         vertex,
+    //         connectedVertex,
+    //       ))
+    //   };
+
+    //   tcEdges[vertex] = weightedEdges;
+    // }
 
     void addReachableVertices(T root, T current) {
       for (final vertex in graph.edges(current)) {
