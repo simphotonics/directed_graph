@@ -8,7 +8,6 @@ void main(List<String> args) {
     return s1.compareTo(s2);
   }
 
-  
   final a = 'a';
   final b = 'b';
   final c = 'c';
@@ -25,7 +24,7 @@ void main(List<String> args) {
 
   var graph = WeightedDirectedGraph<String, int>(
     {
-      a: {b: 1, h: 7, c: 2, e: 40},
+      a: {b: 1, h: 7, c: 2, e: 40, g:7},
       b: {h: 6},
       c: {h: 5, g: 4},
       d: {e: 1, f: 2},
@@ -40,13 +39,21 @@ void main(List<String> args) {
     comparator: comparator,
   );
 
-
-
+  print('Weighted Graph:');
   print(graph);
 
-  final path = graph.optimalPath(a, g, extremum: Extremum.max);
-  final lightestPath = graph.lightestPath(a, g);
+  print('\nNeighbouring vertices sorted by weight:');
+  print(graph..sortEdgesByWeight());
 
-  print('Optimal path: $path');
-  print('Lightest path: $lightestPath');
+  final lightestPath = graph.lightestPath(a, g);
+  print('\nLightest path a -> g');
+  print('$lightestPath weight: ${graph.weightAlong(lightestPath)}');
+
+  final heaviestPath = graph.heaviestPath(a, g);
+  print('\nHeaviest path a -> g');
+  print('$heaviestPath weigth: ${graph.weightAlong(heaviestPath)}');
+
+  final shortestPath = graph.shortestPath(a, g);
+  print('\nShortest path a -> g');
+  print('$shortestPath weight: ${graph.weightAlong(shortestPath)}');
 }

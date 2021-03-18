@@ -30,6 +30,7 @@ void main(List<String> args) {
       d: {e: 1, f: 2},
       e: {g: 2},
       f: {i: 3},
+      h: {a: 7},
       i: {l: 3, k: 2},
       k: {g: 4, f: 5},
       l: {l: 0}
@@ -41,18 +42,10 @@ void main(List<String> args) {
   print('Graph:');
   print(graph);
 
-  final path = graph.optimalPath(a, g, extremum: Extremum.max);
-  final lightestPath = graph.lightestPath(a, g);
-  final heaviestPath = graph.heaviestPath(a, g);
-  
-  print('Optimal path: $path');
-  print('Lightest path: $lightestPath');
-  print('Heaviest path: $heaviestPath');
-  print('Cycle: ${graph.cycle}');
-
   final crawler = GraphCrawler<String>(graph.edges);
+  final treeMap = crawler.mappedTree('a', target: 'g');
 
-  final treeMap = crawler.mappedTree('d');
-
+  print('\nTree map:');
   print(treeMap);
+  print(graph.shortestPaths('a'));
 }

@@ -1,5 +1,4 @@
 import 'package:directed_graph/directed_graph.dart';
-import 'package:directed_graph/src/utils/color_utils.dart';
 
 void main(List<String> args) {
   int comparator(String s1, String s2) => s1.compareTo(s2);
@@ -12,15 +11,14 @@ void main(List<String> args) {
       'b': {'c'},
       'c': {'d', 'f'},
       'd': {'e', 'f'},
-      'e': {'c','f'},
-
+      'e': {'c', 'f'},
     },
     comparator: inverseComparator,
   );
 
-  print(blue('Directed graph'));
+  print('Directed graph');
   print(graph);
 
-  print(blue('Strongly connected components'));
+  print('Strongly connected components');
   print(graph.stronglyConnectedComponents);
 }
