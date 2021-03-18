@@ -44,9 +44,6 @@ var gc = GraphCrawler<String>(graph.edges);
 
 void main() {
   group('Topology:', () {
-    benchmark('walks', () {
-      gc.walks(a, g);
-    }, duration: Duration(milliseconds:100));
     benchmark('path', () {
       gc.path(a, g);
     }, duration: Duration(milliseconds:100));
@@ -55,9 +52,6 @@ void main() {
     }, duration: Duration(milliseconds:100));
     benchmark('tree', () {
       gc.tree(a);
-    }, duration: Duration(milliseconds:100));
-    benchmark('simpleTree', () {
-      gc.simpleTree(a);
     }, duration: Duration(milliseconds:100));
     benchmark('mappedTree', () {
       gc.mappedTree(a);
