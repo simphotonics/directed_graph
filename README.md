@@ -42,7 +42,7 @@ edge is assigned a weight.
 - **Out-degree** of a vertex: Number of edges starting at this vertex. For example, vertex F has out-degree 1.
 - **Source**: A vertex with in-degree zero is called (local) source. Vertices A and D in the graph above are local sources.
 - **Directed Edge**: An ordered pair of connected vertices (v<sub>i</sub>, v<sub>j</sub>). For example, the edge (A, C) starts at vertex A and ends at vertex C.
-- **Path**: A path {v<sub>i</sub>, ...,   v<sub>n</sub>} is an ordered list of at least two connected vertices where each **inner** vertex is **distinct**.
+- **Path**: A path \[v<sub>i</sub>, ...,   v<sub>n</sub>\] is an ordered list of at least two connected vertices where each **inner** vertex is **distinct**.
    The path \[A, E, G\] starts at vertex A and ends at vertex G.
 - **Cycle**: A cycle is an ordered *list* of connected vertices where each inner vertex is distinct and the
 first and last vertices are identical. The sequence \[F, I, K, F\] completes a cycle.
