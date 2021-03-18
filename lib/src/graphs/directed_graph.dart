@@ -1,5 +1,6 @@
 import 'directed_graph_base.dart';
 import '../extensions/sort.dart';
+//import '../extensions/graph_utils.dart';
 
 // import 'package:graphs/graphs.dart' as graphs;
 
@@ -33,29 +34,29 @@ class DirectedGraph<T extends Object> extends DirectedGraphBase<T> {
     });
   }
 
-  /// Factory constructor returning the transitive closure of [directedGraph].
-  factory DirectedGraph.transitiveClosure(DirectedGraph<T> directedGraph) {
+  /// Factory constructor returning the transitive closure of [graph].
+  factory DirectedGraph.transitiveClosure(DirectedGraph<T> graph) {
     final tcEdges = <T, Set<T>>{};
 
+    // for (final vertex in directedGraph.sortedVertices) {
+    //   tcEdges[vertex] = Set<T>.of(directedGraph.reachableVertices(vertex));
+    // }
+
     void addReachableVertices(T root, T current) {
-      for (final vertex in directedGraph._edges[current]!) {
+      for (final vertex in graph.edges(root)) {
         if (tcEdges[root]!.contains(vertex)) continue;
         tcEdges[root]!.add(vertex);
         addReachableVertices(root, vertex);
       }
     }
 
-    for (final root in directedGraph) {
+    for (final root in graph) {
       tcEdges[root] = <T>{};
       addReachableVertices(root, root);
     }
-    return DirectedGraph._(tcEdges, comparator: directedGraph.comparator);
-  }
 
-  /// Private constructor used by `DirectedGraph.transitiveClosure`.
-  DirectedGraph._(Map<T, Set<T>> edges, {Comparator<T>? comparator})
-      : super(comparator) {
-    _edges.addAll(edges);
+
+    return DirectedGraph(tcEdges, comparator: graph.comparator);
   }
 
   /// Graph edges.
