@@ -70,16 +70,11 @@ void main() {
       expect(crawler.paths(d, i), [
         [d, f, i]
       ]);
-      expect(crawler.paths(d, i, maxWalkCount: 2), [
-        [d, f, i],
-        [d, f, i, k, f, i]
-      ]);
       expect(crawler.path(d, i), [d, f, i]);
     });
     test('cycle: d->l', () {
       expect(crawler.paths(d, l), [
         [d, f, i, l],
-        [d, f, i, l, l]
       ]);
       expect(crawler.path(d, l), [d, f, i, l]);
     });
@@ -93,15 +88,10 @@ void main() {
       );
     });
 
-    test('trivial cycle: l->l', () {
+    test('trivial cycle: l->l:', () {
       expect(crawler.paths(l, l), [
         [l, l],
       ]);
-      expect(crawler.paths(l, l, maxWalkCount: 2), [
-        [l, l],
-        [l, l, l]
-      ]);
-
       expect(
         crawler.path(l, l),
         [l, l],
