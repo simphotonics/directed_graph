@@ -1,33 +1,25 @@
 name: directed_graph
 
-description: Directed graph with algorithms enabling topological ordering and
+description: Directed (weighted) graphs with algorithms enabling topological ordering and
   sorting of vertices. The package provides a graph crawler for finding the
   paths connecting two vertices.
 
-version: 0.3.0-nullsafety
+version: 0.3.0
 
 homepage: https://github.com/simphotonics/directed_graph
 
 environment:
-  sdk: '>=2.10.0 <3.0.0'
+  sdk: '>=2.12.0 <3.0.0'
 
 dependencies:
-  #graphs: ^0.2.0
-  exception_templates: ^0.1.1-nullsafety
-  quote_buffer: ^0.2.2-nullsafety
-  #collection: ^1.14.13
+  exception_templates: ^0.2.0
+  graphs: ^1.0.0
+  lazy_memo: ^0.1.1
+  quote_buffer: ^0.2.2
 
 dev_dependencies:
-  # benchmark_harness: ^1.0.5
-  pedantic: ^1.9.2
-  minimal_test: ^0.1.0-nullsafety
+  benchmark: ^0.3.0
+  pedantic: ^1.11.0
+  test: ^1.16.5
 
-dependency_overrides:
-  # ansicolor:
-  #   git:
-  #     url: git://github.com/simphotonics/ansicolor-dart.git
-  #     ref: null_safety
-  # benchmark_harness:
-  #   git:
-  #     url: git://github.com/dart-lang/benchmark_harness.git
-  #     ref: null_safety
+dependency_overrides: null
