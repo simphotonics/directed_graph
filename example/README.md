@@ -10,7 +10,7 @@ to:
 * use the class [`GraphCrawler`][GraphCrawler].
 
 
-![Directed Graph Image](https://raw.githubusercontent.com/simphotonics/directed_graph/master/images/directed_graph.svg?sanitize=true)
+![Directed Graph Image](https://github.com/simphotonics/directed_graph/raw/main/images/directed_graph.svg?sanitize=true)
 
 
 ## Features and bugs
@@ -23,5 +23,7 @@ Please file feature requests and bugs at the [issue tracker].
 [bin]: https://github.com/simphotonics/directed_graph/blob/master/example/bin/
 
 [GraphCrawler]: https://pub.dev/documentation/directed_graph/latest/directed_graph/GraphCrawler-class.html
+
 [DirectedGraph]: https://pub.dev/documentation/directed_graph/latest/directed_graph/DirectedGraph-class.html
+
 [WeightedDirectedGraph]: https://pub.dev/documentation/directed_graph/latest/directed_graph/WeightedDirectedGraph-class.html

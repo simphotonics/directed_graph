@@ -36,7 +36,7 @@ The figure below shows a **directed graph** with unidirectional edges depicted a
 Graph edges are emanating from a vertex and ending at a vertex. In a weighted directed graph each
 edge is assigned a weight.
 
-![Directed Graph Image](https://github.com/simphotonics/directed_graph/blob/main/images/directed_graph.svg?sanitize=true)
+![Directed Graph Image](https://github.com/simphotonics/directed_graph/raw/main/images/directed_graph.svg?sanitize=true)
 
 - **In-degree** of a vertex: Number of edges ending at this vertex. For example, vertex H has in-degree 3.
 - **Out-degree** of a vertex: Number of edges starting at this vertex. For example, vertex F has out-degree 1.
