@@ -42,18 +42,43 @@ void main() {
 
   final crawler = GraphCrawler<String>(graph.edges);
 
-  group('Simple paths:', () {
-    test('no path: a->l', () {
-      expect(crawler.paths(a, l), <List<String>>[]);
-      expect(crawler.path(a, l), <String>[]);
+  group('Path', () {
+    test('no path a -> l', () {
+      expect(crawler.path(a, l), <List<String>>[]);
     });
-    test('d->i', () {
+    test('d -> i', () {
+      expect(crawler.path(d, i), [d, f, i]);
+    });
+    test('a -> h:', () {
+      expect(crawler.path(a, h), [a, h]);
+    });
+    test('cycle: d->l', () {
+      expect(crawler.path(d, l), [d, f, i, l]);
+    });
+    test('cycle: f->f', () {
+      expect(
+        crawler.path(f, f),
+        [f, i, k, f],
+      );
+    });
+    test('trivial cycle: l->l:', () {
+      expect(
+        crawler.path(l, l),
+        [l, l],
+      );
+    });
+  });
+
+  group('Paths:', () {
+    test('no path a->l', () {
+      expect(crawler.paths(a, l), <List<String>>[]);
+    });
+    test('d -> i', () {
       expect(crawler.paths(d, i), [
         [d, f, i]
       ]);
-      expect(crawler.path(d, i), [d, f, i]);
     });
-    test('a->h:', () {
+    test('a -> h:', () {
       expect(
         crawler.paths(a, h),
         [
@@ -62,21 +87,12 @@ void main() {
           [a, c, h],
         ],
       );
-      expect(crawler.path(a, h), [a, h]);
     });
-  });
-  group('Cyclic paths:', () {
-    test('simple path: d->i', () {
-      expect(crawler.paths(d, i), [
-        [d, f, i]
-      ]);
-      expect(crawler.path(d, i), [d, f, i]);
-    });
-    test('cycle: d->l', () {
+
+    test(' d->l', () {
       expect(crawler.paths(d, l), [
         [d, f, i, l],
       ]);
-      expect(crawler.path(d, l), [d, f, i, l]);
     });
     test('cycle: f->f', () {
       expect(crawler.paths(f, f), [
@@ -92,16 +108,16 @@ void main() {
       expect(crawler.paths(l, l), [
         [l, l],
       ]);
-      expect(
-        crawler.path(l, l),
-        [l, l],
-      );
     });
   });
-  group('SimpleTree', () {
-    test('Root: a', () {
+
+  group('Tree:', () {
+    test('Root: a with cycle', () {
+      addTearDown(() {
+        graph.removeEdges('a', {'a'});
+      });
       graph.addEdges('a', {'a'});
-      expect(crawler.simpleTree('a'), [
+      expect(crawler.tree('a'), [
         {'b'},
         {'h'},
         {'c'},
@@ -111,68 +127,59 @@ void main() {
         {'c', 'h'},
         {'c', 'g'},
       ]);
-      graph.removeEdges('a', {'a'});
     });
-  });
-  group('Tree:', () {
+
     test('Root: a', () {
       expect(crawler.tree('a'), [
-        ['a'],
-        ['a', 'b'],
-        ['a', 'h'],
-        ['a', 'c'],
-        ['a', 'e'],
-        ['a', 'b', 'h'],
-        ['a', 'c', 'h'],
-        ['a', 'c', 'g'],
+        {'b'},
+        {'h'},
+        {'c'},
+        {'e'},
+        {'b', 'h'},
+        {'c', 'h'},
+        {'c', 'g'}
       ]);
     });
     test('Root: a, target: h', () {
-      expect(crawler.tree('a', target: 'h'), [
-        ['a'],
-        ['a', 'b'],
-        ['a', 'h'],
+      expect(crawler.tree('a', 'h'), [
+        {'b'},
+        {'h'},
+        {'c'},
+        {'e'},
+        {'b', 'h'},
+        {'c', 'h'}
       ]);
     });
-    test('Root: d, maxCount: 2', () {
-      expect(crawler.tree('d', maxCount: 2), [
-        [d],
-        [d, e],
-        [d, f],
-        [d, f, i],
-        [d, f, i, l],
-        [d, f, i, k],
-        [d, f, i, l, l],
-        [d, f, i, k, g],
-        [d, f, i, k, f],
-        [d, f, i, k, f, i],
-        [d, f, i, k, f, i, l],
-        [d, f, i, k, f, i, k],
-        [d, f, i, k, f, i, l, l],
-        [d, f, i, k, f, i, k, g],
+    test('Root: d', () {
+      expect(crawler.tree('d'), [
+        ['e'],
+        ['f'],
+        ['f', 'i'],
+        ['f', 'i', 'l'],
+        ['f', 'i', 'k'],
+        ['f', 'i', 'k', 'g']
       ]);
     });
   });
   group('Mapped Tree:', () {
     test('mappedTree(a)', () {
       expect(crawler.mappedTree(a), {
-        a: [<String>{}],
-        b: [
-          {b}
+        'b': [
+          {'b'}
         ],
-        h: [
-          {h},
-          {b, h},
-          {c, h}
+        'h': [
+          {'h'},
+          {'b', 'h'},
+          {'c', 'h'}
         ],
-        c: [
-          {c}
+        'c': [
+          {'c'}
         ],
-        e: [
-          {e}
+        'e': [
+          {'e'}
         ],
-        g: [
-          {c, g}
+        'g': [
+          {'c', 'g'}
         ]
       });
     });
