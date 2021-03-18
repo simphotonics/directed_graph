@@ -4,7 +4,7 @@ description: Directed (weighted) graphs with algorithms enabling topological ord
   sorting of vertices. The package provides a graph crawler for finding the
   paths connecting two vertices.
 
-version: 0.3.0
+version: 0.3.1
 
 homepage: https://github.com/simphotonics/directed_graph
 

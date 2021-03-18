@@ -60,7 +60,7 @@ definition. For example, self-loops, that is edges connecting a vertex to itself
 ## Usage
 
 To use this library include [`directed_graph`][directed_graph] as a dependency in your pubspec.yaml file. The
-example below shows how to construct an object of type [`DirecteGraph`][DirectedGraph].
+example below shows how to construct an object of type [`DirectedGraph`][DirectedGraph].
 The constructor takes an optional comparator function
 as parameter. If a comparator is specified, vertices are sorted accordingly. For more information see [comparator].
 

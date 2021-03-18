@@ -1,8 +1,12 @@
+## 0.3.1
+
+* Amended documentation.
+
 ## 0.3.0
 
 * Added null-safety features.
 * Tightened the definition of path.
-  A path {v<sub>i</sub>, ...,   v<sub>n</sub>} is an ordered list of at least two connected vertices where each **inner** vertex is **distinct**.
+  A path \[v<sub>i</sub>, ...,   v<sub>n</sub>\] is an ordered list of at least two connected vertices where each **inner** vertex is **distinct**.
 * Functions returning a topological ordering now return an ordered set of vertices, reflecting the fact that in a topological ordering
   each vertex must be distinct.
 * Added the classes `WeightedDirectedGraph` and `BiDirectedGraph`.
