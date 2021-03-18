@@ -1,5 +1,5 @@
 import 'package:directed_graph/directed_graph.dart';
-import 'package:minimal_test/minimal_test.dart';
+import 'package:test/test.dart';
 
 /// To run the test, navigate to the folder 'directed_graph'
 /// in your local copy of this library and use the command:
@@ -151,6 +151,30 @@ void main() {
         [d, f, i, k, f, i, l, l],
         [d, f, i, k, f, i, k, g],
       ]);
+    });
+  });
+  group('Mapped Tree:', () {
+    test('mappedTree(a)', () {
+      expect(crawler.mappedTree(a), {
+        a: [<String>{}],
+        b: [
+          {b}
+        ],
+        h: [
+          {h},
+          {b, h},
+          {c, h}
+        ],
+        c: [
+          {c}
+        ],
+        e: [
+          {e}
+        ],
+        g: [
+          {c, g}
+        ]
+      });
     });
   });
 }

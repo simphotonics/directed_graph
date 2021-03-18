@@ -1,5 +1,5 @@
 import 'package:directed_graph/directed_graph.dart';
-import 'package:minimal_test/minimal_test.dart';
+import 'package:test/test.dart';
 
 /// To run the test, navigate to the folder 'directed_graph'
 /// in your local copy of this library and use the command:
@@ -12,13 +12,6 @@ void main() {
     String s2,
   ) {
     return s1.compareTo(s2);
-  }
-
-  int inverseComparator(
-    String s1,
-    String s2,
-  ) {
-    return -s1.compareTo(s2);
   }
 
   var a = 'a';
@@ -46,8 +39,6 @@ void main() {
     comparator: comparator,
   );
 
-  final emptyGraph = BidirectedGraph({});
-
   group('Basic:', () {
     test('toString().', () {
       expect(
@@ -66,46 +57,8 @@ void main() {
           ' \'l\': {\'i\'},\n'
           '}');
     });
-    test('get comparator', () {
-      expect(graph.comparator, comparator);
-    });
-    test('set comparator.', () {
-      graph.comparator = inverseComparator;
-      expect(graph.comparator, inverseComparator);
-      expect(graph.vertices, [l, k, i, h, g, f, e, d, c, b, a]);
-      graph.comparator = comparator;
-    });
-    test('for loop.', () {
-      var index = 0;
-      for (var vertex in graph) {
-        expect(vertex, graph.vertices[index]);
-        ++index;
-      }
-    });
   });
 
-  group('Manipulating edges/vertices.', () {
-    test('addEdges():', () {
-      expect(graph.edges(i), {l, f});
-      expect(graph.edges(k), {g, f});
-      graph.addEdges(i, {k});
-      expect(graph.edges(i), {l, f, k});
-      expect(graph.edges(k), {g, f, i});
-      graph.removeEdges(i, {k});
-      expect(graph.edges(i), {l, f});
-      expect(graph.edges(k), {g, f});
-    });
-    test('remove().', () {
-      expect(graph.edges(i), {l, f});
-      graph.remove(l);
-      expect(graph.edges(i), {f});
-      expect(graph.vertices.contains(l), false);
-      // Restore graph:
-      graph.addEdges(i, {l});
-      expect(graph.vertices.contains(l), true);
-      expect(graph.edges(i), {f, l});
-    });
-  });
   group('Graph data:', () {
     test('edges().', () {
       expect(graph.edges(a), {b, h, c, e});
@@ -114,10 +67,11 @@ void main() {
       expect(graph.inDegree(h), 3);
     });
     test('indegree vertex with self-loop.', () {
+      addTearDown(() {
+        graph.removeEdges(l, {l});
+      });
       graph.addEdges(l, {l});
       expect(graph.inDegree(l), 2);
-      graph.removeEdges(l, {l});
-      expect(graph.inDegree(l), 1);
     });
     test('outDegree().', () {
       expect(graph.outDegree(d), 2);
@@ -130,62 +84,16 @@ void main() {
       expect(graph.inDegreeMap,
           {a: 4, b: 2, h: 3, c: 3, e: 2, g: 2, d: 2, f: 3, i: 2, k: 2, l: 1});
     });
-    test('vertices().', () {
-      expect(graph.vertices, [a, b, c, d, e, f, g, h, i, k, l]);
+    test('sortedVertices.', () {
+      expect(graph.sortedVertices, [a, b, c, d, e, f, g, h, i, k, l]);
     });
   });
-  group('Topological ordering:', () {
-    test('isAcyclic: self-loop.', () {
-      graph.addEdges(l, {l});
-      expect(
-        graph.isAcyclic,
-        false,
-      );
-      graph.removeEdges(l, {l});
-    });
-    test('isAcyclic: without self-loops', () {
-      expect(graph.isAcyclic, false);
-    });
-    test('isAcyclic: empty graph', () {
-      expect(emptyGraph.isAcyclic, true);
-    });
-    test('sortedTopologicalOrdering:', () {
-      expect(graph.sortedTopologicalOrdering, null);
-    });
-    test('topologicalOrdering:', () {
-      expect(graph.topologicalOrdering, null);
-    });
-    test('topologicalOrdering: empty graph', () {
-      expect(BidirectedGraph<int>({}).topologicalOrdering, <int>{});
-    });
-    test('localSources().', () {
-      expect(graph.localSources, null);
-    });
-  });
-  group('Cycles', () {
-    test('graph.cycle | acyclic graph.', () {
-      expect(graph.cycle, [a, b, a]);
-    });
-    test('emptyGraph.cycle', () {
-      expect(emptyGraph.cycle, []);
-    });
 
-    test('graph.cycle | cyclic graph.', () {
-      graph.addEdges(a, {a});
-      expect(graph.cycle, [a, a]);
-      graph.removeEdges(a, {a});
-    });
-
-    test('graph.cycle | non-trivial cycle.', () {
-      final crawler = GraphCrawler<String>(graph.edges);
-      expect(crawler.path(f, f), [f, i, f]);
-    });
-  });
   group('TransitiveClosure', () {
     test('cyclic graph', () {
       final tc = BidirectedGraph.transitiveClosure(graph)..sortEdges();
 
-      expect(tc.graphData, {
+      expect(tc.data, {
         a: {a, b, c, d, e, f, g, h, i, k, l},
         b: {a, b, c, d, e, f, g, h, i, k, l},
         c: {a, b, c, d, e, f, g, h, i, k, l},
