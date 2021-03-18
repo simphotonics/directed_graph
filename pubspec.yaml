@@ -1,23 +1,25 @@
 name: directed_graph
 
-description: Directed graph with algorithms enabling topological ordering and
-  sorting of vertices. The package provides a graph crawler for finding 
+description: Directed (weighted) graphs with algorithms enabling topological ordering and
+  sorting of vertices. The package provides a graph crawler for finding the
   paths connecting two vertices.
 
-version: 0.2.3
+version: 0.3.0
 
 homepage: https://github.com/simphotonics/directed_graph
 
 environment:
-  sdk: '>=2.8.0 <3.0.0'
+  sdk: '>=2.12.0 <3.0.0'
 
 dependencies:
-  graphs: ^0.2.0
-  lazy_evaluation: ^0.0.6+3
-  meta: ^1.2.2
+  exception_templates: ^0.2.0
+  graphs: ^1.0.0
+  lazy_memo: ^0.1.1
+  quote_buffer: ^0.2.2
 
 dev_dependencies:
-  ansicolor: ^1.0.2
-  benchmark_harness: ^1.0.5
-  pedantic: ^1.9.2
-  test: ^1.15.3
+  benchmark: ^0.3.0
+  pedantic: ^1.11.0
+  test: ^1.16.5
+
+dependency_overrides: null

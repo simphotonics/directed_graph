@@ -22,48 +22,52 @@ It is simple to use and includes methods that enable:
 The library provides access to algorithms
 for finding:
 * the shortest path between vertices,
+* the path with the lowest/highest weight (for weighted directed graphs),
 * all paths connecting two vertices,
 * cycles,
 * a topological ordering of the graph vertices.
 
-The class [`GraphCrawler`][GraphCrawler] can be used to find all paths connecting two vertices.
+The class [`GraphCrawler`][GraphCrawler] can be used to retrieve *paths* or *walks* connecting two vertices.
 
 ## Terminology
 
 Elements of a graph are called **vertices** (or nodes) and neighbouring vertices are connected by **edges**.
 The figure below shows a **directed graph** with unidirectional edges depicted as arrows.
-Graph edges are emanating from a vertex and ending at a vertex.
+Graph edges are emanating from a vertex and ending at a vertex. In a weighted directed graph each
+edge is assigned a weight.
 
 ![Directed Graph Image](https://raw.githubusercontent.com/simphotonics/directed_graph/master/images/directed_graph.svg?sanitize=true)
 
 - **In-degree** of a vertex: Number of edges ending at this vertex. For example, vertex H has in-degree 3.
 - **Out-degree** of a vertex: Number of edges starting at this vertex. For example, vertex F has out-degree 1.
 - **Source**: A vertex with in-degree zero is called (local) source. Vertices A and D in the graph above are local sources.
-- **Edge**: An ordered pair of connected vertices. For example, the edge (A, C) starts at vertex A and ends at vertex C.
-- **Path**: A directed path is an ordered list of at least two connected vertices. The path (A, E, G) starts at vertex A and ends at vertex G.
-- **Cycle**: A path that starts and ends at the same vertex. For example, a self-loop is a cycle. The dashed edges in the figure complete a cycle.
+- **Directed Edge**: An ordered pair of connected vertices (v<sub>i</sub>, v<sub>j</sub>). For example, the edge (A, C) starts at vertex A and ends at vertex C.
+- **Path**: A path \[v<sub>i</sub>, ...,   v<sub>n</sub>\] is an ordered list of at least two connected vertices where each **inner** vertex is **distinct**.
+   The path \[A, E, G\] starts at vertex A and ends at vertex G.
+- **Cycle**: A cycle is an ordered *list* of connected vertices where each inner vertex is distinct and the
+first and last vertices are identical. The sequence \[F, I, K, F\] completes a cycle.
+- **Walk**: A walk is an ordered *list* of at least two connected vertices.
+\[D, F, I, K, F\] is a walk but not a path since the vertex F is listed twice.
 - **DAG**: An acronym for **Directed Acyclic Graph**, a directed graph without cycles.
-- **Topological ordering**: An ordered list of all vertices in a graph such that vertex1 occurs before vertex2 if there is an edge pointing from vertex1 to vertex2.
-A topological ordering of the graph above is: [A, D, B, C, E, K, F, G, H, I, L]. Hereby, dashed edges were disregarded since a cyclic graph does
-not have a topological ordering.
+- **Topological ordering**: An ordered *set* of all vertices in a graph such that v<sub>i</sub>
+occurs before v<sub>j</sub> if there is a directed edge (v<sub>i</sub>, v<sub>j</sub>).
+A topological ordering of the graph above is: \{A, D, B, C, E, K, F, G, H, I, L\}.
+Hereby, dashed edges were disregarded since a cyclic graph does not have a topological ordering.
 
-**Note**: In the context of this package the definition of *edge* might be more lax compared to a rigorous mathematical definition.
-For example, self-loops, that is edges connecting a vertex to itself are explicitly allowed.
-
-For simplicity, edges are (internally) stored in a structure of type `Map<Vertex<T>, List<Vertex<T>>>` and there is nothing preventing a user from
-inserting self-loops or multiple edges between the same nodes. While self-loops will render a graph cyclic, multiple entries of the same edge
-do not affect the algorithms calculating a topological ordering of vertices.
+**Note**: In the context of this package the definition of *edge* might be more lax compared to a rigorous mathematical
+definition. For example, self-loops, that is edges connecting a vertex to itself are explicitly allowed.
 
 ## Usage
 
 To use this library include [`directed_graph`][directed_graph] as a dependency in your pubspec.yaml file. The
-example below shows how to construct a graph. The constructor takes an optional comparator function
+example below shows how to construct an object of type [`DirecteGraph`][DirectedGraph].
+The constructor takes an optional comparator function
 as parameter. If a comparator is specified, vertices are sorted accordingly. For more information see [comparator].
 
 ```Dart
-import 'package:directed_graph/directed_graph.dart';
-import 'package:ansicolor/ansicolor.dart';
-import 'package:directed_graph/graph_crawler.dart';
+
+import 'package:directed_graph/src/graphs/directed_graph.dart';
+import 'package:directed_graph/src/utils/color_utils.dart';
 
 // To run this program navigate to
 // the folder 'directed_graph/example'
@@ -73,253 +77,252 @@ import 'package:directed_graph/graph_crawler.dart';
 //
 // followed by enter.
 void main() {
-  var a = Vertex<String>('A');
-  var b = Vertex<String>('B');
-  var c = Vertex<String>('C');
-  var d = Vertex<String>('D');
-  var e = Vertex<String>('E');
-  var f = Vertex<String>('F');
-  var g = Vertex<String>('G');
-  var h = Vertex<String>('H');
-  var i = Vertex<String>('I');
-  var k = Vertex<String>('K');
-  var l = Vertex<String>('L');
-
-  int comparator(
-    Vertex<String> vertex1,
-    Vertex<String> vertex2,
-  ) {
-    return vertex1.data.compareTo(vertex2.data);
-  }
-
-  int inverseComparator(Vertex<String> vertex1, Vertex<String> vertex2) =>
-      -comparator(vertex1, vertex2);
+  int comparator(String s1, String s2) => s1.compareTo(s2);
+  int inverseComparator(String s1, String s2) => -comparator(s1, s2);
 
   // Constructing a graph from vertices.
-  var graph = DirectedGraph<String>(
+  final graph = DirectedGraph<String>(
     {
-      a: [b, h, c, e],
-      b: [h],
-      c: [h, g],
-      d: [e, f],
-      e: [g],
-      f: [i],
-      i: [l],
-      k: [g, f]
+      'a': {'b', 'h', 'c', 'e'},
+      'b': {'h'},
+      'c': {'h', 'g'},
+      'd': {'e', 'f'},
+      'e': {'g'},
+      'f': {'i'},
+      'i': {'l'},
+      'k': {'g', 'f'}
     },
     comparator: comparator,
   );
 
-  // Constructing a graph from data.
-  // Note: Each object is converted to a vertex.
-  var graphII = DirectedGraph<String>.fromData({
-    'A': ['B', 'H', 'C', 'E'],
-    'B': ['H'],
-    'C': ['H', 'G'],
-    'D': ['E', 'F'],
-    'E': ['G'],
-    'F': ['I'],
-    'I': ['L'],
-    'K': ['G', 'F'],
-  }, comparator: comparator);
-
-  final bluePen = AnsiPen()..blue(bold: true);
-  final magentaPen = AnsiPen()..magenta(bold: true);
-
-  print(magentaPen('Example Directed Graph...'));
-  print(bluePen('\ngraph.toString():'));
+  print(magenta('Example Directed Graph...'));
+  print(blue('graph.toString():'));
   print(graph);
 
-  print(bluePen('\ngraphII.toString():'));
-  print(graphII);
-
-  print(bluePen('\nIs Acylic:'));
+  print(blue('\nIs Acylic:'));
   print(graph.isAcyclic);
 
-  print(bluePen('\nStrongly connected components:'));
+  print(blue('\nStrongly connected components:'));
   print(graph.stronglyConnectedComponents);
 
-  print(bluePen('\nShortestPath(d, l):'));
-  print(graph.shortestPath(d, l));
+  print(blue('\nShortestPath(d, l):'));
+  //print(graph.shortestPath('d', 'l'));
 
-  print(bluePen('\nInDegree(C):'));
-  print(graph.inDegree(c));
+  print(blue('\nInDegree(C):'));
+  print(graph.inDegree('c'));
 
-  print(bluePen('\nOutDegree(C)'));
-  print(graph.outDegree(c));
+  print(blue('\nOutDegree(C)'));
+  print(graph.outDegree('c'));
 
-  print(bluePen('\nVertices sorted in lexicographical order:'));
+  print(blue('\nVertices sorted in lexicographical order:'));
   print(graph.vertices);
 
-  print(bluePen('\nVertices sorted in inverse lexicographical order:'));
+  print(blue('\nVertices sorted in inverse lexicographical order:'));
   graph.comparator = inverseComparator;
   print(graph.vertices);
   graph.comparator = comparator;
 
-  print(bluePen('\nInDegreeMap:'));
+  print(blue('\nInDegreeMap:'));
   print(graph.inDegreeMap);
 
-  print(bluePen('\nSorted Topological Ordering:'));
+  print(blue('\nSorted Topological Ordering:'));
   print(graph.sortedTopologicalOrdering);
 
-  print(bluePen('\nTopological Ordering:'));
+  print(blue('\nTopological Ordering:'));
   print(graph.topologicalOrdering);
 
-  print(bluePen('\nLocal Sources:'));
+  print(blue('\nLocal Sources:'));
   print(graph.localSources);
 
   // Add edge to render the graph cyclic
-  graph.addEdges(i, [k]);
-  graph.addEdges(l, [l]);
+  graph.addEdges('i', {'k'});
+  graph.addEdges('l', {'l'});
+  graph.addEdges('i', {'d'});
 
-  print(bluePen('\nCycle:'));
+  print(blue('\nCycle:'));
   print(graph.cycle);
 
-  // Create graph crawler.
-  final crawler = GraphCrawler<String>(edges: graph.edges);
-
-  print(bluePen('\nPaths from D to L.'));
-  print(crawler.paths(d, l));
-
-  print(bluePen('\nPaths from D to I.'));
-  print(crawler.paths(d, i));
-
-  print(bluePen('\nPaths from A to H.'));
-  print(crawler.paths(a, h));
-
-  print(bluePen('\nPaths from L to L.'));
-  print(crawler.paths(l, l));
-
-  print(bluePen('\nPath from F to F.'));
-  print(crawler.path(f, f));
-
-  print(bluePen('\nPath from A to H.'));
-  print(crawler.path(a, h));
-
-  print(bluePen('\nTree with root L.'));
-  print(crawler.tree(l));
-
-  print(bluePen('\nTree with root A, target H.'));
-  print(crawler.tree(a, target: h));
-
-  print(bluePen('\nTree with root A, target G.'));
-  print(crawler.tree(a, target: g));
-
-  print(bluePen('\nPaths from L to L.'));
-  print(crawler.paths(l, l));
+  print(blue('\nShortest Paths:'));
+  print(graph.shortestPaths('a', target: 'g'));
 }
 
 ```
 
 <details> <summary> Click to show the console output. </summary>
 
-  ```Console
-  $ dart example/bin/example.dart
-  Example Directed Graph...
+```Console
+$ dart example/bin/directed_graph_example.dart
+Example Directed Graph...
+graph.toString():
+{
+ 'a': {'b', 'h', 'c', 'e'},
+ 'b': {'h'},
+ 'c': {'h', 'g'},
+ 'd': {'e', 'f'},
+ 'e': {'g'},
+ 'f': {'i'},
+ 'g': {},
+ 'h': {},
+ 'i': {'l'},
+ 'k': {'g', 'f'},
+ 'l': {},
+}
 
-  graph.toString():
-  {
-   A: [B, H, C, E],
-   B: [H],
-   C: [H, G],
-   D: [E, F],
-   E: [G],
-   F: [I],
-   G: [],
-   H: [],
-   I: [L],
-   K: [G, F],
-   L: [],
-  }
+Is Acylic:
+true
 
-  Example Directed Graph...
+Strongly connected components:
+[[h], [b], [g], [c], [e], [a], [l], [i], [f], [d], [k]]
 
-  graphII.toString():
-  {
-   A: [B, H, C, E],
-   B: [H],
-   C: [H, G],
-   D: [E, F],
-   E: [G],
-   F: [I],
-   G: [],
-   H: [],
-   I: [L],
-   K: [G, F],
-   L: [],
-  }
+ShortestPath(d, l):
 
-  Is Acylic:
-  true
+InDegree(C):
+1
 
-  Strongly connected components:
-  [[H], [B], [G], [C], [E], [A], [L], [I], [F], [D], [K]]
+OutDegree(C)
+2
 
-  ShortestPath(d, l):
-  [F, I, L]
+Vertices sorted in lexicographical order:
+[a, b, c, d, e, f, g, h, i, k, l]
 
-  InDegree(C):
-  1
+Vertices sorted in inverse lexicographical order:
+[l, k, i, h, g, f, e, d, c, b, a]
 
-  OutDegree(C)
-  2
+InDegreeMap:
+{a: 0, b: 1, h: 3, c: 1, e: 2, g: 3, d: 0, f: 2, i: 1, l: 1, k: 0}
 
-  Vertices sorted in lexicographical order:
-  [A, B, C, D, E, F, G, H, I, K, L]
+Sorted Topological Ordering:
+{a, b, c, d, e, h, k, f, g, i, l}
 
-  Vertices sorted in inverse lexicographical order:
-  [L, K, I, H, G, F, E, D, C, B, A]
+Topological Ordering:
+{a, b, c, d, e, h, k, f, i, g, l}
 
-  InDegreeMap:
-  {A: 0, B: 1, H: 3, C: 1, E: 2, G: 3, D: 0, F: 2, I: 1, L: 1, K: 0}
+Local Sources:
+[[a, d, k], [b, c, e, f], [g, h, i], [l]]
 
-  Sorted Topological Ordering:
-  [A, B, C, D, E, H, K, F, G, I, L]
+Cycle:
+[l, l]
 
-  Topological Ordering:
-  [A, B, C, D, E, H, K, F, I, G, L]
+Shortest Paths:
+{e: (e), c: (c), h: (h), a: (), g: (c, g), b: (b)}
 
-  Local Sources:
-  [[A, D, K], [B, C, E, F], [G, H, I], [L]]
-
-  Cycle:
-  [L, L]
-
-  Paths from D to L.
-  [[D, F, I, L]]
-
-  Paths from D to I.
-  [[D, F, I]]
-
-  Paths from A to H.
-  [[A, B, H], [A, H], [A, C, H]]
-
-  Paths from L to L.
-  [[L, L]]
-
-  Path from F to F.
-  [F, I, K, F]
-
-  Path from A to H.
-  [A, H]
-
-  Tree with root L.
-  [[L], [L, L]]
-  
-  Tree with root A, target H.
-  [[A], [A, B], [A, H]]
-  
-  Tree with root A, target G.
-  [[A], [A, B], [A, H], [A, C], [A, E], [A, B, H], [A, C, H], [A, C, G]]
-  
-  Paths from L to L.
-  [[L, L]]
-
-  ```
-
+```
 </details>
 
+## Weighted Directed Graphs
 
+The example below shows how to construct an object of type [`WeightedDirectedGraph`][WeightedDirectedGraph].
+The constructor takes an optional comparator function
+as parameter. If a comparator is specified, vertices are sorted accordingly.
+For more information see [comparator].
+
+```Dart
+
+import 'package:directed_graph/directed_graph.dart';
+
+void main(List<String> args) {
+  int comparator(
+    String s1,
+    String s2,
+  ) {
+    return s1.compareTo(s2);
+  }
+
+  final a = 'a';
+  final b = 'b';
+  final c = 'c';
+  final d = 'd';
+  final e = 'e';
+  final f = 'f';
+  final g = 'g';
+  final h = 'h';
+  final i = 'i';
+  final k = 'k';
+  final l = 'l';
+
+  int sum(int left, int right) => left + right;
+
+  var graph = WeightedDirectedGraph<String, int>(
+    {
+      a: {b: 1, h: 7, c: 2, e: 40, g:7},
+      b: {h: 6},
+      c: {h: 5, g: 4},
+      d: {e: 1, f: 2},
+      e: {g: 2},
+      f: {i: 3},
+      i: {l: 3, k: 2},
+      k: {g: 4, f: 5},
+      l: {l: 0}
+    },
+    summation: sum,
+    zero: 0,
+    comparator: comparator,
+  );
+
+  print('Weighted Graph:');
+  print(graph);
+
+  print('\nNeighbouring vertices sorted by weight:');
+  print(graph..sortEdgesByWeight());
+
+  final lightestPath = graph.lightestPath(a, g);
+  print('\nLightest path a -> g');
+  print('$lightestPath weight: ${graph.weightAlong(lightestPath)}');
+
+  final heaviestPath = graph.heaviestPath(a, g);
+  print('\nHeaviest path a -> g');
+  print('$heaviestPath weigth: ${graph.weightAlong(heaviestPath)}');
+
+  final shortestPath = graph.shortestPath(a, g);
+  print('\nShortest path a -> g');
+  print('$shortestPath weight: ${graph.weightAlong(shortestPath)}');
+}
+```
+
+<details> <summary> Click to show the console output. </summary>
+
+```Console
+$ dart example/bin/weighted_graph_example.dart
+Weighted Graph:
+{
+ 'a': {'b': 1, 'h': 7, 'c': 2, 'e': 40, 'g': 7},
+ 'b': {'h': 6},
+ 'c': {'h': 5, 'g': 4},
+ 'd': {'e': 1, 'f': 2},
+ 'e': {'g': 2},
+ 'f': {'i': 3},
+ 'g': {},
+ 'h': {},
+ 'i': {'l': 3, 'k': 2},
+ 'k': {'g': 4, 'f': 5},
+ 'l': {'l': 0},
+}
+
+Neighbouring vertices sorted by weight
+{
+ 'a': {'b': 1, 'c': 2, 'h': 7, 'g': 7, 'e': 40},
+ 'b': {'h': 6},
+ 'c': {'g': 4, 'h': 5},
+ 'd': {'e': 1, 'f': 2},
+ 'e': {'g': 2},
+ 'f': {'i': 3},
+ 'g': {},
+ 'h': {},
+ 'i': {'k': 2, 'l': 3},
+ 'k': {'g': 4, 'f': 5},
+ 'l': {'l': 0},
+}
+
+Lightest path a -> g
+[a, c, g] weight: 6
+
+Heaviest path a -> g
+[a, e, g] weigth: 42
+
+Shortest path a -> g
+[a, g] weight: 7
+```
+</details>
 ## Examples
 
 For further information on how to generate a topological sorting of vertices see [example].
@@ -328,12 +331,22 @@ For further information on how to generate a topological sorting of vertices see
 
 Please file feature requests and bugs at the [issue tracker].
 
-[comparator]: https://api.flutter.dev/flutter/dart-core/Comparator.html
+[comparator]: https://api.dart.dev/stable/dart-core/Comparator.html
+
 [issue tracker]: https://github.com/simphotonics/directed_graph/issues
 
-[collections]: https://api.dart.dev/stable/2.8.4/dart-collection/dart-collection-library.html
+[collections]: https://api.dart.dev/stable/dart-collection/dart-collection-library.html
+
 [example]: https://github.com/simphotonics/directed_graph/tree/master/example
+
 [graphs-examples]: https://pub.dev/packages/graphs#-example-tab-
+
 [graphs]: https://pub.dev/packages/graphs
+
 [directed_graph]: https://pub.dev/packages/directed_graph
+
 [GraphCrawler]: https://pub.dev/documentation/directed_graph/latest/directed_graph/GraphCrawler-class.html
+
+[DirectedGraph]: https://pub.dev/documentation/directed_graph/latest/directed_graph/DirectedGraph-class.html
+
+[WeightedDirectedGraph]: https://pub.dev/documentation/directed_graph/latest/directed_graph/WeightedDirectedGraph-class.html

@@ -1,5 +1,6 @@
-import 'package:directed_graph/directed_graph.dart';
 import 'package:test/test.dart';
+
+import 'package:directed_graph/directed_graph.dart';
 
 /// To run the test, navigate to the folder 'directed_graph'
 /// in your local copy of this library and use the command:
@@ -33,16 +34,21 @@ void main() {
   var k = 'k';
   var l = 'l';
 
-  var graph = DirectedGraph<String>(
+  int sum(int left, int right) => left + right;
+
+  var graph = WeightedDirectedGraph<String, int>(
     {
-      a: {b, h, c, e},
-      d: {e, f},
-      b: {h},
-      c: {h, g},
-      f: {i},
-      i: {l},
-      k: {g, f}
+      'a': {'b': 1, 'h': 7, 'c': 2, 'e': 4},
+      'b': {'h': 6},
+      'c': {'h': 5, 'g': 4},
+      'd': {'e': 1, 'f': 2},
+      'e': {'g': 2},
+      'f': {'i': 3},
+      'i': {'l': 3},
+      'k': {'g': 4, 'f': 5},
     },
+    summation: sum,
+    zero: 0,
     comparator: comparator,
   );
 
@@ -51,38 +57,27 @@ void main() {
       expect(
           graph.toString(),
           '{\n'
-          ' \'a\': {\'b\', \'h\', \'c\', \'e\'},\n'
-          ' \'b\': {\'h\'},\n'
-          ' \'c\': {\'h\', \'g\'},\n'
-          ' \'d\': {\'e\', \'f\'},\n'
-          ' \'e\': {},\n'
-          ' \'f\': {\'i\'},\n'
+          ' \'a\': {\'b\': 1, \'h\': 7, \'c\': 2, \'e\': 4},\n'
+          ' \'b\': {\'h\': 6},\n'
+          ' \'c\': {\'h\': 5, \'g\': 4},\n'
+          ' \'d\': {\'e\': 1, \'f\': 2},\n'
+          ' \'e\': {\'g\': 2},\n'
+          ' \'f\': {\'i\': 3},\n'
           ' \'g\': {},\n'
           ' \'h\': {},\n'
-          ' \'i\': {\'l\'},\n'
-          ' \'k\': {\'g\', \'f\'},\n'
+          ' \'i\': {\'l\': 3},\n'
+          ' \'k\': {\'g\': 4, \'f\': 5},\n'
           ' \'l\': {},\n'
           '}');
-    });
-    test('graph data', () {
-      expect(graph.data, {
-        'a': ['b', 'h', 'c', 'e'],
-        'b': ['h'],
-        'c': ['h', 'g'],
-        'd': ['e', 'f'],
-        'f': ['i'],
-        'i': ['l'],
-        'k': ['g', 'f']
-      });
     });
     test('get comparator', () {
       expect(graph.comparator, comparator);
     });
     test('set comparator.', () {
-      graph.comparator = inverseComparator;
       addTearDown(() {
         graph.comparator = comparator;
       });
+      graph.comparator = inverseComparator;
       expect(graph.comparator, inverseComparator);
       expect(graph.sortedVertices, [l, k, i, h, g, f, e, d, c, b, a]);
     });
@@ -96,38 +91,23 @@ void main() {
     });
   });
 
-  group('Manipulating edges/vertices.', () {
-    test('addEdges():', () {
+  group('Manipulating edges/vertices:', () {
+    test('remove/add vertex l.', () {
       addTearDown(() {
-        graph.removeEdges(i, {k});
-      });
-      graph.addEdges(i, {k});
-      expect(graph.edges(i), {l, k});
-      '{\n'
-          ' a: [b, h, c, e],\n'
-          ' b: [h],\n'
-          ' c: [h, g],\n'
-          ' d: [e, f],\n'
-          ' e: [],\n'
-          ' f: [i],\n'
-          ' g: [],\n'
-          ' h: [],\n'
-          ' i: {l},\n'
-          ' k: [g, f],\n'
-          ' l: [],\n'
-          '}';
-    });
-    test('remove(l).', () {
-      addTearDown(() {
-        // Restore graph:
-        graph.addEdges(i, {l});
+        graph.addEdges(i, <String, int>{l: 3});
       });
       graph.remove(l);
       expect(graph.edges(i), <String>{});
-      expect(
-        graph.sortedVertices,
-        ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'k'],
-      );
+      expect(graph.vertices.contains(l), false);
+      // Restore graph:
+    });
+    test('addEdges(\'g\',{\'h\': 1}):', () {
+      addTearDown(() {
+        graph.removeEdges('g', {'h'});
+      });
+      graph.addEdges('g', {'h': 1});
+      expect(graph.edges('g'), {'h'});
+      expect(graph.data['g']?['h'], 1);
     });
   });
   group('Graph data:', () {
@@ -141,21 +121,43 @@ void main() {
       addTearDown(() {
         graph.removeEdges(l, {l});
       });
-      graph.addEdges(l, {l});
+      graph.addEdges(l, {l: 0});
       expect(graph.inDegree(l), 2);
     });
     test('outDegree().', () {
       expect(graph.outDegree(d), 2);
     });
     test('outDegreeMap().', () {
-      expect(graph.outDegreeMap,
-          {a: 4, b: 1, c: 2, d: 2, e: 0, f: 1, g: 0, h: 0, i: 1, k: 2, l: 0});
+      expect(graph.outDegreeMap, {
+        a: 4,
+        b: 1,
+        c: 2,
+        d: 2,
+        e: 1,
+        f: 1,
+        g: 0,
+        h: 0,
+        i: 1,
+        k: 2,
+        l: 0,
+      });
     });
     test('inDegreeMap.', () {
-      expect(graph.inDegreeMap,
-          {a: 0, b: 1, h: 3, c: 1, e: 2, d: 0, f: 2, g: 2, i: 1, l: 1, k: 0});
+      expect(graph.inDegreeMap, {
+        a: 0,
+        b: 1,
+        h: 3,
+        c: 1,
+        e: 2,
+        g: 3,
+        d: 0,
+        f: 2,
+        i: 1,
+        l: 1,
+        k: 0,
+      });
     });
-    test('sortedVertices.', () {
+    test('sortedVertices().', () {
       expect(graph.sortedVertices, [a, b, c, d, e, f, g, h, i, k, l]);
     });
   });
@@ -183,7 +185,7 @@ void main() {
       addTearDown(() {
         graph.removeEdges(l, {l});
       });
-      graph.addEdges(l, {l});
+      graph.addEdges(l, {l: 0});
       expect(
         graph.isAcyclic,
         false,
@@ -197,14 +199,14 @@ void main() {
       addTearDown(() {
         graph.removeEdges(l, {l});
       });
-      graph.addEdges(l, {l});
+      graph.addEdges(l, {l: 0});
       expect(graph.topologicalOrdering, null);
     });
     test('topologicalOrdering(): cycle', () {
       addTearDown(() {
         graph.removeEdges(i, {k});
       });
-      graph.addEdges(i, {k});
+      graph.addEdges(i, {k: 2});
       expect(graph.topologicalOrdering, null);
     });
     test('sortedTopologicalOrdering():', () {
@@ -215,7 +217,13 @@ void main() {
       expect(graph.topologicalOrdering, {a, b, c, d, e, h, k, f, i, g, l});
     });
     test('topologicalOrdering(): empty graph', () {
-      expect(DirectedGraph<int>({}).topologicalOrdering, <int>{});
+      expect(
+          WeightedDirectedGraph<String, int>(
+            {},
+            zero: 0,
+            summation: sum,
+          ).topologicalOrdering,
+          <String>{});
     });
     test('localSources().', () {
       expect(graph.localSources, [
@@ -226,42 +234,40 @@ void main() {
       ]);
     });
   });
-  group('Cycles', () {
-    test('graph.cycle | acyclic graph.', () {
-      expect(graph.cycle, <String>[]);
-    });
 
-    test('graph.cycle | cyclic graph.', () {
-      addTearDown(() {
-        graph.removeEdges(l, {l});
-      });
-      graph.addEdges(l, {l});
-      expect(graph.cycle, [l, l]);
-    });
-
-    test('graph.cycle | non-trivial cycle.', () {
-      addTearDown(() {
-        graph.removeEdges(i, {k});
-      });
-      graph.addEdges(i, {k});
-      expect(graph.cycle, [f, i, k, f]);
-    });
-  });
   group('TransitiveClosure', () {
     test('acyclic graph', () {
-      expect(DirectedGraph.transitiveClosure(graph).data, <String, Set<String>>{
-        a: {b, h, c, g, e},
-        b: {h},
-        c: {h, g},
-        d: {e, f, i, l},
-        e: {},
-        f: {i, l},
-        g: {},
-        h: {},
-        i: {l},
-        k: {g, f, i, l},
-        l: {},
+      expect(
+        WeightedDirectedGraph.transitiveClosure(graph).data,
+        <String, Map<String, int>>{
+          'a': {'b': 1, 'h': 7, 'c': 2, 'g': 6, 'e': 4},
+          'b': {'h': 6},
+          'c': {'h': 5, 'g': 4},
+          'd': {'e': 1, 'g': 3, 'f': 2, 'i': 5, 'l': 8},
+          'e': {'g': 2},
+          'f': {'i': 3, 'l': 6},
+          'g': {},
+          'h': {},
+          'i': {'l': 3},
+          'k': {'g': 4, 'f': 5, 'i': 8, 'l': 11},
+          'l': {}
+        },
+      );
+    });
+  });
+
+  group('path:', () {
+    test('min. weight', () {
+      expect(graph.lightestPath('a', 'g'), [a, c, g]);
+      expect(graph.weightAlong([a, c, g]), 6);
+    });
+    test('max. weight', () {
+      addTearDown(() {
+        graph.removeEdges(h, {g});
       });
+      graph.addEdges(h, {g: 17});
+      expect(graph.heaviestPath(a, g), [a, h, g]);
+      expect(graph.weightAlong([a, h, g]), 24);
     });
   });
 }
