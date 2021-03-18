@@ -1,8 +1,3 @@
-/// Library providing `GraphCrawler`,
-/// a utility class for finding paths connecting
-/// two vertices.
-library graph_crawler;
-
 import 'dart:collection';
 
 /// Constant holding the largest (smi) int.
@@ -10,15 +5,14 @@ import 'dart:collection';
 /// `largeInt = pow(2, 30) - 1;`
 const largeInt = 1073741823;
 
-/// Function returning a list of edge vertices.
-/// If a vertex has no neighbours it should return
-/// an empty list.
-///
-/// Note: The function must never return null.
-typedef Edges<T> = Iterable<T> Function(T vertex);
+/// Function returning an `Iterable<T>` representing edge vertices.
+/// * If `vertex` has no neighbours the function must return
+///   an empty iterable.
+/// * The function must never return `null`.
+typedef Edges<T extends Object> = Iterable<T> Function(T vertex);
 
 /// A list of connected vertices with an internal occurance count.
-class _Branch<T> {
+class _Branch<T extends Object> {
   /// Constructs a branch of vertices.
   /// * `vertices` should be a list of connected vertices that can be walked in
   /// the given order.
@@ -27,7 +21,7 @@ class _Branch<T> {
         _count[vertex] = _count.containsKey(vertex) ? _count[vertex]! + 1 : 1);
   }
 
-  /// Constructs a copy of a branch.
+  /// Constructs a copy of a branch connecting `start` and `target`.
   _Branch.from(_Branch<T> branch) : _vertices = List<T>.from(branch._vertices) {
     _count.addAll(branch._count);
   }
@@ -69,17 +63,18 @@ class _Branch<T> {
 }
 
 /// Utility class for crawling a graph defined by [edges] and
-/// retrieving paths and walks connecting `start` and `target`.
+/// retrieving paths and walks.
 /// * A directed **path** is defined as a list of connected vertices where
 /// each *inner* vertex is listed at most once. The first and the last vertex
 /// may be same in order to represent a cycle.
 /// * A directed **walk** is defined as a list of connected vertices that can be
-/// traversed in the given order.
-class GraphCrawler<T> {
+/// traversed in sequential order.
+class GraphCrawler<T extends Object> {
   GraphCrawler(this.edges);
 
-  /// Function returning a list of edge vertices or an empty list.
-  /// It must never return `null`.
+  /// Function returning an `Iterable<T>` representing edge vertices.
+  ///
+  /// Important: It must never return `null`.
   final Edges<T> edges;
 
   /// Builds a tree-like structure with [start] as root vertex and returns
@@ -176,7 +171,7 @@ class GraphCrawler<T> {
     maxCount = (maxCount < 1) ? 1 : maxCount;
 
     // Add start vertex.
-    tree.add([]..add(start));
+    tree.add([start]);
 
     // Initialize iteration variables.
     var previousLength = tree.length;
@@ -254,25 +249,18 @@ class GraphCrawler<T> {
 
   /// Returns a map containing all paths commencing at [start].
   /// * Paths are grouped according to the last vertex in the path list.
-  /// * If a [target] vertex is specified the function return as soon as a path
-  ///  from [start] to [target] is found.
+  /// * If a [target] vertex is specified the function will return
+  /// as soon as a path from [start] to [target] is found.
   /// * Each entry of type `Set<T>` represents a path (the [start] vertex is omitted).
   /// * Inspired by [`graphs`](https://pub.dev/documentation/graphs/latest/graphs/shortestPaths.html).
+  /// Usage:
   ///
-  /// Example:
   /// ```
   /// import 'package:directed_graph/directed_graph.dart';
-  /// void main(List<String> args) {
-  ///   int comparator(
-  ///     String s1,
-  ///     String s2,
-  ///   ) {
-  ///     return s1.compareTo(s2);
-  ///   }
-  ///
+  /// void main() {
   ///   var graph = DirectedGraph<String, int>(
   ///     {
-  ///       'a': {'b', 'h', 'c', 'e'},
+  ///       'a': {'a', 'b', 'h', 'c', 'e'},
   ///       'b': {'h'},
   ///       'c': {'h', 'g'},
   ///       'd': {'e', 'f'},
@@ -280,27 +268,59 @@ class GraphCrawler<T> {
   ///       'f': {'i'},
   ///       'i': {'l', 'k'},
   ///       'k': {'g', 'f'},
-  ///       'l': {'l'}
-  ///     },
-  ///     comparator: comparator,
+  ///      }
   ///   );
-  ///
   ///   final crawler = GraphCrawler<String>(graph.edges);
-  ///   final treeMap = crawler.mappedTree('d');
+  ///   final treeMap = crawler.mappedTree('a', 'g');
   ///   print(treeMap);
-  ///   // Prints: {e: [{e}], f: [{f}], g: [{e, g}, {f, i, k, g}], i: [{f, i}], l: [{f, i, l}], k: [{f, i, k}]}
   /// }
   /// ```
+  /// The program above generates the following console output:
+  ///
+  /// `{a: [{a}], b: [{b}], h: [{h}, {b, h}, {c, h}], c: [{c}], e: [{e}], g: [{c, g}]}`
+  ///
+  /// The shortest path from vertex `'a'` to `'g'` is: `{a, c, g}`.
   Map<T, List<Set<T>>> mappedTree(T start, {T? target}) {
-    final tree = <T, List<Set<T>>>{};
-    final visited = <T>{};
-    final queue = ListQueue<T>()..add(start);
+    final tree = <T, List<Set<T>>>{
+      start: [{}]
+    };
+    final visited = <T>{start};
+    final queue = Queue<T>();
+    var selfLoop = false;
+    var reachedTarget = false;
+
+    // Visiting vertices connected to start.
+    for (final connected in edges(start)) {
+      // Dealing with possible self-loop
+      if (connected == start) {
+        selfLoop = true;
+        if (target == start) {
+          reachedTarget = true;
+          break;
+        }
+        continue;
+      }
+      tree[connected] = [
+        {connected}
+      ];
+      if (connected == target) {
+        reachedTarget = true;
+        break;
+      }
+      if (!visited.contains(connected)) {
+        queue.add(connected);
+        visited.add(connected);
+      }
+    }
 
     while (queue.isNotEmpty) {
+      if (reachedTarget) {
+        break;
+      }
+
       final current = queue.removeFirst();
 
       for (final connected in edges(current)) {
-        // print('$current => $connected');
         if (tree[current] == null) {
           tree[connected] ??= [
             {connected}
@@ -310,19 +330,24 @@ class GraphCrawler<T> {
             ...?tree[connected],
             for (final path in tree[current]!)
               // Filter out any path that intersects itself.
-              if (!path.contains(connected)) Set<T>.from(path)..add(connected)
+              if (!path.contains(connected) && connected != start)
+                Set<T>.of(path)..add(connected)
           ];
+        }
+        if (connected == target) {
+          reachedTarget = true;
+          break;
         }
         if (!visited.contains(connected)) {
           queue.add(connected);
           visited.add(connected);
         }
-        // stdin.readLineSync();
-        // print(queue);
-        // print(tree);
+        //stdin.readLineSync();
       }
     }
-
+    if (selfLoop == true) {
+      tree[start]!.first.add(start);
+    }
     return tree;
   }
 }
