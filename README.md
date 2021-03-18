@@ -65,15 +65,12 @@ The constructor takes an optional comparator function
 as parameter. If a comparator is specified, vertices are sorted accordingly. For more information see [comparator].
 
 ```Dart
-
-import 'package:directed_graph/src/graphs/directed_graph.dart';
-import 'package:directed_graph/src/utils/color_utils.dart';
-
+import 'package:directed_graph/directed_graph.dart';
 // To run this program navigate to
 // the folder 'directed_graph/example'
 // in your terminal and type:
 //
-// # dart bin/example.dart
+// # dart bin/directed_graph_example.dart
 //
 // followed by enter.
 void main() {
@@ -95,43 +92,43 @@ void main() {
     comparator: comparator,
   );
 
-  print(magenta('Example Directed Graph...'));
-  print(blue('graph.toString():'));
+  print('Example Directed Graph...');
+  print('graph.toString():');
   print(graph);
 
-  print(blue('\nIs Acylic:'));
+  print('\nIs Acylic:');
   print(graph.isAcyclic);
 
-  print(blue('\nStrongly connected components:'));
+  print('\nStrongly connected components:');
   print(graph.stronglyConnectedComponents);
 
-  print(blue('\nShortestPath(d, l):'));
-  //print(graph.shortestPath('d', 'l'));
+  print('\nShortestPath(d, l):');
+  //print(graph.shortestPath('d', 'l');
 
-  print(blue('\nInDegree(C):'));
+  print('\nInDegree(C):');
   print(graph.inDegree('c'));
 
-  print(blue('\nOutDegree(C)'));
+  print('\nOutDegree(C)');
   print(graph.outDegree('c'));
 
-  print(blue('\nVertices sorted in lexicographical order:'));
-  print(graph.vertices);
+  print('\nVertices sorted in lexicographical order:');
+  print(graph.sortedVertices);
 
-  print(blue('\nVertices sorted in inverse lexicographical order:'));
+  print('\nVertices sorted in inverse lexicographical order:');
   graph.comparator = inverseComparator;
-  print(graph.vertices);
+  print(graph.sortedVertices);
   graph.comparator = comparator;
 
-  print(blue('\nInDegreeMap:'));
+  print('\nInDegreeMap:');
   print(graph.inDegreeMap);
 
-  print(blue('\nSorted Topological Ordering:'));
+  print('\nSorted Topological Ordering:');
   print(graph.sortedTopologicalOrdering);
 
-  print(blue('\nTopological Ordering:'));
+  print('\nTopological Ordering:');
   print(graph.topologicalOrdering);
 
-  print(blue('\nLocal Sources:'));
+  print('\nLocal Sources:');
   print(graph.localSources);
 
   // Add edge to render the graph cyclic
@@ -139,11 +136,11 @@ void main() {
   graph.addEdges('l', {'l'});
   graph.addEdges('i', {'d'});
 
-  print(blue('\nCycle:'));
+  print('\nCycle:');
   print(graph.cycle);
 
-  print(blue('\nShortest Paths:'));
-  print(graph.shortestPaths('a', target: 'g'));
+  print('\nShortest Paths:');
+  print(graph.shortestPaths('a'));
 }
 
 ```
@@ -323,6 +320,7 @@ Shortest path a -> g
 [a, g] weight: 7
 ```
 </details>
+
 ## Examples
 
 For further information on how to generate a topological sorting of vertices see [example].
