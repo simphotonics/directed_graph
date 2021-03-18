@@ -6,7 +6,20 @@
 * Functions returning a topological ordering now return an ordered set of vertices, reflecting the fact that in a topological ordering
   each vertex must be distinct.
 * Added the classes `WeightedDirectedGraph` and `BiDirectedGraph`.
-* Complete overhaul of the class `GraphCrawler`. 
+* Complete overhaul of the class `GraphCrawler`.
+
+## 0.2.3
+
+Added [`GraphCrawler`][GraphCrawler] method `tree`.
+Amended methods `path` and `paths`.
+
+## 0.2.2
+
+Added the getter `data`.
+
+## 0.2.1
+
+Removed debug print statement.
 
 
 ## 0.2.0
