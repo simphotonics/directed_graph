@@ -1,4 +1,4 @@
-/// Dart implementation of a directed graph.
+/// Dart implementation of directed graphs.
 /// Provides methods to
 /// * add/remove edges,
 /// * check if the graph is acyclic,
@@ -10,7 +10,6 @@ export 'src/graphs/bidirected_graph.dart';
 export 'src/graphs/directed_graph.dart';
 export 'src/graphs/graph_crawler.dart';
 export 'src/graphs/weighted_directed_graph.dart';
-export 'src/extensions/cycle.dart';
 export 'src/extensions/graph_utils.dart';
 export 'src/extensions/sort.dart';
 export 'src/extensions/weighted_graph_utils.dart';
