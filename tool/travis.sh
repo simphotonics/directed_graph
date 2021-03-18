@@ -46,20 +46,26 @@ dartanalyzer \
 echo
 echo -e "${CYAN}=== Testing $PWD...${RESET}"
 echo
-#pub run test -r expanded --test-randomize-ordering-seed=random
-pub run --enable-experiment=non-nullable minimal_test:minimal_test.dart
+pub run test -r expanded --test-randomize-ordering-seed=random
+#pub run --enable-experiment=non-nullable minimal_test:minimal_test.dart
 
+# ================
+# Running examples
+# ================
 
+echo
+echo -e "${BLUE}=== Running Example $PWD...${RESET}"
+echo
 
-# ==============================
-# Running examples and benchmark
-# ===============================
+dart example/bin/directed_graph_example.dart
 
-# Directories to be processed
-directories="example"
+echo
 
-for directory in $directories; do
-  cd $directory
-  ./tool/travis.sh
-  cd ..
-done
+# =================
+# Running benchmark
+# =================
+echo
+echo -e "${GREEN}=== Running Benchmark $PWD...${RESET}"
+echo
+
+pub run benchmark bin/
