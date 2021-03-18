@@ -60,7 +60,8 @@ definition. For example, self-loops, that is edges connecting a vertex to itself
 ## Usage
 
 To use this library include [`directed_graph`][directed_graph] as a dependency in your pubspec.yaml file. The
-example below shows how to construct a graph. The constructor takes an optional comparator function
+example below shows how to construct an object of type [`DirecteGraph`][DirectedGraph].
+The constructor takes an optional comparator function
 as parameter. If a comparator is specified, vertices are sorted accordingly. For more information see [comparator].
 
 ```Dart
@@ -210,7 +211,7 @@ Shortest Paths:
 
 ## Weighted Directed Graphs
 
-The example below shows how to construct a weighted graph.
+The example below shows how to construct an object of type [`WeightedDirectedGraph`][WeightedDirectedGraph].
 The constructor takes an optional comparator function
 as parameter. If a comparator is specified, vertices are sorted accordingly.
 For more information see [comparator].
@@ -331,11 +332,21 @@ For further information on how to generate a topological sorting of vertices see
 Please file feature requests and bugs at the [issue tracker].
 
 [comparator]: https://api.dart.dev/stable/dart-core/Comparator.html
+
 [issue tracker]: https://github.com/simphotonics/directed_graph/issues
 
 [collections]: https://api.dart.dev/stable/dart-collection/dart-collection-library.html
+
 [example]: https://github.com/simphotonics/directed_graph/tree/master/example
+
 [graphs-examples]: https://pub.dev/packages/graphs#-example-tab-
+
 [graphs]: https://pub.dev/packages/graphs
+
 [directed_graph]: https://pub.dev/packages/directed_graph
+
 [GraphCrawler]: https://pub.dev/documentation/directed_graph/latest/directed_graph/GraphCrawler-class.html
+
+[DirectedGraph]: https://pub.dev/documentation/directed_graph/latest/directed_graph/DirectedGraph-class.html
+
+[WeightedDirectedGraph]: https://pub.dev/documentation/directed_graph/latest/directed_graph/WeightedDirectedGraph-class.html
