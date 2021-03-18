@@ -1,8 +1,8 @@
 import 'directed_graph.dart';
 
 /// Graph with bidirected edges represented by a directed graph
-/// with symmetric edges
-class BidirectedGraph<T> extends DirectedGraph<T> {
+/// with symmetric edges.
+class BidirectedGraph<T extends Object> extends DirectedGraph<T> {
   BidirectedGraph(
     Map<T, Set<T>> edges, {
     Comparator<T>? comparator,
@@ -14,7 +14,7 @@ class BidirectedGraph<T> extends DirectedGraph<T> {
   /// Constructs a bidirected graph from a directed graph.
   BidirectedGraph.from(DirectedGraph<T> graph)
       : super(
-          graph.graphData,
+          graph.data,
           comparator: graph.comparator,
         ) {
     _symmetrize();
@@ -58,21 +58,6 @@ class BidirectedGraph<T> extends DirectedGraph<T> {
     removeIncomingEdges(vertex);
     super.remove(vertex);
   }
-
-  // @override
-  // bool get isAcyclic => isEmpty? true: false;
-
-  // @override
-  // List<List<T>>? get localSources => isEmpty ? []: null;
-
-  // @override
-  // List<T>? get topologicalOrdering => isEmpty ? []: null;
-
-  // @override
-  // List<T>? get sortedTopologicalOrdering => isEmpty ? []: null;
-
-  // @override
-  // List<T> get cycle => isEmpty ? []:
 
   /// Renders the graph symmetric by adding a symmetric edge
   /// for each existing graph edge.
