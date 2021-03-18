@@ -2,6 +2,7 @@ import 'package:graphs/graphs.dart' as graphs;
 
 import '../graphs/directed_graph_base.dart';
 
+/// Provides access to functions offered by the library `graphs`.
 extension GraphUtils<T extends Object> on DirectedGraphBase<T> {
   /// Returns a valid reverse topological ordering of the
   /// strongly connected components.
