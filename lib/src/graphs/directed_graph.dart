@@ -1,6 +1,6 @@
 import 'directed_graph_base.dart';
 import '../extensions/sort.dart';
-//import '../extensions/graph_utils.dart';
+import '../extensions/graph_utils.dart';
 
 // import 'package:graphs/graphs.dart' as graphs;
 
@@ -38,23 +38,22 @@ class DirectedGraph<T extends Object> extends DirectedGraphBase<T> {
   factory DirectedGraph.transitiveClosure(DirectedGraph<T> graph) {
     final tcEdges = <T, Set<T>>{};
 
-    // for (final vertex in directedGraph.sortedVertices) {
-    //   tcEdges[vertex] = Set<T>.of(directedGraph.reachableVertices(vertex));
+    for (final vertex in graph.sortedVertices) {
+      tcEdges[vertex] = Set<T>.of(graph.reachableVertices(vertex));
+    }
+
+    // void addReachableVertices(T root, T current) {
+    //   for (final vertex in graph.edges(root)) {
+    //     if (tcEdges[root]!.contains(vertex)) continue;
+    //     tcEdges[root]!.add(vertex);
+    //     addReachableVertices(root, vertex);
+    //   }
     // }
 
-    void addReachableVertices(T root, T current) {
-      for (final vertex in graph.edges(root)) {
-        if (tcEdges[root]!.contains(vertex)) continue;
-        tcEdges[root]!.add(vertex);
-        addReachableVertices(root, vertex);
-      }
-    }
-
-    for (final root in graph) {
-      tcEdges[root] = <T>{};
-      addReachableVertices(root, root);
-    }
-
+    // for (final root in graph) {
+    //   tcEdges[root] = <T>{};
+    //   addReachableVertices(root, root);
+    // }
 
     return DirectedGraph(tcEdges, comparator: graph.comparator);
   }
