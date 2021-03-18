@@ -24,7 +24,7 @@ void main(List<String> args) {
 
   var graph = WeightedDirectedGraph<String, int>(
     {
-      a: {b: 1, h: 7, c: 2, e: 40, g:7},
+      a: {b: 1, h: 7, c: 2, e: 40, g: 7},
       b: {h: 6},
       c: {h: 5, g: 4},
       d: {e: 1, f: 2},
@@ -56,4 +56,7 @@ void main(List<String> args) {
   final shortestPath = graph.shortestPath(a, g);
   print('\nShortest path a -> g');
   print('$shortestPath weight: ${graph.weightAlong(shortestPath)}');
+
+  print('\nTransitive Closure');
+  print(WeightedDirectedGraph.transitiveClosure(graph));
 }
