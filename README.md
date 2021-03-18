@@ -22,6 +22,7 @@ It is simple to use and includes methods that enable:
 The library provides access to algorithms
 for finding:
 * the shortest path between vertices,
+* the path with the lowest/highest weight (for weighted directed graphs),
 * all paths connecting two vertices,
 * cycles,
 * a topological ordering of the graph vertices.
@@ -32,7 +33,8 @@ The class [`GraphCrawler`][GraphCrawler] can be used to retrieve *paths* or *wal
 
 Elements of a graph are called **vertices** (or nodes) and neighbouring vertices are connected by **edges**.
 The figure below shows a **directed graph** with unidirectional edges depicted as arrows.
-Graph edges are emanating from a vertex and ending at a vertex.
+Graph edges are emanating from a vertex and ending at a vertex. In a weighted directed graph each
+edge is assigned a weight.
 
 ![Directed Graph Image](https://raw.githubusercontent.com/simphotonics/directed_graph/master/images/directed_graph.svg?sanitize=true)
 
@@ -40,8 +42,8 @@ Graph edges are emanating from a vertex and ending at a vertex.
 - **Out-degree** of a vertex: Number of edges starting at this vertex. For example, vertex F has out-degree 1.
 - **Source**: A vertex with in-degree zero is called (local) source. Vertices A and D in the graph above are local sources.
 - **Directed Edge**: An ordered pair of connected vertices (v<sub>i</sub>, v<sub>j</sub>). For example, the edge (A, C) starts at vertex A and ends at vertex C.
-- **Path**: A path {v<sub>i</sub>, ...,   v<sub>n</sub>} is an ordered *set* of at least two connected vertices where each vertex is **distinct**.
-   The path \{A, E, G\} starts at vertex A and ends at vertex G.
+- **Path**: A path {v<sub>i</sub>, ...,   v<sub>n</sub>} is an ordered list of at least two connected vertices where each **inner** vertex is **distinct**.
+   The path \[A, E, G\] starts at vertex A and ends at vertex G.
 - **Cycle**: A cycle is an ordered *list* of connected vertices where each inner vertex is distinct and the
 first and last vertices are identical. The sequence \[F, I, K, F\] completes a cycle.
 - **Walk**: A walk is an ordered *list* of at least two connected vertices.
@@ -143,72 +145,183 @@ void main() {
   print(graph.shortestPaths('a', target: 'g'));
 }
 
-
 ```
 
 <details> <summary> Click to show the console output. </summary>
 
-  ```Console
-  $ dart example/bin/example.dart
-  Example Directed Graph...
-  graph.toString():
-  {
-   'a': {'b', 'h', 'c', 'e'},
-   'b': {'h'},
-   'c': {'h', 'g'},
-   'd': {'e', 'f'},
-   'e': {'g'},
-   'f': {'i'},
-   'g': {},
-   'h': {},
-   'i': {'l'},
-   'k': {'g', 'f'},
-   'l': {},
-  }
+```Console
+$ dart example/bin/directed_graph_example.dart
+Example Directed Graph...
+graph.toString():
+{
+ 'a': {'b', 'h', 'c', 'e'},
+ 'b': {'h'},
+ 'c': {'h', 'g'},
+ 'd': {'e', 'f'},
+ 'e': {'g'},
+ 'f': {'i'},
+ 'g': {},
+ 'h': {},
+ 'i': {'l'},
+ 'k': {'g', 'f'},
+ 'l': {},
+}
 
-  Is Acylic:
-  true
+Is Acylic:
+true
 
-  Strongly connected components:
-  [[h], [b], [g], [c], [e], [a], [l], [i], [f], [d], [k]]
+Strongly connected components:
+[[h], [b], [g], [c], [e], [a], [l], [i], [f], [d], [k]]
 
-  ShortestPath(d, l):
+ShortestPath(d, l):
 
-  InDegree(C):
-  1
+InDegree(C):
+1
 
-  OutDegree(C)
-  2
+OutDegree(C)
+2
 
-  Vertices sorted in lexicographical order:
-  [a, b, c, d, e, f, g, h, i, k, l]
+Vertices sorted in lexicographical order:
+[a, b, c, d, e, f, g, h, i, k, l]
 
-  Vertices sorted in inverse lexicographical order:
-  [l, k, i, h, g, f, e, d, c, b, a]
+Vertices sorted in inverse lexicographical order:
+[l, k, i, h, g, f, e, d, c, b, a]
 
-  InDegreeMap:
-  {a: 0, b: 1, h: 3, c: 1, e: 2, g: 3, d: 0, f: 2, i: 1, l: 1, k: 0}
+InDegreeMap:
+{a: 0, b: 1, h: 3, c: 1, e: 2, g: 3, d: 0, f: 2, i: 1, l: 1, k: 0}
 
-  Sorted Topological Ordering:
-  {a, b, c, d, e, h, k, f, g, i, l}
+Sorted Topological Ordering:
+{a, b, c, d, e, h, k, f, g, i, l}
 
-  Topological Ordering:
-  {a, b, c, d, e, h, k, f, i, g, l}
+Topological Ordering:
+{a, b, c, d, e, h, k, f, i, g, l}
 
-  Local Sources:
-  [[a, d, k], [b, c, e, f], [g, h, i], [l]]
+Local Sources:
+[[a, d, k], [b, c, e, f], [g, h, i], [l]]
 
-  Cycle:
-  [l, l]
+Cycle:
+[l, l]
 
-  Shortest Paths:
-  {a: [], b: [b], h: [h], c: [c], e: [e], g: [c, g]}
+Shortest Paths:
+{e: (e), c: (c), h: (h), a: (), g: (c, g), b: (b)}
 
-  ```
-
+```
 </details>
 
+## Weighted Directed Graphs
 
+The example below shows how to construct a weighted graph.
+The constructor takes an optional comparator function
+as parameter. If a comparator is specified, vertices are sorted accordingly.
+For more information see [comparator].
+
+```Dart
+
+import 'package:directed_graph/directed_graph.dart';
+
+void main(List<String> args) {
+  int comparator(
+    String s1,
+    String s2,
+  ) {
+    return s1.compareTo(s2);
+  }
+
+  final a = 'a';
+  final b = 'b';
+  final c = 'c';
+  final d = 'd';
+  final e = 'e';
+  final f = 'f';
+  final g = 'g';
+  final h = 'h';
+  final i = 'i';
+  final k = 'k';
+  final l = 'l';
+
+  int sum(int left, int right) => left + right;
+
+  var graph = WeightedDirectedGraph<String, int>(
+    {
+      a: {b: 1, h: 7, c: 2, e: 40, g:7},
+      b: {h: 6},
+      c: {h: 5, g: 4},
+      d: {e: 1, f: 2},
+      e: {g: 2},
+      f: {i: 3},
+      i: {l: 3, k: 2},
+      k: {g: 4, f: 5},
+      l: {l: 0}
+    },
+    summation: sum,
+    zero: 0,
+    comparator: comparator,
+  );
+
+  print('Weighted Graph:');
+  print(graph);
+
+  print('\nNeighbouring vertices sorted by weight:');
+  print(graph..sortEdgesByWeight());
+
+  final lightestPath = graph.lightestPath(a, g);
+  print('\nLightest path a -> g');
+  print('$lightestPath weight: ${graph.weightAlong(lightestPath)}');
+
+  final heaviestPath = graph.heaviestPath(a, g);
+  print('\nHeaviest path a -> g');
+  print('$heaviestPath weigth: ${graph.weightAlong(heaviestPath)}');
+
+  final shortestPath = graph.shortestPath(a, g);
+  print('\nShortest path a -> g');
+  print('$shortestPath weight: ${graph.weightAlong(shortestPath)}');
+}
+```
+
+<details> <summary> Click to show the console output. </summary>
+
+```Console
+$ dart example/bin/weighted_graph_example.dart
+Weighted Graph:
+{
+ 'a': {'b': 1, 'h': 7, 'c': 2, 'e': 40, 'g': 7},
+ 'b': {'h': 6},
+ 'c': {'h': 5, 'g': 4},
+ 'd': {'e': 1, 'f': 2},
+ 'e': {'g': 2},
+ 'f': {'i': 3},
+ 'g': {},
+ 'h': {},
+ 'i': {'l': 3, 'k': 2},
+ 'k': {'g': 4, 'f': 5},
+ 'l': {'l': 0},
+}
+
+Neighbouring vertices sorted by weight
+{
+ 'a': {'b': 1, 'c': 2, 'h': 7, 'g': 7, 'e': 40},
+ 'b': {'h': 6},
+ 'c': {'g': 4, 'h': 5},
+ 'd': {'e': 1, 'f': 2},
+ 'e': {'g': 2},
+ 'f': {'i': 3},
+ 'g': {},
+ 'h': {},
+ 'i': {'k': 2, 'l': 3},
+ 'k': {'g': 4, 'f': 5},
+ 'l': {'l': 0},
+}
+
+Lightest path a -> g
+[a, c, g] weight: 6
+
+Heaviest path a -> g
+[a, e, g] weigth: 42
+
+Shortest path a -> g
+[a, g] weight: 7
+```
+</details>
 ## Examples
 
 For further information on how to generate a topological sorting of vertices see [example].
