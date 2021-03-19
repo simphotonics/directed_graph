@@ -62,4 +62,7 @@ void main(List<String> args) {
 
   print('\nTransitive Weighted Edges:');
   print(graph.transitiveWeightedEdges);
+
+  print('\nVertices reachable from d:');
+  print(graph.reachableVertices(d));
 }
