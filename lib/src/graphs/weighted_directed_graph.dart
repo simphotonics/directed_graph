@@ -35,7 +35,6 @@ class WeightedDirectedGraph<T extends Object, W extends Comparable>
       }
     });
     _weight = Lazy<W>(() => _calculateWeight);
-    crawler = GraphCrawler<T>(this.edges);
   }
 
   /// Constructs a shallow copy of [graph].
@@ -90,9 +89,6 @@ class WeightedDirectedGraph<T extends Object, W extends Comparable>
 
   /// Function used to sum edge weights.
   final Summation<W> summation;
-
-  /// The graph crawler of this instance.
-  late final GraphCrawler<T> crawler;
 
   /// Returns a copy of the weighted edges
   /// as an object of type `Map<T, Map<T, W>>`.
