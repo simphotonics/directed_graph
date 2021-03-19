@@ -3,7 +3,6 @@ import 'package:lazy_memo/lazy_memo.dart';
 
 import '../exceptions/error_types.dart';
 import '../extensions/sort.dart';
-import '../graphs/graph_crawler.dart';
 import 'directed_graph_base.dart';
 
 /// Function used to sum edge weights.
