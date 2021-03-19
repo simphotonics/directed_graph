@@ -3,6 +3,8 @@ import 'dart:collection';
 import 'package:lazy_memo/lazy_memo.dart';
 import 'package:quote_buffer/quote_buffer.dart';
 
+import 'graph_crawler.dart';
+
 /// Abstract base class of a directed graph.
 abstract class DirectedGraphBase<T extends Object> extends Iterable<T> {
   /// Super constructor of objects extending `DirectedGraphBase`.
@@ -17,6 +19,7 @@ abstract class DirectedGraphBase<T extends Object> extends Iterable<T> {
     );
     _lazyOutDegreeMap = LazyMap<T, int>(() => _outDegreeMap);
     _lazyInDegreeMap = LazyMap<T, int>(() => _inDegreeMap);
+    crawler = GraphCrawler<T>(edges);
   }
 
   /// The comparator used to sort vertices.
@@ -70,6 +73,46 @@ abstract class DirectedGraphBase<T extends Object> extends Iterable<T> {
   /// Returns a mapping between vertex and number of
   /// incoming connections.
   Map<T, int> get inDegreeMap => _lazyInDegreeMap();
+
+  /// The graph crawler of this graph.
+  late final GraphCrawler<T> crawler;
+
+  /// Returns an iterable containing all vertices that are reachable from
+  /// vertex `start`.
+  Set<T> reachableVertices(T start) {
+    return crawler.tree(start).map<T>((branch) => branch.last).toSet();
+  }
+
+  /// Returns the shortest detected path from [start] to [target]
+  /// including cycles.
+  /// * Returns an empty list if no path was found.
+  /// * To exclude cycles use the method `shortestPath(start, target)`.
+  List<T> path(T start, T target) {
+    return crawler.path(start, target);
+  }
+
+  /// Returns all paths from [start] to [target]
+  /// including cycles.
+  /// * Returns an empty list if no path was found.
+  /// * To exclude cycles and list only the shortest paths
+  ///   use the method `shortestPaths(start, target)`.
+  List<List<T>> paths(T start, T target) {
+    return crawler.paths(start, target);
+  }
+
+  /// Returns the first cycle detected or an empty list
+  /// if the graph is acyclic.
+  ///
+  /// Note: A cycle starts and ends at
+  /// the same vertex while inner vertices are distinct.
+  List<T> get cycle {
+    final start = cycleVertex;
+    if (start == null) {
+      return <T>[];
+    } else {
+      return crawler.path(start, start);
+    }
+  }
 
   /// Returns the first vertex detected
   /// that is part of a cycle.
