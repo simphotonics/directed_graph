@@ -59,4 +59,7 @@ void main(List<String> args) {
 
   print('\nTransitive Closure');
   print(WeightedDirectedGraph.transitiveClosure(graph));
+
+  print('\nTransitive Weighted Edges:');
+  print(graph.transitiveWeightedEdges);
 }
