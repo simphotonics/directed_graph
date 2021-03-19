@@ -1,5 +1,8 @@
 ## 0.3.4
 
+- Eliminated cyclic dependency between class [`WeightedDirectedGraph`][WeightedDirectedGraph]
+  and extension `GraphUtils`.
+- Added getter `crawler`.
 - Added the method `clear()` to classes [`DirectedGraph`][DirectedGraph] and
 [`WeightedDirectedGraph`][WeightedDirectedGraph].
 
