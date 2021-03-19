@@ -109,6 +109,12 @@ void main() {
       expect(graph.edges('g'), {'h'});
       expect(graph.data['g']?['h'], 1);
     });
+    test('clear', () {
+      final graphCopy = WeightedDirectedGraph.of(graph);
+      expect(graphCopy.sortedVertices, graph.sortedVertices);
+      graphCopy.clear();
+      expect(graphCopy.isEmpty, true);
+    });
   });
   group('Graph data:', () {
     test('edges().', () {

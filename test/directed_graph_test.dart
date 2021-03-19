@@ -118,6 +118,12 @@ void main() {
         ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'k'],
       );
     });
+    test('clear', () {
+      final graphCopy = DirectedGraph.of(graph);
+      expect(graphCopy.sortedVertices, graph.sortedVertices);
+      graphCopy.clear();
+      expect(graphCopy.isEmpty, true);
+    });
   });
   group('Graph data:', () {
     test('edges().', () {
