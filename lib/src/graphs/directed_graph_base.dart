@@ -3,7 +3,11 @@ import 'dart:collection';
 import 'package:lazy_memo/lazy_memo.dart';
 import 'package:quote_buffer/quote_buffer.dart';
 
+/// Abstract base class of a directed graph.
 abstract class DirectedGraphBase<T extends Object> extends Iterable<T> {
+  /// Super constructor of objects extending `DirectedGraphBase`.
+  /// * `comparator`: A function with signature `int Function(T a, T b)`
+  /// used to sort vertices.
   DirectedGraphBase(
     Comparator<T>? comparator,
   ) : _comparator = comparator {
