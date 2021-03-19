@@ -68,31 +68,34 @@ void main() {
   group('Topology:', () {
     benchmark('isAcyclic', () {
       graph.isAcyclic;
-    }, duration: Duration(milliseconds:100));
+    }, duration: Duration(milliseconds: 100));
     benchmark('topologicalOrdering', () {
       graph.topologicalOrdering;
-    }, duration: Duration(milliseconds:100));
+    }, duration: Duration(milliseconds: 100));
     benchmark('sortedTopologicalOrdering', () {
       graph.sortedTopologicalOrdering;
-    }, duration: Duration(milliseconds:100));
+    }, duration: Duration(milliseconds: 100));
     benchmark('transitiveClosure', () {
       DirectedGraph.transitiveClosure(graph);
-    }, duration: Duration(milliseconds:100));
+    }, duration: Duration(milliseconds: 100));
     benchmark('cycleVertex', () {
       graph.cycleVertex;
-    }, duration: Duration(milliseconds:100));
+    }, duration: Duration(milliseconds: 100));
     benchmark('cycle', () {
       graph.cycle;
-    }, duration: Duration(milliseconds:100));
+    }, duration: Duration(milliseconds: 100));
     benchmark('localSources', () {
       graph.localSources;
-    }, duration: Duration(milliseconds:100));
+    }, duration: Duration(milliseconds: 100));
     benchmark('stronglyConnectedComponents', () {
       graph.stronglyConnectedComponents;
-    }, duration: Duration(milliseconds:100));
+    }, duration: Duration(milliseconds: 100));
 
     benchmark('shortestPaths', () {
       graph.shortestPaths(a);
-    }, duration: Duration(milliseconds:100));
+    }, duration: Duration(milliseconds: 100));
+    benchmark('reachableVertices(d)', () {
+      graph.reachableVertices(d);
+    }, duration: Duration(milliseconds: 100));
   });
 }
