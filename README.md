@@ -33,7 +33,7 @@ The class [`GraphCrawler`][GraphCrawler] can be used to retrieve *paths* or *wal
 
 Elements of a graph are called **vertices** (or nodes) and neighbouring vertices are connected by **edges**.
 The figure below shows a **directed graph** with unidirectional edges depicted as arrows.
-Graph edges are emanating from a vertex and ending at a vertex. In a weighted directed graph each
+Graph edges are emanating from a vertex and ending at a vertex. In a **weighted directed graph** each
 edge is assigned a weight.
 
 ![Directed Graph Image](https://github.com/simphotonics/directed_graph/raw/main/images/directed_graph.svg?sanitize=true)
@@ -54,8 +54,9 @@ occurs before v<sub>j</sub> if there is a directed edge (v<sub>i</sub>, v<sub>j<
 A topological ordering of the graph above is: \{A, D, B, C, E, K, F, G, H, I, L\}.
 Hereby, dashed edges were disregarded since a cyclic graph does not have a topological ordering.
 
-**Note**: In the context of this package the definition of *edge* might be more lax compared to a rigorous mathematical
-definition. For example, self-loops, that is edges connecting a vertex to itself are explicitly allowed.
+**Note**: In the context of this package the definition of *edge* might be more lax compared to a
+rigorous mathematical definition.
+For example, self-loops, that is edges connecting a vertex to itself are explicitly allowed.
 
 ## Usage
 
@@ -209,6 +210,10 @@ Shortest Paths:
 ## Weighted Directed Graphs
 
 The example below shows how to construct an object of type [`WeightedDirectedGraph`][WeightedDirectedGraph].
+Initial graph edges are specified in the form of map of type `Map<T, Map<T, W>>`. The vertex type `T` extends
+`Object` and therefore must be a non-nullable. The type associated with the edge weight `W` extends `Comparable`
+to enable sorting of vertices by their edge weight.
+
 The constructor takes an optional comparator function
 as parameter. If a comparator is specified, vertices are sorted accordingly.
 For more information see [comparator].
