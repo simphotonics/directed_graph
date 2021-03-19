@@ -49,40 +49,13 @@ class WeightedDirectedGraph<T extends Object, W extends Comparable>
 
   /// Constructs the transitive closure of [graph].
   factory WeightedDirectedGraph.transitiveClosure(
-      WeightedDirectedGraph<T, W> graph) {
-    final tcEdges = <T, Map<T, W>>{};
-
-    // for (final vertex in graph.sortedVertices) {
-    //   final weightedEdges = {
-    //     for (var connectedVertex in graph.reachableVertices(vertex))
-    //       connectedVertex: graph.weightAlong(graph.lightestPath(
-    //         vertex,
-    //         connectedVertex,
-    //       ))
-    //   };
-
-    //   tcEdges[vertex] = weightedEdges;
-    // }
-
-    void addReachableVertices(T root, T current) {
-      for (final vertex in graph.edges(current)) {
-        if (tcEdges[root]!.containsKey(vertex)) continue;
-        tcEdges[root]![vertex] =
-            graph.weightAlong(graph.lightestPath(root, vertex));
-        addReachableVertices(root, vertex);
-      }
-    }
-
-    for (final root in graph) {
-      tcEdges[root] = <T, W>{};
-      addReachableVertices(root, root);
-    }
-
-    return WeightedDirectedGraph(tcEdges,
+          WeightedDirectedGraph<T, W> graph) =>
+      WeightedDirectedGraph(
+        graph.transitiveWeightedEdges,
         comparator: graph.comparator,
         summation: graph.summation,
-        zero: graph.zero);
-  }
+        zero: graph.zero,
+      );
 
   /// The weight of an empty path.
   /// * Used as the initial value when summing the weight of a path.
@@ -150,6 +123,21 @@ class WeightedDirectedGraph<T extends Object, W extends Comparable>
     updateCache();
   }
 
+  /// Adds a new weighted edge and any vertex that is not yet registered with
+  /// the graph.
+  ///
+  /// If the edge `(vertex, connectedVertex`) exists,
+  /// the edge `weight` is updated.
+  void addEdge(T vertex, T connectedVertex, W weight) {
+    if (_edges.containsKey(vertex)) {
+      _edges[vertex]![connectedVertex] = weight;
+    } else {
+      _edges[vertex] = {connectedVertex: weight};
+    }
+    // Add any new vertices to the graph:
+    _edges[connectedVertex] ??= <T, W>{};
+  }
+
   /// Removes edges (connections) pointing from [vertex] to [connectedVertices].
   ///
   /// Does not remove any vertices from the graph.
@@ -192,12 +180,14 @@ class WeightedDirectedGraph<T extends Object, W extends Comparable>
   /// * Vertices and edges may be repeated.
   /// * Throws an error if the `walk` cannot be traversed.
   /// * Returns zero if `walk` is empty.
-  W weightAlong(List<T> walk) {
-    if (walk.length < 2) {
+  W weightAlong(Iterable<T> walk) {
+    final edge = walk.take(2);
+    if (edge.length < 2) {
       return zero;
     }
-    final vertex = walk[0];
-    final connectedVertex = walk[1];
+    final vertex = edge.first;
+    final connectedVertex = edge.last;
+
     if (!_edges.containsKey(vertex)) {
       throw ErrorOfType<UnkownVertex>();
     }
@@ -207,10 +197,9 @@ class WeightedDirectedGraph<T extends Object, W extends Comparable>
         invalidState: 'Vertex $vertex not connected to $connectedVertex.}',
       );
     }
-    return (walk.length == 2)
-        ? _edges[vertex]![connectedVertex]!
-        : summation(_edges[vertex]![connectedVertex]!,
-            weightAlong(List<T>.of(walk.skip(1))));
+
+    return summation(
+        _edges[vertex]![connectedVertex]!, weightAlong(walk.skip(1)));
   }
 
   /// Returns the summed weight of all graph edges.
