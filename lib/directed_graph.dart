@@ -12,4 +12,3 @@ export 'src/graphs/graph_crawler.dart';
 export 'src/graphs/weighted_directed_graph.dart';
 export 'src/extensions/graph_utils.dart';
 export 'src/extensions/sort.dart';
-export 'src/extensions/weighted_graph_utils.dart';
