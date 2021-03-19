@@ -1,3 +1,7 @@
+## 0.3.3
+
+- Added weighted graph getter `transitiveWeightedEdges` and method `addEdge()`.
+
 ## 0.3.2
 
 - Amended factory constructor `DirectedGraph.transitiveClosure()`.
