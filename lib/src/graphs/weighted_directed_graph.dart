@@ -1,24 +1,23 @@
 import 'package:exception_templates/exception_templates.dart';
 import 'package:lazy_memo/lazy_memo.dart';
 
+import 'directed_graph_base.dart';
 import '../exceptions/error_types.dart';
 import '../extensions/sort.dart';
 import '../extensions/weighted_graph_utils.dart';
-//import '../extensions/graph_utils.dart';
-import 'directed_graph_base.dart';
 
 /// Function used to sum edge weights.
 typedef Summation<W> = W Function(W left, W right);
 
 /// A directed graph with vertices of type `T` and a weight of type
 /// `W` associated with each directed edges.
-///
 /// * `T` must be usable as a map key.
 class WeightedDirectedGraph<T extends Object, W extends Comparable>
     extends DirectedGraphBase<T> {
   /// Constructs a weighted directed graph with vertices of type `T`
   /// and associates to each graph edge a weight of type `W`.
-  ///
+  /// * [edges]: The weighted edges of the graph. An empty map may
+  /// be used to create an empty graph.
   /// * [zero]: The weight of an empty path. It represents the additive
   /// identity of the type `W`.
   /// * [summation]: The function used to sum edge weights.
@@ -171,6 +170,12 @@ class WeightedDirectedGraph<T extends Object, W extends Comparable>
     if (!_edges.containsKey(vertex)) return;
     removeIncomingEdges(vertex);
     _edges.remove(vertex);
+    updateCache();
+  }
+
+  /// Removes all graph edges.
+  void clear() {
+    _edges.clear();
     updateCache();
   }
 

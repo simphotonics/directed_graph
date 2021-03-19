@@ -5,7 +5,10 @@ import '../extensions/sort.dart';
 ///
 /// The data-type `T` should be usable as a map key.
 class DirectedGraph<T extends Object> extends DirectedGraphBase<T> {
-  /// Constructs a directed graph from a map of type `Map<T, List<T>>`.
+  /// Constructs a directed graph.
+  /// * `edges`: a map of type `Map<T, Set<T>>`,
+  /// * `comparator`: a function with typedef `Comparator<T>` used to sort
+  /// the graph vertices.
   DirectedGraph(
     Map<T, Set<T>> edges, {
     Comparator<T>? comparator,
@@ -18,8 +21,14 @@ class DirectedGraph<T extends Object> extends DirectedGraphBase<T> {
     });
   }
 
+  /// Constructs a shallow copy of [graph].
+  DirectedGraph.of(DirectedGraph<T> graph)
+      : this(
+          graph.data,
+          comparator: graph.comparator,
+        );
+
   /// Constructs a directed graph from a map of weighted edges.
-  ///
   DirectedGraph.fromWeightedEdges(Map<T, Map<T, dynamic>> weightedEdges,
       {Comparator<T>? comparator})
       : super(comparator) {
@@ -34,11 +43,6 @@ class DirectedGraph<T extends Object> extends DirectedGraphBase<T> {
   /// Factory constructor returning the transitive closure of [graph].
   factory DirectedGraph.transitiveClosure(DirectedGraph<T> graph) {
     final tcEdges = <T, Set<T>>{};
-
-    // for (final vertex in graph.sortedVertices) {
-    //   tcEdges[vertex] = Set<T>.of(graph.reachableVertices(vertex));
-    // }
-
     void addReachableVertices(T root, T current) {
       for (final vertex in graph.edges(current)) {
         if (tcEdges[root]!.contains(vertex)) continue;
@@ -51,7 +55,6 @@ class DirectedGraph<T extends Object> extends DirectedGraphBase<T> {
       tcEdges[root] = <T>{};
       addReachableVertices(root, root);
     }
-
     return DirectedGraph(tcEdges, comparator: graph.comparator);
   }
 
@@ -120,6 +123,12 @@ class DirectedGraph<T extends Object> extends DirectedGraphBase<T> {
       _edges.remove(vertex);
       updateCache();
     }
+  }
+
+  /// Removes all graph edges.
+  void clear() {
+    _edges.clear();
+    updateCache();
   }
 
   /// Sorts the neighbouring vertices of each vertex using [comparator].
