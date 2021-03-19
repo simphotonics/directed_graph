@@ -235,6 +235,15 @@ void main() {
     });
   });
 
+  group('Weigth:', () {
+    test('graph weigth', () {
+      expect(graph.weight, 49);
+    });
+    test('weightAlong([a, c, g])', () {
+      expect(graph.weightAlong([a, c, g]), 6);
+    });
+  });
+
   group('TransitiveClosure', () {
     test('acyclic graph', () {
       expect(
