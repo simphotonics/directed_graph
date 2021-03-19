@@ -1,3 +1,8 @@
+## 0.3.4
+
+- Added the method `clear()` to classes [`DirectedGraph`][DirectedGraph] and
+[`WeightedDirectedGraph`][WeightedDirectedGraph].
+
 ## 0.3.3
 
 - Added weighted graph getter `transitiveWeightedEdges` and method `addEdge()`.
@@ -17,7 +22,7 @@
   A path \[v<sub>i</sub>, ...,   v<sub>n</sub>\] is an ordered list of at least two connected vertices where each **inner** vertex is **distinct**.
 * Functions returning a topological ordering now return an ordered set of vertices, reflecting the fact that in a topological ordering
   each vertex must be distinct.
-* Added the classes `WeightedDirectedGraph` and `BiDirectedGraph`.
+* Added the classes [`WeightedDirectedGraph`][WeightedDirectedGraph] and `BiDirectedGraph`.
 * Complete overhaul of the class `GraphCrawler`.
 
 ## 0.2.3
@@ -116,4 +121,7 @@ Amended package description.
 Initial version of the library.
 
 [DirectedGraph]: https://pub.dev/documentation/directed_graph/latest/directed_graph/DirectedGraph-class.html
+
+[WeightedDirectedGraph]: https://pub.dev/documentation/directed_graph/latest/directed_graph/WeightedDirectedGraph-class.html
+
 [GraphCrawler]: https://pub.dev/documentation/directed_graph/latest/directed_graph/GraphCrawler-class.html
