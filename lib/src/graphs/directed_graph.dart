@@ -50,7 +50,6 @@ class DirectedGraph<T extends Object> extends DirectedGraphBase<T> {
         addReachableVertices(root, vertex);
       }
     }
-
     for (final root in graph) {
       tcEdges[root] = <T>{};
       addReachableVertices(root, root);
