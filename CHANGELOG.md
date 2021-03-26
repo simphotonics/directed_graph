@@ -1,3 +1,7 @@
+## 0.3.5
+
+- Amended docs. Migrated from travis to github actions.
+
 ## 0.3.4
 
 - Eliminated cyclic dependency between class [`WeightedDirectedGraph`][WeightedDirectedGraph]
