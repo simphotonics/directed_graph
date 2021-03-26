@@ -83,7 +83,7 @@ abstract class DirectedGraphBase<T extends Object> extends Iterable<T> {
     return crawler.tree(start).map<T>((branch) => branch.last).toSet();
   }
 
-  /// Returns the shortest detected path from [start] to [target]
+  /// Returns the shortest detected path from `start` to `target`
   /// including cycles.
   /// * Returns an empty list if no path was found.
   /// * To exclude cycles use the method `shortestPath(start, target)`.
@@ -91,7 +91,7 @@ abstract class DirectedGraphBase<T extends Object> extends Iterable<T> {
     return crawler.path(start, target);
   }
 
-  /// Returns all paths from [start] to [target]
+  /// Returns all paths from `start` to `target`
   /// including cycles.
   /// * Returns an empty list if no path was found.
   /// * To exclude cycles and list only the shortest paths

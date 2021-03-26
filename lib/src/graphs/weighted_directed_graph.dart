@@ -15,7 +15,7 @@ class WeightedDirectedGraph<T extends Object, W extends Comparable>
     extends DirectedGraphBase<T> {
   /// Constructs a weighted directed graph with vertices of type `T`
   /// and associates to each graph edge a weight of type `W`.
-  /// * [edges]: The weighted edges of the graph. An empty map may
+  /// * `edges`: The weighted edges of the graph. An empty map may
   /// be used to create an empty graph.
   /// * [zero]: The weight of an empty path. It represents the additive
   /// identity of the type `W`.
@@ -36,7 +36,7 @@ class WeightedDirectedGraph<T extends Object, W extends Comparable>
     _weight = Lazy<W>(() => _calculateWeight);
   }
 
-  /// Constructs a shallow copy of [graph].
+  /// Constructs a shallow copy of `graph`.
   WeightedDirectedGraph.of(WeightedDirectedGraph<T, W> graph)
       : this(
           graph.data,
@@ -45,7 +45,7 @@ class WeightedDirectedGraph<T extends Object, W extends Comparable>
           comparator: graph.comparator,
         );
 
-  /// Constructs the transitive closure of [graph].
+  /// Constructs the transitive closure of `graph`.
   factory WeightedDirectedGraph.transitiveClosure(
           WeightedDirectedGraph<T, W> graph) =>
       WeightedDirectedGraph(
@@ -105,7 +105,7 @@ class WeightedDirectedGraph<T extends Object, W extends Comparable>
     super.updateCache();
   }
 
-  /// Adds weighted edges pointing from [vertex] to `weightedEdges.keys`.
+  /// Adds weighted edges pointing from `vertex` to `weightedEdges.keys`.
   void addEdges(T vertex, Map<T, W> weightedEdges) {
     if (_edges[vertex] == null) {
       // If vertex is new add it to the graph.
@@ -121,8 +121,7 @@ class WeightedDirectedGraph<T extends Object, W extends Comparable>
     updateCache();
   }
 
-  /// Adds a new weighted edge and any vertex that is not yet registered with
-  /// the graph.
+  /// Adds a new weighted edge pointing from `vertex` to `connectedVertex`.
   ///
   /// If the edge `(vertex, connectedVertex`) exists,
   /// the edge `weight` is updated.
@@ -136,7 +135,7 @@ class WeightedDirectedGraph<T extends Object, W extends Comparable>
     _edges[connectedVertex] ??= <T, W>{};
   }
 
-  /// Removes edges (connections) pointing from [vertex] to [connectedVertices].
+  /// Removes edges pointing from `vertex` to `connectedVertices`.
   ///
   /// Does not remove any vertices from the graph.
   void removeEdges(T vertex, Set<T> connectedVertices) {
@@ -150,7 +149,7 @@ class WeightedDirectedGraph<T extends Object, W extends Comparable>
     updateCache();
   }
 
-  /// Removes edges ending at [vertex] from the graph.
+  /// Removes edges ending at `vertex` from the graph.
   ///
   /// Note: Does not remove any vertices from the graph.
   void removeIncomingEdges(T vertex) {
@@ -162,7 +161,7 @@ class WeightedDirectedGraph<T extends Object, W extends Comparable>
     updateCache();
   }
 
-  /// Completely removes [vertex] from the graph, including outgoing
+  /// Completely removes `vertex` from the graph, including outgoing
   /// and incoming edges.
   void remove(T vertex) {
     // Return early if vertex is unknown.
@@ -225,7 +224,7 @@ class WeightedDirectedGraph<T extends Object, W extends Comparable>
   ///   insertion order.
   /// * In general, adding further graph edges invalidates
   ///   the sorting of neighbouring vertices.
-  /// * The optional parameter `vertexComparator` defaults to `comparator`.
+  /// * The optional parameter `vertexComparator` defaults to [comparator].
   void sortEdges([Comparator<T>? vertexComparator]) {
     if (comparator == null && vertexComparator == null) return;
     for (final vertex in vertices) {
@@ -233,7 +232,7 @@ class WeightedDirectedGraph<T extends Object, W extends Comparable>
     }
   }
 
-  /// Sorts the neighbouring vertices of each vertex using [weightComparator].
+  /// Sorts the neighbouring vertices of each vertex using `weightComparator`.
   /// * By default the neighbouring vertices of a vertex are listed in
   ///   insertion order.
   /// * Note: In general, adding further graph edges invalidates

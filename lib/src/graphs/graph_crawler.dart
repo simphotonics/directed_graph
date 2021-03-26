@@ -24,7 +24,7 @@ class GraphCrawler<T extends Object> {
   /// Important: It must never return `null`.
   final Edges<T> edges;
 
-  /// Returns the shortest detected path from [start] to [target].
+  /// Returns the shortest detected path from `start` to `target`.
   /// * Returns an empty list if no path was found.
   List<T> path(T start, T target) {
     final _tree = mappedTree(start, target);
@@ -33,7 +33,7 @@ class GraphCrawler<T extends Object> {
         : <T>[];
   }
 
-  /// Returns a list containing all paths connecting [start] and [target].
+  /// Returns a list containing all paths connecting `start` and `target`.
   List<List<T>> paths(T start, T target) {
     final pathList = <List<T>>[];
     // Retrieve vertex tree.
@@ -46,7 +46,7 @@ class GraphCrawler<T extends Object> {
     return pathList;
   }
 
-  /// Returns a tree-like structure with [start] as root vertex.
+  /// Returns a tree-like structure with `start` as root vertex.
   /// * Each entry of type `Set<T>` represents a path
   ///  (the start vertex is omitted).
   List<Set<T>> tree(T start, [T? target]) {
@@ -79,11 +79,11 @@ class GraphCrawler<T extends Object> {
     return result;
   }
 
-  /// Returns a map containing all paths commencing at [start].
+  /// Returns a map containing all paths commencing at `start`.
   /// * Paths are grouped according to the last vertex in the path list.
-  /// * If a [target] vertex is specified the function will return
-  /// as soon as a path from [start] to [target] is found.
-  /// * Each entry of type `Set<T>` represents a path (the [start] vertex is omitted).
+  /// * If a `target` vertex is specified the function will return
+  /// as soon as a path from `start` to `target` is found.
+  /// * Each entry of type `Set<T>` represents a path (the `start` vertex is omitted).
   /// * Inspired by [`graphs`](https://pub.dev/documentation/graphs/latest/graphs/shortestPaths.html).
   /// Usage:
   ///
@@ -110,8 +110,6 @@ class GraphCrawler<T extends Object> {
   /// The program above generates the following console output:
   ///
   /// `{a: [{a}], b: [{b}], h: [{h}, {b, h}, {c, h}], c: [{c}], e: [{e}], g: [{c, g}]}`
-  ///
-  /// The shortest path from vertex `'a'` to `'g'` is: `{a, c, g}`.
   Map<T, List<Set<T>>> mappedTree(T start, [T? target]) {
     final result = <T, List<Set<T>>>{};
     final _tree = tree(start, target);
@@ -122,7 +120,6 @@ class GraphCrawler<T extends Object> {
         result[branch.last] = [branch];
       }
     }
-
     return result;
   }
 }

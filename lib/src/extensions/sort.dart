@@ -1,7 +1,7 @@
 import 'package:directed_graph/src/exceptions/error_types.dart';
 import 'package:exception_templates/exception_templates.dart';
 
-/// Extension providing the method `sort()` for
+/// Extension providing the method [sort] for
 /// sorting a `Set<T extends Object>` in place.
 extension SortSet<T extends Object> on Set<T> {
   void sort([Comparator<T>? comparator]) {
@@ -24,8 +24,8 @@ extension SortSet<T extends Object> on Set<T> {
   }
 }
 
-/// Extension providing the methods `sortByKey()`
-/// and `sortByValue()` for
+/// Extension providing the methods [sortByKey]
+/// and [sortByValue] for
 /// sorting a `Map<K extends Object, V extends Object>` in place.
 extension SortMap<K extends Object, V extends Object> on Map<K, V> {
   /// Sorts a map of type `Map<K, V>` (in place) using the map keys.

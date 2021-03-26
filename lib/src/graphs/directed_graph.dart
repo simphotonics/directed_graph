@@ -21,7 +21,7 @@ class DirectedGraph<T extends Object> extends DirectedGraphBase<T> {
     });
   }
 
-  /// Constructs a shallow copy of [graph].
+  /// Constructs a shallow copy of `graph`.
   DirectedGraph.of(DirectedGraph<T> graph)
       : this(
           graph.data,
@@ -77,13 +77,13 @@ class DirectedGraph<T extends Object> extends DirectedGraphBase<T> {
     return data;
   }
 
-  /// Returns the vertices connected to [vertex].
+  /// Returns the vertices connected to `vertex`.
   /// Note: Mathematically, an edge is an ordered pair
   /// (vertex, connected-vertex).
   @override
   Iterable<T> edges(T vertex) => _edges[vertex] ?? <T>{};
 
-  /// Adds edges (connections) pointing from [vertex] to [connectedVertices].
+  /// Adds edges (connections) pointing from `vertex` to `connectedVertices`.
   void addEdges(T vertex, Set<T> connectedVertices) {
     if (_edges.containsKey(vertex)) {
       _edges[vertex]!.addAll(connectedVertices);
@@ -98,14 +98,14 @@ class DirectedGraph<T extends Object> extends DirectedGraphBase<T> {
     updateCache();
   }
 
-  /// Removes edges (connections) pointing from [vertex] to [connectedVertices].
+  /// Removes edges (connections) pointing from `vertex` to `connectedVertices`.
   /// * Note: Does not remove the vertices.
   void removeEdges(T vertex, Set<T> connectedVertices) {
     _edges[vertex]?.removeAll(connectedVertices);
     updateCache();
   }
 
-  /// Removes edges ending at [vertex] from the graph.
+  /// Removes edges ending at `vertex` from the graph.
   void removeIncomingEdges(T vertex) {
     if (_edges.containsKey(vertex)) {
       for (final connectedVertices in _edges.values) {
@@ -115,7 +115,7 @@ class DirectedGraph<T extends Object> extends DirectedGraphBase<T> {
     }
   }
 
-  /// Completely removes [vertex] from the graph, including outgoing
+  /// Completely removes `vertex` from the graph, including outgoing
   /// and incoming edges.
   void remove(T vertex) {
     if (_edges.containsKey(vertex)) {
@@ -131,7 +131,7 @@ class DirectedGraph<T extends Object> extends DirectedGraphBase<T> {
     updateCache();
   }
 
-  /// Sorts the neighbouring vertices of each vertex using [comparator].
+  /// Sorts the neighbouring vertices of each vertex using `comparator`.
   /// * By default the neighbouring vertices of a vertex are listed in
   ///   insertion order.
   ///   ```
