@@ -5,11 +5,22 @@
 
 name: Dart
 
+
+on:
+  push:
+    paths:
+    - '**.js'
+
+
 on:
   push:
     branches: [ main ]
+    paths:
+    - '**.dart'
   pull_request:
     branches: [ main ]
+    paths:
+    - '**.dart'
 
 jobs:
   build:
@@ -40,3 +51,11 @@ jobs:
       # want to change this to 'flutter test'.
       - name: Run tests
         run: dart test
+
+      # Run benchmarks
+      - name: Run benchmarks
+        run: dart run benchmark
+
+      # Run example
+      - name: Run example
+        run: dart example/bin/directed_graph_example.dart
