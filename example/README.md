@@ -1,6 +1,4 @@
-
-
-[![Build Status](https://travis-ci.com/simphotonics/directed_graph.svg?branch=master)](https://travis-ci.com/simphotonics/directed_graph)
+[![Dart](https://github.com/simphotonics/directed_graph/actions/workflows/dart.yml/badge.svg)](https://github.com/simphotonics/directed_graph/actions/workflows/dart.yml)
 
 ## Directed Graph - Example
 The files located in the folder *bin* contain short programs that demonstrate how
