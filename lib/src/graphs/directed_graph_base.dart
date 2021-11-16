@@ -143,8 +143,8 @@ abstract class DirectedGraphBase<T extends Object> extends Iterable<T> {
       }
       // Temporary mark. Marks current vertex as visited.
       temp.add(vertex);
-      for (final connected_Vertex in edges(vertex)) {
-        visit(connected_Vertex);
+      for (final connectedVertex in edges(vertex)) {
+        visit(connectedVertex);
       }
       // Permanent mark, indicating that there is no path from
       // neighbouring vertices back to the current vertex.
