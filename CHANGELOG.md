@@ -1,3 +1,8 @@
+## 0.3.6
+
+- Replace package `pedantic` with `lints`.
+- Updated deps.
+
 ## 0.3.5
 
 - Amended docs. Migrated from travis to github actions.
