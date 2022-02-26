@@ -1,5 +1,6 @@
 import 'dart:collection';
-
+import 'dart:io';
+import 'dart:math';
 import 'package:lazy_memo/lazy_memo.dart';
 import 'package:quote_buffer/quote_buffer.dart';
 
@@ -413,5 +414,114 @@ abstract class DirectedGraphBase<T extends Object> extends Iterable<T> {
     }
     b.write('}');
     return b.toString();
+  }
+
+  /// Returns the non-cyclic vertices of [graph] sorted in topological order.
+  ///
+  /// If [indexMap] is provided, it is filled with "index" of each vertex.
+  /// If [layers] is provided, it is filled with a list of the vertices for each
+  /// "index".
+  ///
+  /// Here, the "index" of a vertex is the length of the longest path through
+  /// neighbors. For vertices with no neighbors, the index is 0. For any other
+  /// vertex, it is 1 plus max of the index of its neighbors.
+  List<T> topologicalSort(DirectedGraphBase<T> graph,
+      {Map<T, int>? indexMap, List<List<T>>? layers}) {
+    List<T> workList = graph.vertices.toList();
+    indexMap ??= {};
+    List<T> topologicallySortedVertices = [];
+    List<T> previousWorkList;
+    do {
+      previousWorkList = workList;
+      workList = [];
+      for (int i = 0; i < previousWorkList.length; i++) {
+        T vertex = previousWorkList[i];
+        int index = 0;
+        bool allSupertypesProcessed = true;
+        for (T neighbor in graph.edges(vertex)) {
+          int? neighborIndex = indexMap[neighbor];
+          if (neighborIndex == null) {
+            allSupertypesProcessed = false;
+            break;
+          } else {
+            index = max(index, neighborIndex + 1);
+          }
+        }
+        if (allSupertypesProcessed) {
+          indexMap[vertex] = index;
+          topologicallySortedVertices.add(vertex);
+          if (layers != null) {
+            if (index >= layers.length) {
+              assert(index == layers.length);
+              layers.add([vertex]);
+            } else {
+              layers[index].add(vertex);
+            }
+          }
+        } else {
+          workList.add(vertex);
+        }
+      }
+    } while (previousWorkList.length != workList.length);
+    return topologicallySortedVertices.reversed.toList();
+  }
+
+  /// Returns the non-cyclic vertices sorted in topological order.
+  ///
+  /// If [reachIndexMap] is provided, it is filled with "reach index"
+  /// of each vertex.
+  /// If [layers] is provided, it is filled with a list of the vertices for each
+  /// "reach index".
+  ///
+  /// The "reach index" of a vertex is the length of the longest path
+  /// starting at vertex. For vertices with no neighbors, the reach index is 0.
+  /// For any other vertex, it is 1 plus max of the reach index of its neighbours.
+  List<T> topSort({Map<T, int>? reachIndexMap, List<List<T>>? layers}) {
+    List<T> unexploredVertices = sortedVertices.toList();
+    reachIndexMap ??= {};
+    layers ??= <List<T>>[];
+    List<T> topologicallySortedVertices = [];
+    List<T> previousUnexploredVertices;
+    do {
+      previousUnexploredVertices = unexploredVertices;
+      unexploredVertices = [];
+      for (var vertex in previousUnexploredVertices) {
+        int reachIndex = 0;
+        bool allEdgesExplored = true;
+        for (T connectedVertex in edges(vertex)) {
+          int? connectedVertexReachIndex = reachIndexMap[connectedVertex];
+          if (connectedVertexReachIndex == null) {
+            allEdgesExplored = false;
+            break;
+          } else {
+            // print('index: ==========> $reachIndex');
+            reachIndex = max(reachIndex, connectedVertexReachIndex + 1);
+          }
+        }
+        if (allEdgesExplored) {
+          reachIndexMap[vertex] = reachIndex;
+          topologicallySortedVertices.add(vertex);
+          if (reachIndex >= layers.length) {
+            assert(reachIndex == layers.length);
+            layers.add([vertex]);
+          } else {
+            layers[reachIndex].add(vertex);
+          }
+        } else {
+          unexploredVertices.add(vertex);
+        }
+
+        // stdin.readLineSync();
+        // print('previousUnexploredVertices: $previousUnexploredVertices');
+        // print('unexploredVertices: $unexploredVertices');
+        // // print('----');
+        // print('reachIndexMap: $reachIndexMap');
+        // print('layers: $layers');
+        // // print('----');
+        // // print('topolSortedVertices: $topologicallySortedVertices');
+        // print('===================');
+      }
+    } while (unexploredVertices.length != previousUnexploredVertices.length);
+    return topologicallySortedVertices.reversed.toList();
   }
 }
