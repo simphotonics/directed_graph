@@ -1,4 +1,5 @@
 import 'package:directed_graph/directed_graph.dart';
+
 // To run this program navigate to
 // the folder 'directed_graph/example'
 // in your terminal and type:
@@ -11,6 +12,7 @@ void main() {
   int inverseComparator(String s1, String s2) => -comparator(s1, s2);
 
   // Constructing a graph from vertices.
+
   final graph = DirectedGraph<String>(
     {
       'a': {'b', 'h', 'c', 'e'},
@@ -19,11 +21,19 @@ void main() {
       'd': {'e', 'f'},
       'e': {'g'},
       'f': {'i'},
+      'g': {'a'},
       'i': {'l'},
-      'k': {'g', 'f'}
+      'k': {'g', 'f'},
     },
     comparator: comparator,
   );
+
+  // for (var i = 1; i < 3; i++) {
+  //   var nodes = graph.vertices.toList();
+  //   for (var node in nodes) {
+  //     graph.addEdges(node, {'$node$i'});
+  //   }
+  // }
 
   print('Example Directed Graph...');
   print('graph.toString():');
@@ -36,7 +46,7 @@ void main() {
   print(graph.stronglyConnectedComponents);
 
   print('\nShortestPath(d, l):');
-  //print(graph.shortestPath('d', 'l');
+  print(graph.shortestPath('d', 'l'));
 
   print('\nInDegree(C):');
   print(graph.inDegree('c'));
@@ -60,7 +70,13 @@ void main() {
 
   print('\nTopological Ordering:');
   print(graph.topologicalOrdering);
+  var indexMap = <String, int>{};
+  var layers = <List<String>>[];
 
+  print(graph.topSort(reachIndexMap: indexMap, layers: layers));
+  print(graph.topologicalSort(graph));
+  print(indexMap);
+  print(layers);
   print('\nLocal Sources:');
   print(graph.localSources);
 
