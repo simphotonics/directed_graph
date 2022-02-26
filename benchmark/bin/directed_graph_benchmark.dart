@@ -27,34 +27,39 @@ var i = 'i';
 var k = 'k';
 var l = 'l';
 
-var graph = DirectedGraph<String>(
-  {
-    a: {b, h, c, e},
-    d: {e, f},
-    b: {h},
-    c: {h, g},
-    f: {i},
-    i: {l},
-    k: {g, f}
-  },
-  comparator: comparator,
-);
+// var graph = DirectedGraph<String>(
+//   {
+//     a: {b, h, c, e},
+//     d: {e, f},
+//     b: {h},
+//     c: {h, g},
+//     f: {i},
+//     i: {l},
+//     k: {g, f}
+//   },
+//   comparator: comparator,
+// );
 
 void main() {
-  setUp(() {
-    graph = DirectedGraph<String>(
-      {
-        a: {b, h, c, e},
-        d: {e, f},
-        b: {h},
-        c: {h, g},
-        f: {i},
-        i: {l},
-        k: {g, f}
-      },
-      comparator: comparator,
-    );
-  });
+  var graph = DirectedGraph<String>(
+    {
+      a: {b, h, c, e},
+      d: {e, f},
+      b: {h},
+      c: {h, g},
+      f: {i},
+      i: {l},
+      // h: {a},
+      k: {g, f}
+    },
+    comparator: comparator,
+  );
+  for (var i = 1; i < 10; i++) {
+    var nodes = graph.vertices.toList();
+    for (var node in nodes) {
+      graph.addEdges(node, {'$node$i'});
+    }
+  }
 
   group('Manipulating edges:', () {
     benchmark('remove vertex l', () {
@@ -65,13 +70,16 @@ void main() {
       graph.sortEdges();
     }, duration: Duration(milliseconds: 100));
   });
-  group('Topology:', () {
+  group('Topology: ${graph.vertices.length} vertices', () {
     benchmark('isAcyclic', () {
       graph.isAcyclic;
     }, duration: Duration(milliseconds: 100));
+    benchmark('graphs.topSort', () {
+      graph.topSort();
+    }, duration: Duration(milliseconds: 1000));
     benchmark('topologicalOrdering', () {
       graph.topologicalOrdering;
-    }, duration: Duration(milliseconds: 100));
+    }, duration: Duration(milliseconds: 1000));
     benchmark('sortedTopologicalOrdering', () {
       graph.sortedTopologicalOrdering;
     }, duration: Duration(milliseconds: 100));
