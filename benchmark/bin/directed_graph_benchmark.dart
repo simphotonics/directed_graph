@@ -54,7 +54,7 @@ void main() {
     },
     comparator: comparator,
   );
-  for (var i = 1; i < 10; i++) {
+  for (var i = 1; i < 5; i++) {
     var nodes = graph.vertices.toList();
     for (var node in nodes) {
       graph.addEdges(node, {'$node$i'});
@@ -74,9 +74,6 @@ void main() {
     benchmark('isAcyclic', () {
       graph.isAcyclic;
     }, duration: Duration(milliseconds: 100));
-    benchmark('graphs.topSort', () {
-      graph.topSort();
-    }, duration: Duration(milliseconds: 1000));
     benchmark('topologicalOrdering', () {
       graph.topologicalOrdering;
     }, duration: Duration(milliseconds: 1000));

@@ -21,7 +21,7 @@ void main() {
       'd': {'e', 'f'},
       'e': {'g'},
       'f': {'i'},
-      'g': {'a'},
+      // 'g': {'a'},
       'i': {'l'},
       'k': {'g', 'f'},
     },
@@ -70,13 +70,7 @@ void main() {
 
   print('\nTopological Ordering:');
   print(graph.topologicalOrdering);
-  var indexMap = <String, int>{};
-  var layers = <List<String>>[];
-
-  print(graph.topSort(reachIndexMap: indexMap, layers: layers));
-  print(graph.topologicalSort(graph));
-  print(indexMap);
-  print(layers);
+  
   print('\nLocal Sources:');
   print(graph.localSources);
 
