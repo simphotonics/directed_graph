@@ -342,7 +342,7 @@ abstract class DirectedGraphBase<T extends Object> extends Iterable<T> {
     }
 
     // Return null if graph is not a DAG.
-    return (isCyclic) ? null : queue.toSet(); 
+    return (isCyclic) ? null : queue.toSet();
   }
 
   // Returns a mapping between vertex and number of
