@@ -105,6 +105,20 @@ class WeightedDirectedGraph<T extends Object, W extends Comparable>
     super.updateCache();
   }
 
+  @override
+  bool edgeExists(T vertexOut, T vertexIn) {
+    if (_edges.containsKey(vertexOut) &&
+        _edges[vertexOut]!.containsKey(vertexIn)) {
+      return true;
+    }
+    return false;
+  }
+
+  @override
+  bool vertexExists(T vertex) {
+    return _edges.containsKey(vertex);
+  }
+
   /// Adds weighted edges pointing from `vertex` to `weightedEdges.keys`.
   void addEdges(T vertex, Map<T, W> weightedEdges) {
     if (_edges[vertex] == null) {

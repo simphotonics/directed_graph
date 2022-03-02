@@ -83,6 +83,20 @@ class DirectedGraph<T extends Object> extends DirectedGraphBase<T> {
   @override
   Iterable<T> edges(T vertex) => _edges[vertex] ?? <T>{};
 
+  @override
+  bool edgeExists(T vertexOut, T vertexIn) {
+    if (_edges.containsKey(vertexOut) &&
+        _edges[vertexOut]!.contains(vertexIn)) {
+      return true;
+    }
+    return false;
+  }
+
+  @override
+  bool vertexExists(T vertex) {
+    return _edges.containsKey(vertex);
+  }
+
   /// Adds edges (connections) pointing from `vertex` to `connectedVertices`.
   void addEdges(T vertex, Set<T> connectedVertices) {
     if (_edges.containsKey(vertex)) {
