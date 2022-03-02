@@ -1,3 +1,7 @@
+## 0.3.7
+- Updated deps.
+- Added graph methods `edgeExists` and `vertexExists`.
+
 ## 0.3.6
 
 - Replace package `pedantic` with `lints`.
