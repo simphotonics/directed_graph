@@ -21,7 +21,7 @@ void main() {
       'd': {'e', 'f'},
       'e': {'g'},
       'f': {'i'},
-      // 'g': {'a'},
+      //'g': {'a'},
       'i': {'l'},
       'k': {'g', 'f'},
     },
@@ -70,7 +70,7 @@ void main() {
 
   print('\nTopological Ordering:');
   print(graph.topologicalOrdering);
-  
+
   print('\nLocal Sources:');
   print(graph.localSources);
 
@@ -84,4 +84,7 @@ void main() {
 
   print('\nShortest Paths:');
   print(graph.shortestPaths('a'));
+
+  print('\nEdge exists: a->b');
+  print(graph.edgeExists('a', 'b'));
 }
