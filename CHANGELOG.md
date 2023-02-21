@@ -1,3 +1,7 @@
+## 0.3.8
+- Updated dependencies.
+- Applied suggested lints.
+
 ## 0.3.7
 - Updated deps.
 - Added graph methods `edgeExists` and `vertexExists`.

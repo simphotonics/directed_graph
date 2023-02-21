@@ -27,9 +27,9 @@ class GraphCrawler<T extends Object> {
   /// Returns the shortest detected path from `start` to `target`.
   /// * Returns an empty list if no path was found.
   List<T> path(T start, T target) {
-    final _tree = mappedTree(start, target);
-    return _tree.containsKey(target)
-        ? <T>[start, ..._tree[target]!.first]
+    final tree = mappedTree(start, target);
+    return tree.containsKey(target)
+        ? <T>[start, ...tree[target]!.first]
         : <T>[];
   }
 
@@ -37,9 +37,9 @@ class GraphCrawler<T extends Object> {
   List<List<T>> paths(T start, T target) {
     final pathList = <List<T>>[];
     // Retrieve vertex tree.
-    final _tree = mappedTree(start);
-    if (_tree.containsKey(target)) {
-      for (final branch in _tree[target]!) {
+    final tree = mappedTree(start);
+    if (tree.containsKey(target)) {
+      for (final branch in tree[target]!) {
         pathList.add(<T>[start, ...branch]);
       }
     }
@@ -112,8 +112,8 @@ class GraphCrawler<T extends Object> {
   /// `{a: [{a}], b: [{b}], h: [{h}, {b, h}, {c, h}], c: [{c}], e: [{e}], g: [{c, g}]}`
   Map<T, List<Set<T>>> mappedTree(T start, [T? target]) {
     final result = <T, List<Set<T>>>{};
-    final _tree = tree(start, target);
-    for (final branch in _tree) {
+    final tree = this.tree(start, target);
+    for (final branch in tree) {
       if (result.containsKey(branch.last)) {
         result[branch.last]!.add(branch);
       } else {
