@@ -287,7 +287,6 @@ void main() {
   });
 
   group('Default comparator', () {
-
     final graph = WeightedDirectedGraph<String, int>(
       {
         a: {b: 1, h: 7, c: 2, e: 4},

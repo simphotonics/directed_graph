@@ -46,15 +46,15 @@ void main() {
   group('Topology:', () {
     benchmark('path', () {
       gc.path(a, g);
-    }, duration: Duration(milliseconds:100));
+    }, duration: Duration(milliseconds: 100));
     benchmark('paths', () {
       gc.path(a, g);
-    }, duration: Duration(milliseconds:100));
+    }, duration: Duration(milliseconds: 100));
     benchmark('tree', () {
       gc.tree(a);
-    }, duration: Duration(milliseconds:100));
+    }, duration: Duration(milliseconds: 100));
     benchmark('mappedTree', () {
       gc.mappedTree(a);
-    }, duration: Duration(milliseconds:100));
+    }, duration: Duration(milliseconds: 100));
   });
 }

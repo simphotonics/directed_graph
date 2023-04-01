@@ -58,49 +58,49 @@ void main() {
     benchmark('remove vertex l', () {
       graph.remove(l);
       graph.addEdges(i, {l: 3});
-    }, duration: Duration(milliseconds:100));
+    }, duration: Duration(milliseconds: 100));
     benchmark('sort edges', () {
       graph.sortEdges();
-    }, duration: Duration(milliseconds:100));
+    }, duration: Duration(milliseconds: 100));
     benchmark('sort edges by weight', () {
       graph.sortEdgesByWeight();
-    }, duration: Duration(milliseconds:100));
+    }, duration: Duration(milliseconds: 100));
   });
   group('Topology:', () {
     benchmark('isAcyclic', () {
       graph.isAcyclic;
-    }, duration: Duration(milliseconds:100));
+    }, duration: Duration(milliseconds: 100));
     benchmark('topologicalOrdering', () {
       graph.topologicalOrdering;
-    }, duration: Duration(milliseconds:100));
+    }, duration: Duration(milliseconds: 100));
     benchmark('sortedTopologicalOrdering', () {
       graph.sortedTopologicalOrdering;
-    }, duration: Duration(milliseconds:100));
+    }, duration: Duration(milliseconds: 100));
     benchmark('transitiveClosure', () {
       WeightedDirectedGraph.transitiveClosure(graph);
-    }, duration: Duration(milliseconds:100));
+    }, duration: Duration(milliseconds: 100));
     benchmark('cycleVertex', () {
       graph.cycleVertex;
-    }, duration: Duration(milliseconds:100));
+    }, duration: Duration(milliseconds: 100));
     benchmark('cycle', () {
       graph.cycle;
-    }, duration: Duration(milliseconds:100));
+    }, duration: Duration(milliseconds: 100));
     benchmark('localSources', () {
       graph.localSources;
-    }, duration: Duration(milliseconds:100));
+    }, duration: Duration(milliseconds: 100));
     benchmark('stronglyConnectedComponents', () {
       graph.stronglyConnectedComponents;
-    }, duration: Duration(milliseconds:100));
+    }, duration: Duration(milliseconds: 100));
     benchmark('shortestPaths', () {
       graph.shortestPaths(a);
-    }, duration: Duration(milliseconds:100));
+    }, duration: Duration(milliseconds: 100));
   });
   group('Selecting path by weight:', () {
     benchmark('lightest path a -> g', () {
       graph.lightestPath(a, g);
-    }, duration: Duration(milliseconds:100));
+    }, duration: Duration(milliseconds: 100));
     benchmark('heaviest path a -> g', () {
       graph.heaviestPath(a, g);
-    }, duration: Duration(milliseconds:100));
+    }, duration: Duration(milliseconds: 100));
   });
 }
