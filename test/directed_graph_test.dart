@@ -259,4 +259,36 @@ void main() {
       });
     });
   });
+  group('Default comparator', () {
+    var a = 'a';
+    var b = 'b';
+    var c = 'c';
+    var d = 'd';
+    var e = 'e';
+    var f = 'f';
+    var g = 'g';
+    var h = 'h';
+    var i = 'i';
+    var k = 'k';
+    var l = 'l';
+
+    var graph = DirectedGraph<String>(
+      {
+        a: {b, h, c, e},
+        d: {e, f},
+        b: {h},
+        c: {h, g},
+        f: {i},
+        i: {l},
+        k: {g, f}
+      },
+    );
+    test('sort Strings', () {
+      for (var vertex in graph.sortedVertices) {
+        vertex = '${vertex}1';
+      }
+      expect(graph.sortedVertices,
+          {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'k', 'l'});
+    });
+  });
 }

@@ -33,7 +33,6 @@ class WeightedDirectedGraph<T extends Object, W extends Comparable>
         _edges[connectedVertex] ??= <T, W>{};
       }
     });
-    _weight = Lazy<W>(() => _calculateWeight);
   }
 
   /// Constructs a shallow copy of `graph`.
@@ -81,7 +80,18 @@ class WeightedDirectedGraph<T extends Object, W extends Comparable>
       _edges[vertex] == null ? <T>{} : _edges[vertex]!.keys;
 
   /// Lazy variable representing the graph weight.
-  late final Lazy<W> _weight;
+  late final _weight = Lazy<W>(() {
+    var sum = zero;
+    for (final vertex in vertices) {
+      var partialSum = zero;
+      // Adding weight of edges connected to vertex.
+      for (final weight in _edges[vertex]!.values) {
+        partialSum = summation(partialSum, weight);
+      }
+      sum = summation(sum, partialSum);
+    }
+    return sum;
+  });
 
   /// Returns the sum of all graph edges.
   W get weight => _weight();
@@ -210,27 +220,14 @@ class WeightedDirectedGraph<T extends Object, W extends Comparable>
     }
     if (!_edges[vertex]!.containsKey(connectedVertex)) {
       throw ErrorOfType<NotAnEdge>(
-        message: 'Could not calculate weight of path',
+        message: 'Could not calculate weight of walk: $walk.',
         invalidState: 'Vertex $vertex not connected to $connectedVertex.}',
       );
     }
-
     return summation(
-        _edges[vertex]![connectedVertex]!, weightAlong(walk.skip(1)));
-  }
-
-  /// Returns the summed weight of all graph edges.
-  W get _calculateWeight {
-    var sum = zero;
-    for (final vertex in vertices) {
-      var partialSum = zero;
-      // Adding weight of edges connected to vertex.
-      for (final weight in _edges[vertex]!.values) {
-        partialSum = summation(partialSum, weight);
-      }
-      sum = summation(sum, partialSum);
-    }
-    return sum;
+      _edges[vertex]![connectedVertex]!,
+      weightAlong(walk.skip(1)),
+    );
   }
 
   /// Sorts the neighbouring vertices of each vertex using [comparator].
@@ -278,7 +275,8 @@ class WeightedDirectedGraph<T extends Object, W extends Comparable>
 
   /// Returns the path connecting `start` and `target` with
   /// the largest summed edge-weight.
-  /// * Returns an empty list if no path could be found.
+  ///
+  /// Note: Returns an empty list if no path could be found.
   List<T> heaviestPath(T start, T target) {
     final paths = crawler.paths(start, target);
     if (paths.isEmpty) return [];

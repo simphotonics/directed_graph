@@ -1,4 +1,5 @@
 import 'dart:collection';
+import 'package:directed_graph/src/extensions/sort.dart';
 import 'package:lazy_memo/lazy_memo.dart';
 import 'package:quote_buffer/quote_buffer.dart';
 
@@ -13,15 +14,7 @@ abstract class DirectedGraphBase<T extends Object> extends Iterable<T> {
   /// used to sort vertices.
   DirectedGraphBase(
     Comparator<T>? comparator,
-  ) : _comparator = comparator {
-    _lazySortedVertices = Lazy<List<T>>(
-      () => _comparator == null ? vertices.toList() : vertices.toList()
-        ..sort(_comparator),
-    );
-    _lazyOutDegreeMap = LazyMap<T, int>(() => _outDegreeMap);
-    _lazyInDegreeMap = LazyMap<T, int>(() => _inDegreeMap);
-    crawler = GraphCrawler<T>(edges);
-  }
+  ) : _comparator = comparator;
 
   /// The comparator used to sort vertices.
   Comparator<T>? _comparator;
@@ -32,8 +25,11 @@ abstract class DirectedGraphBase<T extends Object> extends Iterable<T> {
   /// Sets the comparator used to sort graph vertices.
   set comparator(Comparator<T>? comparator) {
     _comparator = comparator;
-    _lazySortedVertices.updateCache();
+    _sortedVertices.updateCache();
   }
+
+  /// Returns `true` if [comparator] is not null.
+  bool get hasComparator => _comparator != null;
 
   /// Marks cached variables as stale.
   /// This method must be called every time vertices or edges
@@ -42,19 +38,20 @@ abstract class DirectedGraphBase<T extends Object> extends Iterable<T> {
   /// After calling this method
   /// all cached variables will be recalculated when next accessed.
   void updateCache() {
-    _lazyOutDegreeMap.updateCache();
-    _lazyInDegreeMap.updateCache();
-    _lazySortedVertices.updateCache();
+    _outDegreeMap.updateCache();
+    _inDegreeMap.updateCache();
+    _sortedVertices.updateCache();
   }
 
   /// Caches the sorted vertices.
-  late final Lazy<List<T>> _lazySortedVertices;
+  late final Lazy<Set<T>> _sortedVertices =
+      Lazy<Set<T>>(() => vertices.toSet()..sort(comparator));
 
   /// Returns an `Iterable<T>` of all vertices.
   Iterable<T> get vertices;
 
   /// Returns an `Iterable<T>` of all vertices sorted using `comparator`.
-  Iterable<T> get sortedVertices => _lazySortedVertices();
+  Iterable<T> get sortedVertices => _sortedVertices();
 
   /// Returns the vertices connected to `vertex`.
   Iterable<T> edges(T vertex);
@@ -69,22 +66,39 @@ abstract class DirectedGraphBase<T extends Object> extends Iterable<T> {
 
   // Returns a mapping between vertex and number of
   /// outgoing connections.
-  late LazyMap<T, int> _lazyOutDegreeMap;
+  late final _outDegreeMap = LazyMap<T, int>(() {
+    final map = <T, int>{};
+    for (final vertex in sortedVertices) {
+      map[vertex] = edges(vertex).length;
+    }
+    return map;
+  });
 
   // Returns a mapping between vertex and number of
   /// outgoing connections.
-  Map<T, int> get outDegreeMap => _lazyOutDegreeMap();
+  Map<T, int> get outDegreeMap => _outDegreeMap();
 
   /// Returns a mapping between vertex and number of
   /// incoming connections.
-  late LazyMap<T, int> _lazyInDegreeMap;
+  late final _inDegreeMap = LazyMap<T, int>(() {
+    var map = <T, int>{};
+    for (final vertex in sortedVertices) {
+      // Entry might already exist.
+      map[vertex] ??= 0;
+      for (final connectedVertex in edges(vertex)) {
+        map[connectedVertex] =
+            map.containsKey(connectedVertex) ? map[connectedVertex]! + 1 : 1;
+      }
+    }
+    return map;
+  });
 
   /// Returns a mapping between vertex and number of
   /// incoming connections.
-  Map<T, int> get inDegreeMap => _lazyInDegreeMap();
+  Map<T, int> get inDegreeMap => _inDegreeMap();
 
   /// The graph crawler of this graph.
-  late final GraphCrawler<T> crawler;
+  late final GraphCrawler<T> crawler = GraphCrawler<T>(edges);
 
   /// Returns an iterable containing all vertices that are reachable from
   /// vertex `start`.
@@ -186,7 +200,7 @@ abstract class DirectedGraphBase<T extends Object> extends Iterable<T> {
   List<List<T>>? get localSources {
     final result = <List<T>>[];
 
-    final vertices = Set<T>.of(sortedVertices);
+    final vertices = LinkedHashSet<T>.of(sortedVertices);
     final localInDegreeMap = inDegreeMap;
 
     var hasSources = false;
@@ -345,43 +359,10 @@ abstract class DirectedGraphBase<T extends Object> extends Iterable<T> {
     return (isCyclic) ? null : queue.toSet();
   }
 
-  // Returns a mapping between vertex and number of
-  /// outgoing connections.
-  /// ---
-  /// Note: Do not use this function directly.
-  /// Instead use `outDegreeMap`. This function is used
-  /// to construct the object cached by `_lazyOutDegreeMap`.
-  Map<T, int> get _outDegreeMap {
-    final map = <T, int>{};
-    for (final vertex in sortedVertices) {
-      map[vertex] = edges(vertex).length;
-    }
-    return map;
-  }
-
   /// Returns the number of outgoing directed edges for [vertex].
   /// * Note: Returns `null` if `vertex` does not belong to the graph.
   int? outDegree(T vertex) {
     return vertexExists(vertex) ? edges(vertex).length : null;
-  }
-
-  /// Returns a mapping between vertex and number of
-  /// incoming connections.
-  /// ---
-  /// Note: Do not use this function directly.
-  /// Instead use `inDegreeMap`. This function is used
-  /// to construct the object cached by `_lazyInDegreeMap`.
-  Map<T, int> get _inDegreeMap {
-    var map = <T, int>{};
-    for (final vertex in sortedVertices) {
-      // Entry might already exist.
-      map[vertex] ??= 0;
-      for (final connectedVertex in edges(vertex)) {
-        map[connectedVertex] =
-            map.containsKey(connectedVertex) ? map[connectedVertex]! + 1 : 1;
-      }
-    }
-    return map;
   }
 
   /// Returns the number of incoming directed edges for [vertex].

@@ -1,3 +1,10 @@
+## 0.3.9
+- Updated dependencies.
+- Amended extensions in `sort.dart`.
+- Sorting is now possible without specifying a `Comparator` as long as the
+  the vertex type `T` implements `Comparable`.
+- Added tests.
+
 ## 0.3.8
 - Updated dependencies.
 - Applied suggested lints.

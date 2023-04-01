@@ -83,7 +83,8 @@ class GraphCrawler<T extends Object> {
   /// * Paths are grouped according to the last vertex in the path list.
   /// * If a `target` vertex is specified the function will return
   /// as soon as a path from `start` to `target` is found.
-  /// * Each entry of type `Set<T>` represents a path (the `start` vertex is omitted).
+  /// * Each entry of type `Set<T>` represents a path
+  ///   (the `start` vertex is omitted).
   /// * Inspired by [`graphs`](https://pub.dev/documentation/graphs/latest/graphs/shortestPaths.html).
   /// Usage:
   ///

@@ -38,14 +38,14 @@ void main() {
 
   var graph = WeightedDirectedGraph<String, int>(
     {
-      'a': {'b': 1, 'h': 7, 'c': 2, 'e': 4},
-      'b': {'h': 6},
-      'c': {'h': 5, 'g': 4},
-      'd': {'e': 1, 'f': 2},
-      'e': {'g': 2},
-      'f': {'i': 3},
-      'i': {'l': 3},
-      'k': {'g': 4, 'f': 5},
+      a: {b: 1, h: 7, c: 2, e: 4},
+      b: {h: 6},
+      c: {h: 5, g: 4},
+      d: {e: 1, f: 2},
+      e: {g: 2},
+      f: {i: 3},
+      i: {l: 3},
+      k: {g: 4, f: 5},
     },
     summation: sum,
     zero: 0,
@@ -283,6 +283,31 @@ void main() {
       graph.addEdges(h, {g: 17});
       expect(graph.heaviestPath(a, g), [a, h, g]);
       expect(graph.weightAlong([a, h, g]), 24);
+    });
+  });
+
+  group('Default comparator', () {
+
+    final graph = WeightedDirectedGraph<String, int>(
+      {
+        a: {b: 1, h: 7, c: 2, e: 4},
+        b: {h: 6},
+        c: {h: 5, g: 4},
+        d: {e: 1, f: 2},
+        e: {g: 2},
+        f: {i: 3},
+        i: {l: 3},
+        k: {g: 4, f: 5},
+      },
+      summation: sum,
+      zero: 0,
+    );
+    test('sort Strings', () {
+      for (var vertex in graph.sortedVertices) {
+        vertex = '${vertex}1';
+      }
+      expect(graph.sortedVertices,
+          {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'k', 'l'});
     });
   });
 }

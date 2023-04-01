@@ -62,8 +62,11 @@ For example, self-loops, that is edges connecting a vertex to itself are explici
 
 To use this library include [`directed_graph`][directed_graph] as a dependency in your pubspec.yaml file. The
 example below shows how to construct an object of type [`DirectedGraph`][DirectedGraph].
-The constructor takes an optional comparator function
-as parameter. If a comparator is specified, vertices are sorted accordingly. For more information see [comparator].
+
+The class `DirectedGraph<T extends Object>` supports sorting of vertices if
+a [comparator] function is provided
+or if `T` implements [`Comparator`][Comparator].
+
 
 ```Dart
 import 'package:directed_graph/directed_graph.dart';
@@ -75,6 +78,7 @@ import 'package:directed_graph/directed_graph.dart';
 //
 // followed by enter.
 void main() {
+
   int comparator(String s1, String s2) => s1.compareTo(s2);
   int inverseComparator(String s1, String s2) => -comparator(s1, s2);
 
@@ -104,7 +108,7 @@ void main() {
   print(graph.stronglyConnectedComponents);
 
   print('\nShortestPath(d, l):');
-  //print(graph.shortestPath('d', 'l');
+  print(graph.shortestPath('d', 'l');
 
   print('\nInDegree(C):');
   print(graph.inDegree('c'));
@@ -142,6 +146,9 @@ void main() {
 
   print('\nShortest Paths:');
   print(graph.shortestPaths('a'));
+
+  print('\nEdge exists: a->b');
+  print(graph.edgeExists('a', 'b'));
 }
 
 ```
@@ -173,6 +180,7 @@ Strongly connected components:
 [[h], [b], [g], [c], [e], [a], [l], [i], [f], [d], [k]]
 
 ShortestPath(d, l):
+[d, f, i, l]
 
 InDegree(C):
 1
@@ -204,6 +212,9 @@ Cycle:
 Shortest Paths:
 {e: (e), c: (c), h: (h), a: (), g: (c, g), b: (b)}
 
+Edge exists: a->b
+true
+
 ```
 </details>
 
@@ -215,8 +226,9 @@ Initial graph edges are specified in the form of map of type `Map<T, Map<T, W>>`
 to enable sorting of vertices by their edge weight.
 
 The constructor takes an optional comparator function
-as parameter. If a comparator is specified, vertices are sorted accordingly.
-For more information see [comparator].
+as parameter. Vertices may be sorted if
+a [comparator] function is provided
+or if `T` implements [`Comparator`][Comparator].
 
 ```Dart
 
