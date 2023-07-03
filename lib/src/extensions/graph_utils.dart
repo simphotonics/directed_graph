@@ -10,7 +10,7 @@ extension GraphUtils<T extends Object> on DirectedGraphBase<T> {
   ///
   /// Provided by the library [graphs].
   List<List<T>> get stronglyConnectedComponents {
-    return graphs.stronglyConnectedComponents(sortedVertices, edges);
+    return graphs.stronglyConnectedComponents(vertices, edges);
   }
 
   /// Returns the shortest path between `start` and `target`.

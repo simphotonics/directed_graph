@@ -170,17 +170,17 @@ void main() {
   group('Graph topology:', () {
     test('stronglyConnectedComponents().', () {
       expect(graph.stronglyConnectedComponents, [
-        [h],
-        [b],
-        [g],
-        [c],
-        [e],
-        [a],
-        {l},
-        [i],
-        [f],
-        [d],
-        {k}
+        ['l'],
+        ['g'],
+        ['i'],
+        ['f'],
+        ['k'],
+        ['e'],
+        ['d'],
+        ['h'],
+        ['c'],
+        ['b'],
+        ['a'],
       ]);
     });
     test('shortestPath().', () {

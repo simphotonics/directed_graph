@@ -352,7 +352,7 @@ Please file feature requests and bugs at the [issue tracker].
 
 [collections]: https://api.dart.dev/stable/dart-collection/dart-collection-library.html
 
-[example]: https://github.com/simphotonics/directed_graph/tree/master/example
+[example]: https://github.com/simphotonics/directed_graph/tree/main/example
 
 [graphs-examples]: https://pub.dev/packages/graphs#-example-tab-
 

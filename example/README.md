@@ -18,7 +18,7 @@ Please file feature requests and bugs at the [issue tracker].
 
 [directed_graph]: https://github.com/simphotonics/directed_graph/
 
-[bin]: https://github.com/simphotonics/directed_graph/blob/master/example/bin/
+[bin]: https://github.com/simphotonics/directed_graph/blob/main/example/bin/
 
 [GraphCrawler]: https://pub.dev/documentation/directed_graph/latest/directed_graph/GraphCrawler-class.html
 

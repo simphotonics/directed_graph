@@ -1,4 +1,6 @@
-import 'dart:collection';
+import 'dart:collection' show HashMap, HashSet, LinkedHashSet, Queue;
+
+import 'package:collection/collection.dart';
 import 'package:directed_graph/src/extensions/sort.dart';
 import 'package:lazy_memo/lazy_memo.dart';
 import 'package:quote_buffer/quote_buffer.dart';
@@ -14,7 +16,13 @@ abstract class DirectedGraphBase<T extends Object> extends Iterable<T> {
   /// used to sort vertices.
   DirectedGraphBase(
     Comparator<T>? comparator,
-  ) : _comparator = comparator;
+  ) : _comparator = comparator {
+    if (_comparator == null && T is Comparable) {
+      _comparator = (T left, T right) {
+        return (left as Comparable).compareTo(right);
+      };
+    }
+  }
 
   /// The comparator used to sort vertices.
   Comparator<T>? _comparator;
@@ -32,7 +40,7 @@ abstract class DirectedGraphBase<T extends Object> extends Iterable<T> {
   bool get hasComparator => _comparator != null;
 
   /// Marks cached variables as stale.
-  /// This method must be called every time vertices or edges
+  /// This method is called every time vertices or edges
   /// are *added* or *removed* from the graph.
   ///
   /// After calling this method
@@ -44,8 +52,8 @@ abstract class DirectedGraphBase<T extends Object> extends Iterable<T> {
   }
 
   /// Caches the sorted vertices.
-  late final Lazy<Set<T>> _sortedVertices =
-      Lazy<Set<T>>(() => vertices.toSet()..sort(comparator));
+  late final LazySet<T> _sortedVertices =
+      LazySet<T>(() => vertices.toSet()..sort(comparator));
 
   /// Returns an `Iterable<T>` of all vertices.
   Iterable<T> get vertices;
@@ -56,15 +64,15 @@ abstract class DirectedGraphBase<T extends Object> extends Iterable<T> {
   /// Returns the vertices connected to `vertex`.
   Iterable<T> edges(T vertex);
 
-  /// Returns `True` if there is an edge pointing from
+  /// Returns `true` if there is an edge pointing from
   /// `vertexOut` to `vertexIn`. Returns `False` otherwise.
   bool edgeExists(T vertexOut, T vertexIn);
 
-  /// Returns `True` if `vertex` is a graph vertex.
-  /// Returns `False` otherwise.
+  /// Returns `true` if `vertex` is a graph vertex.
+  /// Returns `false` otherwise.
   bool vertexExists(T vertex);
 
-  // Returns a mapping between vertex and number of
+  /// Returns a mapping between vertex and number of
   /// outgoing connections.
   late final _outDegreeMap = LazyMap<T, int>(() {
     final map = <T, int>{};
@@ -74,7 +82,7 @@ abstract class DirectedGraphBase<T extends Object> extends Iterable<T> {
     return map;
   });
 
-  // Returns a mapping between vertex and number of
+  /// Returns a mapping between vertex and number of
   /// outgoing connections.
   Map<T, int> get outDegreeMap => _outDegreeMap();
 
@@ -83,11 +91,11 @@ abstract class DirectedGraphBase<T extends Object> extends Iterable<T> {
   late final _inDegreeMap = LazyMap<T, int>(() {
     var map = <T, int>{};
     for (final vertex in sortedVertices) {
-      // Entry might already exist.
+      // The map entry might already exist if vertex is connected to a
+      // previously encountered vertex.
       map[vertex] ??= 0;
       for (final connectedVertex in edges(vertex)) {
-        map[connectedVertex] =
-            map.containsKey(connectedVertex) ? map[connectedVertex]! + 1 : 1;
+        map[connectedVertex] = (map[connectedVertex] ?? 0) + 1;
       }
     }
     return map;
@@ -129,6 +137,7 @@ abstract class DirectedGraphBase<T extends Object> extends Iterable<T> {
   /// Note: A cycle starts and ends at
   /// the same vertex while inner vertices are distinct.
   List<T> get cycle {
+    // Find a cycle.
     final start = cycleVertex;
     if (start == null) {
       return <T>[];
@@ -201,7 +210,7 @@ abstract class DirectedGraphBase<T extends Object> extends Iterable<T> {
     final result = <List<T>>[];
 
     final vertices = LinkedHashSet<T>.of(sortedVertices);
-    final localInDegreeMap = inDegreeMap;
+    final localInDegreeMap = Map<T, int>.of(inDegreeMap);
 
     var hasSources = false;
     var count = 0;
@@ -226,8 +235,9 @@ abstract class DirectedGraphBase<T extends Object> extends Iterable<T> {
       // Simulate the removal of detected local sources.
       for (final source in sources) {
         for (final connectedVertex in edges(source)) {
-          localInDegreeMap[connectedVertex] =
-              localInDegreeMap[connectedVertex]! - 1;
+          var inDegree = localInDegreeMap[connectedVertex]!;
+          inDegree--;
+          localInDegreeMap[connectedVertex] = inDegree;
         }
       }
       // Check if local sources were found.
@@ -252,20 +262,18 @@ abstract class DirectedGraphBase<T extends Object> extends Iterable<T> {
   Set<T>? get sortedTopologicalOrdering {
     if (_comparator == null) return topologicalOrdering;
 
-    final result = Queue<T>();
-
-    int inverseComparator(T left, T right) => -_comparator!(left, right);
+    final result = <T>{};
 
     // Get modifiable in-degree map.
-    final localInDegreeMap = inDegreeMap;
+    final localInDegreeMap = HashMap<T, int>.of(inDegreeMap);
 
     // Add all sources (vertices with inDegree == 0) to queue.
     // Using a list instead of a queue to enable sorting of [sources].
     //
     // Note: In an acyclic directed graph there is at least
     //       one vertex with inDegree equal to zero.
-    final sources = <T>[];
-    for (final vertex in sortedVertices) {
+    final sources = PriorityQueue<T>(comparator);
+    for (final vertex in vertices) {
       if (localInDegreeMap[vertex] == 0) {
         sources.add(vertex);
       }
@@ -276,24 +284,24 @@ abstract class DirectedGraphBase<T extends Object> extends Iterable<T> {
     // Note: In an acyclic directed graph at least
     // one vertex has outDegree zero.
     while (sources.isNotEmpty) {
-      // Sort source vertices:
-      sources.sort(inverseComparator);
-      result.add(sources.removeLast());
+      result.add(sources.removeFirst());
 
       // Simulate removing the current vertex from the
       //   graph. => Connected vertices will have inDegree = inDegree - 1.
       for (final vertex in edges(result.last)) {
-        localInDegreeMap[vertex] = localInDegreeMap[vertex]! - 1;
+        var inDegree = localInDegreeMap[vertex]!;
+        inDegree--;
+        localInDegreeMap[vertex] = inDegree;
 
         // Add new local source vertices of the remaining graph to the queue.
-        if (localInDegreeMap[vertex] == 0) {
+        if (inDegree == 0) {
           sources.add(vertex);
         }
       }
       // Increment count of visited vertices.
       count++;
     }
-    return (count != length) ? null : result.toSet();
+    return (count == length) ? result : null;
   }
 
   /// Returns a set containing all graph vertices in topological order.
