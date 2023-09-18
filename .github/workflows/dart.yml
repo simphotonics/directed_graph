@@ -49,7 +49,7 @@ jobs:
 
       # Run benchmarks
       - name: Run benchmarks
-        run: dart run benchmark
+        run: dart run benchmark_runner
 
       # Run example
       - name: Run example
