@@ -1,4 +1,5 @@
 import 'dart:collection' show HashMap, HashSet, LinkedHashSet, Queue;
+import 'dart:math';
 
 import 'package:collection/collection.dart';
 import 'package:directed_graph/src/extensions/sort.dart';
@@ -23,6 +24,15 @@ abstract class DirectedGraphBase<T extends Object> extends Iterable<T> {
       };
     }
   }
+
+  /// Returns the shortest path from the vertex `start` to the vertex `target`.
+  /// * Returns an empty list if `target` is not reachable from `start`.
+  List<T> shortestPath(T start, T target) => crawler.path(start, target);
+
+  /// Returns a map containing the shortest paths from
+  /// `start` to each reachable vertex.
+  /// The map keys represent the set of vertices reachable from `start`.
+  Map<T, Iterable<T>> shortestPaths(T start) => crawler.shortestPaths(start);
 
   /// The comparator used to sort vertices.
   Comparator<T>? _comparator;
@@ -365,6 +375,58 @@ abstract class DirectedGraphBase<T extends Object> extends Iterable<T> {
 
     // Return null if graph is not a DAG.
     return (isCyclic) ? null : queue.toSet();
+  }
+
+  /// Returns a list of strongly connected components.
+  /// * If vertices a and b belong to the same strongly connected component,
+  /// then vertex a is reachable from b and vertex b is reachable from a.
+  /// * Uses Tarjans algorithm:
+  /// (https://en.wikipedia.org/wiki/Tarjan%27s_strongly_connected_components_algorithm#References)
+  /// * If a graph is acyclic, each strongly connected component
+  /// consists of a single vertex and the vertices are listed in *inverse*
+  /// topological order.(The reverse is only true if the graph does not
+  /// contains any self-loops, that is edges pointing from a vertex to itself.)
+  List<List<T>> get stronglyConnectedComponents {
+    final queue = Queue<T>();
+    var index = 0;
+    final result = <List<T>>[];
+
+    final lowLink = HashMap<T, int>();
+    final indices = HashMap<T, int>();
+
+    void strongConnect(T vertex) {
+      lowLink[vertex] = index;
+      indices[vertex] = index;
+      index++;
+      queue.addLast(vertex);
+
+      for (final connectedVertex in edges(vertex)) {
+        if (!indices.containsKey(connectedVertex)) {
+          strongConnect(connectedVertex);
+          lowLink[vertex] = min(lowLink[vertex]!, lowLink[connectedVertex]!);
+        } else if (queue.contains(connectedVertex)) {
+          lowLink[vertex] = min(lowLink[vertex]!, indices[connectedVertex]!);
+        }
+      }
+
+      // Check if vertex is a root node:
+      if (lowLink[vertex] == indices[vertex]) {
+        final scc = <T>[];
+        late T componentVertex;
+        do {
+          componentVertex = queue.removeLast();
+          scc.add(componentVertex);
+        } while (vertex != componentVertex);
+        result.add(scc);
+      }
+    }
+
+    for (final vertex in sortedVertices) {
+      if (!indices.containsKey(vertex)) {
+        strongConnect(vertex);
+      }
+    }
+    return result;
   }
 
   /// Returns the number of outgoing directed edges for [vertex].
