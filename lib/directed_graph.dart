@@ -5,7 +5,6 @@
 /// * retrieve cycles,
 /// * retrieve a list of vertices in topological order.
 
-export 'src/extensions/graph_utils.dart';
 export 'src/extensions/sort.dart';
 export 'src/graphs/bidirected_graph.dart';
 export 'src/graphs/directed_graph.dart';
