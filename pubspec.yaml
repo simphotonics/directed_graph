@@ -11,13 +11,12 @@ environment:
   sdk: '^3.0.0'
 
 dependencies:
-  collection: ^1.17.2
+  collection: ^1.18.0
   exception_templates: ^0.3.0
-  graphs: ^2.3.1
-  lazy_memo: ^0.2.0
+  lazy_memo: ^0.2.2
   quote_buffer: ^0.2.5
 
 dev_dependencies:
-  benchmark: ^0.3.0
+  benchmark_runner: ^0.0.2
   lints: ^2.1.1
-  test: ^1.24.4
+  test: ^1.24.6
