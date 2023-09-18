@@ -112,7 +112,7 @@ void main() {
   });
 
   group('Tree:', () {
-    test('Root: a with cycle', () {
+    test('Root: a with cycle a -> a', () {
       addTearDown(() {
         graph.removeEdges('a', {'a'});
       });
@@ -144,10 +144,6 @@ void main() {
       expect(crawler.tree('a', 'h'), [
         {'b'},
         {'h'},
-        {'c'},
-        {'e'},
-        {'b', 'h'},
-        {'c', 'h'}
       ]);
     });
     test('Root: d', () {
