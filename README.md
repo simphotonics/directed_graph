@@ -15,15 +15,16 @@ Examples include: network connections, links in a document pointing to other par
 
 The package [`directed_graph`][directed_graph] contains an implementation of a Dart graph that follows the
 recommendations found in [graphs-examples] and is compatible with the algorithms provided by [`graphs`][graphs].
-It is simple to use and includes methods that enable:
+It includes methods that enable:
 * adding/removing vertices and edges,
-* the sorting of vertices.
+* sorting of vertices.
 
 The library provides access to algorithms
 for finding:
 * the shortest path between vertices,
 * the path with the lowest/highest weight (for weighted directed graphs),
 * all paths connecting two vertices,
+* the shortest paths from a vertice to all connected vertices,
 * cycles,
 * a topological ordering of the graph vertices.
 
@@ -64,8 +65,9 @@ To use this library include [`directed_graph`][directed_graph] as a dependency i
 example below shows how to construct an object of type [`DirectedGraph`][DirectedGraph].
 
 The class `DirectedGraph<T extends Object>` supports sorting of vertices if
-a [comparator] function is provided
-or if `T` implements [`Comparator`][Comparator].
+a [comparator] function is provided.
+If `T` implements [`Comparator`][Comparator] and *no* comparator function
+is provided, then the sorting is performed using the default comparator.
 
 
 ```Dart
