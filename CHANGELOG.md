@@ -1,3 +1,10 @@
+## 0.4.0
+- Updated dependencies.
+- Library now uses latest version of [`lazy_memo`][lazy_memo].
+- Removed dependency on [`graphs`][graphs].
+- Benchmarks now using [`benchmark_runner`][benchmark_runner].
+
+
 ## 0.3.9
 - Updated dependencies.
 - Amended extensions in `sort.dart`.
@@ -152,3 +159,7 @@ Initial version of the library.
 [WeightedDirectedGraph]: https://pub.dev/documentation/directed_graph/latest/directed_graph/WeightedDirectedGraph-class.html
 
 [GraphCrawler]: https://pub.dev/documentation/directed_graph/latest/directed_graph/GraphCrawler-class.html
+
+[benchmark_runner]: https://pub.dev/packages/benchmark_runner
+[lazy_memo]: https://pub.dev/packages/lazy_memo
+[graphs]: https://pub.dev/packages/graphs
