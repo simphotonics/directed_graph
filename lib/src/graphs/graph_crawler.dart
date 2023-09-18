@@ -1,5 +1,3 @@
-import 'dart:collection';
-
 /// Constant holding the largest (smi) int.
 ///
 /// `largeInt = pow(2, 30) - 1;`
