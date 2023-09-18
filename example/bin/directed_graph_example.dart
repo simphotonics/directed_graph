@@ -28,13 +28,6 @@ void main() {
     comparator: comparator,
   );
 
-  // for (var i = 1; i < 3; i++) {
-  //   var nodes = graph.vertices.toList();
-  //   for (var node in nodes) {
-  //     graph.addEdges(node, {'$node$i'});
-  //   }
-  // }
-
   print('Example Directed Graph...');
   print('graph.toString():');
   print(graph);
@@ -45,8 +38,11 @@ void main() {
   print('\nStrongly connected components:');
   print(graph.stronglyConnectedComponents);
 
-  print('\nShortestPath(d, l):');
+  print('\nshortestPath(d, l):');
   print(graph.shortestPath('d', 'l'));
+
+  print('\nshortestPaths(a)');
+  print(graph.shortestPaths('a'));
 
   print('\nInDegree(C):');
   print(graph.inDegree('c'));
