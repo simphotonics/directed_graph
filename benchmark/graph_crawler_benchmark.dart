@@ -45,16 +45,20 @@ var gc = GraphCrawler<String>(graph.edges);
 void main() {
   group('Topology:', () {
     benchmark('path', () {
-      gc.shortestPath(a, g);
+      gc.path(a, g);
     });
     benchmark('paths', () {
-      gc.shortestPath(a, g);
+      gc.path(a, g);
     });
     benchmark('tree', () {
       gc.tree(a);
     });
     benchmark('mappedTree', () {
       gc.mappedTree(a);
+    });
+
+    benchmark('shortestPathsI', () {
+      gc.shortestPaths(a);
     });
   });
 }
