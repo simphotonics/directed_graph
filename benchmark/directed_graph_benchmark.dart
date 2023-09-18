@@ -70,7 +70,7 @@ void main() {
       graph.sortEdges();
     });
   });
-  group('Topology' , () {
+  group('Topology', () {
     benchmark('isAcyclic', () {
       graph.isAcyclic;
     });
@@ -103,9 +103,6 @@ void main() {
     });
     benchmark('path', () {
       graph.path(a, g);
-    });
-    benchmark('shortestPathsII', () {
-      graph.crawler.shortestPathsII(a);
     });
     benchmark('reachableVertices(d)', () {
       graph.reachableVertices(d);
