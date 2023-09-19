@@ -65,8 +65,8 @@ To use this library include [`directed_graph`][directed_graph] as a dependency i
 example below shows how to construct an object of type [`DirectedGraph`][DirectedGraph].
 
 The graph classes provided by this library are generic with type argument
-`T extends Object`.
-Sorting of vertices is possible if `T is Comparable` or
+`T extends Object`, that is vertice must be non-nullable.
+Graph vertices can be sorted if `T is Comparable` or
 if a custom comparator function is provided. In the example below, a custom
 comparator is used to sort vertices in inverse lexicographical order.
 
