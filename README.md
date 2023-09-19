@@ -64,11 +64,11 @@ For example, self-loops, that is edges connecting a vertex to itself are explici
 To use this library include [`directed_graph`][directed_graph] as a dependency in your pubspec.yaml file. The
 example below shows how to construct an object of type [`DirectedGraph`][DirectedGraph].
 
-The class `DirectedGraph<T extends Object>` supports sorting of vertices if
-a [comparator] function is provided.
-If `T` implements [`Comparator`][Comparator] and *no* comparator function
-is provided, then the sorting is performed using the default comparator.
-
+The graph classes provided by this library are generic with type argument
+`T extends Object`.
+Sorting of vertices is possible if `T is Comparable` or
+if a custom comparator function is provided. In the example below, a custom
+comparator is used to sort vertices in inverse lexicographical order.
 
 ```Dart
 import 'package:directed_graph/directed_graph.dart';
@@ -96,7 +96,8 @@ void main() {
       'i': {'l'},
       'k': {'g', 'f'}
     },
-    comparator: comparator,
+    // Custom comparators can be specified here:
+    // comparator: comparator,
   );
 
   print('Example Directed Graph...');
