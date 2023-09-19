@@ -1,3 +1,6 @@
+## 0.4.1
+- Updated section Usage.
+
 ## 0.4.0
 - Updated dependencies.
 - Library now uses latest version of [`lazy_memo`][lazy_memo].
