@@ -17,6 +17,6 @@ dependencies:
   quote_buffer: ^0.2.5
 
 dev_dependencies:
-  benchmark_runner: ^0.0.2
+  benchmark_runner: ^0.0.3
   lints: ^3.0.0
   test: ^1.25.2
