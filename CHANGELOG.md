@@ -1,9 +1,7 @@
-## 0.4.2
-- Updated dependencies.
-- Applied suggested lints.
-
 ## 0.4.1
 - Updated section Usage.
+- Updated dependencies.
+- Applied suggested lints.
 
 ## 0.4.0
 - Updated dependencies.
