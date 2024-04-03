@@ -1,10 +1,3 @@
-/// Dart implementation of directed graphs.
-/// Provides methods to
-/// * add/remove edges,
-/// * check if the graph is acyclic,
-/// * retrieve cycles,
-/// * retrieve a list of vertices in topological order.
-
 export 'src/extensions/sort.dart';
 export 'src/graphs/bidirected_graph.dart';
 export 'src/graphs/directed_graph.dart';

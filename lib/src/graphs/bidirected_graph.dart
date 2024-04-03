@@ -4,9 +4,9 @@ import 'directed_graph.dart';
 /// with symmetric edges.
 class BidirectedGraph<T extends Object> extends DirectedGraph<T> {
   BidirectedGraph(
-    Map<T, Set<T>> edges, {
-    Comparator<T>? comparator,
-  }) : super(edges, comparator: comparator) {
+    super.edges, {
+    super.comparator,
+  }) {
     // Render graph symmetric:
     _symmetrize();
   }
