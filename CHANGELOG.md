@@ -1,3 +1,7 @@
+## 0.4.2
+- Updated deps.
+- Added topics to `pubspec.yaml`.
+
 ## 0.4.1
 - Updated section Usage.
 - Updated dependencies.
