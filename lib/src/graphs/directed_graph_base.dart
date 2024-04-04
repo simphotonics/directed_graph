@@ -1,7 +1,7 @@
 import 'dart:collection' show HashMap, HashSet, LinkedHashSet, Queue;
 import 'dart:math';
 
-import 'package:collection/collection.dart';
+import 'package:collection/collection.dart' show PriorityQueue;
 import 'package:directed_graph/src/extensions/sort.dart';
 import 'package:lazy_memo/lazy_memo.dart';
 import 'package:quote_buffer/quote_buffer.dart';
@@ -451,22 +451,19 @@ abstract class DirectedGraphBase<T extends Object> extends Iterable<T> {
     return inDegree;
   }
 
-  /// Returns a string representation of the graph.
+  /// Returns a String representation of the graph.
   @override
   String toString() {
+    if (isEmpty) return '{}';
     var b = StringBuffer();
-    final q = (T == String) ? '\'' : '';
-    final isString = (T == String);
+    final isString = (first is String);
     b.writeln('{');
     for (final vertex in sortedVertices) {
-      b.write(' $q$vertex$q: ');
+      b.write(' ');
+      isString ? b.writeQ(vertex) : b.write(vertex);
+      b.write(': ');
       b.write('{');
-      if (isString) {
-        b.writeAllQ(edges(vertex));
-      } else {
-        b.writeAll(edges(vertex), ', ');
-      }
-
+      isString ? b.writeAllQ(edges(vertex)) : b.writeAll(edges(vertex), ', ');
       b.write('},');
       b.writeln('');
     }
