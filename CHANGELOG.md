@@ -1,3 +1,6 @@
+## 0.4.4
+- Updated benchmark_runner version and benchmark report.
+
 ## 0.4.3
 - Updated deps.
 
