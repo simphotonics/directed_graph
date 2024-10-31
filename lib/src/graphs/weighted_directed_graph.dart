@@ -157,6 +157,7 @@ class WeightedDirectedGraph<T extends Object, W extends Comparable>
     }
     // Add any new vertices to the graph:
     _edges[connectedVertex] ??= <T, W>{};
+    updateCache();
   }
 
   /// Removes edges pointing from `vertex` to `connectedVertices`.

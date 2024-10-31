@@ -65,4 +65,4 @@ echo
 echo -e "${GREEN}=== Running Benchmark $PWD...${RESET}"
 echo
 
-dart run benchmark_runner 
+dart run benchmark_runner report
