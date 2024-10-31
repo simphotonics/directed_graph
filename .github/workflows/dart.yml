@@ -22,7 +22,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       # Note: This workflow uses the latest stable version of the Dart SDK.
       # You can specify other versions if desired, see documentation here:
@@ -49,7 +49,7 @@ jobs:
 
       # Run benchmarks
       - name: Run benchmarks
-        run: dart run benchmark_runner
+        run: dart run benchmark_runner report
 
       # Run example
       - name: Run example
