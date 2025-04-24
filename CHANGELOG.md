@@ -1,7 +1,11 @@
 
+## 0.4.5
+- Updated dependencies.
+- Updated benchmark report.
 
 ## 0.4.4
-- Fixed bug where cache was updated after calling the method `addEdge` on an instance of type
+- Fixed bug where cache was updated after calling the method `addEdge`
+   on an instance of type
   `WeightedDirectedGraph`.
 - Updated dependencies.
 - Updated benchmark_runner version and benchmark report.
