@@ -37,22 +37,22 @@ class WeightedDirectedGraph<T extends Object, W extends Comparable>
 
   /// Constructs a shallow copy of `graph`.
   WeightedDirectedGraph.of(WeightedDirectedGraph<T, W> graph)
-      : this(
-          graph.data,
-          summation: graph.summation,
-          zero: graph.zero,
-          comparator: graph.comparator,
-        );
+    : this(
+        graph.data,
+        summation: graph.summation,
+        zero: graph.zero,
+        comparator: graph.comparator,
+      );
 
   /// Constructs the transitive closure of `graph`.
   factory WeightedDirectedGraph.transitiveClosure(
-          WeightedDirectedGraph<T, W> graph) =>
-      WeightedDirectedGraph(
-        graph.transitiveWeightedEdges,
-        comparator: graph.comparator,
-        summation: graph.summation,
-        zero: graph.zero,
-      );
+    WeightedDirectedGraph<T, W> graph,
+  ) => WeightedDirectedGraph(
+    graph.transitiveWeightedEdges,
+    comparator: graph.comparator,
+    summation: graph.summation,
+    zero: graph.zero,
+  );
 
   /// The weight of an empty path.
   /// * Used as the initial value when summing the weight of a path.
@@ -167,9 +167,8 @@ class WeightedDirectedGraph<T extends Object, W extends Comparable>
     // Return early if vertex does not belong to the graph.
     if (!_edges.containsKey(vertex)) return;
     _edges[vertex]?.removeWhere(
-      (connectedVertex, edgeWeight) => connectedVertices.contains(
-        connectedVertex,
-      ),
+      (connectedVertex, edgeWeight) =>
+          connectedVertices.contains(connectedVertex),
     );
     updateCache();
   }
@@ -334,9 +333,13 @@ class WeightedDirectedGraph<T extends Object, W extends Comparable>
       b.write(' $q$vertex$q: ');
       b.write('{');
       b.writeAll(
-          _edges[vertex]!.keys.map<String>((key) => '$q$key$q: '
-              '${_edges[vertex]![key]}'),
-          ', ');
+        _edges[vertex]!.keys.map<String>(
+          (key) =>
+              '$q$key$q: '
+              '${_edges[vertex]![key]}',
+        ),
+        ', ',
+      );
 
       b.write('},');
       b.writeln('');

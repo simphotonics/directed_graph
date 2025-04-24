@@ -13,20 +13,17 @@ void main() {
 
   // Constructing a graph from vertices.
 
-  final graph = DirectedGraph<String>(
-    {
-      'a': {'b', 'h', 'c', 'e'},
-      'b': {'h'},
-      'c': {'h', 'g'},
-      'd': {'e', 'f'},
-      'e': {'g'},
-      'f': {'i'},
-      //'g': {'a'},
-      'i': {'l'},
-      'k': {'g', 'f'},
-    },
-    comparator: comparator,
-  );
+  final graph = DirectedGraph<String>({
+    'a': {'b', 'h', 'c', 'e'},
+    'b': {'h'},
+    'c': {'h', 'g'},
+    'd': {'e', 'f'},
+    'e': {'g'},
+    'f': {'i'},
+    //'g': {'a'},
+    'i': {'l'},
+    'k': {'g', 'f'},
+  }, comparator: comparator);
 
   print('Example Directed Graph...');
   print('graph.toString():');

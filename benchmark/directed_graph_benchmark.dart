@@ -1,17 +1,11 @@
 import 'package:benchmark_runner/benchmark_runner.dart';
 import 'package:directed_graph/directed_graph.dart';
 
-int comparator(
-  String s1,
-  String s2,
-) {
+int comparator(String s1, String s2) {
   return s1.compareTo(s2);
 }
 
-int inverseComparator(
-  String s1,
-  String s2,
-) {
+int inverseComparator(String s1, String s2) {
   return -s1.compareTo(s2);
 }
 
@@ -41,19 +35,16 @@ var l = 'l';
 // );
 
 void main() {
-  var graph = DirectedGraph<String>(
-    {
-      a: {b, h, c, e},
-      d: {e, f},
-      b: {h},
-      c: {h, g},
-      f: {i},
-      i: {l},
-      // h: {a},
-      k: {g, f}
-    },
-    comparator: comparator,
-  );
+  var graph = DirectedGraph<String>({
+    a: {b, h, c, e},
+    d: {e, f},
+    b: {h},
+    c: {h, g},
+    f: {i},
+    i: {l},
+    // h: {a},
+    k: {g, f},
+  }, comparator: comparator);
   for (var i = 1; i < 0; i++) {
     var nodes = graph.vertices.toList();
     for (var node in nodes) {

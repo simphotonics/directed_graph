@@ -3,20 +3,14 @@ import 'directed_graph.dart';
 /// Graph with bidirected edges represented by a directed graph
 /// with symmetric edges.
 class BidirectedGraph<T extends Object> extends DirectedGraph<T> {
-  BidirectedGraph(
-    super.edges, {
-    super.comparator,
-  }) {
+  BidirectedGraph(super.edges, {super.comparator}) {
     // Render graph symmetric:
     _symmetrize();
   }
 
   /// Constructs a bidirected graph from a directed graph.
   BidirectedGraph.from(DirectedGraph<T> graph)
-      : super(
-          graph.data,
-          comparator: graph.comparator,
-        ) {
+    : super(graph.data, comparator: graph.comparator) {
     _symmetrize();
   }
 

@@ -8,17 +8,11 @@ import 'package:directed_graph/directed_graph.dart';
 /// # pub run test -r expanded --test-randomize-ordering-seed=random
 ///
 void main() {
-  int comparator(
-    String s1,
-    String s2,
-  ) {
+  int comparator(String s1, String s2) {
     return s1.compareTo(s2);
   }
 
-  int inverseComparator(
-    String s1,
-    String s2,
-  ) {
+  int inverseComparator(String s1, String s2) {
     return -s1.compareTo(s2);
   }
 
@@ -55,20 +49,21 @@ void main() {
   group('Basic:', () {
     test('toString().', () {
       expect(
-          graph.toString(),
-          '{\n'
-          ' \'a\': {\'b\': 1, \'h\': 7, \'c\': 2, \'e\': 4},\n'
-          ' \'b\': {\'h\': 6},\n'
-          ' \'c\': {\'h\': 5, \'g\': 4},\n'
-          ' \'d\': {\'e\': 1, \'f\': 2},\n'
-          ' \'e\': {\'g\': 2},\n'
-          ' \'f\': {\'i\': 3},\n'
-          ' \'g\': {},\n'
-          ' \'h\': {},\n'
-          ' \'i\': {\'l\': 3},\n'
-          ' \'k\': {\'g\': 4, \'f\': 5},\n'
-          ' \'l\': {},\n'
-          '}');
+        graph.toString(),
+        '{\n'
+        ' \'a\': {\'b\': 1, \'h\': 7, \'c\': 2, \'e\': 4},\n'
+        ' \'b\': {\'h\': 6},\n'
+        ' \'c\': {\'h\': 5, \'g\': 4},\n'
+        ' \'d\': {\'e\': 1, \'f\': 2},\n'
+        ' \'e\': {\'g\': 2},\n'
+        ' \'f\': {\'i\': 3},\n'
+        ' \'g\': {},\n'
+        ' \'h\': {},\n'
+        ' \'i\': {\'l\': 3},\n'
+        ' \'k\': {\'g\': 4, \'f\': 5},\n'
+        ' \'l\': {},\n'
+        '}',
+      );
     });
     test('get comparator', () {
       expect(graph.comparator, comparator);
@@ -192,10 +187,7 @@ void main() {
         graph.removeEdges(l, {l});
       });
       graph.addEdges(l, {l: 0});
-      expect(
-        graph.isAcyclic,
-        false,
-      );
+      expect(graph.isAcyclic, false);
     });
     test('isAcyclic(): without cycles', () {
       expect(graph.isAcyclic, true);
@@ -216,27 +208,39 @@ void main() {
       expect(graph.topologicalOrdering, null);
     });
     test('sortedTopologicalOrdering():', () {
-      expect(
-          graph.sortedTopologicalOrdering, {a, b, c, d, e, h, k, f, g, i, l});
+      expect(graph.sortedTopologicalOrdering, {
+        a,
+        b,
+        c,
+        d,
+        e,
+        h,
+        k,
+        f,
+        g,
+        i,
+        l,
+      });
     });
     test('topologicalOrdering():', () {
       expect(graph.topologicalOrdering, {a, b, c, d, e, h, k, f, i, g, l});
     });
     test('topologicalOrdering(): empty graph', () {
       expect(
-          WeightedDirectedGraph<String, int>(
-            {},
-            zero: 0,
-            summation: sum,
-          ).topologicalOrdering,
-          <String>{});
+        WeightedDirectedGraph<String, int>(
+          {},
+          zero: 0,
+          summation: sum,
+        ).topologicalOrdering,
+        <String>{},
+      );
     });
     test('localSources().', () {
       expect(graph.localSources, [
         [a, d, k],
         [b, c, e, f],
         [g, h, i],
-        [l]
+        [l],
       ]);
     });
   });
@@ -265,7 +269,7 @@ void main() {
           'h': {},
           'i': {'l': 3},
           'k': {'g': 4, 'f': 5, 'i': 8, 'l': 11},
-          'l': {}
+          'l': {},
         },
       );
     });
@@ -305,8 +309,19 @@ void main() {
       for (var vertex in graph.sortedVertices) {
         vertex = '${vertex}1';
       }
-      expect(graph.sortedVertices,
-          {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'k', 'l'});
+      expect(graph.sortedVertices, {
+        'a',
+        'b',
+        'c',
+        'd',
+        'e',
+        'f',
+        'g',
+        'h',
+        'i',
+        'k',
+        'l',
+      });
     });
   });
 }

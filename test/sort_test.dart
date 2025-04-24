@@ -2,10 +2,7 @@ import 'package:directed_graph/directed_graph.dart';
 import 'package:test/test.dart';
 
 void main() {
-  int comparator(
-    String s1,
-    String s2,
-  ) {
+  int comparator(String s1, String s2) {
     return -s1.compareTo(s2);
   }
 
@@ -49,9 +46,8 @@ void main() {
       expect(map.values.last, 4);
     });
     test('{c:3, a:4, b:2}.sortByValue(comparator)', () {
-      final map = {c: 3, a: 4, b: 2}..sortByValue(
-          (left, right) => -left.compareTo(right),
-        );
+      final map = {c: 3, a: 4, b: 2}
+        ..sortByValue((left, right) => -left.compareTo(right));
       expect(map.keys.first, a);
       expect(map.values.first, 4);
       expect(map.keys.last, b);

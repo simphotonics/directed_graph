@@ -18,9 +18,10 @@ extension SortSet<T extends Object> on Set<T> {
       tmp.sort(); // Sort using default comparator.
     } else {
       throw ErrorOfType<SortingNotSupported<T>>(
-          message: 'Error trying to sort the set: $this.',
-          invalidState: 'Type \'$T\' is not comparable.',
-          expectedState: 'Try specifying a valid comparator for type \'$T\'.');
+        message: 'Error trying to sort the set: $this.',
+        invalidState: 'Type \'$T\' is not comparable.',
+        expectedState: 'Try specifying a valid comparator for type \'$T\'.',
+      );
     }
     clear();
     addAll(tmp);
@@ -44,10 +45,12 @@ extension SortMap<K extends Object, V extends Object> on Map<K, V> {
       tmp.sort((left, right) => (left.key as Comparable).compareTo(right.key));
     } else {
       throw ErrorOfType<SortingNotSupported<K>>(
-          message: 'Error trying to sort $this using the keys $keys.',
-          invalidState: 'Type \'$K\' is not comparable.',
-          expectedState: 'Try calling sortByKey() '
-              'specifying a valid comparator for type \'$K\'.');
+        message: 'Error trying to sort $this using the keys $keys.',
+        invalidState: 'Type \'$K\' is not comparable.',
+        expectedState:
+            'Try calling sortByKey() '
+            'specifying a valid comparator for type \'$K\'.',
+      );
     }
     clear();
     addEntries(tmp);
@@ -68,10 +71,12 @@ extension SortMap<K extends Object, V extends Object> on Map<K, V> {
       );
     } else {
       throw ErrorOfType<SortingNotSupported<V>>(
-          message: 'Error trying to sort a map of type Map<$K, $V>.',
-          invalidState: 'Type \'$V\' is not comparable.',
-          expectedState: 'Try calling sortByValue() specifying '
-              'a valid comparator for type \'$V\'.');
+        message: 'Error trying to sort a map of type Map<$K, $V>.',
+        invalidState: 'Type \'$V\' is not comparable.',
+        expectedState:
+            'Try calling sortByValue() specifying '
+            'a valid comparator for type \'$V\'.',
+      );
     }
     clear();
     addEntries(tmp);

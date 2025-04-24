@@ -7,10 +7,7 @@ import 'package:test/test.dart';
 /// # pub run test -r expanded --test-randomize-ordering-seed=random
 ///
 void main() {
-  int comparator(
-    String s1,
-    String s2,
-  ) {
+  int comparator(String s1, String s2) {
     return s1.compareTo(s2);
   }
 
@@ -26,19 +23,16 @@ void main() {
   var k = 'k';
   var l = 'l';
 
-  var graph = DirectedGraph<String>(
-    {
-      a: {b, h, c, e},
-      d: {e, f},
-      b: {h},
-      c: {h, g},
-      f: {i},
-      i: {l, k},
-      k: {g, f},
-      l: {l}
-    },
-    comparator: comparator,
-  );
+  var graph = DirectedGraph<String>({
+    a: {b, h, c, e},
+    d: {e, f},
+    b: {h},
+    c: {h, g},
+    f: {i},
+    i: {l, k},
+    k: {g, f},
+    l: {l},
+  }, comparator: comparator);
 
   final crawler = GraphCrawler<String>(graph.edges);
 
@@ -56,16 +50,10 @@ void main() {
       expect(crawler.path(d, l), [d, f, i, l]);
     });
     test('cycle: f->f', () {
-      expect(
-        crawler.path(f, f),
-        [f, i, k, f],
-      );
+      expect(crawler.path(f, f), [f, i, k, f]);
     });
     test('trivial cycle: l->l:', () {
-      expect(
-        crawler.path(l, l),
-        [l, l],
-      );
+      expect(crawler.path(l, l), [l, l]);
     });
   });
 
@@ -75,18 +63,15 @@ void main() {
     });
     test('d -> i', () {
       expect(crawler.paths(d, i), [
-        [d, f, i]
+        [d, f, i],
       ]);
     });
     test('a -> h:', () {
-      expect(
-        crawler.paths(a, h),
-        [
-          [a, h],
-          [a, b, h],
-          [a, c, h],
-        ],
-      );
+      expect(crawler.paths(a, h), [
+        [a, h],
+        [a, b, h],
+        [a, c, h],
+      ]);
     });
 
     test(' d->l', () {
@@ -98,10 +83,7 @@ void main() {
       expect(crawler.paths(f, f), [
         [f, i, k, f],
       ]);
-      expect(
-        crawler.path(f, f),
-        [f, i, k, f],
-      );
+      expect(crawler.path(f, f), [f, i, k, f]);
     });
 
     test('trivial cycle: l->l:', () {
@@ -137,7 +119,7 @@ void main() {
         {'e'},
         {'b', 'h'},
         {'c', 'h'},
-        {'c', 'g'}
+        {'c', 'g'},
       ]);
     });
     test('Root: a, target: h', () {
@@ -153,7 +135,7 @@ void main() {
         ['f', 'i'],
         ['f', 'i', 'l'],
         ['f', 'i', 'k'],
-        ['f', 'i', 'k', 'g']
+        ['f', 'i', 'k', 'g'],
       ]);
     });
   });
@@ -161,22 +143,22 @@ void main() {
     test('mappedTree(a)', () {
       expect(crawler.mappedTree(a), {
         'b': [
-          {'b'}
+          {'b'},
         ],
         'h': [
           {'h'},
           {'b', 'h'},
-          {'c', 'h'}
+          {'c', 'h'},
         ],
         'c': [
-          {'c'}
+          {'c'},
         ],
         'e': [
-          {'e'}
+          {'e'},
         ],
         'g': [
-          {'c', 'g'}
-        ]
+          {'c', 'g'},
+        ],
       });
     });
   });

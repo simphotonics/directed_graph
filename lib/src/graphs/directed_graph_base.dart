@@ -15,9 +15,7 @@ abstract class DirectedGraphBase<T extends Object> extends Iterable<T> {
   /// Super constructor of objects extending `DirectedGraphBase`.
   /// * `comparator`: A function with signature `int Function(T a, T b)`
   /// used to sort vertices.
-  DirectedGraphBase(
-    Comparator<T>? comparator,
-  ) : _comparator = comparator {
+  DirectedGraphBase(Comparator<T>? comparator) : _comparator = comparator {
     if (_comparator == null && T is Comparable) {
       _comparator = (T left, T right) {
         return (left as Comparable).compareTo(right);
@@ -62,8 +60,9 @@ abstract class DirectedGraphBase<T extends Object> extends Iterable<T> {
   }
 
   /// Caches the sorted vertices.
-  late final LazySet<T> _sortedVertices =
-      LazySet<T>(() => vertices.toSet()..sort(comparator));
+  late final LazySet<T> _sortedVertices = LazySet<T>(
+    () => vertices.toSet()..sort(comparator),
+  );
 
   /// Returns an `Iterable<T>` of all vertices.
   Iterable<T> get vertices;

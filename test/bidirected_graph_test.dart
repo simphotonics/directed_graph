@@ -7,10 +7,7 @@ import 'package:test/test.dart';
 /// # pub run test -r expanded --test-randomize-ordering-seed=random
 ///
 void main() {
-  int comparator(
-    String s1,
-    String s2,
-  ) {
+  int comparator(String s1, String s2) {
     return s1.compareTo(s2);
   }
 
@@ -26,36 +23,34 @@ void main() {
   var k = 'k';
   var l = 'l';
 
-  var graph = BidirectedGraph<String>(
-    {
-      a: {b, h, c, e},
-      d: {e, f},
-      b: {h},
-      c: {h, g},
-      f: {i},
-      i: {l},
-      k: {g, f}
-    },
-    comparator: comparator,
-  );
+  var graph = BidirectedGraph<String>({
+    a: {b, h, c, e},
+    d: {e, f},
+    b: {h},
+    c: {h, g},
+    f: {i},
+    i: {l},
+    k: {g, f},
+  }, comparator: comparator);
 
   group('Basic:', () {
     test('toString().', () {
       expect(
-          graph.toString(),
-          '{\n'
-          ' \'a\': {\'b\', \'h\', \'c\', \'e\'},\n'
-          ' \'b\': {\'h\', \'a\'},\n'
-          ' \'c\': {\'h\', \'g\', \'a\'},\n'
-          ' \'d\': {\'e\', \'f\'},\n'
-          ' \'e\': {\'a\', \'d\'},\n'
-          ' \'f\': {\'i\', \'d\', \'k\'},\n'
-          ' \'g\': {\'c\', \'k\'},\n'
-          ' \'h\': {\'a\', \'b\', \'c\'},\n'
-          ' \'i\': {\'l\', \'f\'},\n'
-          ' \'k\': {\'g\', \'f\'},\n'
-          ' \'l\': {\'i\'},\n'
-          '}');
+        graph.toString(),
+        '{\n'
+        ' \'a\': {\'b\', \'h\', \'c\', \'e\'},\n'
+        ' \'b\': {\'h\', \'a\'},\n'
+        ' \'c\': {\'h\', \'g\', \'a\'},\n'
+        ' \'d\': {\'e\', \'f\'},\n'
+        ' \'e\': {\'a\', \'d\'},\n'
+        ' \'f\': {\'i\', \'d\', \'k\'},\n'
+        ' \'g\': {\'c\', \'k\'},\n'
+        ' \'h\': {\'a\', \'b\', \'c\'},\n'
+        ' \'i\': {\'l\', \'f\'},\n'
+        ' \'k\': {\'g\', \'f\'},\n'
+        ' \'l\': {\'i\'},\n'
+        '}',
+      );
     });
   });
 
@@ -77,12 +72,34 @@ void main() {
       expect(graph.outDegree(d), 2);
     });
     test('outDegreeMap().', () {
-      expect(graph.outDegreeMap,
-          {a: 4, b: 2, c: 3, d: 2, e: 2, f: 3, g: 2, h: 3, i: 2, k: 2, l: 1});
+      expect(graph.outDegreeMap, {
+        a: 4,
+        b: 2,
+        c: 3,
+        d: 2,
+        e: 2,
+        f: 3,
+        g: 2,
+        h: 3,
+        i: 2,
+        k: 2,
+        l: 1,
+      });
     });
     test('inDegreeMap.', () {
-      expect(graph.inDegreeMap,
-          {a: 4, b: 2, h: 3, c: 3, e: 2, g: 2, d: 2, f: 3, i: 2, k: 2, l: 1});
+      expect(graph.inDegreeMap, {
+        a: 4,
+        b: 2,
+        h: 3,
+        c: 3,
+        e: 2,
+        g: 2,
+        d: 2,
+        f: 3,
+        i: 2,
+        k: 2,
+        l: 1,
+      });
     });
     test('sortedVertices.', () {
       expect(graph.sortedVertices, [a, b, c, d, e, f, g, h, i, k, l]);
@@ -104,7 +121,7 @@ void main() {
         h: {a, b, c, d, e, f, g, h, i, k, l},
         i: {a, b, c, d, e, f, g, h, i, k, l},
         k: {a, b, c, d, e, f, g, h, i, k, l},
-        l: {a, b, c, d, e, f, g, h, i, k, l}
+        l: {a, b, c, d, e, f, g, h, i, k, l},
       });
     });
   });

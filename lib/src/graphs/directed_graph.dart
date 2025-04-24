@@ -9,10 +9,8 @@ class DirectedGraph<T extends Object> extends DirectedGraphBase<T> {
   /// * `edges`: a map of type `Map<T, Set<T>>`,
   /// * `comparator`: a function with typedef `Comparator<T>` used to sort
   /// the graph vertices.
-  DirectedGraph(
-    Map<T, Set<T>> edges, {
-    Comparator<T>? comparator,
-  }) : super(comparator) {
+  DirectedGraph(Map<T, Set<T>> edges, {Comparator<T>? comparator})
+    : super(comparator) {
     edges.forEach((vertex, connectedVertices) {
       _edges[vertex] = Set<T>.of(connectedVertices);
       for (final connectedVertex in connectedVertices) {
@@ -23,15 +21,13 @@ class DirectedGraph<T extends Object> extends DirectedGraphBase<T> {
 
   /// Constructs a shallow copy of `graph`.
   DirectedGraph.of(DirectedGraph<T> graph)
-      : this(
-          graph.data,
-          comparator: graph.comparator,
-        );
+    : this(graph.data, comparator: graph.comparator);
 
   /// Constructs a directed graph from a map of weighted edges.
-  DirectedGraph.fromWeightedEdges(Map<T, Map<T, dynamic>> weightedEdges,
-      {Comparator<T>? comparator})
-      : super(comparator) {
+  DirectedGraph.fromWeightedEdges(
+    Map<T, Map<T, dynamic>> weightedEdges, {
+    Comparator<T>? comparator,
+  }) : super(comparator) {
     weightedEdges.forEach((vertex, connectedVerticeWeights) {
       _edges[vertex] = Set<T>.of(connectedVerticeWeights.keys);
       for (final connectedVertex in connectedVerticeWeights.keys) {

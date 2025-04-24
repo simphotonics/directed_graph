@@ -7,17 +7,11 @@ import 'package:test/test.dart';
 /// # pub run test -r expanded --test-randomize-ordering-seed=random
 ///
 void main() {
-  int comparator(
-    String s1,
-    String s2,
-  ) {
+  int comparator(String s1, String s2) {
     return s1.compareTo(s2);
   }
 
-  int inverseComparator(
-    String s1,
-    String s2,
-  ) {
+  int inverseComparator(String s1, String s2) {
     return -s1.compareTo(s2);
   }
 
@@ -33,36 +27,34 @@ void main() {
   var k = 'k';
   var l = 'l';
 
-  var graph = DirectedGraph<String>(
-    {
-      a: {b, h, c, e},
-      d: {e, f},
-      b: {h},
-      c: {h, g},
-      f: {i},
-      i: {l},
-      k: {g, f}
-    },
-    comparator: comparator,
-  );
+  var graph = DirectedGraph<String>({
+    a: {b, h, c, e},
+    d: {e, f},
+    b: {h},
+    c: {h, g},
+    f: {i},
+    i: {l},
+    k: {g, f},
+  }, comparator: comparator);
 
   group('Basic:', () {
     test('toString().', () {
       expect(
-          graph.toString(),
-          '{\n'
-          ' \'a\': {\'b\', \'h\', \'c\', \'e\'},\n'
-          ' \'b\': {\'h\'},\n'
-          ' \'c\': {\'h\', \'g\'},\n'
-          ' \'d\': {\'e\', \'f\'},\n'
-          ' \'e\': {},\n'
-          ' \'f\': {\'i\'},\n'
-          ' \'g\': {},\n'
-          ' \'h\': {},\n'
-          ' \'i\': {\'l\'},\n'
-          ' \'k\': {\'g\', \'f\'},\n'
-          ' \'l\': {},\n'
-          '}');
+        graph.toString(),
+        '{\n'
+        ' \'a\': {\'b\', \'h\', \'c\', \'e\'},\n'
+        ' \'b\': {\'h\'},\n'
+        ' \'c\': {\'h\', \'g\'},\n'
+        ' \'d\': {\'e\', \'f\'},\n'
+        ' \'e\': {},\n'
+        ' \'f\': {\'i\'},\n'
+        ' \'g\': {},\n'
+        ' \'h\': {},\n'
+        ' \'i\': {\'l\'},\n'
+        ' \'k\': {\'g\', \'f\'},\n'
+        ' \'l\': {},\n'
+        '}',
+      );
     });
     test('get comparator', () {
       expect(graph.comparator, comparator);
@@ -113,10 +105,18 @@ void main() {
       });
       graph.remove(l);
       expect(graph.edges(i), <String>{});
-      expect(
-        graph.sortedVertices,
-        ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'k'],
-      );
+      expect(graph.sortedVertices, [
+        'a',
+        'b',
+        'c',
+        'd',
+        'e',
+        'f',
+        'g',
+        'h',
+        'i',
+        'k',
+      ]);
     });
     test('clear', () {
       final graphCopy = DirectedGraph.of(graph);
@@ -143,12 +143,34 @@ void main() {
       expect(graph.outDegree(d), 2);
     });
     test('outDegreeMap().', () {
-      expect(graph.outDegreeMap,
-          {a: 4, b: 1, c: 2, d: 2, e: 0, f: 1, g: 0, h: 0, i: 1, k: 2, l: 0});
+      expect(graph.outDegreeMap, {
+        a: 4,
+        b: 1,
+        c: 2,
+        d: 2,
+        e: 0,
+        f: 1,
+        g: 0,
+        h: 0,
+        i: 1,
+        k: 2,
+        l: 0,
+      });
     });
     test('inDegreeMap.', () {
-      expect(graph.inDegreeMap,
-          {a: 0, b: 1, h: 3, c: 1, e: 2, d: 0, f: 2, g: 2, i: 1, l: 1, k: 0});
+      expect(graph.inDegreeMap, {
+        a: 0,
+        b: 1,
+        h: 3,
+        c: 1,
+        e: 2,
+        d: 0,
+        f: 2,
+        g: 2,
+        i: 1,
+        l: 1,
+        k: 0,
+      });
     });
     test('sortedVertices.', () {
       expect(graph.sortedVertices, [a, b, c, d, e, f, g, h, i, k, l]);
@@ -179,10 +201,7 @@ void main() {
         graph.removeEdges(l, {l});
       });
       graph.addEdges(l, {l});
-      expect(
-        graph.isAcyclic,
-        false,
-      );
+      expect(graph.isAcyclic, false);
     });
     test('isAcyclic(): without cycles', () {
       expect(graph.isAcyclic, true);
@@ -203,8 +222,19 @@ void main() {
       expect(graph.topologicalOrdering, null);
     });
     test('sortedTopologicalOrdering():', () {
-      expect(
-          graph.sortedTopologicalOrdering, {a, b, c, d, e, h, k, f, g, i, l});
+      expect(graph.sortedTopologicalOrdering, {
+        a,
+        b,
+        c,
+        d,
+        e,
+        h,
+        k,
+        f,
+        g,
+        i,
+        l,
+      });
     });
     test('topologicalOrdering():', () {
       expect(graph.topologicalOrdering, {a, b, c, d, e, h, k, f, i, g, l});
@@ -217,7 +247,7 @@ void main() {
         [a, d, k],
         [b, c, e, f],
         [g, h, i],
-        [l]
+        [l],
       ]);
     });
   });
@@ -272,23 +302,32 @@ void main() {
     var k = 'k';
     var l = 'l';
 
-    var graph = DirectedGraph<String>(
-      {
-        a: {b, h, c, e},
-        d: {e, f},
-        b: {h},
-        c: {h, g},
-        f: {i},
-        i: {l},
-        k: {g, f}
-      },
-    );
+    var graph = DirectedGraph<String>({
+      a: {b, h, c, e},
+      d: {e, f},
+      b: {h},
+      c: {h, g},
+      f: {i},
+      i: {l},
+      k: {g, f},
+    });
     test('sort Strings', () {
       for (var vertex in graph.sortedVertices) {
         vertex = '${vertex}1';
       }
-      expect(graph.sortedVertices,
-          {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'k', 'l'});
+      expect(graph.sortedVertices, {
+        'a',
+        'b',
+        'c',
+        'd',
+        'e',
+        'f',
+        'g',
+        'h',
+        'i',
+        'k',
+        'l',
+      });
     });
   });
 }

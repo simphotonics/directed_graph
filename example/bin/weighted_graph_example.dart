@@ -1,10 +1,7 @@
 import 'package:directed_graph/directed_graph.dart';
 
 void main(List<String> args) {
-  int comparator(
-    String s1,
-    String s2,
-  ) {
+  int comparator(String s1, String s2) {
     return s1.compareTo(s2);
   }
 
@@ -32,7 +29,7 @@ void main(List<String> args) {
       f: {i: 3},
       i: {l: 3, k: 2},
       k: {g: 4, f: 5},
-      l: {l: 0}
+      l: {l: 0},
     },
     summation: sum,
     zero: 0,

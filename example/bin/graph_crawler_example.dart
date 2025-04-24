@@ -1,10 +1,7 @@
 import 'package:directed_graph/directed_graph.dart';
 
 void main(List<String> args) {
-  int comparator(
-    String s1,
-    String s2,
-  ) {
+  int comparator(String s1, String s2) {
     return s1.compareTo(s2);
   }
 
@@ -33,7 +30,7 @@ void main(List<String> args) {
       h: {a: 7},
       i: {l: 3, k: 2},
       k: {g: 4, f: 5},
-      l: {l: 0}
+      l: {l: 0},
     },
     summation: sum,
     zero: 0,
@@ -51,8 +48,5 @@ void main(List<String> args) {
   print(crawler.mappedTree(a, h));
 
   print('\nTruncated tree with root vertex a and target h:');
-  print(graph.crawler.paths(
-    a,
-    h,
-  ));
+  print(graph.crawler.paths(a, h));
 }
