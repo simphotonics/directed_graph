@@ -12,7 +12,7 @@ $ pub run benchmark_runner
 ```
 A sample benchmark output is shown below:
 
-![Benchmark report](https://github.com/simphotonics/directed_graph/raw/main/images/benchmark_report.png)
+![Benchmark report](https://github.com/simphotonics/directed_graph/raw/main/images/benchmark_report.jpg)
 
 
 The report above was generated on a PC with an Intel Core i5-6260U processor and 32GB of memory
