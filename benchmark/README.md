@@ -8,7 +8,7 @@
 To run the benchmarks, navigate to the package root in your local copy of [`directed_graph`][directed_graph] and
 use the command:
 ```Console
-$ pub run benchmark_runner
+$ pub run benchmark_runner report
 ```
 A sample benchmark output is shown below:
 
