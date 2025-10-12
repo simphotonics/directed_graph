@@ -22,6 +22,12 @@ class BidirectedGraph<T extends Object> extends DirectedGraph<T> {
   }
 
   @override
+  void addEdge(T vertex, T connectedVertex) {
+    super.addEdge(vertex, connectedVertex);
+    super.addEdge(connectedVertex, vertex);
+  }
+
+  @override
   void addEdges(T vertex, Set<T> connectedVertices) {
     super.addEdges(vertex, connectedVertices);
     for (final connectedVertex in connectedVertices) {
@@ -29,8 +35,8 @@ class BidirectedGraph<T extends Object> extends DirectedGraph<T> {
     }
   }
 
-  /// Removes edges (connections) pointing from `vertex`
-  /// to `connectedVertices`.
+  /// Removes edges (connections) pointing from [vertex]
+  /// to [connectedVertices].
   /// * Note: Does not remove the vertices.
   @override
   void removeEdges(T vertex, Set<T> connectedVertices) {
@@ -40,7 +46,7 @@ class BidirectedGraph<T extends Object> extends DirectedGraph<T> {
     }
   }
 
-  /// Removes edges ending at `vertex` from the graph.
+  /// Removes edges ending at [vertex] from the graph.
   @override
   void removeIncomingEdges(T vertex) {
     super.removeIncomingEdges(vertex);

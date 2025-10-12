@@ -15,19 +15,20 @@ void main() {
     return -s1.compareTo(s2);
   }
 
-  var a = 'a';
-  var b = 'b';
-  var c = 'c';
-  var d = 'd';
-  var e = 'e';
-  var f = 'f';
-  var g = 'g';
-  var h = 'h';
-  var i = 'i';
-  var k = 'k';
-  var l = 'l';
+  const a = 'a';
+  const b = 'b';
+  const c = 'c';
+  const d = 'd';
+  const e = 'e';
+  const f = 'f';
+  const g = 'g';
+  const h = 'h';
+  const i = 'i';
+  const k = 'k';
+  const l = 'l';
 
-  var graph = DirectedGraph<String>({
+  // Original graph
+  final graph0 = DirectedGraph<String>({
     a: {b, h, c, e},
     d: {e, f},
     b: {h},
@@ -39,36 +40,36 @@ void main() {
 
   group('Basic:', () {
     test('toString().', () {
+      final graph = DirectedGraph.of(graph0);
       expect(
         graph.toString(),
         '{\n'
         ' \'a\': {\'b\', \'h\', \'c\', \'e\'},\n'
         ' \'b\': {\'h\'},\n'
-        ' \'c\': {\'h\', \'g\'},\n'
-        ' \'d\': {\'e\', \'f\'},\n'
-        ' \'e\': {},\n'
-        ' \'f\': {\'i\'},\n'
-        ' \'g\': {},\n'
         ' \'h\': {},\n'
+        ' \'c\': {\'h\', \'g\'},\n'
+        ' \'e\': {},\n'
+        ' \'g\': {},\n'
+        ' \'d\': {\'e\', \'f\'},\n'
+        ' \'f\': {\'i\'},\n'
         ' \'i\': {\'l\'},\n'
-        ' \'k\': {\'g\', \'f\'},\n'
         ' \'l\': {},\n'
+        ' \'k\': {\'g\', \'f\'},\n'
         '}',
       );
     });
     test('get comparator', () {
-      expect(graph.comparator, comparator);
+      expect(graph0.comparator, comparator);
     });
     test('set comparator.', () {
+      final graph = DirectedGraph.of(graph0);
       graph.comparator = inverseComparator;
-      addTearDown(() {
-        graph.comparator = comparator;
-      });
       expect(graph.comparator, inverseComparator);
-      expect(graph.sortedVertices, [l, k, i, h, g, f, e, d, c, b, a]);
+      expect(graph.sortedVertices.toList(), [l, k, i, h, g, f, e, d, c, b, a]);
     });
     test('for loop.', () {
       var index = 0;
+      final graph = DirectedGraph.of(graph0);
       final vertices = graph.vertices.toList();
       for (var vertex in graph) {
         expect(vertex, vertices[index]);
@@ -79,9 +80,7 @@ void main() {
 
   group('Manipulating edges/vertices.', () {
     test('addEdges():', () {
-      addTearDown(() {
-        graph.removeEdges(i, {k});
-      });
+      final graph = DirectedGraph.of(graph0);
       graph.addEdges(i, {k});
       expect(graph.edges(i), {l, k});
       '{\n'
@@ -99,13 +98,10 @@ void main() {
           '}';
     });
     test('remove(l).', () {
-      addTearDown(() {
-        // Restore graph:
-        graph.addEdges(i, {l});
-      });
+      final graph = DirectedGraph.of(graph0);
       graph.remove(l);
       expect(graph.edges(i), <String>{});
-      expect(graph.sortedVertices, [
+      expect(graph.sortedVertices.toList(), [
         'a',
         'b',
         'c',
@@ -119,13 +115,14 @@ void main() {
       ]);
     });
     test('clear', () {
-      final graphCopy = DirectedGraph.of(graph);
-      expect(graphCopy.sortedVertices, graph.sortedVertices);
-      graphCopy.clear();
-      expect(graphCopy.isEmpty, true);
+      final graph = DirectedGraph.of(graph0);
+      expect(graph.sortedVertices, graph0.sortedVertices);
+      graph.clear();
+      expect(graph.isEmpty, true);
     });
   });
   group('Graph data:', () {
+    final graph = DirectedGraph.of(graph0);
     test('edges().', () {
       expect(graph.edges(a), {b, h, c, e});
     });
@@ -173,77 +170,168 @@ void main() {
       });
     });
     test('sortedVertices.', () {
-      expect(graph.sortedVertices, [a, b, c, d, e, f, g, h, i, k, l]);
+      expect(graph.sortedVertices.toList(), [a, b, c, d, e, f, g, h, i, k, l]);
     });
   });
   group('Graph topology:', () {
     test('stronglyConnectedComponents().', () {
-      expect(graph.stronglyConnectedComponents, [
-        [h],
-        [b],
-        [g],
-        [c],
-        [e],
-        [a],
-        [l],
-        [i],
-        [f],
-        [d],
-        [k],
+      final graph = DirectedGraph<String>({
+        k: {a},
+        a: {},
+        b: {c},
+        c: {b},
+      });
+      expect(graph.stronglyConnectedComponents(), [
+        {a},
+        {k},
+        {c, b},
       ]);
     });
+    test('stronglyConnectedComponents(sorted: true).', () {
+      final graph = DirectedGraph<String>({
+        k: {a},
+        a: {},
+        b: {c},
+        c: {b},
+      });
+      expect(graph.stronglyConnectedComponents(sorted: true), [
+        {a},
+        {b, c},
+        {k},
+      ]);
+    });
+
+    test('stronglyConnectedComponents(sorted: true, '
+        'comparator: inverseComparator).', () {
+      final graph = DirectedGraph<String>({
+        k: {a},
+        a: {},
+        b: {c},
+        c: {b},
+      });
+      expect(
+        graph.stronglyConnectedComponents(
+          sorted: true,
+          comparator: inverseComparator,
+        ),
+        [
+          {a},
+          {k},
+          {c, b},
+        ],
+      );
+    });
+
     test('shortestPath().', () {
+      final graph = DirectedGraph.of(graph0);
       expect(graph.shortestPath(d, l), [d, f, i, l]);
     });
 
     test('isAcyclic(): self-loop.', () {
-      addTearDown(() {
-        graph.removeEdges(l, {l});
-      });
+      final graph = DirectedGraph.of(graph0);
       graph.addEdges(l, {l});
       expect(graph.isAcyclic, false);
     });
     test('isAcyclic(): without cycles', () {
+      final graph = DirectedGraph.of(graph0);
       expect(graph.isAcyclic, true);
     });
 
     test('topologicalOrdering(): self-loop', () {
-      addTearDown(() {
-        graph.removeEdges(l, {l});
-      });
+      final graph = DirectedGraph.of(graph0);
       graph.addEdges(l, {l});
-      expect(graph.topologicalOrdering, null);
+      expect(graph.topologicalOrdering(), null);
     });
     test('topologicalOrdering(): cycle', () {
-      addTearDown(() {
-        graph.removeEdges(i, {k});
-      });
+      final graph = DirectedGraph.of(graph0);
       graph.addEdges(i, {k});
-      expect(graph.topologicalOrdering, null);
+      expect(graph.topologicalOrdering(), null);
     });
-    test('sortedTopologicalOrdering():', () {
-      expect(graph.sortedTopologicalOrdering, {
+    test('topologicalOrdering():', () {
+      final graph = DirectedGraph<String>({
+        k: {b, a, c},
+        d: {},
+        e: {},
+      });
+      expect(graph.topologicalOrdering()?.toList(), [d, e, k, c, a, b]);
+    });
+    test('topologicalOrdering(sorted: true):', () {
+      final graph = DirectedGraph<String>({
+        k: {b, a, c},
+        d: {},
+        e: {},
+      });
+      expect(graph.topologicalOrdering(sorted: true)?.toList(), [
+        d,
+        e,
+        k,
+        a,
+        b,
+        c,
+      ]);
+    });
+    test('topologicalOrdering(sorted: true, '
+        'comparator: inverseComparator):', () {
+      final graph = DirectedGraph<String>({
+        k: {b, a, c},
+        d: {},
+        e: {},
+      }, comparator: inverseComparator);
+      expect(graph.topologicalOrdering(sorted: true)?.toList(), [
+        k,
+        e,
+        d,
+        c,
+        b,
+        a,
+      ]);
+    });
+    test('topologicalOrdering(): empty graph', () {
+      expect(DirectedGraph<int>({}).topologicalOrdering(), <int>{});
+    });
+
+    test('reverseTopologicalOrdering():', () {
+      final graph = DirectedGraph<String>({
+        k: {b, a, c},
+        d: {},
+        e: {},
+      });
+      expect(graph.reverseTopologicalOrdering()?.toList(), [b, a, c, k, e, d]);
+    });
+    test('reverseTopologicalOrdering(sorted: true):', () {
+      final graph = DirectedGraph<String>({
+        k: {b, a, c},
+        d: {},
+        e: {},
+      }, comparator: comparator);
+      expect(graph.reverseTopologicalOrdering(sorted: true)?.toList(), [
         a,
         b,
         c,
         d,
         e,
-        h,
         k,
-        f,
-        g,
-        i,
-        l,
-      });
+      ]);
     });
-    test('topologicalOrdering():', () {
-      expect(graph.topologicalOrdering, {a, b, c, d, e, h, k, f, i, g, l});
-    });
-    test('topologicalOrdering(): empty graph', () {
-      expect(DirectedGraph<int>({}).topologicalOrdering, <int>{});
+    test('topologicalOrdering(sorted: true, '
+        'comparator: inverseComparator):', () {
+      final graph = DirectedGraph<String>({
+        k: {b, a, c},
+        d: {},
+        e: {},
+      }, comparator: inverseComparator);
+      expect(graph.reverseTopologicalOrdering(sorted: true)?.toList(), [
+        c,
+        b,
+        a,
+        k,
+        e,
+        d,
+      ]);
     });
     test('localSources().', () {
-      expect(graph.localSources, [
+      final graph = DirectedGraph.of(graph0);
+      expect(graph.localSources(), [
         [a, d, k],
         [b, c, e, f],
         [g, h, i],
@@ -253,27 +341,25 @@ void main() {
   });
   group('Cycles', () {
     test('graph.cycle | acyclic graph.', () {
-      expect(graph.cycle, <String>[]);
+      final graph = DirectedGraph.of(graph0);
+      expect(graph.cycle(), <String>[]);
     });
 
     test('graph.cycle | cyclic graph.', () {
-      addTearDown(() {
-        graph.removeEdges(l, {l});
-      });
+      final graph = DirectedGraph.of(graph0);
       graph.addEdges(l, {l});
-      expect(graph.cycle, [l, l]);
+      expect(graph.cycle(), [l, l]);
     });
 
     test('graph.cycle | non-trivial cycle.', () {
-      addTearDown(() {
-        graph.removeEdges(i, {k});
-      });
+      final graph = DirectedGraph.of(graph0);
       graph.addEdges(i, {k});
-      expect(graph.cycle, [f, i, k, f]);
+      expect(graph.cycle(), [f, i, k, f]);
     });
   });
   group('TransitiveClosure', () {
     test('acyclic graph', () {
+      final graph = DirectedGraph.of(graph0);
       expect(DirectedGraph.transitiveClosure(graph).data, <String, Set<String>>{
         a: {b, h, c, g, e},
         b: {h},

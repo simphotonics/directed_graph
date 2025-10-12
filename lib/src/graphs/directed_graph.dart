@@ -6,9 +6,10 @@ import '../extensions/sort.dart';
 /// The data-type `T` should be usable as a map key.
 class DirectedGraph<T extends Object> extends DirectedGraphBase<T> {
   /// Constructs a directed graph.
-  /// * `edges`: a map of type `Map<T, Set<T>>`,
-  /// * `comparator`: a function with typedef `Comparator<T>` used to sort
-  /// the graph vertices.
+  /// * [edges]: a map of type `Map<T, Set<T>>`,
+  /// * [comparator]
+  /// : a function with typedef [Comparator] and type
+  /// parameter [T] used to sort the graph vertices.
   DirectedGraph(Map<T, Set<T>> edges, {Comparator<T>? comparator})
     : super(comparator) {
     edges.forEach((vertex, connectedVertices) {
@@ -19,7 +20,7 @@ class DirectedGraph<T extends Object> extends DirectedGraphBase<T> {
     });
   }
 
-  /// Constructs a shallow copy of `graph`.
+  /// Constructs a shallow copy of [graph].
   DirectedGraph.of(DirectedGraph<T> graph)
     : this(graph.data, comparator: graph.comparator);
 
@@ -73,7 +74,7 @@ class DirectedGraph<T extends Object> extends DirectedGraphBase<T> {
     return data;
   }
 
-  /// Returns the vertices connected to `vertex`.
+  /// Returns the vertices connected to [vertex].
   /// Note: Mathematically, an edge is an ordered pair
   /// (vertex, connected-vertex).
   @override
@@ -93,7 +94,22 @@ class DirectedGraph<T extends Object> extends DirectedGraphBase<T> {
     return _edges.containsKey(vertex);
   }
 
-  /// Adds edges (connections) pointing from `vertex` to `connectedVertices`.
+  /// Adds a new edge pointing from [vertex] to [connectedVertex].
+  ///
+  /// If [vertex] or [connectedVertex] are new, then they are
+  /// added to the graph.
+  void addEdge(T vertex, T connectedVertex) {
+    if (_edges.containsKey(vertex)) {
+      _edges[vertex]!.add(connectedVertex);
+    } else {
+      _edges[vertex] = {connectedVertex};
+    }
+    // If connectedVertex is new add it to the graph.
+    _edges[connectedVertex] ??= <T>{};
+    updateCache();
+  }
+
+  /// Adds edges (connections) pointing from [vertex] to [connectedVertices].
   void addEdges(T vertex, Set<T> connectedVertices) {
     if (_edges.containsKey(vertex)) {
       _edges[vertex]!.addAll(connectedVertices);
@@ -108,14 +124,14 @@ class DirectedGraph<T extends Object> extends DirectedGraphBase<T> {
     updateCache();
   }
 
-  /// Removes edges (connections) pointing from `vertex` to `connectedVertices`.
+  /// Removes edges (connections) pointing from [vertex] to [connectedVertices].
   /// * Note: Does not remove the vertices.
   void removeEdges(T vertex, Set<T> connectedVertices) {
     _edges[vertex]?.removeAll(connectedVertices);
     updateCache();
   }
 
-  /// Removes edges ending at `vertex` from the graph.
+  /// Removes edges ending at [vertex] from the graph.
   void removeIncomingEdges(T vertex) {
     if (_edges.containsKey(vertex)) {
       for (final connectedVertices in _edges.values) {
@@ -125,7 +141,7 @@ class DirectedGraph<T extends Object> extends DirectedGraphBase<T> {
     }
   }
 
-  /// Completely removes `vertex` from the graph, including outgoing
+  /// Completely removes [vertex] from the graph, including outgoing
   /// and incoming edges.
   void remove(T vertex) {
     if (_edges.containsKey(vertex)) {

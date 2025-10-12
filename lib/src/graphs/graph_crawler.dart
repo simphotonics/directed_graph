@@ -6,17 +6,17 @@ const largeInt = 1073741823;
 final largestInt = double.maxFinite.floor();
 
 /// Function returning an `Iterable<T>` representing edge vertices.
-/// * If `vertex` has no neighbours the function must return
+/// * If [vertex] has no neighbours the function must return
 ///   an empty iterable.
 /// * The function must never return `null`.
 typedef Edges<T extends Object> = Iterable<T> Function(T vertex);
 
 /// Utility class for crawling a graph defined by [edges] and
 /// retrieving paths and walks.
-/// * A directed **path** is defined as a list of connected vertices where
+/// * A directed *path* is defined as a list of connected vertices where
 /// each *inner* vertex is listed at most once. The first and the last vertex
 /// may be same in order to represent a cycle.
-/// * A directed **walk** is defined as a list of connected vertices that can be
+/// * A directed *walk* is defined as a list of connected vertices that can be
 /// traversed in sequential order.
 class GraphCrawler<T extends Object> {
   GraphCrawler(this.edges);
@@ -26,8 +26,8 @@ class GraphCrawler<T extends Object> {
   /// Important: It must never return `null`.
   final Edges<T> edges;
 
-  /// Returns the shortest path from `start` to `target`.
-  /// * Returns an empty list if `target` is not reachable from `start`.
+  /// Returns the shortest path from [start] to [target].
+  /// * Returns an empty list if [target] is not reachable from [start].
   List<T> path(T start, T target) {
     final tree = <Set<T>>[];
     for (final connected in edges(start)) {
@@ -77,7 +77,7 @@ class GraphCrawler<T extends Object> {
     return <T>[];
   }
 
-  /// Returns a list containing all paths connecting `start` and `target`.
+  /// Returns a list containing all paths connecting [start] and [target].
   List<List<T>> paths(T start, T target) {
     final pathList = <List<T>>[];
     // // Retrieve vertex tree.
@@ -101,7 +101,7 @@ class GraphCrawler<T extends Object> {
       }
     }
 
-    // There is no other path (except for self-loops from `start` to `start`).
+    // There is no other path (except for self-loops from [start] to [start]).
     if (tree.isNotEmpty) {
       var startIndex = 0;
       var endIndex = 0;
@@ -135,8 +135,8 @@ class GraphCrawler<T extends Object> {
   }
 
   /// Returns a map containing the shortest paths from
-  /// `start` to each reachable vertex.
-  /// The map keys represent the set of vertices reachable from `start`.
+  /// [start] to each reachable vertex.
+  /// The map keys represent the set of vertices reachable from [start].
   Map<T, Iterable<T>> shortestPaths(T start) {
     final pathMap = <T, Iterable<T>>{};
 
@@ -180,11 +180,11 @@ class GraphCrawler<T extends Object> {
     return pathMap;
   }
 
-  /// Returns a tree-like structure with `start` as root vertex.
+  /// Returns a tree-like structure with [start] as root vertex.
   /// * Each entry of type `Set<T>` represents a path
   ///  (the start vertex is omitted).
-  /// * If a `target` vertex is provided the function returns
-  /// as soon as a branch reaching `target` is added to the tree.
+  /// * If a [target] vertex is provided the function returns
+  /// as soon as a branch reaching [target] is added to the tree.
   List<Set<T>> tree(T start, [T? target]) {
     final result = <Set<T>>[];
 
@@ -223,12 +223,12 @@ class GraphCrawler<T extends Object> {
     return result;
   }
 
-  /// Returns a map containing all paths commencing at `start`.
+  /// Returns a map containing all paths commencing at [start].
   /// * Each entry of type `Set<T>` represents a path
-  ///   (the `start` vertex is omitted).
+  ///   (the [start] vertex is omitted).
   /// * Paths are grouped according to the last vertex in the path list.
-  /// * If a `target` vertex is specified the function will return
-  /// after a path from `start` to `target` was found and added to the map.
+  /// * If a [target] vertex is specified the function will return
+  /// after a path from [start] to [target] was found and added to the map.
   /// * Inspired by [`graphs`](https://pub.dev/documentation/graphs/latest/graphs/shortestPaths.html).
   ///
   /// Usage:

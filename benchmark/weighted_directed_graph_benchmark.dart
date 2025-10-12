@@ -61,10 +61,10 @@ void main() {
       graph.isAcyclic;
     }, setup: setup);
     benchmark('topologicalOrdering', () {
-      graph.topologicalOrdering;
+      graph.topologicalOrdering();
     }, setup: setup);
     benchmark('sortedTopologicalOrdering', () {
-      graph.sortedTopologicalOrdering;
+      graph.topologicalOrdering();
     }, setup: setup);
     benchmark('transitiveClosure', () {
       WeightedDirectedGraph.transitiveClosure(graph);
@@ -73,13 +73,13 @@ void main() {
       graph.cycleVertex;
     }, setup: setup);
     benchmark('cycle', () {
-      graph.cycle;
+      graph.cycle();
     }, setup: setup);
     benchmark('localSources', () {
       graph.localSources;
     }, setup: setup);
     benchmark('stronglyConnectedComponents', () {
-      graph.stronglyConnectedComponents;
+      graph.stronglyConnectedComponents();
     }, setup: setup);
     benchmark('shortestPaths', () {
       graph.shortestPaths(a);

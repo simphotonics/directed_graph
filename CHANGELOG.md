@@ -1,4 +1,35 @@
 
+## 0.5.0
+- *Breaking changes*:
+  The following *getters have been converted to functions*, to
+  reflect the fact that a potentially long computation is be needed to
+  calculate the result:
+    * `stronglyConnectedComponents({bool sorted, Comparator <T> comparator})`
+      and the function return type has been
+      changed to `List<Set>` to show the fact that each scc is a set
+      of vertices and to make searching a component for a specify vertex more
+      efficient,
+    * `topologicalOrdering({bool sorted})`,
+    * `cycle()`,
+    * `localSource()`.
+- The getters `cycleVertex` and `isAcyclic` were kept, but are now cached and
+  only updated if vertices or edges are added/removed.
+
+- The getter `sortedTopologicalOrdering` was removed. To get the equivalent
+  result call `topologicalOrdering(sorted:true)`.
+- *New additions*:
+    * `addEdge({vertex, connectedVertex})` was added to `DirectedGraph` and
+    `BiDirectedGraph` to make
+    it consistent with `WeightedDirectedGraph`,
+    * `reverseTopologicalOrdering({bool sorted})`, for the meaning of
+       quasi-topological ordering see Section Terminology of README.md.
+    * `quasiTopologicalOrdering({bool sorted})`,
+    * `reverseQuasiTopologicalOrdering({bool sorted})`.
+- Fixed a bug related to the addition of a default comparator if the
+  generic type `T` of `DirectedGraph<T>` is `Comparable<T>`.
+- Updated dependencies.
+
+
 ## 0.4.5
 - Updated dependencies.
 - Updated benchmark report.
@@ -77,7 +108,7 @@
 
 * Added null-safety features.
 * Tightened the definition of path.
-  A path \[v<sub>i</sub>, ...,   v<sub>n</sub>\] is an ordered list of at least two connected vertices where each **inner** vertex is **distinct**.
+  A path \[v<sub>i</sub>, ...,   v<sub>n</sub>\] is an ordered list of at least two connected vertices where each *inner* vertex is *distinct*.
 * Functions returning a topological ordering now return an ordered set of vertices, reflecting the fact that in a topological ordering
   each vertex must be distinct.
 * Added the classes [`WeightedDirectedGraph`][WeightedDirectedGraph] and `BiDirectedGraph`.

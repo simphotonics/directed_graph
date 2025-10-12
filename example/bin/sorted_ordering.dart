@@ -7,15 +7,15 @@ void main() {
   // Constructing a graph from vertices.
 
   final graph = DirectedGraph<String>({
-    'a': {'b', 'h', 'c', 'e'},
-    'b': {'h'},
-    'c': {'h', 'g'},
-    'd': {'e', 'f'},
+    'k': {'i'},
     'e': {'g'},
-    'f': {'i'},
-    //g': {'a'},
-    'i': {'l'},
-    'k': {'g', 'f'},
+    'd': {},
+    'c': {'b'},
+    'f': {},
+    'g': {'e'},
+    'i': {},
+    'b': {'a'},
+    'a': {},
   }, comparator: comparator);
 
   print('Example Directed Graph...');
@@ -28,8 +28,18 @@ void main() {
   print('\nStrongly connected components:');
   print(graph.stronglyConnectedComponents());
 
-  print('\nLocal sources:');
-  print(graph.localSources());
+  print('\nStrongly connected components, sorted:');
+  print(
+    graph.stronglyConnectedComponents(sorted: true, comparator: comparator),
+  );
+
+  print('\nStrongly connected components, sorted, inverse:');
+  print(
+    graph.stronglyConnectedComponents(
+      sorted: true,
+      comparator: inverseComparator,
+    ),
+  );
 
   print('\nshortestPath(d, l):');
   print(graph.shortestPath('d', 'l'));
@@ -63,59 +73,29 @@ void main() {
   print('\nReverse Topological Ordering:');
   print(graph.reverseTopologicalOrdering());
 
-  print('\nReverse Topological Ordering, sorted: true');
-  print(graph.reverseTopologicalOrdering(sorted: true));
+  print('\nQuasi-Topological Ordering:');
+  print(graph.quasiTopologicalOrdering({'k', 'i', 'd'}));
+
+  print('\nQuasi-Topological Ordering, sorted:');
+  print(graph.quasiTopologicalOrdering({'k', 'i', 'd'}, sorted: true));
+
+  print('\nReverse-Quasi-Topological Ordering, sorted:');
+  print(graph.reverseQuasiTopologicalOrdering({'k', 'i', 'd'}, sorted: true));
 
   print('\nLocal Sources:');
   print(graph.localSources());
 
-  print('\nAdding edges: i -> k and i -> d');
-
   // Add edge to render the graph cyclic
-  graph.addEdge('i', 'k');
-  //graph.addEdge('l', 'l');
-  graph.addEdge('i', 'd');
-
-  print('\nCyclic graph:');
-  print(graph);
+  graph.addEdges('i', {'k'});
+  graph.addEdges('l', {'l'});
+  graph.addEdges('i', {'d'});
 
   print('\nCycle:');
   print(graph.cycle());
-
-  print('\nCycle vertex:');
-  print(graph.cycleVertex);
-
-  print('\ngraph.isAcyclic: ');
-  print(graph.isAcyclic);
 
   print('\nShortest Paths:');
   print(graph.shortestPaths('a'));
 
   print('\nEdge exists: a->b');
   print(graph.edgeExists('a', 'b'));
-
-  print('\nStrongly connected components:');
-  print(graph.stronglyConnectedComponents());
-
-  print('\nStrongly connected components, sorted:');
-  print(
-    graph.stronglyConnectedComponents(sorted: true, comparator: comparator),
-  );
-
-  print('\nStrongly connected components, sorted, inverse:');
-  print(
-    graph.stronglyConnectedComponents(
-      sorted: true,
-      comparator: inverseComparator,
-    ),
-  );
-
-  print('\nQuasi-Topological Ordering:');
-  print(graph.quasiTopologicalOrdering({'d', 'e', 'a'}));
-
-  print('\nQuasi-Topological Ordering, sorted:');
-  print(graph.quasiTopologicalOrdering({'d', 'e', 'a'}, sorted: true));
-
-  print('\nReverse-Quasi-Topological Ordering, sorted:');
-  print(graph.reverseQuasiTopologicalOrdering({'d', 'e', 'a'}, sorted: true));
 }

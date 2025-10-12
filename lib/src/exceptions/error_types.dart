@@ -10,7 +10,7 @@ class InvalidPath extends ErrorType {}
 class NotAnEdge extends ErrorType {}
 
 /// Error thrown while attempting to sort objects of type `T` if:
-/// * `T` does not extend `Comparable` **or**
+/// * `T` does not extend `Comparable` *or*
 /// * a valid `Comparator<T>` was not specified.
 class SortingNotSupported<T> extends ErrorType {
   Type type = T;

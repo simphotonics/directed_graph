@@ -16,21 +16,22 @@ void main() {
     return -s1.compareTo(s2);
   }
 
-  var a = 'a';
-  var b = 'b';
-  var c = 'c';
-  var d = 'd';
-  var e = 'e';
-  var f = 'f';
-  var g = 'g';
-  var h = 'h';
-  var i = 'i';
-  var k = 'k';
-  var l = 'l';
+  const a = 'a';
+  const b = 'b';
+  const c = 'c';
+  const d = 'd';
+  const e = 'e';
+  const f = 'f';
+  const g = 'g';
+  const h = 'h';
+  const i = 'i';
+  const k = 'k';
+  const l = 'l';
+  const zero = 0;
 
   int sum(int left, int right) => left + right;
 
-  var graph = WeightedDirectedGraph<String, int>(
+  final graph0 = WeightedDirectedGraph<String, int>(
     {
       a: {b: 1, h: 7, c: 2, e: 4},
       b: {h: 6},
@@ -42,12 +43,13 @@ void main() {
       k: {g: 4, f: 5},
     },
     summation: sum,
-    zero: 0,
+    zero: zero,
     comparator: comparator,
   );
 
   group('Basic:', () {
     test('toString().', () {
+      final graph = WeightedDirectedGraph.of(graph0);
       expect(
         graph.toString(),
         '{\n'
@@ -66,17 +68,17 @@ void main() {
       );
     });
     test('get comparator', () {
+      final graph = WeightedDirectedGraph.of(graph0);
       expect(graph.comparator, comparator);
     });
     test('set comparator.', () {
-      addTearDown(() {
-        graph.comparator = comparator;
-      });
+      final graph = WeightedDirectedGraph.of(graph0);
       graph.comparator = inverseComparator;
       expect(graph.comparator, inverseComparator);
       expect(graph.sortedVertices, [l, k, i, h, g, f, e, d, c, b, a]);
     });
     test('for loop.', () {
+      final graph = WeightedDirectedGraph.of(graph0);
       var index = 0;
       final vertices = graph.vertices.toList();
       for (var vertex in graph) {
@@ -88,47 +90,45 @@ void main() {
 
   group('Manipulating edges/vertices:', () {
     test('remove/add vertex l.', () {
-      addTearDown(() {
-        graph.addEdges(i, <String, int>{l: 3});
-      });
+      final graph = WeightedDirectedGraph.of(graph0);
       graph.remove(l);
       expect(graph.edges(i), <String>{});
       expect(graph.vertices.contains(l), false);
       // Restore graph:
     });
     test('addEdges(\'g\',{\'h\': 1}):', () {
-      addTearDown(() {
-        graph.removeEdges('g', {'h'});
-      });
+      final graph = WeightedDirectedGraph.of(graph0);
       graph.addEdges('g', {'h': 1});
       expect(graph.edges('g'), {'h'});
       expect(graph.data['g']?['h'], 1);
     });
     test('clear', () {
-      final graphCopy = WeightedDirectedGraph.of(graph);
-      expect(graphCopy.sortedVertices, graph.sortedVertices);
-      graphCopy.clear();
-      expect(graphCopy.isEmpty, true);
+      final graph = WeightedDirectedGraph.of(graph0);
+      expect(graph.sortedVertices, graph0.sortedVertices);
+      graph.clear();
+      expect(graph.isEmpty, true);
     });
   });
   group('Graph data:', () {
     test('edges().', () {
+      final graph = WeightedDirectedGraph.of(graph0);
       expect(graph.edges(a), {b, h, c, e});
     });
     test('indegree().', () {
+      final graph = WeightedDirectedGraph.of(graph0);
       expect(graph.inDegree(h), 3);
     });
     test('indegree vertex with self-loop.', () {
-      addTearDown(() {
-        graph.removeEdges(l, {l});
-      });
+      final graph = WeightedDirectedGraph.of(graph0);
       graph.addEdges(l, {l: 0});
       expect(graph.inDegree(l), 2);
     });
     test('outDegree().', () {
+      final graph = WeightedDirectedGraph.of(graph0);
       expect(graph.outDegree(d), 2);
     });
     test('outDegreeMap().', () {
+      final graph = WeightedDirectedGraph.of(graph0);
       expect(graph.outDegreeMap, {
         a: 4,
         b: 1,
@@ -144,6 +144,7 @@ void main() {
       });
     });
     test('inDegreeMap.', () {
+      final graph = WeightedDirectedGraph.of(graph0);
       expect(graph.inDegreeMap, {
         a: 0,
         b: 1,
@@ -159,12 +160,14 @@ void main() {
       });
     });
     test('sortedVertices().', () {
+      final graph = WeightedDirectedGraph.of(graph0);
       expect(graph.sortedVertices, [a, b, c, d, e, f, g, h, i, k, l]);
     });
   });
   group('Graph topology:', () {
     test('stronglyConnectedComponents().', () {
-      expect(graph.stronglyConnectedComponents, [
+      final graph = WeightedDirectedGraph.of(graph0);
+      expect(graph.stronglyConnectedComponents(), [
         [h],
         [b],
         [g],
@@ -179,51 +182,71 @@ void main() {
       ]);
     });
     test('shortestPath().', () {
+      final graph = WeightedDirectedGraph.of(graph0);
       expect(graph.shortestPath(d, l), [d, f, i, l]);
     });
 
     test('isAcyclic(): self-loop.', () {
-      addTearDown(() {
-        graph.removeEdges(l, {l});
-      });
+      final graph = WeightedDirectedGraph.of(graph0);
       graph.addEdges(l, {l: 0});
       expect(graph.isAcyclic, false);
     });
     test('isAcyclic(): without cycles', () {
+      final graph = WeightedDirectedGraph.of(graph0);
       expect(graph.isAcyclic, true);
     });
 
     test('topologicalOrdering(): self-loop', () {
-      addTearDown(() {
-        graph.removeEdges(l, {l});
-      });
+      final graph = WeightedDirectedGraph.of(graph0);
       graph.addEdges(l, {l: 0});
-      expect(graph.topologicalOrdering, null);
+      expect(graph.topologicalOrdering(), null);
     });
     test('topologicalOrdering(): cycle', () {
-      addTearDown(() {
-        graph.removeEdges(i, {k});
-      });
+      final graph = WeightedDirectedGraph.of(graph0);
       graph.addEdges(i, {k: 2});
-      expect(graph.topologicalOrdering, null);
+      expect(graph.topologicalOrdering(), null);
     });
-    test('sortedTopologicalOrdering():', () {
-      expect(graph.sortedTopologicalOrdering, {
+
+    test('topologicalOrdering({sorted: false}):', () {
+      final graph = WeightedDirectedGraph(
+        {
+          k: {b: 2, c: 3, a: 4},
+          d: <String, int>{},
+        },
+        summation: sum,
+        zero: zero,
+        comparator: comparator,
+      );
+      expect(graph.topologicalOrdering(sorted: false)?.toList(), [
+        d,
+        k,
+        a,
+        c,
+        b,
+      ]);
+    });
+    test('topologicalOrdering({sorted: true}):', () {
+      final graph = WeightedDirectedGraph(
+        {
+          k: {b: 2, c: 3, a: 4},
+          d: <String, int>{},
+        },
+        summation: sum,
+        zero: zero,
+        comparator: comparator,
+      );
+      expect(graph.topologicalOrdering(sorted: true)?.toList(), [
+        d,
+        k,
         a,
         b,
         c,
-        d,
-        e,
-        h,
-        k,
-        f,
-        g,
-        i,
-        l,
-      });
+      ]);
     });
+
     test('topologicalOrdering():', () {
-      expect(graph.topologicalOrdering, {a, b, c, d, e, h, k, f, i, g, l});
+      final graph = WeightedDirectedGraph.of(graph0);
+      expect(graph.topologicalOrdering(), {a, b, c, d, e, h, k, f, i, g, l});
     });
     test('topologicalOrdering(): empty graph', () {
       expect(
@@ -231,12 +254,13 @@ void main() {
           {},
           zero: 0,
           summation: sum,
-        ).topologicalOrdering,
+        ).topologicalOrdering(),
         <String>{},
       );
     });
     test('localSources().', () {
-      expect(graph.localSources, [
+      final graph = WeightedDirectedGraph.of(graph0);
+      expect(graph.localSources(), [
         [a, d, k],
         [b, c, e, f],
         [g, h, i],
@@ -247,15 +271,18 @@ void main() {
 
   group('Weigth:', () {
     test('graph weigth', () {
+      final graph = WeightedDirectedGraph.of(graph0);
       expect(graph.weight, 49);
     });
     test('weightAlong([a, c, g])', () {
+      final graph = WeightedDirectedGraph.of(graph0);
       expect(graph.weightAlong([a, c, g]), 6);
     });
   });
 
   group('TransitiveClosure', () {
     test('acyclic graph', () {
+      final graph = WeightedDirectedGraph.of(graph0);
       expect(
         WeightedDirectedGraph.transitiveClosure(graph).data,
         <String, Map<String, int>>{
@@ -277,13 +304,12 @@ void main() {
 
   group('path:', () {
     test('min. weight', () {
+      final graph = WeightedDirectedGraph.of(graph0);
       expect(graph.lightestPath('a', 'g'), [a, c, g]);
       expect(graph.weightAlong([a, c, g]), 6);
     });
     test('max. weight', () {
-      addTearDown(() {
-        graph.removeEdges(h, {g});
-      });
+      final graph = WeightedDirectedGraph.of(graph0);
       graph.addEdges(h, {g: 17});
       expect(graph.heaviestPath(a, g), [a, h, g]);
       expect(graph.weightAlong([a, h, g]), 24);

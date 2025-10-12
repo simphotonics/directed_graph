@@ -1,3 +1,5 @@
+// ignore_for_file: unused_local_variable
+
 import 'package:benchmark_runner/benchmark_runner.dart';
 import 'package:directed_graph/directed_graph.dart';
 
@@ -20,19 +22,6 @@ var h = 'h';
 var i = 'i';
 var k = 'k';
 var l = 'l';
-
-// var graph = DirectedGraph<String>(
-//   {
-//     a: {b, h, c, e},
-//     d: {e, f},
-//     b: {h},
-//     c: {h, g},
-//     f: {i},
-//     i: {l},
-//     k: {g, f}
-//   },
-//   comparator: comparator,
-// );
 
 void main() {
   var graph = DirectedGraph<String>({
@@ -66,10 +55,10 @@ void main() {
       graph.isAcyclic;
     });
     benchmark('topologicalOrdering', () {
-      graph.topologicalOrdering;
+      graph.topologicalOrdering();
     });
     benchmark('sortedTopologicalOrdering', () {
-      graph.sortedTopologicalOrdering;
+      graph.topologicalOrdering(sorted: true);
     });
     benchmark('transitiveClosure', () {
       DirectedGraph.transitiveClosure(graph);
@@ -78,13 +67,13 @@ void main() {
       graph.cycleVertex;
     });
     benchmark('cycle', () {
-      graph.cycle;
+      graph.cycle();
     });
     benchmark('localSources', () {
-      graph.localSources;
+      graph.localSources();
     });
     benchmark('stronglyConnectedComponents', () {
-      graph.stronglyConnectedComponents;
+      graph.stronglyConnectedComponents();
     });
     benchmark('shortestPaths', () {
       graph.shortestPaths(a);
@@ -97,6 +86,26 @@ void main() {
     });
     benchmark('reachableVertices(d)', () {
       graph.reachableVertices(d);
+    });
+  });
+  group('Comparator', () {
+    final count = 10000000;
+    final graph = DirectedGraph<String>(<String, Set<String>>{});
+    final inferedComparator = graph.comparator;
+
+    benchmark('user defined', () {
+      var result = 0;
+      for (var i = 0; i < count; i++) {
+        result = comparator('Hello', 'world');
+      }
+    });
+    benchmark('infered', () {
+      if (graph.hasComparator) {
+        var result = 0;
+        for (var i = 0; i < count; i++) {
+          result = inferedComparator!('Hello', 'world');
+        }
+      }
     });
   });
 }

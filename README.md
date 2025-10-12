@@ -8,10 +8,11 @@
 An integral part of storing, manipulating, and retrieving numerical data are *data structures* or as they are called in Dart: [collections].
 Arguably the most common data structure is the *list*. It enables efficient storage and retrieval of sequential data that can be associated with an index.
 
-A more general (non-linear) data structure where an element may be connected to one, several, or none of the other elements is called a **graph**.
+A more general (non-linear) data structure where an element may be connected to one, several, or none of the other elements is called a *graph*.
 
 Graphs are useful when keeping track of elements that are linked to or are dependent on other elements.
-Examples include: network connections, links in a document pointing to other paragraphs or documents, foreign keys in a relational database, file dependencies in a build system, etc.
+Examples include: network connections, links in a document pointing to other paragraphs or documents,
+foreign keys in a relational database, file dependencies in a build system, etc.
 
 The package [`directed_graph`][directed_graph] contains an implementation of a Dart graph that follows the
 recommendations found in [graphs-examples] and is compatible with the algorithms provided by [`graphs`][graphs].
@@ -26,36 +27,42 @@ for finding:
 * all paths connecting two vertices,
 * the shortest paths from a vertex to all connected vertices,
 * cycles,
-* a topological ordering of the graph vertices.
+* a topological ordering of the graph vertices,
+* a reverse topological ordering of the graph vertices.
 
 The class [`GraphCrawler`][GraphCrawler] can be used to retrieve *paths* or *walks* connecting two vertices.
 
 ## Terminology
 
-Elements of a graph are called **vertices** (or nodes) and neighbouring vertices are connected by **edges**.
-The figure below shows a **directed graph** with unidirectional edges depicted as arrows.
-Graph edges are emanating from a vertex and ending at a vertex. In a **weighted directed graph** each
+Elements of a graph are called *vertices* (or nodes) and neighbouring vertices are connected by *edges*.
+The figure below shows a *directed graph* with unidirectional edges depicted as arrows.
+Graph edges are emanating from a vertex and ending at a vertex. In a *weighted directed graph* each
 edge is assigned a weight.
 
 ![Directed Graph Image](https://github.com/simphotonics/directed_graph/raw/main/images/directed_graph.svg?sanitize=true)
 
-- **In-degree** of a vertex: Number of edges ending at this vertex. For example, vertex H has in-degree 3.
-- **Out-degree** of a vertex: Number of edges starting at this vertex. For example, vertex F has out-degree 1.
-- **Source**: A vertex with in-degree zero is called (local) source. Vertices A and D in the graph above are local sources.
-- **Directed Edge**: An ordered pair of connected vertices (v<sub>i</sub>, v<sub>j</sub>). For example, the edge (A, C) starts at vertex A and ends at vertex C.
-- **Path**: A path \[v<sub>i</sub>, ...,   v<sub>n</sub>\] is an ordered list of at least two connected vertices where each **inner** vertex is **distinct**.
+- *In-degree* of a vertex: Number of edges ending at this vertex. For example, vertex H has in-degree 3.
+- *Out-degree* of a vertex: Number of edges starting at this vertex. For example, vertex F has out-degree 1.
+- *Source*: A vertex with in-degree zero is called (local) source. Vertices A and D in the graph above are local sources.
+- *Directed Edge*: An ordered pair of connected vertices (v<sub>i</sub>, v<sub>j</sub>). For example, the edge (A, C) starts at vertex A and ends at vertex C.
+- *Path*: A path \[v<sub>i</sub>, ...,   v<sub>n</sub>\] is an ordered list of at least two connected vertices where each *inner* vertex is *distinct*.
    The path \[A, E, G\] starts at vertex A and ends at vertex G.
-- **Cycle**: A cycle is an ordered *list* of connected vertices where each inner vertex is distinct and the
+- *Cycle*: A cycle is an ordered *list* of connected vertices where each inner vertex is distinct and the
 first and last vertices are identical. The sequence \[F, I, K, F\] completes a cycle.
-- **Walk**: A walk is an ordered *list* of at least two connected vertices.
+- *Walk*: A walk is an ordered *list* of at least two connected vertices.
 \[D, F, I, K, F\] is a walk but not a path since the vertex F is listed twice.
-- **DAG**: An acronym for **Directed Acyclic Graph**, a directed graph without cycles.
-- **Topological ordering**: An ordered *set* of all vertices in a graph such that v<sub>i</sub>
+- *DAG*: An acronym for *Directed Acyclic Graph*, a directed graph without cycles.
+- *Topological ordering*: An ordered *set* of all vertices in a graph such that v<sub>i</sub>
 occurs before v<sub>j</sub> if there is a directed edge (v<sub>i</sub>, v<sub>j</sub>).
 A topological ordering of the graph above is: \{A, D, B, C, E, K, F, G, H, I, L\}.
 Hereby, dashed edges were disregarded since a cyclic graph does not have a topological ordering.
+- *Quasi-Topological ordering*: An ordered *sub-set* of graph vertices
+such that v<sub>i</sub>
+occurs before v<sub>j</sub> if there is a directed edge (v<sub>i</sub>, v<sub>j</sub>).
+For a quasi-topological ordering to exist, any two vertices belonging to the *sub-set* must not have mutually connecting edges.
 
-**Note**: In the context of this package the definition of *edge* might be more lax compared to a
+
+*Note*: In the context of this package the definition of *edge* might be more lax compared to a
 rigorous mathematical definition.
 For example, self-loops, that is edges connecting a vertex to itself are explicitly allowed.
 
@@ -67,38 +74,40 @@ example below shows how to construct an object of type [`DirectedGraph`][Directe
 The graph classes provided by this library are generic with type argument
 `T extends Object`, that is `T` must be non-nullable.
 Graph vertices can be sorted if `T is Comparable` or
-if a custom comparator function is provided. In the example below, a custom
-comparator is used to sort vertices in inverse lexicographical order.
+if a custom comparator function is provided.
+
+Note: If `T is Comparable` and no comparator is provided, then
+the following default comparator is added:
+```Dart
+(T left, T right) =>  (left as Comparable<T>).compareTo(right);
+```
+Compared to an explicit comparator this function contains a cast and
+the benchmarks show that is approximatly 3 &times; slower.
+For large graphs it is advisable to follow the example below and
+explicitly provide a comparator.
+
+In the example below, a custom
+comparator is used to sort vertices in lexicographical order.
 
 ```Dart
 import 'package:directed_graph/directed_graph.dart';
-// To run this program navigate to
-// the folder 'directed_graph/example'
-// in your terminal and type:
-//
-// # dart bin/directed_graph_example.dart
-//
-// followed by enter.
 void main() {
-
   int comparator(String s1, String s2) => s1.compareTo(s2);
   int inverseComparator(String s1, String s2) => -comparator(s1, s2);
 
   // Constructing a graph from vertices.
-  final graph = DirectedGraph<String>(
-    {
-      'a': {'b', 'h', 'c', 'e'},
-      'b': {'h'},
-      'c': {'h', 'g'},
-      'd': {'e', 'f'},
-      'e': {'g'},
-      'f': {'i'},
-      'i': {'l'},
-      'k': {'g', 'f'}
-    },
-    // Custom comparators can be specified here:
-    // comparator: comparator,
-  );
+
+  final graph = DirectedGraph<String>({
+    'a': {'b', 'h', 'c', 'e'},
+    'b': {'h'},
+    'c': {'h', 'g'},
+    'd': {'e', 'f'},
+    'e': {'g'},
+    'f': {'i'},
+    //g': {'a'},
+    'i': {'l'},
+    'k': {'g', 'f'},
+  }, comparator: comparator);
 
   print('Example Directed Graph...');
   print('graph.toString():');
@@ -108,10 +117,16 @@ void main() {
   print(graph.isAcyclic);
 
   print('\nStrongly connected components:');
-  print(graph.stronglyConnectedComponents);
+  print(graph.stronglyConnectedComponents());
 
-  print('\nShortestPath(d, l):');
-  print(graph.shortestPath('d', 'l');
+  print('\nLocal sources:');
+  print(graph.localSources());
+
+  print('\nshortestPath(d, l):');
+  print(graph.shortestPath('d', 'l'));
+
+  print('\nshortestPaths(a)');
+  print(graph.shortestPaths('a'));
 
   print('\nInDegree(C):');
   print(graph.inDegree('c'));
@@ -131,27 +146,69 @@ void main() {
   print(graph.inDegreeMap);
 
   print('\nSorted Topological Ordering:');
-  print(graph.sortedTopologicalOrdering);
+  print(graph.topologicalOrdering(sorted: true));
 
   print('\nTopological Ordering:');
-  print(graph.topologicalOrdering);
+  print(graph.topologicalOrdering());
+
+  print('\nReverse Topological Ordering:');
+  print(graph.reverseTopologicalOrdering());
+
+  print('\nReverse Topological Ordering, sorted: true');
+  print(graph.reverseTopologicalOrdering(sorted: true));
 
   print('\nLocal Sources:');
-  print(graph.localSources);
+  print(graph.localSources());
+
+  print('\nAdding edges: i -> k and i -> d');
 
   // Add edge to render the graph cyclic
-  graph.addEdges('i', {'k'});
-  graph.addEdges('l', {'l'});
-  graph.addEdges('i', {'d'});
+  graph.addEdge('i', 'k');
+  //graph.addEdge('l', 'l');
+  graph.addEdge('i', 'd');
+
+  print('\nCyclic graph:');
+  print(graph);
 
   print('\nCycle:');
-  print(graph.cycle);
+  print(graph.cycle());
+
+  print('\nCycle vertex:');
+  print(graph.cycleVertex);
+
+  print('\ngraph.isAcyclic: ');
+  print(graph.isAcyclic);
 
   print('\nShortest Paths:');
   print(graph.shortestPaths('a'));
 
   print('\nEdge exists: a->b');
   print(graph.edgeExists('a', 'b'));
+
+  print('\nStrongly connected components:');
+  print(graph.stronglyConnectedComponents());
+
+  print('\nStrongly connected components, sorted:');
+  print(
+    graph.stronglyConnectedComponents(sorted: true, comparator: comparator),
+  );
+
+  print('\nStrongly connected components, sorted, inverse:');
+  print(
+    graph.stronglyConnectedComponents(
+      sorted: true,
+      comparator: inverseComparator,
+    ),
+  );
+
+  print('\nQuasi-Topological Ordering:');
+  print(graph.quasiTopologicalOrdering({'d', 'e', 'a'}));
+
+  print('\nQuasi-Topological Ordering, sorted:');
+  print(graph.quasiTopologicalOrdering({'d', 'e', 'a'}, sorted: true));
+
+  print('\nReverse-Quasi-Topological Ordering, sorted:');
+  print(graph.reverseQuasiTopologicalOrdering({'d', 'e', 'a'}, sorted: true));
 }
 
 ```
@@ -165,25 +222,31 @@ graph.toString():
 {
  'a': {'b', 'h', 'c', 'e'},
  'b': {'h'},
- 'c': {'h', 'g'},
- 'd': {'e', 'f'},
- 'e': {'g'},
- 'f': {'i'},
- 'g': {},
  'h': {},
+ 'c': {'h', 'g'},
+ 'e': {'g'},
+ 'g': {},
+ 'd': {'e', 'f'},
+ 'f': {'i'},
  'i': {'l'},
- 'k': {'g', 'f'},
  'l': {},
+ 'k': {'g', 'f'},
 }
 
 Is Acylic:
 true
 
 Strongly connected components:
-[[h], [b], [g], [c], [e], [a], [l], [i], [f], [d], [k]]
+[{h}, {b}, {g}, {c}, {e}, {a}, {l}, {i}, {f}, {d}, {k}]
 
-ShortestPath(d, l):
+Local sources:
+[{a, d, k}, {b, c, e, f}, {g, h, i}, {l}]
+
+shortestPath(d, l):
 [d, f, i, l]
+
+shortestPaths(a)
+{b: [b], h: [h], c: [c], e: [e], g: [c, g]}
 
 InDegree(C):
 1
@@ -192,10 +255,10 @@ OutDegree(C)
 2
 
 Vertices sorted in lexicographical order:
-[a, b, c, d, e, f, g, h, i, k, l]
+{a, b, c, d, e, f, g, h, i, k, l}
 
 Vertices sorted in inverse lexicographical order:
-[l, k, i, h, g, f, e, d, c, b, a]
+{l, k, i, h, g, f, e, d, c, b, a}
 
 InDegreeMap:
 {a: 0, b: 1, h: 3, c: 1, e: 2, g: 3, d: 0, f: 2, i: 1, l: 1, k: 0}
@@ -206,18 +269,64 @@ Sorted Topological Ordering:
 Topological Ordering:
 {a, b, c, d, e, h, k, f, i, g, l}
 
+Reverse Topological Ordering:
+{l, g, i, f, k, h, e, d, c, b, a}
+
+Reverse Topological Ordering, sorted: true
+{h, b, g, c, e, a, l, i, f, d, k}
+
 Local Sources:
-[[a, d, k], [b, c, e, f], [g, h, i], [l]]
+[{a, d, k}, {b, c, e, f}, {g, h, i}, {l}]
+
+Adding edges: i -> k and i -> d
+
+Cyclic graph:
+{
+ 'a': {'b', 'h', 'c', 'e'},
+ 'b': {'h'},
+ 'h': {},
+ 'c': {'h', 'g'},
+ 'e': {'g'},
+ 'g': {},
+ 'd': {'e', 'f'},
+ 'f': {'i'},
+ 'i': {'l', 'k', 'd'},
+ 'l': {},
+ 'k': {'g', 'f'},
+}
 
 Cycle:
-[l, l]
+[f, i, k, f]
+
+Cycle vertex:
+f
+
+graph.isAcyclic:
+false
 
 Shortest Paths:
-{e: (e), c: (c), h: (h), a: (), g: (c, g), b: (b)}
+{b: [b], h: [h], c: [c], e: [e], g: [c, g]}
 
 Edge exists: a->b
 true
 
+Strongly connected components:
+[{h}, {b}, {g}, {c}, {e}, {a}, {l}, {k, i, f, d}]
+
+Strongly connected components, sorted:
+[{h}, {b}, {g}, {c}, {e}, {a}, {l}, {d, f, i, k}]
+
+Strongly connected components, sorted, inverse:
+[{l}, {g}, {e}, {k, i, f, d}, {h}, {c}, {b}, {a}]
+
+Quasi-Topological Ordering:
+{d, a, e}
+
+Quasi-Topological Ordering, sorted:
+{a, d, e}
+
+Reverse-Quasi-Topological Ordering, sorted:
+{e, a, d}
 ```
 </details>
 
