@@ -31,7 +31,7 @@ var graph = DirectedGraph<String>({
   k: {g, f},
 }, comparator: comparator);
 
-var gc = GraphCrawler<String>(graph.edges);
+final gc = graph.crawler;
 
 void main() {
   group('Topology:', () {
@@ -48,7 +48,7 @@ void main() {
       gc.mappedTree(a);
     });
 
-    benchmark('shortestPathsI', () {
+    benchmark('shortestPaths', () {
       gc.shortestPaths(a);
     });
   });

@@ -1,3 +1,5 @@
+import 'dart:collection' show HashSet;
+
 /// Constant holding the largest (smi) int.
 ///
 /// `largeInt = pow(2, 30) - 1;`
@@ -49,6 +51,7 @@ class GraphCrawler<T extends Object> {
     var startIndex = 0;
     var endIndex = 0;
     var length = tree.length;
+    final visited = HashSet<T>()..add(start);
     do {
       endIndex = tree.length;
       for (var i = startIndex; i < endIndex; ++i) {
@@ -57,7 +60,7 @@ class GraphCrawler<T extends Object> {
           // Discard walks which reach the same (inner) vertex twice.
           // Note: Each path starts with [start] even though it is not
           // listed!
-          if (path.contains(vertex) || path.contains(start)) {
+          if (path.contains(vertex) || visited.contains(vertex)) {
             continue;
           } else {
             if (vertex == target) {
@@ -70,6 +73,7 @@ class GraphCrawler<T extends Object> {
             }
           }
         }
+        visited.add(path.last);
       }
       startIndex = endIndex;
     } while (endIndex < length);
@@ -106,6 +110,7 @@ class GraphCrawler<T extends Object> {
       var startIndex = 0;
       var endIndex = 0;
       var length = tree.length;
+
       do {
         endIndex = tree.length;
         for (var i = startIndex; i < endIndex; ++i) {
@@ -114,7 +119,7 @@ class GraphCrawler<T extends Object> {
             // Discard walks which reach the same (inner) vertex twice.
             // Note: Each path starts with [start] even though it is not
             // listed!
-            if (path.contains(vertex) || path.contains(start)) {
+            if (path.contains(vertex)) {
               continue;
             } else {
               if (vertex == target) {
@@ -136,24 +141,22 @@ class GraphCrawler<T extends Object> {
 
   /// Returns a map containing the shortest paths from
   /// [start] to each reachable vertex.
-  /// The map keys represent the set of vertices reachable from [start].
+  /// The map keys are vertices reachable from [start].
   Map<T, Iterable<T>> shortestPaths(T start) {
     final pathMap = <T, Iterable<T>>{};
 
     final tree = <Set<T>>[];
     for (final connected in edges(start)) {
       pathMap[connected] = ([connected]);
-      if (connected != start) {
-        // Do not follow self-loops.
-        // Store first branches of tree.
-        tree.add({connected});
-      }
+      // Store first branches of tree.
+      tree.add({connected});
     }
 
     if (tree.isNotEmpty) {
       var startIndex = 0;
       var endIndex = 0;
       var length = tree.length;
+      final visited = HashSet<T>()..add(start);
       do {
         endIndex = tree.length;
         for (var i = startIndex; i < endIndex; ++i) {
@@ -162,7 +165,7 @@ class GraphCrawler<T extends Object> {
             // Discard walks which reach the same (inner) vertex twice.
             // Note: Each path starts with [start] even though it is not
             // listed!
-            if (path.contains(vertex) || path.contains(start)) {
+            if (path.contains(vertex) || visited.contains(vertex)) {
               continue;
             } else {
               // Store path to new vertex.
@@ -173,6 +176,7 @@ class GraphCrawler<T extends Object> {
               length++;
             }
           }
+          visited.add(path.last);
         }
         startIndex = endIndex;
       } while (endIndex < length);
