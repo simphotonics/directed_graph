@@ -8,15 +8,22 @@ import 'package:directed_graph/directed_graph.dart';
 // //
 // // followed by enter.
 void main() {
+  final a = 'a';
+  final b = 'b';
+  final c = 'c';
+  final d = 'd';
+
   var graph = DirectedGraph<String>({
-    'a': {'b', 'c', 'd'},
-    'b': {'a', 'c', 'd'},
-    'c': {'a', 'b', 'd'},
-    'd': {'a', 'b', 'c'},
+    a: {b, c, d},
+    b: {a, c, d},
+    c: {a, b, d},
+    d: {a, b, c},
   });
-  print(graph.inDegreeMap);
-  print(graph.outDegreeMap);
-  print(graph);
-  print(graph.localSources);
-  print(graph.cycle);
+  print('inDegreeMap: ${graph.inDegreeMap}\n');
+
+  print('outDegreeMap: ${graph.outDegreeMap}\n');
+
+  print('Graph: $graph\n');
+
+  print('Cycle: ${graph.cycle()}');
 }
