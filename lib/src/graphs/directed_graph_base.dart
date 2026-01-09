@@ -164,18 +164,14 @@ abstract class DirectedGraphBase<T extends Object> extends Iterable<T> {
   /// including cycles.
   /// * Returns an empty list if no path was found.
   /// * To exclude cycles use the method `shortestPath(start, target)`.
-  List<T> path(T start, T target) {
-    return crawler.path(start, target);
-  }
+  List<T> path(T start, T target) => crawler.path(start, target);
 
   /// Returns all paths from [start] to [target]
   /// including cycles.
   /// * Returns an empty list if no path was found.
   /// * To exclude cycles and list only the shortest paths
   ///   use the method `shortestPaths(start, target)`.
-  List<List<T>> paths(T start, T target) {
-    return crawler.paths(start, target);
-  }
+  List<List<T>> paths(T start, T target) => crawler.paths(start, target);
 
   /// Returns the first cycle detected or an empty list
   /// if the graph is acyclic.
@@ -574,11 +570,12 @@ abstract class DirectedGraphBase<T extends Object> extends Iterable<T> {
   }
 
   /// Returns a set containing the elements of [vertices]
-  /// in quasi topological insertion order if there is not mutual connection
-  /// between any two elements of [vertices].
-  ///
+  /// in quasi-topological insertion order.
   /// * [vertices] must be a subset of the graph vertices. If any vertex in
   /// [vertices] does not belong to the graph, `null` is returned.
+  /// * Note: If A and B are any two elements of [vertices],
+  /// and there is a path [A, ..., B], then there be no path [B, ..., A]
+  ///  for a quasi-topological ordering to exists.
   /// * If sorted is set to
   /// `true` the vertices will be ordered using the graph [comparator] on top
   /// of the topological sort.

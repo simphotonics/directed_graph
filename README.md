@@ -59,10 +59,11 @@ Hereby, dashed edges were disregarded since a cyclic graph does not have a topol
 - *Quasi-Topological ordering*: An ordered *sub-set* of graph vertices
 such that v<sub>i</sub>
 occurs before v<sub>j</sub> if there is a directed edge (v<sub>i</sub>, v<sub>j</sub>).
-For a quasi-topological ordering to exist, any two vertices belonging to the *sub-set* must not have mutually connecting edges.
+For a quasi-topological ordering to exist, any two vertices belonging to the *sub-set*
+must not be mutually connected. That is, if there is a path \[v<sub>i</sub>, ...,   v<sub>j</sub>\]
+then there must not be a path \[v<sub>j</sub>, ...,   v<sub>i</sub>\] and vice versa.
 
-
-*Note*: In the context of this package the definition of *edge* might be more lax compared to a
+*Note*: In the context of this package, the definition of *edge* might be more lax compared to a
 rigorous mathematical definition.
 For example, self-loops, that is edges connecting a vertex to itself are explicitly allowed.
 

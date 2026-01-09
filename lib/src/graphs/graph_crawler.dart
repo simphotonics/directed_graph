@@ -29,7 +29,9 @@ class GraphCrawler<T extends Object> {
   final Edges<T> edges;
 
   /// Returns the shortest path from [start] to [target].
+  ///
   /// * Returns an empty list if [target] is not reachable from [start].
+  ///
   List<T> path(T start, T target) {
     final tree = <Set<T>>[];
     for (final connected in edges(start)) {
@@ -51,7 +53,7 @@ class GraphCrawler<T extends Object> {
     var startIndex = 0;
     var endIndex = 0;
     var length = tree.length;
-    final visited = HashSet<T>()..add(start);
+    final visited = HashSet<T>();
     do {
       endIndex = tree.length;
       for (var i = startIndex; i < endIndex; ++i) {
