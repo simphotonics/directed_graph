@@ -205,7 +205,7 @@ abstract class DirectedGraphBase<T extends Object> extends Iterable<T> {
       // Terminate iteration.
       if (isCyclic) return;
 
-      // _Vertex has permanent mark.
+      // Vertex has permanent mark.
       // => This vertex and its neighbouring
       //    vertices have already been visited.
       if (perm.contains(vertex)) return;
