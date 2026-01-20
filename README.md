@@ -56,12 +56,18 @@ first and last vertices are identical. The sequence \[F, I, K, F\] completes a c
 occurs before v<sub>j</sub> if there is a directed edge (v<sub>i</sub>, v<sub>j</sub>).
 A topological ordering of the graph above is: \{A, D, B, C, E, K, F, G, H, I, L\}.
 Hereby, dashed edges were disregarded since a cyclic graph does not have a topological ordering.
-- *Quasi-Topological ordering*: An ordered *sub-set* of graph vertices
+- *Quasi-topological ordering*: An ordered *sub-set* of graph vertices
 such that v<sub>i</sub>
 occurs before v<sub>j</sub> if there is a directed edge (v<sub>i</sub>, v<sub>j</sub>).
 For a quasi-topological ordering to exist, any two vertices belonging to the *sub-set*
 must not be mutually connected. That is, if there is a path \[v<sub>i</sub>, ...,   v<sub>j</sub>\]
-then there must not be a path \[v<sub>j</sub>, ...,   v<sub>i</sub>\] and vice versa.
+then there must not be a path \[v<sub>j</sub>, ...,   v<sub>i</sub>\] and vice versa. Note:
+  * The paths \[v<sub>i</sub>, ...,   v<sub>j</sub>\] and
+\[v<sub>j</sub>, ...,   v<sub>i</sub>\] may include vertices that are *not* in
+the sub-set, but belong to the graph.
+  * A quasi-topological ordering many exist even if the
+total graph is cyclic.
+
 
 *Note*: In the context of this package, the definition of *edge* might be more lax compared to a
 rigorous mathematical definition.
