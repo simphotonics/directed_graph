@@ -1,4 +1,12 @@
 
+## 0.5.1
+- The graph `length` is now calculated using an efficient length iterable
+  (the keys of the map storing the graph edges).
+  The function `reachableVertices` is not based on a recursive algorithm that
+  is speeds up execution time.
+- Extended the definition of a quasi-topological ordering.
+- Lowered the required SDK version to ^3.5.0. 
+
 ## 0.5.0
 - *Breaking changes*:
   The following *getters have been converted to functions*, to
