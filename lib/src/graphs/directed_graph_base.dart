@@ -4,13 +4,14 @@ import 'dart:math';
 import 'package:collection/collection.dart' show PriorityQueue;
 import 'package:directed_graph/src/extensions/sort.dart';
 import 'package:lazy_memo/lazy_memo.dart';
+import 'package:meta/meta.dart';
 import 'package:quote_buffer/quote_buffer.dart';
 
 import 'graph_crawler.dart';
 
 const int cyclicMarker = -1;
 
-bool isSubType<S, T>() => <S>[] is List<T>;
+//bool isSubType<S, T>() => <S>[] is List<T>;
 
 /// Abstract base class of a directed graph.
 abstract class DirectedGraphBase<T extends Object> extends Iterable<T> {
@@ -19,10 +20,17 @@ abstract class DirectedGraphBase<T extends Object> extends Iterable<T> {
   /// used to sort vertices.
   DirectedGraphBase(Comparator<T>? comparator) : _comparator = comparator {
     if (comparator == null && isComparable) {
-      _comparator = (T left, T right) =>
-          (left as Comparable<T>).compareTo(right);
+      _comparator =
+          (T left, T right) => (left as Comparable<T>).compareTo(right);
     }
   }
+
+  /// Returns the number of graph vertices.
+  /// Classes extending [DirectedGraphBase] should make sure that the [length]
+  /// is obtained from an `EfficientLengthIterable`.
+  @override
+  @mustBeOverridden
+  int get length;
 
   /// Returns the shortest path from the vertex [start] to the vertex [target].
   /// * Returns an empty list if [target] is not reachable from [start].
@@ -108,7 +116,7 @@ abstract class DirectedGraphBase<T extends Object> extends Iterable<T> {
   Set<T> get sortedVertices => _sortedVertices();
 
   /// Returns the vertices connected to `vertex`.
-  Iterable<T> edges(T vertex);
+  Set<T> edges(T vertex);
 
   /// Returns `true` if there is an edge pointing from
   /// [source] to [target]. Returns `False` otherwise.
@@ -154,11 +162,9 @@ abstract class DirectedGraphBase<T extends Object> extends Iterable<T> {
   /// The graph crawler of this graph.
   late final GraphCrawler<T> crawler = GraphCrawler<T>(edges);
 
-  /// Returns an iterable containing all vertices that are reachable from
+  /// Returns a set containing all vertices that are reachable from
   /// vertex [start].
-  Set<T> reachableVertices(T start) {
-    return crawler.tree(start).map<T>((branch) => branch.last).toSet();
-  }
+  Set<T> reachableVertices(T start) => crawler.reachableVertices(start);
 
   /// Returns the shortest detected path from [start] to [target]
   /// including cycles.
@@ -549,8 +555,8 @@ abstract class DirectedGraphBase<T extends Object> extends Iterable<T> {
 
     switch (sorted) {
       case true:
-        for (final vertex
-            in vertices.toList()..sort(comparator ?? this.comparator)) {
+        for (final vertex in vertices.toList()
+          ..sort(comparator ?? this.comparator)) {
           if (!indices.containsKey(vertex)) {
             strongConnectSorted(
               vertex,
@@ -610,9 +616,8 @@ abstract class DirectedGraphBase<T extends Object> extends Iterable<T> {
     if (isQuasiSortable) {
       final result = scc.fold(
         <T>[],
-        (flattendList, component) =>
-            flattendList
-              ..addAll(component.where((vertex) => vertices.contains(vertex))),
+        (flattendList, component) => flattendList
+          ..addAll(component.where((vertex) => vertices.contains(vertex))),
       );
       return result.reversed.toSet();
     } else {
@@ -664,9 +669,8 @@ abstract class DirectedGraphBase<T extends Object> extends Iterable<T> {
     if (isQuasiSortable) {
       final result = scc.fold(
         <T>[],
-        (flattendList, component) =>
-            flattendList
-              ..addAll(component.where((vertex) => vertices.contains(vertex))),
+        (flattendList, component) => flattendList
+          ..addAll(component.where((vertex) => vertices.contains(vertex))),
       );
       return result.toSet();
     } else {

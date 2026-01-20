@@ -11,7 +11,7 @@ class DirectedGraph<T extends Object> extends DirectedGraphBase<T> {
   /// : a function with typedef [Comparator] and type
   /// parameter [T] used to sort the graph vertices.
   DirectedGraph(Map<T, Set<T>> edges, {Comparator<T>? comparator})
-    : super(comparator) {
+      : super(comparator) {
     edges.forEach((vertex, connectedVertices) {
       _edges[vertex] = Set<T>.of(connectedVertices);
       for (final connectedVertex in connectedVertices) {
@@ -22,7 +22,7 @@ class DirectedGraph<T extends Object> extends DirectedGraphBase<T> {
 
   /// Constructs a shallow copy of [graph].
   DirectedGraph.of(DirectedGraph<T> graph)
-    : this(graph.data, comparator: graph.comparator);
+      : this(graph.data, comparator: graph.comparator);
 
   /// Constructs a directed graph from a map of weighted edges.
   DirectedGraph.fromWeightedEdges(
@@ -40,17 +40,8 @@ class DirectedGraph<T extends Object> extends DirectedGraphBase<T> {
   /// Factory constructor returning the transitive closure of [graph].
   factory DirectedGraph.transitiveClosure(DirectedGraph<T> graph) {
     final tcEdges = <T, Set<T>>{};
-    void addReachableVertices(T root, T current) {
-      for (final vertex in graph.edges(current)) {
-        if (tcEdges[root]!.contains(vertex)) continue;
-        tcEdges[root]!.add(vertex);
-        addReachableVertices(root, vertex);
-      }
-    }
-
     for (final root in graph) {
-      tcEdges[root] = <T>{};
-      addReachableVertices(root, root);
+      tcEdges[root] = graph.crawler.reachableVertices(root);
     }
     return DirectedGraph(tcEdges, comparator: graph.comparator);
   }
@@ -78,7 +69,7 @@ class DirectedGraph<T extends Object> extends DirectedGraphBase<T> {
   /// Note: Mathematically, an edge is an ordered pair
   /// (vertex, connected-vertex).
   @override
-  Iterable<T> edges(T vertex) => _edges[vertex] ?? <T>{};
+  Set<T> edges(T vertex) => _edges[vertex] ?? <T>{};
 
   @override
   bool edgeExists(T vertexOut, T vertexIn) {
@@ -175,4 +166,7 @@ class DirectedGraph<T extends Object> extends DirectedGraphBase<T> {
 
   @override
   Iterator<T> get iterator => vertices.iterator;
+
+  @override
+  int get length => _edges.keys.length;
 }

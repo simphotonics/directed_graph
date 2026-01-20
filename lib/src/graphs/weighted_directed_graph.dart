@@ -37,22 +37,23 @@ class WeightedDirectedGraph<T extends Object, W extends Comparable>
 
   /// Constructs a shallow copy of `graph`.
   WeightedDirectedGraph.of(WeightedDirectedGraph<T, W> graph)
-    : this(
-        graph.data,
-        summation: graph.summation,
-        zero: graph.zero,
-        comparator: graph.comparator,
-      );
+      : this(
+          graph.data,
+          summation: graph.summation,
+          zero: graph.zero,
+          comparator: graph.comparator,
+        );
 
   /// Constructs the transitive closure of `graph`.
   factory WeightedDirectedGraph.transitiveClosure(
     WeightedDirectedGraph<T, W> graph,
-  ) => WeightedDirectedGraph(
-    graph.transitiveWeightedEdges,
-    comparator: graph.comparator,
-    summation: graph.summation,
-    zero: graph.zero,
-  );
+  ) =>
+      WeightedDirectedGraph(
+        graph.transitiveWeightedEdges,
+        comparator: graph.comparator,
+        summation: graph.summation,
+        zero: graph.zero,
+      );
 
   /// The weight of an empty path.
   /// * Used as the initial value when summing the weight of a path.
@@ -76,8 +77,8 @@ class WeightedDirectedGraph<T extends Object, W extends Comparable>
   /// Note: Mathematically, an edge is an ordered pair
   /// (vertex, connected-vertex).
   @override
-  Iterable<T> edges(T vertex) =>
-      _edges[vertex] == null ? <T>{} : _edges[vertex]!.keys;
+  Set<T> edges(T vertex) =>
+      _edges[vertex] == null ? <T>{} : _edges[vertex]!.keys.toSet();
 
   /// Lazy variable representing the graph weight.
   late final _weight = Lazy<W>(() {
@@ -322,6 +323,9 @@ class WeightedDirectedGraph<T extends Object, W extends Comparable>
   @override
   Iterator<T> get iterator => vertices.iterator;
 
+  @override
+  int get length => _edges.keys.length;
+
   /// Returns a string representation of the weighted directed graph.
   @override
   String toString() {
@@ -334,10 +338,9 @@ class WeightedDirectedGraph<T extends Object, W extends Comparable>
       b.write('{');
       b.writeAll(
         _edges[vertex]!.keys.map<String>(
-          (key) =>
-              '$q$key$q: '
-              '${_edges[vertex]![key]}',
-        ),
+              (key) => '$q$key$q: '
+                  '${_edges[vertex]![key]}',
+            ),
         ', ',
       );
 

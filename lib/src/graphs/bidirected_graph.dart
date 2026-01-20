@@ -10,7 +10,7 @@ class BidirectedGraph<T extends Object> extends DirectedGraph<T> {
 
   /// Constructs a bidirected graph from a directed graph.
   BidirectedGraph.from(DirectedGraph<T> graph)
-    : super(graph.data, comparator: graph.comparator) {
+      : super(graph.data, comparator: graph.comparator) {
     _symmetrize();
   }
 
@@ -58,6 +58,10 @@ class BidirectedGraph<T extends Object> extends DirectedGraph<T> {
     removeIncomingEdges(vertex);
     super.remove(vertex);
   }
+
+  @override
+  // ignore: unnecessary_overrides
+  int get length => super.length;
 
   /// Renders the graph symmetric by adding a symmetric edge
   /// for each existing graph edge.
