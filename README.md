@@ -61,7 +61,7 @@ such that v<sub>i</sub>
 occurs before v<sub>j</sub> if there is a directed edge (v<sub>i</sub>, v<sub>j</sub>).
 For example, the set \{ A, D, E, G \} represents a valid quasi-topological ordering,
 even though the edges (I, K) and (L, L) render the total graph cyclic.
-For a quasi-topological ordering to exist, any two vertices belonging to the *sub-set*
+   * For a quasi-topological ordering to exist, any two vertices belonging to the *sub-set*
 must not be mutually connected. That is, if there is a path \[v<sub>i</sub>, ...,   v<sub>j</sub>\]
 then there must not be a path \[v<sub>j</sub>, ...,   v<sub>i</sub>\] and vice versa. Note:
   * The paths \[v<sub>i</sub>, ...,   v<sub>j</sub>\] and
