@@ -59,6 +59,8 @@ Hereby, dashed edges were disregarded since a cyclic graph does not have a topol
 - *Quasi-topological ordering*: An ordered *sub-set* of graph vertices
 such that v<sub>i</sub>
 occurs before v<sub>j</sub> if there is a directed edge (v<sub>i</sub>, v<sub>j</sub>).
+For example, the set \{ A, D, E, G \} represents a valid quasi-topological ordering,
+even though the edges (I, K) and (L, L) render the total graph cyclic.
 For a quasi-topological ordering to exist, any two vertices belonging to the *sub-set*
 must not be mutually connected. That is, if there is a path \[v<sub>i</sub>, ...,   v<sub>j</sub>\]
 then there must not be a path \[v<sub>j</sub>, ...,   v<sub>i</sub>\] and vice versa. Note:
@@ -209,13 +211,13 @@ void main() {
   );
 
   print('\nQuasi-Topological Ordering:');
-  print(graph.quasiTopologicalOrdering({'d', 'e', 'a'}));
+  print(graph.quasiTopologicalOrdering({'d', 'e', 'a', 'g'}));
 
   print('\nQuasi-Topological Ordering, sorted:');
-  print(graph.quasiTopologicalOrdering({'d', 'e', 'a'}, sorted: true));
+  print(graph.quasiTopologicalOrdering({'d', 'e', 'a', 'g'}, sorted: true));
 
   print('\nReverse-Quasi-Topological Ordering, sorted:');
-  print(graph.reverseQuasiTopologicalOrdering({'d', 'e', 'a'}, sorted: true));
+  print(graph.reverseQuasiTopologicalOrdering({'d', 'e', 'a', 'g'}, sorted: true));
 }
 
 ```
@@ -327,13 +329,13 @@ Strongly connected components, sorted, inverse:
 [{l}, {g}, {e}, {k, i, f, d}, {h}, {c}, {b}, {a}]
 
 Quasi-Topological Ordering:
-{d, a, e}
+{d, a, e, g}
 
 Quasi-Topological Ordering, sorted:
-{a, d, e}
+{a, d, e, g}
 
 Reverse-Quasi-Topological Ordering, sorted:
-{e, a, d}
+{g, e, a, d}
 ```
 </details>
 
