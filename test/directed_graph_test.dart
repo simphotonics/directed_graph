@@ -201,7 +201,8 @@ void main() {
       ]);
     });
 
-    test('stronglyConnectedComponents(sorted: true, '
+    test(
+        'stronglyConnectedComponents(sorted: true, '
         'comparator: inverseComparator).', () {
       final graph = DirectedGraph<String>({
         k: {a},
@@ -270,7 +271,8 @@ void main() {
         c,
       ]);
     });
-    test('topologicalOrdering(sorted: true, '
+    test(
+        'topologicalOrdering(sorted: true, '
         'comparator: inverseComparator):', () {
       final graph = DirectedGraph<String>({
         k: {b, a, c},
@@ -313,7 +315,8 @@ void main() {
         k,
       ]);
     });
-    test('topologicalOrdering(sorted: true, '
+    test(
+        'topologicalOrdering(sorted: true, '
         'comparator: inverseComparator):', () {
       final graph = DirectedGraph<String>({
         k: {b, a, c},
