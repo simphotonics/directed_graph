@@ -34,22 +34,34 @@ var graph = DirectedGraph<String>({
 final gc = graph.crawler;
 
 void main() {
+  final nodes = {a, b};
+
+  for (var i = 0; i < 1; i++) {
+    for (var node in nodes) {
+      graph.addEdges(node, {'$node$i'});
+      graph.addEdges('$node$i', nodes);
+    }
+  }
+
   group('Topology:', () {
     benchmark('path', () {
       gc.path(a, g);
     });
     benchmark('paths', () {
-      gc.path(a, g);
+      gc.paths(a, g);
     });
     benchmark('tree', () {
       gc.tree(a);
     });
+
     benchmark('mappedTree', () {
       gc.mappedTree(a);
     });
-
     benchmark('shortestPaths', () {
       gc.shortestPaths(a);
+    });
+    benchmark('reachableVertices', () {
+      gc.reachableVertices(a);
     });
   });
 }
