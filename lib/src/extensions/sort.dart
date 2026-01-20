@@ -75,8 +75,7 @@ extension SortMap<K extends Object, V extends Object> on Map<K, V> {
       throw ErrorOfType<SortingNotSupported<K>>(
         message: 'Error trying to sort $this using the keys $keys.',
         invalidState: 'Type \'$K\' is not comparable.',
-        expectedState:
-            'Try calling sortByKey() '
+        expectedState: 'Try calling sortByKey() '
             'specifying a valid comparator for type \'$K\'.',
       );
     }
@@ -101,8 +100,7 @@ extension SortMap<K extends Object, V extends Object> on Map<K, V> {
       throw ErrorOfType<SortingNotSupported<V>>(
         message: 'Error trying to sort a map of type Map<$K, $V>.',
         invalidState: 'Type \'$V\' is not comparable.',
-        expectedState:
-            'Try calling sortByValue() specifying '
+        expectedState: 'Try calling sortByValue() specifying '
             'a valid comparator for type \'$V\'.',
       );
     }
