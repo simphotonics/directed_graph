@@ -24,8 +24,6 @@ class GraphCrawler<T extends Object> {
   GraphCrawler(this.edges);
 
   /// Function returning an `Iterable<T>` representing edge vertices.
-  ///
-  /// Important: It must never return `null`.
   final Edges<T> edges;
 
   /// Returns the shortest path from [start] to [target].
@@ -52,7 +50,7 @@ class GraphCrawler<T extends Object> {
 
     var startIndex = 0;
     var endIndex = 0;
-    var length = tree.length;
+
     final visited = HashSet<T>();
     do {
       endIndex = tree.length;
@@ -71,14 +69,13 @@ class GraphCrawler<T extends Object> {
             } else {
               // Continue growing tree.
               tree.add({...path, vertex});
-              length++;
             }
           }
         }
         visited.add(path.last);
       }
       startIndex = endIndex;
-    } while (endIndex < length);
+    } while (endIndex < tree.length);
     // No path detected:
     return <T>[];
   }
@@ -86,13 +83,7 @@ class GraphCrawler<T extends Object> {
   /// Returns a list containing all paths connecting [start] and [target].
   List<List<T>> paths(T start, T target) {
     final pathList = <List<T>>[];
-    // // Retrieve vertex tree.
-    // final tree = mappedTree(start);
-    // if (tree.containsKey(target)) {
-    //   for (final branch in tree[target]!) {
-    //     pathList.add(<T>[start, ...branch]);
-    //   }
-    // }
+    // Retrieve vertex tree.
     final tree = <Set<T>>[];
     for (final connected in edges(start)) {
       if (connected == target) {
@@ -111,7 +102,6 @@ class GraphCrawler<T extends Object> {
     if (tree.isNotEmpty) {
       var startIndex = 0;
       var endIndex = 0;
-      var length = tree.length;
 
       do {
         endIndex = tree.length;
@@ -130,26 +120,27 @@ class GraphCrawler<T extends Object> {
               } else {
                 // Continue growing tree.
                 tree.add({...path, vertex});
-                length++;
               }
             }
           }
         }
         startIndex = endIndex;
-      } while (endIndex < length);
+      } while (endIndex < tree.length);
     }
     return pathList;
   }
 
   /// Returns a map containing the shortest paths from
   /// [start] to each reachable vertex.
-  /// The map keys are vertices reachable from [start].
-  Map<T, Iterable<T>> shortestPaths(T start) {
-    final pathMap = <T, Iterable<T>>{};
+  /// * The map keys represent vertices reachable from [start].
+  /// * The map values represent the path from [start] to the vertex listed as
+  /// map key. Note: The first node, [start], is omitted.
+  Map<T, Set<T>> shortestPaths(T start) {
+    final pathMap = <T, Set<T>>{};
 
     final tree = <Set<T>>[];
     for (final connected in edges(start)) {
-      pathMap[connected] = ([connected]);
+      pathMap[connected] = ({connected});
       // Store first branches of tree.
       tree.add({connected});
     }
@@ -157,7 +148,7 @@ class GraphCrawler<T extends Object> {
     if (tree.isNotEmpty) {
       var startIndex = 0;
       var endIndex = 0;
-      var length = tree.length;
+
       final visited = HashSet<T>()..add(start);
       do {
         endIndex = tree.length;
@@ -170,18 +161,17 @@ class GraphCrawler<T extends Object> {
             if (path.contains(vertex) || visited.contains(vertex)) {
               continue;
             } else {
-              // Store path to new vertex.
-              pathMap[vertex] ??= ([...path, vertex]);
-
               // Continue growing tree.
               tree.add({...path, vertex});
-              length++;
+
+              // Store path to new vertex.
+              pathMap[vertex] ??= Set.of(tree.last);
             }
           }
           visited.add(path.last);
         }
         startIndex = endIndex;
-      } while (endIndex < length);
+      } while (endIndex < tree.length);
     }
     return pathMap;
   }
@@ -205,7 +195,7 @@ class GraphCrawler<T extends Object> {
 
     var startIndex = 0;
     var endIndex = 0;
-    var length = result.length;
+
     do_loop:
     do {
       endIndex = result.length;
@@ -219,15 +209,85 @@ class GraphCrawler<T extends Object> {
             continue;
           } else {
             result.add({...path, vertex});
-            length++;
           }
           if (vertex == target) break do_loop;
         }
       }
       startIndex = endIndex;
-    } while (endIndex < length);
+    } while (endIndex < result.length);
     return result;
   }
+
+  // Recursive method returning a tree with root vertex [start].
+  // List<Set<T>> tree1(T start) {
+  //   final result = <Set<T>>[];
+  //   void addPath(T root, T current, Set<T> path) {
+  //     for (final vertex in edges(current)) {
+  //       if (path.contains(vertex) || path.contains(root)) continue;
+  //       result.add(Set.of({...path, vertex}));
+  //       addPath(root, vertex, result.last);
+  //     }
+  //   }
+  //   addPath(start, start, {});
+  //   return result;
+  // }
+
+  /// Returns a set containing all vertices that are reachable from
+  /// vertex [start].
+  Set<T> reachableVertices(T start) {
+    final result = <T>{};
+
+    void addReachableVertices(T root, T current) {
+      for (final vertex in edges(current)) {
+        if (result.contains(vertex)) continue;
+        result.add(vertex);
+        addReachableVertices(root, vertex);
+      }
+    }
+
+    addReachableVertices(start, start);
+    return result;
+  }
+
+  /// Returns a set containing all vertices that are reachable from
+  /// vertex [start].
+  // Set<T> reachableVertices(T start) {
+  //   final result = edges(start).toSet();
+
+  //   final tree = <Set<T>>[];
+  //   for (final connected in edges(start)) {
+  //     // Store first branches of tree.
+  //     tree.add({connected});
+  //   }
+
+  //   if (tree.isNotEmpty) {
+  //     var startIndex = 0;
+  //     var endIndex = 0;
+  //     final visited = HashSet<T>()..add(start);
+  //     do {
+  //       endIndex = tree.length;
+  //       for (var i = startIndex; i < endIndex; ++i) {
+  //         final path = tree[i];
+  //         for (final vertex in edges(path.last)) {
+  //           // Discard walks which reach the same (inner) vertex twice.
+  //           // Note: Each path starts with [start] even though it is not
+  //           // listed!
+  //           if (path.contains(vertex) || visited.contains(vertex)) {
+  //             continue;
+  //           } else {
+  //             result.add(vertex);
+
+  //             // Continue growing tree.
+  //             tree.add({...path, vertex});
+  //           }
+  //         }
+  //         visited.add(path.last);
+  //       }
+  //       startIndex = endIndex;
+  //     } while (endIndex < tree.length);
+  //   }
+  //   return result;
+  // }
 
   /// Returns a map containing all paths commencing at [start].
   /// * Each entry of type `Set<T>` represents a path
