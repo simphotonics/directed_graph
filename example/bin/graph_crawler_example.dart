@@ -42,11 +42,11 @@ void main(List<String> args) {
   final crawler = GraphCrawler<String>(graph.edges);
 
   print('\nTree with root vertex a:');
-  print(crawler.tree(a, h));
+  print(crawler.tree(a));
 
   print('\nMapped tree with root vertex a:');
-  print(crawler.mappedTree(a, h));
+  print(crawler.mappedTree(a));
 
-  print('\nTruncated tree with root vertex a and target h:');
+  print('\nAll path from a -> h:');
   print(graph.crawler.paths(a, h));
 }
