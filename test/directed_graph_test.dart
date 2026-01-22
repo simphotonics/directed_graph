@@ -61,6 +61,21 @@ void main() {
     test('get comparator', () {
       expect(graph0.comparator, comparator);
     });
+    test('default comparator', () {
+      final graph = DirectedGraph<num>({
+        1: {2}
+      });
+      expect(graph.comparator, isA<Comparator<num>>());
+    });
+    test('null comparator', () {
+      final graph = DirectedGraph<num>({
+        1: {2}
+      })
+        ..comparator = null;
+
+      expect(graph.comparator, equals(null));
+    });
+
     test('set comparator.', () {
       final graph = DirectedGraph.of(graph0);
       graph.comparator = inverseComparator;
