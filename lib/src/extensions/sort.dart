@@ -1,6 +1,16 @@
 import 'package:directed_graph/src/exceptions/error_types.dart';
 import 'package:exception_templates/exception_templates.dart';
 
+/// Returns a generic function of type [Comparator] or `null` if [T] does not
+/// implement [Comparable].
+Comparator<T>? defaultComparator<T>() {
+  if (Iterable<T>.empty() is Iterable<Comparable>) {
+    return (T left, T right) => (left as Comparable).compareTo(right);
+  } else {
+    return null;
+  }
+}
+
 /// Extension providing the method [equalTo] for
 /// sorting a set with another set element by element.
 extension CompareSet<T extends Object> on Set<T> {
@@ -28,16 +38,18 @@ extension SortSet<T extends Object> on Set<T> {
   /// * Sorting is nonsensical for instances of `HashSet` since
   ///   the iteration order is *not* specified.
   void sort([Comparator<T>? comparator]) {
-    if (isEmpty) return;
-    final tmp = List<T>.of(this);
+    if (isEmpty) {
+      return;
+    }
+    final tmp = toList();
     if (comparator != null) {
       tmp.sort(comparator);
     } else if (first is Comparable) {
-      tmp.sort(); // Sort using default comparator.
+      tmp.sort(defaultComparator<T>()); // Sort using default comparator.
     } else {
       throw ErrorOfType<SortingNotSupported<T>>(
         message: 'Error trying to sort the set: $this.',
-        invalidState: 'Type \'$T\' is not comparable.',
+        invalidState: 'Type \'$T\' does not implement Comparable<$T>.',
         expectedState: 'Try specifying a valid comparator for type \'$T\'.',
       );
     }
@@ -65,12 +77,15 @@ extension SortMap<K extends Object, V extends Object> on Map<K, V> {
   /// Note: If `K` does not extend `Comparable` a valid `Comparator<K>`
   /// must be provided.
   void sortByKey([Comparator<K>? comparator]) {
-    final tmp = entries.toList();
-    if (isEmpty) return;
+    if (isEmpty) {
+      return;
+    }
+    final sortedKeys = keys.toList();
+
     if (comparator != null) {
-      tmp.sort((left, right) => comparator(left.key, right.key));
-    } else if (keys.first is Comparable) {
-      tmp.sort((left, right) => (left.key as Comparable).compareTo(right.key));
+      sortedKeys.sort(comparator);
+    } else if (sortedKeys.first is Comparable) {
+      sortedKeys.sort(defaultComparator<K>());
     } else {
       throw ErrorOfType<SortingNotSupported<K>>(
         message: 'Error trying to sort $this using the keys $keys.',
@@ -79,8 +94,12 @@ extension SortMap<K extends Object, V extends Object> on Map<K, V> {
             'specifying a valid comparator for type \'$K\'.',
       );
     }
+    // Construct new map.
+    final map = {for (var key in sortedKeys) key: this[key]!};
+    // Clear old entries.
     clear();
-    addEntries(tmp);
+    // Add new entries.
+    addAll(map);
   }
 
   /// Sorts a map of type `Map<K, V>` (in place) using the map values.
@@ -88,8 +107,11 @@ extension SortMap<K extends Object, V extends Object> on Map<K, V> {
   /// Note: If `V` does not extend `Comparable` a valid `Comparator<V>`
   /// is required.
   void sortByValue([Comparator<V>? comparator]) {
+    if (isEmpty) {
+      return;
+    }
+
     final tmp = entries.toList();
-    if (isEmpty) return;
     if (comparator != null) {
       tmp.sort((left, right) => comparator(left.value, right.value));
     } else if (values.first is Comparable) {
