@@ -81,20 +81,16 @@ To use this library include [`directed_graph`][directed_graph] as a dependency i
 example below shows how to construct an object of type [`DirectedGraph`][DirectedGraph].
 
 The graph classes provided by this library are generic with type argument
-`T extends Object`, that is `T` must be non-nullable.
+`T extends Object` (that is `T` must be non-nullable). The graphs
+extend [`Iterable`][Iterable] making it possible to iterate over the graph vertices.
+
 Graph vertices can be sorted if `T is Comparable` or
 if a custom comparator function is provided.
-
 Note: If `T is Comparable` and no comparator is provided, then
-the following default comparator is added:
+the following default comparator is automatically provided:
 ```Dart
 (T left, T right) =>  (left as Comparable<T>).compareTo(right);
 ```
-Compared to an explicit comparator this function contains a cast and
-the benchmarks show that is approximatly 3 &times; slower.
-For large graphs it is advisable to follow the example below and
-explicitly provide a comparator.
-
 In the example below, a custom
 comparator is used to sort vertices in lexicographical order.
 
@@ -484,5 +480,7 @@ Please file feature requests and bugs at the [issue tracker].
 [GraphCrawler]: https://pub.dev/documentation/directed_graph/latest/directed_graph/GraphCrawler-class.html
 
 [DirectedGraph]: https://pub.dev/documentation/directed_graph/latest/directed_graph/DirectedGraph-class.html
+
+[Iterable]: https://api.dart.dev/dart-core/Iterable-class.html
 
 [WeightedDirectedGraph]: https://pub.dev/documentation/directed_graph/latest/directed_graph/WeightedDirectedGraph-class.html
