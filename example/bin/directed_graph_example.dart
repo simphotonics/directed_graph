@@ -117,5 +117,6 @@ void main() {
   print(graph.quasiTopologicalOrdering({'d', 'e', 'a', 'g'}, sorted: true));
 
   print('\nReverse-Quasi-Topological Ordering, sorted:');
-  print(graph.reverseQuasiTopologicalOrdering({'d', 'e', 'a', 'g'}, sorted: true));
+  print(graph
+      .reverseQuasiTopologicalOrdering({'d', 'e', 'a', 'g'}, sorted: true));
 }
