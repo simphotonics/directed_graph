@@ -59,10 +59,6 @@ class BidirectedGraph<T extends Object> extends DirectedGraph<T> {
     super.remove(vertex);
   }
 
-  @override
-  // ignore: unnecessary_overrides
-  int get length => super.length;
-
   /// Renders the graph symmetric by adding a symmetric edge
   /// for each existing graph edge.
   void _symmetrize() {

@@ -1,11 +1,37 @@
 
+## 0.5.2
+- Fixed grammar in CHANGELOG entry below.
+- Moved [`GraphCrawler`][GraphCrawler] to a separate folder.
+- Added function `defaultComparator<T>()` which returns a function of
+  type `Comparator<T>`.
+- When constructing a
+  graph with vertices of type `T` and no explicit comparator is provided,
+  then the function `defaultComparator<T>()` is provided instead.
+- If a user explicitly sets the graph `comparator` to null,
+  then vertices and edges will
+  not be sorted. To restore the default see below:
+  ```Dart
+  final graph = DirectedGraph<String>({a: {b}}); // Has default comparator.
+  print(graph.hasComparator); // Prints true.
+  graph.comparator = graph.inverseComparator; // Has explicitly set comparator.
+  print(graph.hasComparator); // Prints true.
+  graph.comparator = null;
+  print(graph.hasComparator); // Prints false;
+  graph.comparator = defaultComparator<String>(); // Restoring the default comp.
+  ```
+- The graph method `contains`, now explicitly uses the keys of the underlying
+  map to calculate its result.
+
+
 ## 0.5.1
 - The graph `length` is now calculated using an efficient length iterable
   (the keys of the map storing the graph edges).
-  The function `reachableVertices` is not based on a recursive algorithm that
-  is speeds up execution time.
+  The function `reachableVertices` is was moved from
+  `DirectedGraphBase` to
+  [`GraphCrawler`][GraphCrawler]. It is now using a recursive algorithm that
+  speeds up execution time.
 - Extended the definition of a quasi-topological ordering.
-- Lowered the required SDK version to ^3.5.0. 
+- Lowered the required SDK version to ^3.5.0.
 
 ## 0.5.0
 - *Breaking changes*:
@@ -218,6 +244,8 @@ Amended package description.
 Initial version of the library.
 
 [DirectedGraph]: https://pub.dev/documentation/directed_graph/latest/directed_graph/DirectedGraph-class.html
+
+[DirectedGraphBase]: https://pub.dev/documentation/directed_graph/latest/directed_graph/DirectedGraphBase-class.html
 
 [WeightedDirectedGraph]: https://pub.dev/documentation/directed_graph/latest/directed_graph/WeightedDirectedGraph-class.html
 

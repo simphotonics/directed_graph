@@ -148,7 +148,7 @@ class DirectedGraph<T extends Object> extends DirectedGraphBase<T> {
     updateCache();
   }
 
-  /// Sorts the neighbouring vertices of each vertex using `comparator`.
+  /// Sorts the neighbouring vertices of each vertex using [comparator].
   /// * By default the neighbouring vertices of a vertex are listed in
   ///   insertion order.
   ///   ```
@@ -158,9 +158,9 @@ class DirectedGraph<T extends Object> extends DirectedGraphBase<T> {
   /// * Note: In general, adding further graph edges invalidates
   ///   the sorting of neighbouring vertices.
   void sortEdges() {
-    if (comparator == null) return;
+    if (!hasComparator) return;
     for (final vertex in vertices) {
-      _edges[vertex]!.sort(comparator!);
+      _edges[vertex]?.sort(comparator);
     }
   }
 
@@ -168,5 +168,11 @@ class DirectedGraph<T extends Object> extends DirectedGraphBase<T> {
   Iterator<T> get iterator => vertices.iterator;
 
   @override
-  int get length => _edges.keys.length;
+  int get length => _edges.length;
+
+  @override
+  bool contains(Object? element) => _edges.containsKey(element);
+
+  @override
+  T get last => _edges.keys.last;
 }

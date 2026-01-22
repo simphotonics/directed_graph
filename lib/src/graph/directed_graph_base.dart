@@ -4,33 +4,31 @@ import 'dart:math';
 import 'package:collection/collection.dart' show PriorityQueue;
 import 'package:directed_graph/src/extensions/sort.dart';
 import 'package:lazy_memo/lazy_memo.dart';
-import 'package:meta/meta.dart';
 import 'package:quote_buffer/quote_buffer.dart';
 
-import 'graph_crawler.dart';
+import '../crawler/graph_crawler.dart';
 
 const int cyclicMarker = -1;
-
-//bool isSubType<S, T>() => <S>[] is List<T>;
 
 /// Abstract base class of a directed graph.
 abstract class DirectedGraphBase<T extends Object> extends Iterable<T> {
   /// Super constructor of objects extending `DirectedGraphBase`.
   /// * `comparator`: A function with signature `int Function(T a, T b)`
   /// used to sort vertices.
-  DirectedGraphBase(Comparator<T>? comparator) : _comparator = comparator {
-    if (comparator == null && isComparable) {
-      _comparator =
-          (T left, T right) => (left as Comparable<T>).compareTo(right);
-    }
-  }
+  DirectedGraphBase(Comparator<T>? comparator)
+      : _comparator = comparator ?? defaultComparator<T>();
 
   /// Returns the number of graph vertices.
   /// Classes extending [DirectedGraphBase] should make sure that the [length]
   /// is obtained from an `EfficientLengthIterable`.
   @override
-  @mustBeOverridden
   int get length;
+
+  @override
+  T get last;
+
+  @override
+  bool contains(Object? element);
 
   /// Returns the shortest path from the vertex [start] to the vertex [target].
   /// * Returns an empty list if [target] is not reachable from [start].
@@ -41,22 +39,38 @@ abstract class DirectedGraphBase<T extends Object> extends Iterable<T> {
   /// The map keys represent the set of vertices reachable from [start].
   Map<T, Iterable<T>> shortestPaths(T start) => crawler.shortestPaths(start);
 
-  bool get isComparable {
-    if (Iterable<T>.empty() is Iterable<Comparable<T>>) {
-      return true;
-    } else {
-      return false;
-    }
-  }
+  /// Returns `true` if the graph vertices and edges can be sorted.
+  /// * A graph is sortable a [comparator] was specified during construction
+  ///   or set at a later time.
+  /// * A graph is sortable if the type generic type [T] implements
+  /// the interface [Comparable]. In that case, the default [comparator] is
+  /// used.
+  // bool get isSortable {
+  //   if (Iterable<T>.empty() is Iterable<Comparable> || _comparator != null) {
+  //     return true;
+  //   } else {
+  //     return false;
+  //   }
+  // }
 
-  /// The comparator used to sort vertices.
+  /// This field hold either:
+  /// * the comparator provided as constructor parameter,
+  /// * the comparator set by the user,
+  /// * the default comparator if the generic type [T] implements [Comparable],
+  /// * null if [T] does not implement [Comparable].
   Comparator<T>? _comparator;
 
-  /// Returns the comparator used to sort graph vertices.
+  /// Returns the current [comparator]. This could be:
+  /// * the comparator provided as constructor parameter,
+  /// * the comparator set by the user,
+  /// * the default comparator if the generic type [T] implements [Comparable],
+  /// * null if [T] does not implement [Comparable] or the user passed `null` to
+  ///   the setter of [comparator].
   Comparator<T>? get comparator => _comparator;
 
   /// Returns the inverse of [comparator]. Returns `null` if the graph has
-  /// no comparator.
+  /// no comparator (that was set by the user of provided as constructor
+  ///  parameter).
   Comparator<T>? get inverseComparator =>
       hasComparator ? (T v1, T v2) => -_comparator!(v1, v2) : null;
 
@@ -308,7 +322,7 @@ abstract class DirectedGraphBase<T extends Object> extends Iterable<T> {
   /// * Any self-loop renders a directed graph cyclic.
   /// * Based on Kahn's algorithm.
   Set<T>? reverseTopologicalOrdering({bool sorted = false}) {
-    if (_comparator == null || !sorted) {
+    if (!hasComparator || !sorted) {
       return _topologicalOrdering()?..reverse();
     }
 
@@ -323,7 +337,7 @@ abstract class DirectedGraphBase<T extends Object> extends Iterable<T> {
     // Note: In an acyclic directed graph there is at least
     //       one vertex with inDegree equal to zero.
     // Note: Using a reverse comparator since the resulting order
-    //of the vertices will be reversed.
+    // of the vertices will be reversed.
     final sources = PriorityQueue<T>(inverseComparator);
     for (final vertex in vertices) {
       if (localInDegreeMap[vertex] == 0) {
@@ -553,25 +567,24 @@ abstract class DirectedGraphBase<T extends Object> extends Iterable<T> {
       }
     }
 
-    switch (sorted) {
-      case true:
-        for (final vertex in vertices.toList()
-          ..sort(comparator ?? this.comparator)) {
-          if (!indices.containsKey(vertex)) {
-            strongConnectSorted(
-              vertex,
-              comparator: comparator ?? this.comparator,
-            );
-          }
+    if (sorted && (comparator != null || hasComparator)) {
+      for (final vertex in vertices.toList()
+        ..sort(comparator ?? this.comparator)) {
+        if (!indices.containsKey(vertex)) {
+          strongConnectSorted(
+            vertex,
+            comparator: comparator ?? this.comparator,
+          );
         }
-        return result;
-      default:
-        for (final vertex in vertices) {
-          if (!indices.containsKey(vertex)) {
-            strongConnect(vertex);
-          }
+      }
+      return result;
+    } else {
+      for (final vertex in vertices) {
+        if (!indices.containsKey(vertex)) {
+          strongConnect(vertex);
         }
-        return result;
+      }
+      return result;
     }
   }
 

@@ -8,6 +8,10 @@ import 'directed_graph_base.dart';
 /// Function used to sum edge weights.
 typedef Summation<W> = W Function(W left, W right);
 
+/// The default comparator used to compare graph edge weights.
+int defaultWeightComparator<W extends Comparable>(W left, W right) =>
+    left.compareTo(right);
+
 /// A directed graph with vertices of type `T` and a weight of type
 /// `W` associated with each directed edges.
 /// * `T` must be usable as a map key.
@@ -67,6 +71,9 @@ class WeightedDirectedGraph<T extends Object, W extends Comparable>
   /// * Each graph vertex corresponds to a map key.
   final Map<T, Map<T, W>> _edges = {};
 
+  /// Function used to sum edge weights.
+  final Summation<W> summation;
+
   /// Returns a list of all vertices.
   ///
   /// To retrieve a list of sorted vertices use the getter `sortedVertices`.
@@ -96,9 +103,6 @@ class WeightedDirectedGraph<T extends Object, W extends Comparable>
 
   /// Returns the sum of all graph edges.
   W get weight => _weight();
-
-  /// Function used to sum edge weights.
-  final Summation<W> summation;
 
   /// Returns a copy of the weighted edges
   /// as an object of type `Map<T, Map<T, W>>`.
@@ -244,14 +248,17 @@ class WeightedDirectedGraph<T extends Object, W extends Comparable>
     }
   }
 
-  /// Sorts the neighbouring vertices of each vertex using `weightComparator`.
+  /// Sorts the neighbouring vertices of each vertex using [weightComparator].
+  /// * If [weightComparator] is null [defaultWeightComparator]
+  ///   is used instead.
   /// * By default the neighbouring vertices of a vertex are listed in
   ///   insertion order.
   /// * Note: In general, adding further graph edges invalidates
   ///   the sorting of neighbouring vertices.
   void sortEdgesByWeight([Comparator<W>? weightComparator]) {
     for (final vertex in vertices) {
-      _edges[vertex]!.sortByValue(weightComparator);
+      _edges[vertex]
+          ?.sortByValue(weightComparator ?? defaultWeightComparator<W>);
     }
   }
 
@@ -350,4 +357,10 @@ class WeightedDirectedGraph<T extends Object, W extends Comparable>
     b.write('}');
     return b.toString();
   }
+
+  @override
+  bool contains(Object? element) => _edges.containsKey(element);
+
+  @override
+  T get last => _edges.keys.last;
 }
