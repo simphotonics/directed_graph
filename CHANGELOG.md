@@ -26,11 +26,11 @@
 ## 0.5.1
 - The graph `length` is now calculated using an efficient length iterable
   (the keys of the map storing the graph edges).
-  The function `reachableVertices` is was moved from
+  The function `reachableVertices` was moved from
   `DirectedGraphBase` to
-  [`GraphCrawler`][GraphCrawler]. It is now using a recursive algorithm that
-  speeds up execution time.
-- Extended the definition of a quasi-topological ordering.
+  [`GraphCrawler`][GraphCrawler]. It is now using a more efficient recursive
+  algorithm.
+- Extended the definition of a quasi-topological ordering in section `Usage`. 
 - Lowered the required SDK version to ^3.5.0.
 
 ## 0.5.0
