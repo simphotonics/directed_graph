@@ -1,14 +1,16 @@
 import 'package:directed_graph/directed_graph.dart';
 import 'package:test/test.dart';
 
+class A {}
+
 void main() {
   int comparator(String s1, String s2) {
     return -s1.compareTo(s2);
   }
 
-  var a = 'a';
-  var b = 'b';
-  var c = 'c';
+  final a = 'a';
+  final b = 'b';
+  final c = 'c';
 
   group('Sorting Set:', () {
     test('comparable entries', () {
@@ -52,6 +54,14 @@ void main() {
       expect(map.values.first, 4);
       expect(map.keys.last, b);
       expect(map.values.last, 2);
+    });
+  });
+  group('defaultComparator', () {
+    test('T is Comparable', () {
+      expect(defaultComparator<double>(), isA<Comparator<double>>());
+    });
+    test('T !is Comparable', () {
+      expect(defaultComparator<Object>(), isNull);
     });
   });
 }

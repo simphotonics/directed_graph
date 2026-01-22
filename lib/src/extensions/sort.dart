@@ -1,10 +1,13 @@
 import 'package:directed_graph/src/exceptions/error_types.dart';
 import 'package:exception_templates/exception_templates.dart';
 
-/// Returns a generic function of type [Comparator] or `null` if [T] does not
+/// Returns `true` if [T] implements or extends [Comparable].
+bool _isComparable<T>() => Iterable<T>.empty() is Iterable<Comparable>;
+
+/// Returns a generic function of type [Comparator]\<T\> or `null` if [T] does not
 /// implement [Comparable].
 Comparator<T>? defaultComparator<T>() {
-  if (Iterable<T>.empty() is Iterable<Comparable>) {
+  if (_isComparable<T>()) {
     return (T left, T right) => (left as Comparable).compareTo(right);
   } else {
     return null;
@@ -44,7 +47,7 @@ extension SortSet<T extends Object> on Set<T> {
     final tmp = toList();
     if (comparator != null) {
       tmp.sort(comparator);
-    } else if (first is Comparable) {
+    } else if (_isComparable<T>()) {
       tmp.sort(defaultComparator<T>()); // Sort using default comparator.
     } else {
       throw ErrorOfType<SortingNotSupported<T>>(
@@ -84,7 +87,7 @@ extension SortMap<K extends Object, V extends Object> on Map<K, V> {
 
     if (comparator != null) {
       sortedKeys.sort(comparator);
-    } else if (sortedKeys.first is Comparable) {
+    } else if (_isComparable<K>()) {
       sortedKeys.sort(defaultComparator<K>());
     } else {
       throw ErrorOfType<SortingNotSupported<K>>(
@@ -114,7 +117,7 @@ extension SortMap<K extends Object, V extends Object> on Map<K, V> {
     final tmp = entries.toList();
     if (comparator != null) {
       tmp.sort((left, right) => comparator(left.value, right.value));
-    } else if (values.first is Comparable) {
+    } else if (_isComparable<V>()) {
       tmp.sort(
         (left, right) => (left.value as Comparable).compareTo(right.value),
       );
