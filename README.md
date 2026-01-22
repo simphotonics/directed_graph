@@ -89,7 +89,7 @@ if a custom comparator function is provided.
 Note: If `T is Comparable` and no comparator is provided, then
 the following default comparator is automatically provided:
 ```Dart
-(T left, T right) =>  (left as Comparable<T>).compareTo(right);
+(T left, T right) =>  (left as Comparable).compareTo(right);
 ```
 In the example below, a custom
 comparator is used to sort vertices in lexicographical order.
