@@ -25,7 +25,7 @@ class DirectedGraph<T extends Object> extends DirectedGraphBase<T> {
 
   /// Constructs a directed graph from a map of weighted edges.
   DirectedGraph.fromWeightedEdges(
-    Map<T, Map<T, dynamic>> weightedEdges, {
+    Map<T, Map<T, Object>> weightedEdges, {
     Comparator<T>? comparator,
   }) : super(comparator) {
     weightedEdges.forEach((vertex, connectedVerticeWeights) {

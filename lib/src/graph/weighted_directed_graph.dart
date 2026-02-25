@@ -19,7 +19,7 @@ class WeightedDirectedGraph<T extends Object, W extends Comparable>
     extends DirectedGraphBase<T> {
   /// Constructs a weighted directed graph with vertices of type [T]
   /// and associates to each graph edge a weight of type [W].
-  /// * `edges`: The weighted edges of the graph. An empty map may
+  /// * [edges]: The weighted edges of the graph. An empty map may
   /// be used to create an empty graph.
   /// * [zero]: The weight of an empty path. It represents the additive
   /// identity of the type [W].
@@ -39,7 +39,7 @@ class WeightedDirectedGraph<T extends Object, W extends Comparable>
     });
   }
 
-  /// Constructs a shallow copy of `graph`.
+  /// Constructs a shallow copy of [graph].
   WeightedDirectedGraph.of(WeightedDirectedGraph<T, W> graph)
       : this(
           graph.data,
@@ -48,7 +48,7 @@ class WeightedDirectedGraph<T extends Object, W extends Comparable>
           comparator: graph.comparator,
         );
 
-  /// Constructs the transitive closure of `graph`.
+  /// Constructs the transitive closure of [graph].
   factory WeightedDirectedGraph.transitiveClosure(
     WeightedDirectedGraph<T, W> graph,
   ) =>
