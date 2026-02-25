@@ -12,9 +12,9 @@ typedef Summation<W> = W Function(W left, W right);
 int defaultWeightComparator<W extends Comparable>(W left, W right) =>
     left.compareTo(right);
 
-/// A directed graph with vertices of type `T` and a weight of type
-/// `W` associated with each directed edges.
-/// * `T` must be usable as a map key.
+/// A directed graph with vertices of type [T] and a weight of type
+/// [W] associated with each directed edge.
+/// * [T] must be usable as a map key.
 class WeightedDirectedGraph<T extends Object, W extends Comparable>
     extends DirectedGraphBase<T> {
   /// Constructs a weighted directed graph with vertices of type `T`
@@ -206,7 +206,15 @@ class WeightedDirectedGraph<T extends Object, W extends Comparable>
     updateCache();
   }
 
-  /// Removes all graph edges.
+  @override
+  void clearEdges() {
+    for (final vertex in _edges.keys) {
+      _edges[vertex]!.clear();
+    }
+    updateCache();
+  }
+
+  @override
   void clear() {
     _edges.clear();
     updateCache();

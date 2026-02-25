@@ -142,7 +142,15 @@ class DirectedGraph<T extends Object> extends DirectedGraphBase<T> {
     }
   }
 
-  /// Removes all graph edges.
+  @override
+  void clearEdges() {
+    for (final vertex in _edges.keys) {
+      _edges[vertex]!.clear();
+    }
+    updateCache();
+  }
+
+  @override
   void clear() {
     _edges.clear();
     updateCache();

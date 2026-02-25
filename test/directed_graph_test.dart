@@ -135,6 +135,15 @@ void main() {
       graph.clear();
       expect(graph.isEmpty, true);
     });
+    test('clearEdges', () {
+      final graph = DirectedGraph.of(graph0);
+      expect(graph.sortedVertices, graph0.sortedVertices);
+      graph.clearEdges();
+      expect(graph.sortedVertices, graph0.sortedVertices);
+      for (var vertex in graph.sortedVertices) {
+        expect(graph.edges(vertex), isEmpty);
+      }
+    });
   });
   group('Graph data:', () {
     final graph = DirectedGraph.of(graph0);

@@ -30,6 +30,15 @@ abstract class DirectedGraphBase<T extends Object> extends Iterable<T> {
   @override
   bool contains(Object? element);
 
+  /// Removes all graph vertices. After this method returns the graph
+  /// will be empty.
+  void clear();
+
+  /// Removes all graph edges (connections between vertices). The graph vertices
+  /// are not removed. To remove all vertices and (implicitly) all graph edges
+  /// use the method [clear].
+  void clearEdges();
+
   /// Returns the shortest path from the vertex [start] to the vertex [target].
   /// * Returns an empty list if [target] is not reachable from [start].
   List<T> shortestPath(T start, T target) => crawler.path(start, target);
