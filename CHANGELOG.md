@@ -1,8 +1,8 @@
 ## 0.5.4
-- Fixed documentation of graph method `clear`. This method removes all graph
-vertices.
+- Fixed documentation of the graph method `clear`. This method removes all graph
+vertices. The resulting graph will be empty.
 - Added the graph method `clearEdges`. This method removes only the graph
-edges, leaving the graph vertice in place. 
+edges, leaving the graph vertices in place.
 
 ## 0.5.3
 - Added `WeightedDirectedGraph` methods: `weightedEdges` and `updateEdgeWeight`.
