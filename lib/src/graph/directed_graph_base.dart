@@ -138,7 +138,7 @@ abstract class DirectedGraphBase<T extends Object> extends Iterable<T> {
   /// unsorted set of vertices.
   Set<T> get sortedVertices => _sortedVertices();
 
-  /// Returns the vertices connected to `vertex`.
+  /// Returns the vertices connected to [vertex].
   Set<T> edges(T vertex);
 
   /// Returns `true` if there is an edge pointing from
@@ -192,14 +192,14 @@ abstract class DirectedGraphBase<T extends Object> extends Iterable<T> {
   /// Returns the shortest detected path from [start] to [target]
   /// including cycles.
   /// * Returns an empty list if no path was found.
-  /// * To exclude cycles use the method `shortestPath(start, target)`.
+  /// * To exclude cycles use the method [shortestPath].
   List<T> path(T start, T target) => crawler.path(start, target);
 
   /// Returns all paths from [start] to [target]
   /// including cycles.
   /// * Returns an empty list if no path was found.
   /// * To exclude cycles and list only the shortest paths
-  ///   use the method `shortestPaths(start, target)`.
+  ///   use the method [shortestPaths].
   List<List<T>> paths(T start, T target) => crawler.paths(start, target);
 
   /// Returns the first cycle detected or an empty list
@@ -701,14 +701,14 @@ abstract class DirectedGraphBase<T extends Object> extends Iterable<T> {
   }
 
   /// Returns the number of outgoing directed edges for [vertex].
-  /// * Note: Returns `null` if `vertex` does not belong to the graph.
+  /// * Note: Returns `null` if [vertex] does not belong to the graph.
   int? outDegree(T vertex) {
     return vertexExists(vertex) ? edges(vertex).length : null;
   }
 
   /// Returns the number of incoming directed edges for [vertex].
   ///
-  /// Returns `null` if `vertex` is not a graph vertex.
+  /// Returns `null` if [vertex] is not a graph vertex.
   int? inDegree(T vertex) {
     if (!vertexExists(vertex)) {
       return null;
@@ -725,7 +725,7 @@ abstract class DirectedGraphBase<T extends Object> extends Iterable<T> {
   /// Returns a String representation of the graph.
   ///
   /// Vertices of type [String] are *quoted* using
-  /// `QuoteBuffer` an extension on [StringBuffer] so that one can
+  /// [QuoteBuffer] an extension on [StringBuffer] so that one can
   /// copy terminal output and paste it as valid source code representing
   /// a map.
   @override

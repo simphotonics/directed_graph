@@ -12,19 +12,19 @@ typedef Summation<W> = W Function(W left, W right);
 int defaultWeightComparator<W extends Comparable>(W left, W right) =>
     left.compareTo(right);
 
-/// A directed graph with vertices of type [T] and a weight of type
-/// [W] associated with each directed edge.
-/// * [T] must be usable as a map key.
+/// A directed graph storing vertices of type [T]. A weight of type
+/// [W] is associated with each directed edge. Note:
+/// [T] must be usable as a map key.
 class WeightedDirectedGraph<T extends Object, W extends Comparable>
     extends DirectedGraphBase<T> {
-  /// Constructs a weighted directed graph with vertices of type `T`
-  /// and associates to each graph edge a weight of type `W`.
+  /// Constructs a weighted directed graph with vertices of type [T]
+  /// and associates to each graph edge a weight of type [W].
   /// * `edges`: The weighted edges of the graph. An empty map may
   /// be used to create an empty graph.
   /// * [zero]: The weight of an empty path. It represents the additive
-  /// identity of the type `W`.
+  /// identity of the type [W].
   /// * [summation]: The function used to sum edge weights.
-  /// * Note: `W` must extend [Comparable].
+  /// * Note: [W] must extend [Comparable].
   WeightedDirectedGraph(
     Map<T, Map<T, W>> edges, {
     required this.summation,
@@ -61,14 +61,14 @@ class WeightedDirectedGraph<T extends Object, W extends Comparable>
 
   /// The weight of an empty path.
   /// * Used as the initial value when summing the weight of a path.
-  /// * Represents the additive identity of type `W`.
+  /// * Represents the additive identity of type [W].
   /// * Has the property: `(w + zero) == w`, where `w` and `zero` are of type
-  ///   `W`.
+  ///   [W].
   /// * Examples: `int: 0`, `double: 0.0`, `String: ''`.
   final W zero;
 
-  /// Graph edges.
-  /// * Each graph vertex corresponds to a map key.
+  /// Stores the graph edges.
+  /// Each graph vertex corresponds to a map key.
   final Map<T, Map<T, W>> _edges = {};
 
   /// Function used to sum edge weights.
@@ -76,7 +76,7 @@ class WeightedDirectedGraph<T extends Object, W extends Comparable>
 
   /// Returns a list of all vertices.
   ///
-  /// To retrieve a list of sorted vertices use the getter `sortedVertices`.
+  /// To retrieve a list of sorted vertices use the getter [sortedVertices].
   @override
   Iterable<T> get vertices => _edges.keys;
 
@@ -140,7 +140,8 @@ class WeightedDirectedGraph<T extends Object, W extends Comparable>
     return _edges.containsKey(vertex);
   }
 
-  /// Adds weighted edges pointing from `vertex` to `weightedEdges.keys`.
+  /// Adds weighted edges pointing from [vertex] to the vertices specified as
+  /// the keys of the map [weightedEdges].
   void addEdges(T vertex, Map<T, W> weightedEdges) {
     if (_edges[vertex] == null) {
       // If vertex is new add it to the graph.
@@ -156,10 +157,10 @@ class WeightedDirectedGraph<T extends Object, W extends Comparable>
     updateCache();
   }
 
-  /// Adds a new weighted edge pointing from `vertex` to `connectedVertex`.
+  /// Adds a new weighted edge pointing from [vertex] to [connectedVertex].
   ///
-  /// If the edge `(vertex, connectedVertex`) exists,
-  /// the edge `weight` is updated.
+  /// If the edge ([vertex], [connectedVertex]) exists,
+  /// the edge [weight] is updated.
   void addEdge(T vertex, T connectedVertex, W weight) {
     if (_edges.containsKey(vertex)) {
       _edges[vertex]![connectedVertex] = weight;
@@ -171,7 +172,7 @@ class WeightedDirectedGraph<T extends Object, W extends Comparable>
     updateCache();
   }
 
-  /// Removes edges pointing from `vertex` to `connectedVertices`.
+  /// Removes edges pointing from [vertex] to [connectedVertices].
   ///
   /// Does not remove any vertices from the graph.
   void removeEdges(T vertex, Set<T> connectedVertices) {
@@ -184,7 +185,7 @@ class WeightedDirectedGraph<T extends Object, W extends Comparable>
     updateCache();
   }
 
-  /// Removes edges ending at `vertex` from the graph.
+  /// Removes edges ending at [vertex] from the graph.
   ///
   /// Note: Does not remove any vertices from the graph.
   void removeIncomingEdges(T vertex) {
@@ -196,7 +197,7 @@ class WeightedDirectedGraph<T extends Object, W extends Comparable>
     updateCache();
   }
 
-  /// Completely removes `vertex` from the graph, including outgoing
+  /// Completely removes [vertex] from the graph, including outgoing
   /// and incoming edges.
   void remove(T vertex) {
     // Return early if vertex is unknown.
@@ -252,7 +253,7 @@ class WeightedDirectedGraph<T extends Object, W extends Comparable>
     );
   }
 
-  /// Assigns [weight] to the `existing` edge connecting [vertex]
+  /// Assigns [weight] to an existing edge connecting [vertex]
   /// to [connectedVertex].
   /// * Returns `true` on success.
   /// * Return `false` if there is no graph edge connecting [vertex] to
@@ -275,7 +276,7 @@ class WeightedDirectedGraph<T extends Object, W extends Comparable>
   ///   insertion order.
   /// * In general, adding further graph edges invalidates
   ///   the sorting of neighbouring vertices.
-  /// * The optional parameter `vertexComparator` defaults to [comparator].
+  /// * The optional parameter [vertexComparator] defaults to [comparator].
   void sortEdges([Comparator<T>? vertexComparator]) {
     if (comparator == null && vertexComparator == null) return;
     for (final vertex in vertices) {
@@ -297,7 +298,7 @@ class WeightedDirectedGraph<T extends Object, W extends Comparable>
     }
   }
 
-  /// Returns the path connecting `start` and `target` with
+  /// Returns the path connecting [start] and [target] with
   /// the smallest summed edge-weight.
   /// * Returns an empty list if no path could be found.
   List<T> lightestPath(T start, T target) {
@@ -316,7 +317,7 @@ class WeightedDirectedGraph<T extends Object, W extends Comparable>
     return result;
   }
 
-  /// Returns the path connecting `start` and `target` with
+  /// Returns the path connecting [start] and [target] with
   /// the largest summed edge-weight.
   ///
   /// Note: Returns an empty list if no path could be found.

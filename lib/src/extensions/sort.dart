@@ -4,8 +4,8 @@ import 'package:exception_templates/exception_templates.dart';
 /// Returns `true` if [T] implements or extends [Comparable].
 bool _isComparable<T>() => Iterable<T>.empty() is Iterable<Comparable>;
 
-/// Returns a generic function of type [Comparator]\<T\> or `null` if [T] does not
-/// implement [Comparable].
+/// Returns a generic function of type [Comparator]\<T\> or `null` if [T]
+/// does not implement [Comparable].
 Comparator<T>? defaultComparator<T>() {
   if (_isComparable<T>()) {
     return (T left, T right) => (left as Comparable).compareTo(right);
@@ -15,7 +15,7 @@ Comparator<T>? defaultComparator<T>() {
 }
 
 /// Extension providing the method [equalTo] for
-/// sorting a set with another set element by element.
+/// comparing a set with another set element by element.
 extension CompareSet<T extends Object> on Set<T> {
   /// Returns `true` if `this` contains the same elements as [other]
   /// and the elements occur in the same order.
@@ -77,7 +77,7 @@ extension SortSet<T extends Object> on Set<T> {
 extension SortMap<K extends Object, V extends Object> on Map<K, V> {
   /// Sorts a map of type `Map<K, V>` (in place) using the map keys.
   ///
-  /// Note: If `K` does not extend `Comparable` a valid `Comparator<K>`
+  /// Note: If [K] does not extend [Comparable] a valid `Comparator<K>`
   /// must be provided.
   void sortByKey([Comparator<K>? comparator]) {
     if (isEmpty) {
@@ -107,7 +107,7 @@ extension SortMap<K extends Object, V extends Object> on Map<K, V> {
 
   /// Sorts a map of type `Map<K, V>` (in place) using the map values.
   ///
-  /// Note: If `V` does not extend `Comparable` a valid `Comparator<V>`
+  /// Note: If `V` does not extend [Comparable] a valid `Comparator<V>`
   /// is required.
   void sortByValue([Comparator<V>? comparator]) {
     if (isEmpty) {

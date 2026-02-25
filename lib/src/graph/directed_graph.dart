@@ -1,9 +1,8 @@
 import 'directed_graph_base.dart';
 import '../extensions/sort.dart';
 
-/// Generic directed graph storing vertices of type `T`.
-///
-/// The data-type `T` should be usable as a map key.
+/// Generic directed graph storing vertices of type [T].
+/// The type [T] should be usable as a map key.
 class DirectedGraph<T extends Object> extends DirectedGraphBase<T> {
   /// Constructs a directed graph.
   /// * [edges]: a map of type `Map<T, Set<T>>`,
