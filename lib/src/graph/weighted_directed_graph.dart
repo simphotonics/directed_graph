@@ -89,9 +89,9 @@ class WeightedDirectedGraph<T extends Object, W extends Comparable>
 
   /// Returns a map containing the vertices connected to [vertex] as keys
   /// and the weight associated with each edge as values.
-  /// ---
+  ///
   /// Returns and empty map if [vertex] is not connected to any other vertices
-  /// or if [vertex] is not a graph vertex. 
+  /// or if [vertex] is not a graph vertex.
   Map<T, W> weightedEdges(T vertex) => Map.of(_edges[vertex] ?? <T, W>{});
 
   /// Lazy variable representing the graph weight.
