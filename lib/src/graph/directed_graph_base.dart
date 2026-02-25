@@ -133,10 +133,10 @@ abstract class DirectedGraphBase<T extends Object> extends Iterable<T> {
   Set<T> edges(T vertex);
 
   /// Returns `true` if there is an edge pointing from
-  /// [source] to [target]. Returns `False` otherwise.
-  bool edgeExists(T source, T target);
+  /// [vertex] to [connectedVertex]. Returns `false` otherwise.
+  bool edgeExists(T vertex, T connectedVertex);
 
-  /// Returns `true` if `vertex` is a graph vertex.
+  /// Returns `true` if [vertex] is a graph vertex.
   /// Returns `false` otherwise.
   bool vertexExists(T vertex);
 

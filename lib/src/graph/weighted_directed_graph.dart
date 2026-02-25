@@ -127,9 +127,9 @@ class WeightedDirectedGraph<T extends Object, W extends Comparable>
   }
 
   @override
-  bool edgeExists(T vertexOut, T vertexIn) {
-    if (_edges.containsKey(vertexOut) &&
-        _edges[vertexOut]!.containsKey(vertexIn)) {
+  bool edgeExists(T vertex, T connectedVertex) {
+    if (_edges.containsKey(vertex) &&
+        _edges[vertex]!.containsKey(connectedVertex)) {
       return true;
     }
     return false;

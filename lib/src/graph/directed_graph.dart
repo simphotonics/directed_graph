@@ -72,9 +72,9 @@ class DirectedGraph<T extends Object> extends DirectedGraphBase<T> {
   Set<T> edges(T vertex) => _edges[vertex] ?? <T>{};
 
   @override
-  bool edgeExists(T vertexOut, T vertexIn) {
-    if (_edges.containsKey(vertexOut) &&
-        _edges[vertexOut]!.contains(vertexIn)) {
+  bool edgeExists(T vertex, T connectedVertex) {
+    if (_edges.containsKey(vertex) &&
+        _edges[vertex]!.contains(connectedVertex)) {
       return true;
     }
     return false;
