@@ -62,4 +62,8 @@ void main(List<String> args) {
 
   print('\nVertices reachable from d:');
   print(graph.reachableVertices(d));
+
+  print('\nUpdate weight of edge (a,b) with value 101:');
+  graph.updateEdgeWeight(vertex: a, connectedVertex: b, weight: 101);
+  print('graph.weightedEdges(a): ${graph.weightedEdges(a)}');
 }

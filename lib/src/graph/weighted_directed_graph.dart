@@ -84,8 +84,15 @@ class WeightedDirectedGraph<T extends Object, W extends Comparable>
   /// Note: Mathematically, an edge is an ordered pair
   /// (vertex, connected-vertex).
   @override
-  Set<T> edges(T vertex) =>
-      _edges[vertex] == null ? <T>{} : _edges[vertex]!.keys.toSet();
+  Set<T> edges(T vertex) => _edges[vertex]?.keys.toSet() ?? <T>{};
+
+
+  /// Returns a map containing the vertices connected to [vertex] as keys
+  /// and the weight associated with each edge as values.
+  /// ---
+  /// Returns and empty map if [vertex] is not connected to any other vertices
+  /// or if [vertex] is not a graph vertex. 
+  Map<T, W> weightedEdges(T vertex) => Map.of(_edges[vertex] ?? <T, W>{});
 
   /// Lazy variable representing the graph weight.
   late final _weight = Lazy<W>(() {
@@ -206,12 +213,12 @@ class WeightedDirectedGraph<T extends Object, W extends Comparable>
     updateCache();
   }
 
-  /// Returns the weight obtained by traversing `walk` and
+  /// Returns the weight obtained by traversing the iterable [walk] and
   /// summing all edge weights.
   /// * The vertices must be traversable in the specified order.
   /// * Vertices and edges may be repeated.
-  /// * Throws an error if the `walk` cannot be traversed.
-  /// * Returns zero if `walk` is empty.
+  /// * Throws an error if the [walk] cannot be traversed.
+  /// * Returns zero if the iterable [walk] is empty.
   W weightAlong(Iterable<T> walk) {
     final edge = walk.take(2);
     if (edge.length < 2) {
@@ -221,18 +228,39 @@ class WeightedDirectedGraph<T extends Object, W extends Comparable>
     final connectedVertex = edge.last;
 
     if (!_edges.containsKey(vertex)) {
-      throw ErrorOfType<UnkownVertex>();
+      throw ErrorOfType<UnkownVertex>(
+          message: 'Could not calculate weight of walk: $walk',
+          invalidState: '$vertex is not a graph vertex.');
     }
     if (!_edges[vertex]!.containsKey(connectedVertex)) {
       throw ErrorOfType<NotAnEdge>(
-        message: 'Could not calculate weight of walk: $walk.',
-        invalidState: 'Vertex $vertex not connected to $connectedVertex.}',
-      );
+          message: 'Could not calculate the weight of walk: $walk.',
+          invalidState: 'Vertex $vertex is not connected to $connectedVertex.}',
+          expectedState:
+              '$walk must be traversable using existing graph edges.');
     }
     return summation(
       _edges[vertex]![connectedVertex]!,
       weightAlong(walk.skip(1)),
     );
+  }
+
+  /// Assigns [weight] to the `existing` edge connecting [vertex]
+  /// to [connectedVertex].
+  /// * Returns `true` on success.
+  /// * Return `false` if there is no graph edge connecting [vertex] to
+  /// [connectedVertex].
+  /// * Note: To create an new graph edge connecting [vertex] to
+  /// [connectedVertex] use the method [addEdge].
+  bool updateEdgeWeight(
+      {required T vertex, required T connectedVertex, required W weight}) {
+    if (!edgeExists(vertex, connectedVertex)) {
+      return false;
+    } else {
+      _edges[vertex]![connectedVertex] = weight;
+      _weight.updateCache();
+      return true;
+    }
   }
 
   /// Sorts the neighbouring vertices of each vertex using [comparator].

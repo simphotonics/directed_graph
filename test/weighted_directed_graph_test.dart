@@ -278,6 +278,12 @@ void main() {
       final graph = WeightedDirectedGraph.of(graph0);
       expect(graph.weightAlong([a, c, g]), 6);
     });
+    test('updateEdgeWeight', () {
+      final graph = WeightedDirectedGraph.of(graph0);
+      graph.updateEdgeWeight(vertex: a, connectedVertex: c, weight: 1002);
+      expect(graph.weightAlong([a, c]), 1002);
+      expect(graph.weight, graph0.weight + 1000);
+    });
   });
 
   group('TransitiveClosure', () {

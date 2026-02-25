@@ -1,4 +1,8 @@
 
+## 0.5.3
+- Added `WeightedDirectedGraph` methods: `weightedEdges` and `updateEdgeWeight`.
+- Updated docs and examples. 
+
 ## 0.5.2
 - Fixed grammar in CHANGELOG entry below.
 - Moved [`GraphCrawler`][GraphCrawler] to a separate folder.
@@ -30,7 +34,7 @@
   `DirectedGraphBase` to
   [`GraphCrawler`][GraphCrawler]. It is now using a more efficient recursive
   algorithm.
-- Extended the definition of a quasi-topological ordering in section `Usage`. 
+- Extended the definition of a quasi-topological ordering in section `Usage`.
 - Lowered the required SDK version to ^3.5.0.
 
 ## 0.5.0

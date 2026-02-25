@@ -348,14 +348,10 @@ a [comparator] function is provided
 or if `T` implements [`Comparator`][Comparator].
 
 ```Dart
-
 import 'package:directed_graph/directed_graph.dart';
 
 void main(List<String> args) {
-  int comparator(
-    String s1,
-    String s2,
-  ) {
+  int comparator(String s1, String s2) {
     return s1.compareTo(s2);
   }
 
@@ -375,7 +371,7 @@ void main(List<String> args) {
 
   var graph = WeightedDirectedGraph<String, int>(
     {
-      a: {b: 1, h: 7, c: 2, e: 40, g:7},
+      a: {b: 1, h: 7, c: 2, e: 40, g: 7},
       b: {h: 6},
       c: {h: 5, g: 4},
       d: {e: 1, f: 2},
@@ -383,7 +379,7 @@ void main(List<String> args) {
       f: {i: 3},
       i: {l: 3, k: 2},
       k: {g: 4, f: 5},
-      l: {l: 0}
+      l: {l: 0},
     },
     summation: sum,
     zero: 0,
@@ -407,6 +403,19 @@ void main(List<String> args) {
   final shortestPath = graph.shortestPath(a, g);
   print('\nShortest path a -> g');
   print('$shortestPath weight: ${graph.weightAlong(shortestPath)}');
+
+  print('\nTransitive Closure');
+  print(WeightedDirectedGraph.transitiveClosure(graph));
+
+  print('\nTransitive Weighted Edges:');
+  print(graph.transitiveWeightedEdges);
+
+  print('\nVertices reachable from d:');
+  print(graph.reachableVertices(d));
+
+  print('\nUpdate weight of edge (a,b) with value 101:');
+  graph.updateEdgeWeight(vertex: a, connectedVertex: b, weight: 101);
+  print('graph.weightedEdges(a): ${graph.weightedEdges(a)}');
 }
 ```
 
@@ -429,7 +438,7 @@ Weighted Graph:
  'l': {'l': 0},
 }
 
-Neighbouring vertices sorted by weight
+Neighbouring vertices sorted by weight:
 {
  'a': {'b': 1, 'c': 2, 'h': 7, 'g': 7, 'e': 40},
  'b': {'h': 6},
@@ -452,6 +461,30 @@ Heaviest path a -> g
 
 Shortest path a -> g
 [a, g] weight: 7
+
+Transitive Closure
+{
+ 'a': {'b': 1, 'c': 2, 'h': 7, 'g': 6, 'e': 40},
+ 'b': {'h': 6},
+ 'c': {'g': 4, 'h': 5},
+ 'd': {'e': 1, 'f': 2, 'g': 3, 'i': 5, 'k': 7, 'l': 8},
+ 'e': {'g': 2},
+ 'f': {'i': 3, 'k': 5, 'l': 6, 'g': 9, 'f': 10},
+ 'g': {},
+ 'h': {},
+ 'i': {'k': 2, 'l': 3, 'g': 6, 'f': 7, 'i': 10},
+ 'k': {'g': 4, 'f': 5, 'i': 8, 'k': 10, 'l': 11},
+ 'l': {'l': 0},
+}
+
+Transitive Weighted Edges:
+{a: {b: 1, c: 2, h: 7, g: 6, e: 40}, b: {h: 6}, c: {g: 4, h: 5}, d: {e: 1, f: 2, g: 3, i: 5, k: 7, l: 8}, e: {g: 2}, f: {i: 3, k: 5, l: 6, g: 9, f: 10}, g: {}, h: {}, i: {k: 2, l: 3, g: 6, f: 7, i: 10}, k: {g: 4, f: 5, i: 8, k: 10, l: 11}, l: {l: 0}}
+
+Vertices reachable from d:
+{e, g, f, i, k, l}
+
+Update weight of edge (a,b) with value 101:
+graph.weightedEdges(a): {b: 101, c: 2, h: 7, g: 7, e: 40}
 ```
 </details>
 
