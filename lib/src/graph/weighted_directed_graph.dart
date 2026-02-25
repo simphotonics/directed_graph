@@ -86,7 +86,6 @@ class WeightedDirectedGraph<T extends Object, W extends Comparable>
   @override
   Set<T> edges(T vertex) => _edges[vertex]?.keys.toSet() ?? <T>{};
 
-
   /// Returns a map containing the vertices connected to [vertex] as keys
   /// and the weight associated with each edge as values.
   ///
