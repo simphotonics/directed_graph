@@ -598,7 +598,7 @@ abstract class DirectedGraphBase<T extends Object> extends Iterable<T> {
   }
 
   /// Returns a set containing the elements of [vertices]
-  /// in quasi-topological insertion order.
+  /// in quasi-topological order.
   /// * [vertices] must be a subset of the graph vertices. If any vertex in
   /// [vertices] does not belong to the graph, `null` is returned.
   /// * Note: If A and B are any two elements of [vertices],
@@ -648,7 +648,7 @@ abstract class DirectedGraphBase<T extends Object> extends Iterable<T> {
   }
 
   /// Returns a set containing the elements of [vertices]
-  /// in reverse quasi topological insertion order if there is not
+  /// in reverse quasi topological order if there is no
   /// mutual connection
   /// between any two elements of [vertices].
   ///
