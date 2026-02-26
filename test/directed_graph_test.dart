@@ -93,40 +93,44 @@ void main() {
     });
   });
 
-  group('Manipulating edges/vertices.', () {
-    test('addEdges():', () {
+  group('Manipulating edges/vertices:', () {
+    test('addEdge', () {
+      final graph = DirectedGraph.of(graph0);
+      graph.addEdge(i, k);
+      expect(graph.edges(i), {l, k});
+    });
+
+    test('addEdges', () {
       final graph = DirectedGraph.of(graph0);
       graph.addEdges(i, {k});
       expect(graph.edges(i), {l, k});
-      '{\n'
-          ' a: [b, h, c, e],\n'
-          ' b: [h],\n'
-          ' c: [h, g],\n'
-          ' d: [e, f],\n'
-          ' e: [],\n'
-          ' f: [i],\n'
-          ' g: [],\n'
-          ' h: [],\n'
-          ' i: {l},\n'
-          ' k: [g, f],\n'
-          ' l: [],\n'
-          '}';
     });
-    test('remove(l).', () {
+    test('removeEdge', () {
+      final graph = DirectedGraph.of(graph0);
+      graph.removeEdge(a, b);
+      expect(graph.edges(a), {h, c, e});
+    });
+    test('removeEdges', () {
+      final graph = DirectedGraph.of(graph0);
+      graph.removeEdges(a, {b, h, c});
+      expect(graph.edges(a), {e});
+    });
+
+    test('remove(l)', () {
       final graph = DirectedGraph.of(graph0);
       graph.remove(l);
       expect(graph.edges(i), <String>{});
       expect(graph.sortedVertices.toList(), [
-        'a',
-        'b',
-        'c',
-        'd',
-        'e',
-        'f',
-        'g',
-        'h',
-        'i',
-        'k',
+        a,
+        b,
+        c,
+        d,
+        e,
+        f,
+        g,
+        h,
+        i,
+        k,
       ]);
     });
     test('clear', () {
@@ -429,17 +433,17 @@ void main() {
         vertex = '${vertex}1';
       }
       expect(graph.sortedVertices, {
-        'a',
-        'b',
-        'c',
-        'd',
-        'e',
-        'f',
-        'g',
-        'h',
-        'i',
-        'k',
-        'l',
+        a,
+        b,
+        c,
+        d,
+        e,
+        f,
+        g,
+        h,
+        i,
+        k,
+        l,
       });
     });
   });

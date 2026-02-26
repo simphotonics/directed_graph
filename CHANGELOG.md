@@ -1,5 +1,8 @@
+## 0.5.5
+- Added [`DirectedGraph`][DirectedGraph], [`WeightedDirectedGraph`][WeightedDirectedGraph] method `removeEdge`.
+
 ## 0.5.4
-- Fixed documentation of the graph method `clear`. This method removes all graph
+- Fixed the documentation of the graph method `clear`. This method removes all graph
 vertices. The resulting graph will be empty.
 - Added the graph method `clearEdges`. This method removes only the graph
 edges, leaving the graph vertices in place.

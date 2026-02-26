@@ -114,8 +114,14 @@ class DirectedGraph<T extends Object> extends DirectedGraphBase<T> {
     updateCache();
   }
 
+  /// Removes the edge pointing from [vertex] to [connectedVertex].
+  /// Does not remove the vertices.
+  void removeEdge(T vertex, T connectedVertex) {
+    _edges[vertex]?.remove(connectedVertex);
+  }
+
   /// Removes edges (connections) pointing from [vertex] to [connectedVertices].
-  /// * Note: Does not remove the vertices.
+  /// Note: Does not remove the vertices.
   void removeEdges(T vertex, Set<T> connectedVertices) {
     _edges[vertex]?.removeAll(connectedVertices);
     updateCache();

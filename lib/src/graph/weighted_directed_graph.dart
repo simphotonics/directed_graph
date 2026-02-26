@@ -172,6 +172,12 @@ class WeightedDirectedGraph<T extends Object, W extends Comparable>
     updateCache();
   }
 
+  /// Removes the edge pointing from [vertex] to [connectedVertex].
+  /// Does not remove the vertices.
+  void removeEdge(T vertex, T connectedVertex) {
+    _edges[vertex]?.remove(connectedVertex);
+  }
+
   /// Removes edges pointing from [vertex] to [connectedVertices].
   ///
   /// Does not remove any vertices from the graph.

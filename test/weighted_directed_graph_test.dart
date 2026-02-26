@@ -96,12 +96,30 @@ void main() {
       expect(graph.vertices.contains(l), false);
       // Restore graph:
     });
+    test('addEdge', () {
+      final graph = WeightedDirectedGraph.of(graph0);
+      graph.addEdge(g, h, 1);
+      expect(graph.edges(g), {h});
+      expect(graph.weightAlong([g, h]), 1);
+    });
+
     test('addEdges(\'g\',{\'h\': 1}):', () {
       final graph = WeightedDirectedGraph.of(graph0);
-      graph.addEdges('g', {'h': 1});
-      expect(graph.edges('g'), {'h'});
-      expect(graph.data['g']?['h'], 1);
+      graph.addEdges(g, {h: 1});
+      expect(graph.edges(g), {h});
+      expect(graph.weightAlong([g, h]), 1);
     });
+    test('removeEdge', () {
+      final graph = WeightedDirectedGraph.of(graph0);
+      graph.removeEdge(a, b);
+      expect(graph.edges(a), {h, c, e});
+    });
+    test('removeEdges', () {
+      final graph = WeightedDirectedGraph.of(graph0);
+      graph.removeEdges(a, {b, h, c});
+      expect(graph.edges(a), {e});
+    });
+
     test('clear', () {
       final graph = WeightedDirectedGraph.of(graph0);
       expect(graph.sortedVertices, graph0.sortedVertices);
@@ -301,17 +319,17 @@ void main() {
       expect(
         WeightedDirectedGraph.transitiveClosure(graph).data,
         <String, Map<String, int>>{
-          'a': {'b': 1, 'h': 7, 'c': 2, 'g': 6, 'e': 4},
-          'b': {'h': 6},
-          'c': {'h': 5, 'g': 4},
-          'd': {'e': 1, 'g': 3, 'f': 2, 'i': 5, 'l': 8},
-          'e': {'g': 2},
-          'f': {'i': 3, 'l': 6},
-          'g': {},
-          'h': {},
-          'i': {'l': 3},
-          'k': {'g': 4, 'f': 5, 'i': 8, 'l': 11},
-          'l': {},
+          a: {b: 1, h: 7, c: 2, g: 6, e: 4},
+          b: {h: 6},
+          c: {h: 5, g: 4},
+          d: {e: 1, g: 3, f: 2, i: 5, l: 8},
+          e: {g: 2},
+          f: {i: 3, l: 6},
+          g: {},
+          h: {},
+          i: {l: 3},
+          k: {g: 4, f: 5, i: 8, l: 11},
+          l: {},
         },
       );
     });
@@ -320,7 +338,7 @@ void main() {
   group('path:', () {
     test('min. weight', () {
       final graph = WeightedDirectedGraph.of(graph0);
-      expect(graph.lightestPath('a', 'g'), [a, c, g]);
+      expect(graph.lightestPath(a, g), [a, c, g]);
       expect(graph.weightAlong([a, c, g]), 6);
     });
     test('max. weight', () {
@@ -351,17 +369,17 @@ void main() {
         vertex = '${vertex}1';
       }
       expect(graph.sortedVertices, {
-        'a',
-        'b',
-        'c',
-        'd',
-        'e',
-        'f',
-        'g',
-        'h',
-        'i',
-        'k',
-        'l',
+        a,
+        b,
+        c,
+        d,
+        e,
+        f,
+        g,
+        h,
+        i,
+        k,
+        l,
       });
     });
   });
