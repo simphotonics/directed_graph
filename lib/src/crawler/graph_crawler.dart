@@ -134,7 +134,7 @@ class GraphCrawler<T extends Object> {
   /// [start] to each reachable vertex.
   /// * The map keys represent vertices reachable from [start].
   /// * The map values represent the path from [start] to the vertex listed as
-  /// map key. Note: The first node, [start], is omitted.
+  /// map key. Hereby, the first vertex, [start], is omitted.
   Map<T, Set<T>> shortestPaths(T start) {
     final pathMap = <T, Set<T>>{};
 
@@ -248,46 +248,6 @@ class GraphCrawler<T extends Object> {
     addReachableVertices(start, start);
     return result;
   }
-
-  /// Returns a set containing all vertices that are reachable from
-  /// vertex [start].
-  // Set<T> reachableVertices(T start) {
-  //   final result = edges(start).toSet();
-
-  //   final tree = <Set<T>>[];
-  //   for (final connected in edges(start)) {
-  //     // Store first branches of tree.
-  //     tree.add({connected});
-  //   }
-
-  //   if (tree.isNotEmpty) {
-  //     var startIndex = 0;
-  //     var endIndex = 0;
-  //     final visited = HashSet<T>()..add(start);
-  //     do {
-  //       endIndex = tree.length;
-  //       for (var i = startIndex; i < endIndex; ++i) {
-  //         final path = tree[i];
-  //         for (final vertex in edges(path.last)) {
-  //           // Discard walks which reach the same (inner) vertex twice.
-  //           // Note: Each path starts with [start] even though it is not
-  //           // listed!
-  //           if (path.contains(vertex) || visited.contains(vertex)) {
-  //             continue;
-  //           } else {
-  //             result.add(vertex);
-
-  //             // Continue growing tree.
-  //             tree.add({...path, vertex});
-  //           }
-  //         }
-  //         visited.add(path.last);
-  //       }
-  //       startIndex = endIndex;
-  //     } while (endIndex < tree.length);
-  //   }
-  //   return result;
-  // }
 
   /// Returns a map containing all paths commencing at [start].
   /// * Each entry of type `Set<T>` represents a path
