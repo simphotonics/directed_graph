@@ -18,7 +18,7 @@ The package [`directed_graph`][directed_graph] contains an implementation of a D
 recommendations found in [graphs-examples] and is compatible with the algorithms provided by [`graphs`][graphs].
 It includes methods that enable:
 * adding/removing vertices and edges,
-* sorting of vertices.
+* sorting of vertices and edges.
 
 The library provides access to algorithms
 for finding:
@@ -29,7 +29,6 @@ for finding:
 * cycles,
 * a topological ordering of the graph vertices,
 * a reverse topological ordering of the graph vertices.
-It also contains methods for sorting graph vertices and graph edges.
 
 The class [`GraphCrawler`][GraphCrawler] can be used to retrieve *paths* or *walks* connecting two vertices.
 
