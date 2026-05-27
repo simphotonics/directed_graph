@@ -91,7 +91,7 @@ void main() {
   group('Comparator', () {
     final count = 10000000;
     final graph = DirectedGraph<String>(<String, Set<String>>{});
-    final inferedComparator = graph.comparator;
+    final inferredComparator = graph.comparator;
 
     benchmark('user defined', () {
       var result = 0;
@@ -99,11 +99,11 @@ void main() {
         result = comparator('Hello', 'world');
       }
     });
-    benchmark('infered', () {
+    benchmark('inferred', () {
       if (graph.hasComparator) {
         var result = 0;
         for (var i = 0; i < count; i++) {
-          result = inferedComparator!('Hello', 'world');
+          result = inferredComparator!('Hello', 'world');
         }
       }
     });

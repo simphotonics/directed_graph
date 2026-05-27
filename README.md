@@ -29,6 +29,7 @@ for finding:
 * cycles,
 * a topological ordering of the graph vertices,
 * a reverse topological ordering of the graph vertices.
+It also contains methods for sorting graph vertices and graph edges.
 
 The class [`GraphCrawler`][GraphCrawler] can be used to retrieve *paths* or *walks* connecting two vertices.
 

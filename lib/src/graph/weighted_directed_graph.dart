@@ -277,17 +277,29 @@ class WeightedDirectedGraph<T extends Object, W extends Comparable>
     }
   }
 
-  /// Sorts the neighbouring vertices of each vertex using [comparator].
+  /// Sorts the neighbouring vertices of each vertex using [vertexComparator].
+  /// * The optional parameter [vertexComparator] defaults to [comparator].
   /// * By default the neighbouring vertices of a vertex are listed in
   ///   insertion order.
   /// * In general, adding further graph edges invalidates
   ///   the sorting of neighbouring vertices.
-  /// * The optional parameter [vertexComparator] defaults to [comparator].
   void sortEdges([Comparator<T>? vertexComparator]) {
     if (comparator == null && vertexComparator == null) return;
     for (final vertex in vertices) {
       _edges[vertex]!.sortByKey(vertexComparator ?? comparator);
     }
+  }
+
+  /// Sorts the graph vertices using [vertexComparator] and then calls
+  /// [sortEdges].
+  /// * The optional parameter [vertexComparator] defaults to [comparator].
+  /// * Without sorting, the graph vertices are listed in insertion order.
+  /// * Note: In general, adding further vertices and graph edges invalidates
+  /// the sorting.
+  void sort([Comparator<T>? vertexComparator]) {
+    if (comparator == null && vertexComparator == null) return;
+    _edges.sortByKey(vertexComparator ?? comparator);
+    sortEdges(vertexComparator);
   }
 
   /// Sorts the neighbouring vertices of each vertex using [weightComparator].

@@ -383,4 +383,44 @@ void main() {
       });
     });
   });
+  group('sort:', () {
+    final graph0 = WeightedDirectedGraph<String, int>(
+      {
+        b: {h: 6},
+        a: {b: 1, h: 7, c: 2, e: 4},
+        c: {h: 5, g: 4},
+        e: {g: 2},
+        d: {e: 1, f: 2},
+        f: {i: 3},
+        i: {l: 3},
+        k: {g: 4, f: 5},
+      },
+      summation: sum,
+      zero: zero,
+      comparator: comparator,
+    );
+    test('edges', () {
+      final graph = WeightedDirectedGraph.of(graph0)..sortEdges();
+      expect(graph0.edges(a), [b, h, c, e]);
+      expect(graph.edges(a), [b, c, e, h]);
+    });
+
+    test('graph vertices', () {
+      final graph = WeightedDirectedGraph.of(graph0)..sort();
+      expect(graph0.vertices, [
+        b,
+        h,
+        a,
+        c,
+        e,
+        g,
+        d,
+        f,
+        i,
+        l,
+        k,
+      ]);
+      expect(graph.vertices, [a, b, c, d, e, f, g, h, i, k, l]);
+    });
+  });
 }

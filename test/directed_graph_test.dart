@@ -447,4 +447,30 @@ void main() {
       });
     });
   });
+
+  group('sort', () {
+    test('edges', () {
+      final graph = DirectedGraph.of(graph0)..sortEdges();
+      expect(graph0.edges(a), [b, h, c, e]);
+      expect(graph.edges(a), [b, c, e, h]);
+    });
+
+    test('graph vertices', () {
+      final graph = DirectedGraph.of(graph0)..sort();
+      expect(graph0.vertices, [
+        a,
+        b,
+        h,
+        c,
+        e,
+        d,
+        f,
+        g,
+        i,
+        l,
+        k,
+      ]);
+      expect(graph.vertices, [a, b, c, d, e, f, g, h, i, k, l]);
+    });
+  });
 }

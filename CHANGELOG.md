@@ -1,3 +1,9 @@
+## 0.5.6
+- Added the graph method `sort`, to enable the sorting of vertices and edges.
+The vertices must be comparable or a suitable comparator must be provided.
+  * By default, vertices are stored (and printed) in insertion order.
+  * Subsequent insertion of vertices and edges might invalidate the sorting.
+
 ## 0.5.5
 - Added [`DirectedGraph`][DirectedGraph], [`WeightedDirectedGraph`][WeightedDirectedGraph] method `removeEdge`.
 

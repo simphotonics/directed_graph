@@ -177,6 +177,19 @@ class DirectedGraph<T extends Object> extends DirectedGraphBase<T> {
     }
   }
 
+  /// Sorts the graph vertices using [comparator] and then calls
+  /// [sortEdges].
+  /// * Without sorting the graph vertices are listed in insertion order.
+  /// * Note: In general, adding further vertices and graph edges invalidates
+  /// the sorting.
+  void sort() {
+    if (!hasComparator) return;
+    _edges.sortByKey(comparator);
+    for (final vertex in vertices) {
+      _edges[vertex]?.sort(comparator);
+    }
+  }
+
   @override
   Iterator<T> get iterator => vertices.iterator;
 
