@@ -1,1 +1,17 @@
 include: package:lints/recommended.yaml
+
+analyzer:
+  errors:
+    todo: warning
+
+linter:
+  rules:
+    - avoid_void_async
+    - async_return_with_no_await
+    - empty_container_bodies
+    - initialize_in_field_declaration
+    - unnecessary_async
+    - unnecessary_const_in_enum_constructor
+    - unnecessary_primary_constructor_body
+    - unnecessary_type_name_in_constructor
+    - use_declaring_parameters
