@@ -131,6 +131,16 @@ void main() {
         expect(graph.edges(vertex), isEmpty);
       }
     });
+    test('edgeCount', () {
+      final graph = DirectedMultiGraph.of(graph0);
+      expect(graph.edgeCount(a, h), 4);
+      graph.removeEdge(a, h);
+      expect(graph.edgeCount(a, h), 3);
+      graph.removeEdge(a, b);
+      expect(graph.edgeCount(a, b), 0);
+      graph.removeEdge(a, b);
+      expect(graph.edgeCount(a, b), 0);
+    });
   });
   group('Graph data:', () {
     final graph = DirectedMultiGraph.of(graph0);

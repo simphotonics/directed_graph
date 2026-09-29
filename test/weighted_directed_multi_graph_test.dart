@@ -144,10 +144,10 @@ void main() {
         b: [1, 2],
         h: [7],
         c: [2],
+        e: [500], // This edge does not exist. => It is not removed.
       });
       expect(graph.edges(a), {e});
     });
-
     test('clear', () {
       final graph = WeightedDirectedMultiGraph.of(graph0);
       expect(graph.sortedVertices, graph0.sortedVertices);
