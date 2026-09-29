@@ -21,7 +21,7 @@ typedef Edges<T extends Object> = Iterable<T> Function(T vertex);
 /// * A directed *walk* is defined as a list of connected vertices that can be
 /// traversed in sequential order.
 class GraphCrawler<T extends Object> {
-  GraphCrawler(this.edges);
+  new(this.edges);
 
   /// Function returning an `Iterable<T>` representing edge vertices.
   final Edges<T> edges;
