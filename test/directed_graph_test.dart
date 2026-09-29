@@ -1,11 +1,6 @@
 import 'package:directed_graph/directed_graph.dart';
 import 'package:test/test.dart';
 
-/// To run the test, navigate to the folder 'directed_graph'
-/// in your local copy of this library and use the command:
-///
-/// # pub run test -r expanded --test-randomize-ordering-seed=random
-///
 void main() {
   int comparator(String s1, String s2) {
     return s1.compareTo(s2);
@@ -63,15 +58,14 @@ void main() {
     });
     test('default comparator', () {
       final graph = DirectedGraph<num>({
-        1: {2}
+        1: {2},
       });
       expect(graph.comparator, isA<Comparator<num>>());
     });
     test('null comparator', () {
       final graph = DirectedGraph<num>({
-        1: {2}
-      })
-        ..comparator = null;
+        1: {2},
+      })..comparator = null;
 
       expect(graph.comparator, equals(null));
     });
@@ -120,18 +114,7 @@ void main() {
       final graph = DirectedGraph.of(graph0);
       graph.remove(l);
       expect(graph.edges(i), <String>{});
-      expect(graph.sortedVertices.toList(), [
-        a,
-        b,
-        c,
-        d,
-        e,
-        f,
-        g,
-        h,
-        i,
-        k,
-      ]);
+      expect(graph.sortedVertices.toList(), [a, b, c, d, e, f, g, h, i, k]);
     });
     test('clear', () {
       final graph = DirectedGraph.of(graph0);
@@ -229,8 +212,7 @@ void main() {
       ]);
     });
 
-    test(
-        'stronglyConnectedComponents(sorted: true, '
+    test('stronglyConnectedComponents(sorted: true, '
         'comparator: inverseComparator).', () {
       final graph = DirectedGraph<String>({
         k: {a},
@@ -299,8 +281,7 @@ void main() {
         c,
       ]);
     });
-    test(
-        'topologicalOrdering(sorted: true, '
+    test('topologicalOrdering(sorted: true, '
         'comparator: inverseComparator):', () {
       final graph = DirectedGraph<String>({
         k: {b, a, c},
@@ -343,8 +324,7 @@ void main() {
         k,
       ]);
     });
-    test(
-        'topologicalOrdering(sorted: true, '
+    test('topologicalOrdering(sorted: true, '
         'comparator: inverseComparator):', () {
       final graph = DirectedGraph<String>({
         k: {b, a, c},
@@ -432,19 +412,7 @@ void main() {
       for (var vertex in graph.sortedVertices) {
         vertex = '${vertex}1';
       }
-      expect(graph.sortedVertices, {
-        a,
-        b,
-        c,
-        d,
-        e,
-        f,
-        g,
-        h,
-        i,
-        k,
-        l,
-      });
+      expect(graph.sortedVertices, {a, b, c, d, e, f, g, h, i, k, l});
     });
   });
 
@@ -457,19 +425,7 @@ void main() {
 
     test('graph vertices', () {
       final graph = DirectedGraph.of(graph0)..sort();
-      expect(graph0.vertices, [
-        a,
-        b,
-        h,
-        c,
-        e,
-        d,
-        f,
-        g,
-        i,
-        l,
-        k,
-      ]);
+      expect(graph0.vertices, [a, b, h, c, e, d, f, g, i, l, k]);
       expect(graph.vertices, [a, b, c, d, e, f, g, h, i, k, l]);
     });
   });
