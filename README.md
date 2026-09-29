@@ -14,8 +14,11 @@ Graphs are useful when keeping track of elements that are linked to or are depen
 Examples include: network connections, links in a document pointing to other paragraphs or documents,
 foreign keys in a relational database, file dependencies in a build system, etc.
 
-The package [`directed_graph`][directed_graph] contains an implementation of a Dart graph that follows the
-recommendations found in [graphs-examples] and is compatible with the algorithms provided by [`graphs`][graphs].
+The package [`directed_graph`][directed_graph] contains the graphs:
+[`DirectedGraph`][DirectedGraph], [`WeightedDirectedGraph`][WeightedDirectedGraph],
+[`BidirectedGraph`][BidirectedGraph], [`UnmodifiableDirectedGraph`][UnmodifiableDirectedGraph],
+[`DirectedMultiGraph`][DirectedMultiGraph], and [`WeightedDirectedMultiGraph`][WeightedDirectedMultiGraph].
+
 It includes methods that enable:
 * adding/removing vertices and edges,
 * sorting of vertices and edges.
@@ -512,8 +515,17 @@ Please file feature requests and bugs at the [issue tracker].
 
 [GraphCrawler]: https://pub.dev/documentation/directed_graph/latest/directed_graph/GraphCrawler-class.html
 
+[BidirectedGraph]: https://pub.dev/documentation/directed_graph/latest/directed_graph/BidirectedGraph-class.html
+
 [DirectedGraph]: https://pub.dev/documentation/directed_graph/latest/directed_graph/DirectedGraph-class.html
+
+[DirectedMultiGraph]: https://pub.dev/documentation/directed_graph/latest/directed_graph/DirectedMultiGraph-class.html
 
 [Iterable]: https://api.dart.dev/dart-core/Iterable-class.html
 
 [WeightedDirectedGraph]: https://pub.dev/documentation/directed_graph/latest/directed_graph/WeightedDirectedGraph-class.html
+
+[WeightedDirectedMultiGraph]: https://pub.dev/documentation/directed_graph/latest/directed_graph/WeightedDirectedMultiGraph-class.html
+
+
+[UnmodifiableDirectedGraph]: https://pub.dev/documentation/directed_graph/latest/directed_graph/UnmodifiableDirectedGraph-class.html
