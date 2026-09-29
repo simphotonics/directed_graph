@@ -11,12 +11,11 @@ void main() {
     'd': {'e', 'f'},
     'e': {'g'},
     'f': {'i'},
-    //g': {'a'},
+    'g': {'a'},
     'i': {'l'},
     'k': {'g', 'f'},
   }, comparator: comparator);
 
-  print(graph);
   // Throws an UnsupportedOperation error.
   graph.clear();
 }
