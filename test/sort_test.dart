@@ -1,7 +1,7 @@
 import 'package:directed_graph/directed_graph.dart';
 import 'package:test/test.dart';
 
-class A {}
+class A;
 
 void main() {
   int comparator(String s1, String s2) {
@@ -58,10 +58,10 @@ void main() {
   });
   group('defaultComparator', () {
     test('T is Comparable', () {
-      expect(defaultComparator<double>(), isA<Comparator<double>>());
+      expect(defaultVertexComparator<double>(), isA<Comparator<double>>());
     });
     test('T !is Comparable', () {
-      expect(defaultComparator<Object>(), isNull);
+      expect(defaultVertexComparator<Object>(), isNull);
     });
   });
 }
