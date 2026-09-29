@@ -376,7 +376,8 @@ class WeightedDirectedMultiGraph<T extends Object, W extends Comparable>
   /// * Throws an error if the [walk] cannot be traversed.
   /// * Returns zero if the iterable [walk] is empty.
   /// * By default, the edge with the lowest associated weight is selected.
-  ///   To selecte the heaviest edge set [selector] to [WeightSelector.max].
+  ///   To select the heaviest edge set [selector] to
+  ///   [EdgeSelector.highestWeight].
   W weightAlong(
     Iterable<T> walk, {
     EdgeSelector selector = EdgeSelector.lowestWeight,
