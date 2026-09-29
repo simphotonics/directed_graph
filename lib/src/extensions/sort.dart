@@ -1,18 +1,29 @@
 import 'package:directed_graph/src/exceptions/error_types.dart';
 import 'package:exception_templates/exception_templates.dart';
+import 'package:lazy_memo/lazy_memo.dart';
+
+/// Function used to sum edge weights.
+typedef Summation<W> = W Function(W left, W right);
 
 /// Returns `true` if [T] implements or extends [Comparable].
-bool _isComparable<T>() => Iterable<T>.empty() is Iterable<Comparable>;
+bool _isComparable<T>() => (Iterable<T>.empty() is Iterable<Comparable>);
 
-/// Returns a generic function of type [Comparator]\<T\> or `null` if [T]
-/// does not implement [Comparable].
-Comparator<T>? defaultComparator<T>() {
-  if (_isComparable<T>()) {
+/// A memoized generic function with no arguments and return type [bool].
+final isComparable = GenericMemoizedFunction(_isComparable);
+
+/// Returns a generic function of type `int Function(T, T)` or `null` if
+/// the type [T] does not implement [Comparable].
+Comparator<T>? defaultVertexComparator<T>() {
+  if (isComparable<T>()) {
     return (T left, T right) => (left as Comparable).compareTo(right);
   } else {
     return null;
   }
 }
+
+/// The default comparator used to compare graph edge weights.
+int defaultWeightComparator<W extends Comparable>(W left, W right) =>
+    left.compareTo(right);
 
 /// Extension providing the method [equalTo] for
 /// comparing a set with another set element by element.
@@ -48,7 +59,7 @@ extension SortSet<T extends Object> on Set<T> {
     if (comparator != null) {
       tmp.sort(comparator);
     } else if (_isComparable<T>()) {
-      tmp.sort(defaultComparator<T>()); // Sort using default comparator.
+      tmp.sort(defaultVertexComparator<T>()); // Sort using default comparator.
     } else {
       throw ErrorOfType<SortingNotSupported<T>>(
         message: 'Error trying to sort the set: $this.',
@@ -88,12 +99,13 @@ extension SortMap<K extends Object, V extends Object> on Map<K, V> {
     if (comparator != null) {
       sortedKeys.sort(comparator);
     } else if (_isComparable<K>()) {
-      sortedKeys.sort(defaultComparator<K>());
+      sortedKeys.sort(defaultVertexComparator<K>());
     } else {
       throw ErrorOfType<SortingNotSupported<K>>(
         message: 'Error trying to sort $this using the keys $keys.',
         invalidState: 'Type \'$K\' is not comparable.',
-        expectedState: 'Try calling sortByKey() '
+        expectedState:
+            'Try calling sortByKey() '
             'specifying a valid comparator for type \'$K\'.',
       );
     }
@@ -125,7 +137,8 @@ extension SortMap<K extends Object, V extends Object> on Map<K, V> {
       throw ErrorOfType<SortingNotSupported<V>>(
         message: 'Error trying to sort a map of type Map<$K, $V>.',
         invalidState: 'Type \'$V\' is not comparable.',
-        expectedState: 'Try calling sortByValue() specifying '
+        expectedState:
+            'Try calling sortByValue() specifying '
             'a valid comparator for type \'$V\'.',
       );
     }
