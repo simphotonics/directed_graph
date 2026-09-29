@@ -1,3 +1,11 @@
+### 1.0.0
+- Added the classes `UnmodifiableDirectedGraph`, `DirectedMultiGraph`, and
+`WeightedDirectedMultiGraph`.
+- Removed the getter `inverseComparator`, to prevent users from inadvertently
+  setting it as the graph comparator thus causing a stack overflow.
+- Require Dart SDK ^3.13.0.
+- Added tests.
+
 ## 0.5.6
 - Added the graph method `sort`, to enable the sorting of vertices and edges.
 The vertices must be comparable or a suitable comparator must be provided.
