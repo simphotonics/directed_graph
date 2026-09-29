@@ -15,8 +15,8 @@ abstract class DirectedGraphBase<T extends Object> extends Iterable<T> {
   /// Super constructor of objects extending `DirectedGraphBase`.
   /// * `comparator`: A function with signature `int Function(T a, T b)`
   /// used to sort vertices.
-  DirectedGraphBase(Comparator<T>? comparator)
-      : _comparator = comparator ?? defaultComparator<T>();
+  new(Comparator<T>? comparator)
+    : _comparator = comparator ?? defaultVertexComparator<T>();
 
   /// Returns the number of graph vertices.
   /// Classes extending [DirectedGraphBase] should make sure that the [length]
@@ -62,7 +62,7 @@ abstract class DirectedGraphBase<T extends Object> extends Iterable<T> {
   //   }
   // }
 
-  /// This field hold either:
+  /// This field holds either:
   /// * the comparator provided as constructor parameter,
   /// * the comparator set by the user,
   /// * the default comparator if the generic type [T] implements [Comparable],
@@ -80,8 +80,8 @@ abstract class DirectedGraphBase<T extends Object> extends Iterable<T> {
   /// Returns the inverse of [comparator]. Returns `null` if the graph has
   /// no comparator (that was set by the user of provided as constructor
   ///  parameter).
-  Comparator<T>? get inverseComparator =>
-      hasComparator ? (T v1, T v2) => -_comparator!(v1, v2) : null;
+  Comparator<T>? get _inverseComparator =>
+      hasComparator ? (T v1, T v2) => _comparator!(v2, v1) : null;
 
   /// Sets the comparator used to sort graph vertices.
   set comparator(Comparator<T>? comparator) {
@@ -347,7 +347,7 @@ abstract class DirectedGraphBase<T extends Object> extends Iterable<T> {
     //       one vertex with inDegree equal to zero.
     // Note: Using a reverse comparator since the resulting order
     // of the vertices will be reversed.
-    final sources = PriorityQueue<T>(inverseComparator);
+    final sources = PriorityQueue<T>(_inverseComparator);
     for (final vertex in vertices) {
       if (localInDegreeMap[vertex] == 0) {
         sources.add(vertex);
@@ -577,8 +577,8 @@ abstract class DirectedGraphBase<T extends Object> extends Iterable<T> {
     }
 
     if (sorted && (comparator != null || hasComparator)) {
-      for (final vertex in vertices.toList()
-        ..sort(comparator ?? this.comparator)) {
+      for (final vertex
+          in vertices.toList()..sort(comparator ?? this.comparator)) {
         if (!indices.containsKey(vertex)) {
           strongConnectSorted(
             vertex,
@@ -614,7 +614,7 @@ abstract class DirectedGraphBase<T extends Object> extends Iterable<T> {
 
     final scc = stronglyConnectedComponents(
       sorted: sorted,
-      comparator: inverseComparator,
+      comparator: _inverseComparator,
     );
 
     final verticesInSameComponent = HashSet.of([]);
@@ -638,8 +638,9 @@ abstract class DirectedGraphBase<T extends Object> extends Iterable<T> {
     if (isQuasiSortable) {
       final result = scc.fold(
         <T>[],
-        (flattendList, component) => flattendList
-          ..addAll(component.where((vertex) => vertices.contains(vertex))),
+        (flattendList, component) =>
+            flattendList
+              ..addAll(component.where((vertex) => vertices.contains(vertex))),
       );
       return result.reversed.toSet();
     } else {
@@ -691,8 +692,9 @@ abstract class DirectedGraphBase<T extends Object> extends Iterable<T> {
     if (isQuasiSortable) {
       final result = scc.fold(
         <T>[],
-        (flattendList, component) => flattendList
-          ..addAll(component.where((vertex) => vertices.contains(vertex))),
+        (flattendList, component) =>
+            flattendList
+              ..addAll(component.where((vertex) => vertices.contains(vertex))),
       );
       return result.toSet();
     } else {

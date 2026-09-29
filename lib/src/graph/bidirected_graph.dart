@@ -3,20 +3,20 @@ import 'directed_graph.dart';
 /// Graph with bidirected edges represented by a directed graph
 /// with symmetric edges.
 class BidirectedGraph<T extends Object> extends DirectedGraph<T> {
-  BidirectedGraph(super.edges, {super.comparator}) {
+  new(super.edges, {super.comparator}) {
     // Render graph symmetric:
     _symmetrize();
   }
 
   /// Constructs a bidirected graph from a directed graph.
-  BidirectedGraph.from(DirectedGraph<T> graph)
-      : super(graph.data, comparator: graph.comparator) {
+  new from(DirectedGraph<T> graph)
+    : super(graph.data, comparator: graph.comparator) {
     _symmetrize();
   }
 
   /// Constructs the bidirected transitive closure of a graph.
   /// * Note: The input graph can be a directed graph or a bidirected graph.
-  factory BidirectedGraph.transitiveClosure(DirectedGraph<T> graph) {
+  factory transitiveClosure(DirectedGraph<T> graph) {
     final tc = DirectedGraph.transitiveClosure(graph);
     return BidirectedGraph<T>.from(tc);
   }
