@@ -8,10 +8,10 @@ import 'package:directed_graph/directed_graph.dart';
 // //
 // // followed by enter.
 void main() {
-  final a = 'a';
-  final b = 'b';
-  final c = 'c';
-  final d = 'd';
+  const a = 'a';
+  const b = 'b';
+  const c = 'c';
+  const d = 'd';
 
   var graph = DirectedGraph<String>({
     a: {b, c, d},

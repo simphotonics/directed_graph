@@ -44,11 +44,11 @@ void main(List<String> args) {
 
   final lightestPath = graph.lightestPath(a, g);
   print('\nLightest path a -> g');
-  print('$lightestPath weight: ${graph.weightAlong(lightestPath)}');
+  print('${lightestPath.vertices} weight: ${lightestPath.weight}');
 
   final heaviestPath = graph.heaviestPath(a, g);
   print('\nHeaviest path a -> g');
-  print('$heaviestPath weigth: ${graph.weightAlong(heaviestPath)}');
+  print('${heaviestPath.vertices} weigth: ${heaviestPath.weight}');
 
   final shortestPath = graph.shortestPath(a, g);
   print('\nShortest path a -> g');

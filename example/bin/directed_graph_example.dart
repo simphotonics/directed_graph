@@ -5,7 +5,6 @@ void main() {
   int inverseComparator(String s1, String s2) => -comparator(s1, s2);
 
   // Constructing a graph from vertices.
-
   final graph = DirectedGraph<String>({
     'a': {'b', 'h', 'c', 'e'},
     'b': {'h'},
@@ -117,6 +116,7 @@ void main() {
   print(graph.quasiTopologicalOrdering({'d', 'e', 'a', 'g'}, sorted: true));
 
   print('\nReverse-Quasi-Topological Ordering, sorted:');
-  print(graph
-      .reverseQuasiTopologicalOrdering({'d', 'e', 'a', 'g'}, sorted: true));
+  print(
+    graph.reverseQuasiTopologicalOrdering({'d', 'e', 'a', 'g'}, sorted: true),
+  );
 }
