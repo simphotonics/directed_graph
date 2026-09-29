@@ -37,7 +37,7 @@ The class [`GraphCrawler`][GraphCrawler] can be used to retrieve *paths* or *wal
 Elements of a graph are called *vertices* (or nodes) and neighbouring vertices are connected by *edges*.
 The figure below shows a *directed graph* with unidirectional edges depicted as arrows.
 Graph edges are emanating from a vertex and ending at a vertex. In a *weighted directed graph* each
-edge is assigned a weight.
+edge is assigned a weight. A *multi graph* can have several edges connecting the same vertex pair.
 
 ![Directed Graph Image](https://github.com/simphotonics/directed_graph/raw/main/images/directed_graph.svg?sanitize=true)
 
