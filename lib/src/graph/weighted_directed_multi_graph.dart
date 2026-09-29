@@ -6,9 +6,8 @@ import '../exceptions/error_types.dart';
 import '../extensions/sort.dart';
 import 'directed_graph_base.dart';
 
-/// A directed graph storing vertices of type [T].
-/// * A weight of type
-/// [W] is associated with each directed edge.
+/// A directed graph storing vertices of type [T] and edge weights of type
+/// [W].
 /// * There can be several edges between two vertices.
 /// * [T] must be usable as a map key.
 class WeightedDirectedMultiGraph<T extends Object, W extends Comparable>
@@ -30,7 +29,7 @@ class WeightedDirectedMultiGraph<T extends Object, W extends Comparable>
   final Summation<W> summation;
 
   /// Constructs a weighted directed graph with vertices of type [T]
-  /// and associates to each graph edge a weight of type [W].
+  /// edge weight of type [W].
   /// * [edges]: The weighted edges of the graph. An empty map may
   /// be used to create an empty graph.
   /// * [zero]: The weight of an empty path. It represents the additive
@@ -325,7 +324,6 @@ class WeightedDirectedMultiGraph<T extends Object, W extends Comparable>
   }
 
   /// Sorts the neighbouring vertices of each vertex using [comparator].
-
   /// * By default the neighbouring vertices of a vertex are listed in
   ///   insertion order.
   /// * In general, adding further graph edges invalidates

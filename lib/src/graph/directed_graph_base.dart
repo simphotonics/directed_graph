@@ -602,7 +602,7 @@ abstract class DirectedGraphBase<T extends Object> extends Iterable<T> {
   /// * [vertices] must be a subset of the graph vertices. If any vertex in
   /// [vertices] does not belong to the graph, `null` is returned.
   /// * Note: If A and B are any two elements of [vertices],
-  /// and there is a path [A, ..., B], then there be no path [B, ..., A]
+  /// and there is a path (A, ..., B), then there be no path (B, ..., A)
   ///  for a quasi-topological ordering to exists.
   /// * If sorted is set to
   /// `true` the vertices will be ordered using the graph [comparator] on top
@@ -727,7 +727,7 @@ abstract class DirectedGraphBase<T extends Object> extends Iterable<T> {
   /// Returns a String representation of the graph.
   ///
   /// Vertices of type [String] are *quoted* using
-  /// [QuoteBuffer] an extension on [StringBuffer] so that one can
+  /// `QuoteBuffer` an extension on [StringBuffer] so that one can
   /// copy terminal output and paste it as valid source code representing
   /// a map.
   @override

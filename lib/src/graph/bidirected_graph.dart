@@ -15,7 +15,8 @@ class BidirectedGraph<T extends Object> extends DirectedGraph<T> {
   }
 
   /// Constructs the bidirected transitive closure of a graph.
-  /// * Note: The input graph can be a directed graph or a bidirected graph.
+  ///
+  /// Note: The input graph can be a directed graph or a bidirected graph.
   factory transitiveClosure(DirectedGraph<T> graph) {
     final tc = DirectedGraph.transitiveClosure(graph);
     return BidirectedGraph<T>.from(tc);
@@ -37,7 +38,8 @@ class BidirectedGraph<T extends Object> extends DirectedGraph<T> {
 
   /// Removes edges (connections) pointing from [vertex]
   /// to [connectedVertices].
-  /// * Note: Does not remove the vertices.
+  ///
+  /// Note: Does not remove the vertices.
   @override
   void removeEdges(T vertex, Set<T> connectedVertices) {
     super.removeEdges(vertex, connectedVertices);

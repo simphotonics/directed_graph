@@ -157,6 +157,7 @@ class DirectedMultiGraph<T extends Object> extends DirectedGraphBase<T> {
 
   /// Removes *one* edge pointing from [vertex] to [connectedVertex] and
   /// decrements the edge count.
+  ///
   /// Does not remove any vertices from the graph.
   void removeEdge(T vertex, T connectedVertex) {
     _edges[vertex]?.decrement(connectedVertex);

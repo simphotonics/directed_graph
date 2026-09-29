@@ -6,8 +6,9 @@ import '../extensions/sort.dart';
 import 'directed_graph_base.dart';
 
 /// A directed graph storing vertices of type [T]. A weight of type
-/// [W] is associated with each directed edge. Note:
-/// [T] must be usable as a map key.
+/// [W] is associated with each directed edge.
+///
+/// Note: [T] must be usable as a map key.
 class WeightedDirectedGraph<T extends Object, W extends Comparable>
     extends DirectedGraphBase<T> {
   /// The weight of an empty path.
@@ -40,7 +41,7 @@ class WeightedDirectedGraph<T extends Object, W extends Comparable>
   });
 
   /// Constructs a weighted directed graph with vertices of type [T]
-  /// and associates to each graph edge a weight of type [W].
+  /// and edge weights of type [W].
   /// * [edges]: The weighted edges of the graph. An empty map may
   /// be used to create an empty graph.
   /// * [zero]: The weight of an empty path. It represents the additive
@@ -83,7 +84,7 @@ class WeightedDirectedGraph<T extends Object, W extends Comparable>
         zero: graph.zero,
       );
 
-  /// Returns a copy of the weighted edges
+  /// Returns a copy of the graphs weighted edges
   /// as an object of type `Map<T, Map<T, W>>`.
   Map<T, Map<T, W>> get data {
     final out = <T, Map<T, W>>{};
@@ -134,15 +135,12 @@ class WeightedDirectedGraph<T extends Object, W extends Comparable>
   Iterable<T> get vertices => _edges.keys;
 
   /// The comparator used to sort edge weights.
+  ///
   /// This field holds either:
   /// * the comparator provided as constructor parameter,
   /// * the comparator set by the user,
   /// * the default comparator.
   Comparator<W> weightComparator;
-
-  /// Returns the inverse of [weightComparator].
-  Comparator<W> get inverseWeigthComparator =>
-      (W left, W right) => -weightComparator(left, right);
 
   /// Returns the sum of all graph edges.
   W get weight => _weight();
@@ -206,6 +204,7 @@ class WeightedDirectedGraph<T extends Object, W extends Comparable>
   }
 
   /// Returns the vertices connected to [vertex].
+  ///
   /// Note: Mathematically, an edge is an ordered pair
   /// (vertex, connected-vertex).
   @override
@@ -234,7 +233,8 @@ class WeightedDirectedGraph<T extends Object, W extends Comparable>
   /// Returns a record containing the path
   /// connecting [start] and [target] with
   /// the smallest summed edge-weight and the summed weight.
-  /// * Returns an empty list  and [zero] if no path could be found.
+  ///
+  /// Returns an empty list  and [zero] if no path could be found.
   ({List<T> vertices, W weight}) lightestPath(T start, T target) {
     final paths = crawler.paths(start, target);
     if (paths.isEmpty) return (vertices: [], weight: zero);
@@ -262,6 +262,7 @@ class WeightedDirectedGraph<T extends Object, W extends Comparable>
   }
 
   /// Removes the edge pointing from [vertex] to [connectedVertex].
+  ///
   /// Does not remove the vertices.
   void removeEdge(T vertex, T connectedVertex) {
     _edges[vertex]?.remove(connectedVertex);
@@ -304,8 +305,7 @@ class WeightedDirectedGraph<T extends Object, W extends Comparable>
     sortEdges();
   }
 
-  /// Sorts the neighbouring vertices of each vertex using [vertexComparator].
-  /// * The optional parameter [vertexComparator] defaults to [comparator].
+  /// Sorts the neighbouring vertices of each vertex using [comparator].
   /// * By default the neighbouring vertices of a vertex are listed in
   ///   insertion order.
   /// * In general, adding further graph edges invalidates
