@@ -338,14 +338,16 @@ void main() {
   group('path:', () {
     test('min. weight', () {
       final graph = WeightedDirectedGraph.of(graph0);
-      expect(graph.lightestPath(a, g), [a, c, g]);
-      expect(graph.weightAlong([a, c, g]), 6);
+      final lightestPath = graph.lightestPath(a, g);
+      expect(lightestPath.vertices, [a, c, g]);
+      expect(lightestPath.weight, graph.weightAlong([a, c, g]));
     });
     test('max. weight', () {
       final graph = WeightedDirectedGraph.of(graph0);
       graph.addEdges(h, {g: 17});
-      expect(graph.heaviestPath(a, g), [a, h, g]);
-      expect(graph.weightAlong([a, h, g]), 24);
+      final heaviestPath = graph.heaviestPath(a, g);
+      expect(heaviestPath.vertices, [a, h, g]);
+      expect(heaviestPath.weight, graph.weightAlong([a, h, g]));
     });
   });
 
@@ -368,19 +370,7 @@ void main() {
       for (var vertex in graph.sortedVertices) {
         vertex = '${vertex}1';
       }
-      expect(graph.sortedVertices, {
-        a,
-        b,
-        c,
-        d,
-        e,
-        f,
-        g,
-        h,
-        i,
-        k,
-        l,
-      });
+      expect(graph.sortedVertices, {a, b, c, d, e, f, g, h, i, k, l});
     });
   });
   group('sort:', () {
@@ -407,19 +397,7 @@ void main() {
 
     test('graph vertices', () {
       final graph = WeightedDirectedGraph.of(graph0)..sort();
-      expect(graph0.vertices, [
-        b,
-        h,
-        a,
-        c,
-        e,
-        g,
-        d,
-        f,
-        i,
-        l,
-        k,
-      ]);
+      expect(graph0.vertices, [b, h, a, c, e, g, d, f, i, l, k]);
       expect(graph.vertices, [a, b, c, d, e, f, g, h, i, k, l]);
     });
   });
