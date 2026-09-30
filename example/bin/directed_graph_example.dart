@@ -1,20 +1,31 @@
 import 'package:directed_graph/directed_graph.dart';
 
+int comparator(String s1, String s2) => s1.compareTo(s2);
+int inverseComparator(String s1, String s2) => -comparator(s1, s2);
+
 void main() {
-  int comparator(String s1, String s2) => s1.compareTo(s2);
-  int inverseComparator(String s1, String s2) => -comparator(s1, s2);
+  const a = 'a';
+  const b = 'b';
+  const c = 'c';
+  const d = 'd';
+  const e = 'e';
+  const f = 'f';
+  const g = 'g';
+  const h = 'h';
+  const i = 'i';
+  const k = 'k';
+  const l = 'l';
 
   // Constructing a graph from vertices.
   final graph = DirectedGraph<String>({
-    'a': {'b', 'h', 'c', 'e'},
-    'b': {'h'},
-    'c': {'h', 'g'},
-    'd': {'e', 'f'},
-    'e': {'g'},
-    'f': {'i'},
-    //g': {'a'},
-    'i': {'l'},
-    'k': {'g', 'f'},
+    a: {b, h, c, e},
+    b: {h},
+    c: {h, g},
+    d: {e, f},
+    e: {g},
+    f: {i},
+    i: {l},
+    k: {g, f},
   }, comparator: comparator);
 
   print('Example Directed Graph...');
@@ -31,16 +42,16 @@ void main() {
   print(graph.localSources());
 
   print('\nshortestPath(d, l):');
-  print(graph.shortestPath('d', 'l'));
+  print(graph.shortestPath(d, l));
 
   print('\nshortestPaths(a)');
-  print(graph.shortestPaths('a'));
+  print(graph.shortestPaths(a));
 
   print('\nInDegree(C):');
-  print(graph.inDegree('c'));
+  print(graph.inDegree(c));
 
   print('\nOutDegree(C)');
-  print(graph.outDegree('c'));
+  print(graph.outDegree(c));
 
   print('\nVertices sorted in lexicographical order:');
   print(graph.sortedVertices);
@@ -69,11 +80,8 @@ void main() {
   print(graph.localSources());
 
   print('\nAdding edges: i -> k and i -> d');
-
   // Add edge to render the graph cyclic
-  graph.addEdge('i', 'k');
-  //graph.addEdge('l', 'l');
-  graph.addEdge('i', 'd');
+  graph.addEdges(i, {k, d});
 
   print('\nCyclic graph:');
   print(graph);
@@ -88,10 +96,10 @@ void main() {
   print(graph.isAcyclic);
 
   print('\nShortest Paths:');
-  print(graph.shortestPaths('a'));
+  print(graph.shortestPaths(a));
 
   print('\nEdge exists: a->b');
-  print(graph.edgeExists('a', 'b'));
+  print(graph.edgeExists(a, b));
 
   print('\nStrongly connected components:');
   print(graph.stronglyConnectedComponents());
@@ -110,13 +118,11 @@ void main() {
   );
 
   print('\nQuasi-Topological Ordering:');
-  print(graph.quasiTopologicalOrdering({'d', 'e', 'a', 'g'}));
+  print(graph.quasiTopologicalOrdering({d, e, a, g}));
 
   print('\nQuasi-Topological Ordering, sorted:');
-  print(graph.quasiTopologicalOrdering({'d', 'e', 'a', 'g'}, sorted: true));
+  print(graph.quasiTopologicalOrdering({d, e, a, g}, sorted: true));
 
   print('\nReverse-Quasi-Topological Ordering, sorted:');
-  print(
-    graph.reverseQuasiTopologicalOrdering({'d', 'e', 'a', 'g'}, sorted: true),
-  );
+  print(graph.reverseQuasiTopologicalOrdering({d, e, a, g}, sorted: true));
 }

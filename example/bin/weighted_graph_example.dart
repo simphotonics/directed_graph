@@ -1,21 +1,21 @@
 import 'package:directed_graph/directed_graph.dart';
 
 void main(List<String> args) {
+  const a = 'a';
+  const b = 'b';
+  const c = 'c';
+  const d = 'd';
+  const e = 'e';
+  const f = 'f';
+  const g = 'g';
+  const h = 'h';
+  const i = 'i';
+  const k = 'k';
+  const l = 'l';
+
   int comparator(String s1, String s2) {
     return s1.compareTo(s2);
   }
-
-  final a = 'a';
-  final b = 'b';
-  final c = 'c';
-  final d = 'd';
-  final e = 'e';
-  final f = 'f';
-  final g = 'g';
-  final h = 'h';
-  final i = 'i';
-  final k = 'k';
-  final l = 'l';
 
   int sum(int left, int right) => left + right;
 
@@ -56,9 +56,6 @@ void main(List<String> args) {
 
   print('\nTransitive Closure');
   print(WeightedDirectedGraph.transitiveClosure(graph));
-
-  print('\nTransitive Weighted Edges:');
-  print(graph.transitiveWeightedEdges);
 
   print('\nVertices reachable from d:');
   print(graph.reachableVertices(d));

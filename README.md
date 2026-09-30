@@ -95,26 +95,38 @@ the following default comparator is automatically provided:
 (T left, T right) =>  (left as Comparable).compareTo(right);
 ```
 In the example below, a custom
-comparator is used to sort vertices in lexicographical order.
+comparator is used to sort vertices of type `String` in lexicographical order.
 
 ```Dart
+
 import 'package:directed_graph/directed_graph.dart';
+
+int comparator(String s1, String s2) => s1.compareTo(s2);
+int inverseComparator(String s1, String s2) => -comparator(s1, s2);
+
 void main() {
-  int comparator(String s1, String s2) => s1.compareTo(s2);
-  int inverseComparator(String s1, String s2) => -comparator(s1, s2);
+  const a = 'a';
+  const b = 'b';
+  const c = 'c';
+  const d = 'd';
+  const e = 'e';
+  const f = 'f';
+  const g = 'g';
+  const h = 'h';
+  const i = 'i';
+  const k = 'k';
+  const l = 'l';
 
   // Constructing a graph from vertices.
-
   final graph = DirectedGraph<String>({
-    'a': {'b', 'h', 'c', 'e'},
-    'b': {'h'},
-    'c': {'h', 'g'},
-    'd': {'e', 'f'},
-    'e': {'g'},
-    'f': {'i'},
-    //g': {'a'},
-    'i': {'l'},
-    'k': {'g', 'f'},
+    a: {b, h, c, e},
+    b: {h},
+    c: {h, g},
+    d: {e, f},
+    e: {g},
+    f: {i},
+    i: {l},
+    k: {g, f},
   }, comparator: comparator);
 
   print('Example Directed Graph...');
@@ -131,16 +143,16 @@ void main() {
   print(graph.localSources());
 
   print('\nshortestPath(d, l):');
-  print(graph.shortestPath('d', 'l'));
+  print(graph.shortestPath(d, l));
 
   print('\nshortestPaths(a)');
-  print(graph.shortestPaths('a'));
+  print(graph.shortestPaths(a));
 
-  print('\nInDegree(C):');
-  print(graph.inDegree('c'));
+  print('\nInDegree(c):');
+  print(graph.inDegree(c));
 
-  print('\nOutDegree(C)');
-  print(graph.outDegree('c'));
+  print('\nOutDegree(c)');
+  print(graph.outDegree(c));
 
   print('\nVertices sorted in lexicographical order:');
   print(graph.sortedVertices);
@@ -169,11 +181,8 @@ void main() {
   print(graph.localSources());
 
   print('\nAdding edges: i -> k and i -> d');
-
   // Add edge to render the graph cyclic
-  graph.addEdge('i', 'k');
-  //graph.addEdge('l', 'l');
-  graph.addEdge('i', 'd');
+  graph.addEdges(i, {k, d});
 
   print('\nCyclic graph:');
   print(graph);
@@ -188,10 +197,10 @@ void main() {
   print(graph.isAcyclic);
 
   print('\nShortest Paths:');
-  print(graph.shortestPaths('a'));
+  print(graph.shortestPaths(a));
 
   print('\nEdge exists: a->b');
-  print(graph.edgeExists('a', 'b'));
+  print(graph.edgeExists(a, b));
 
   print('\nStrongly connected components:');
   print(graph.stronglyConnectedComponents());
@@ -210,17 +219,15 @@ void main() {
   );
 
   print('\nQuasi-Topological Ordering:');
-  print(graph.quasiTopologicalOrdering({'d', 'e', 'a', 'g'}));
+  print(graph.quasiTopologicalOrdering({d, e, a, g}));
 
   print('\nQuasi-Topological Ordering, sorted:');
-  print(graph.quasiTopologicalOrdering({'d', 'e', 'a', 'g'}, sorted: true));
+  print(graph.quasiTopologicalOrdering({d, e, a, g}, sorted: true));
 
   print('\nReverse-Quasi-Topological Ordering, sorted:');
-  print(graph.reverseQuasiTopologicalOrdering({'d', 'e', 'a', 'g'}, sorted: true));
+  print(graph.reverseQuasiTopologicalOrdering({d, e, a, g}, sorted: true));
 }
-
 ```
-
 <details> <summary> Click to show the console output. </summary>
 
 ```Console
@@ -254,12 +261,12 @@ shortestPath(d, l):
 [d, f, i, l]
 
 shortestPaths(a)
-{b: [b], h: [h], c: [c], e: [e], g: [c, g]}
+{b: {b}, h: {h}, c: {c}, e: {e}, g: {c, g}}
 
-InDegree(C):
+InDegree(c):
 1
 
-OutDegree(C)
+OutDegree(c)
 2
 
 Vertices sorted in lexicographical order:
@@ -313,7 +320,7 @@ graph.isAcyclic:
 false
 
 Shortest Paths:
-{b: [b], h: [h], c: [c], e: [e], g: [c, g]}
+{b: {b}, h: {h}, c: {c}, e: {e}, g: {c, g}}
 
 Edge exists: a->b
 true
@@ -354,21 +361,21 @@ or if `T` implements [`Comparator`][Comparator].
 import 'package:directed_graph/directed_graph.dart';
 
 void main(List<String> args) {
+  const a = 'a';
+  const b = 'b';
+  const c = 'c';
+  const d = 'd';
+  const e = 'e';
+  const f = 'f';
+  const g = 'g';
+  const h = 'h';
+  const i = 'i';
+  const k = 'k';
+  const l = 'l';
+
   int comparator(String s1, String s2) {
     return s1.compareTo(s2);
   }
-
-  final a = 'a';
-  final b = 'b';
-  final c = 'c';
-  final d = 'd';
-  final e = 'e';
-  final f = 'f';
-  final g = 'g';
-  final h = 'h';
-  final i = 'i';
-  final k = 'k';
-  final l = 'l';
 
   int sum(int left, int right) => left + right;
 
@@ -397,11 +404,11 @@ void main(List<String> args) {
 
   final lightestPath = graph.lightestPath(a, g);
   print('\nLightest path a -> g');
-  print('$lightestPath weight: ${graph.weightAlong(lightestPath)}');
+  print('${lightestPath.vertices} weight: ${lightestPath.weight}');
 
   final heaviestPath = graph.heaviestPath(a, g);
   print('\nHeaviest path a -> g');
-  print('$heaviestPath weigth: ${graph.weightAlong(heaviestPath)}');
+  print('${heaviestPath.vertices} weigth: ${heaviestPath.weight}');
 
   final shortestPath = graph.shortestPath(a, g);
   print('\nShortest path a -> g');
@@ -467,12 +474,12 @@ Shortest path a -> g
 
 Transitive Closure
 {
- 'a': {'b': 1, 'c': 2, 'h': 7, 'g': 6, 'e': 40},
+ 'a': {'b': 1, 'c': 2, 'h': 7, 'g': 7, 'e': 40},
  'b': {'h': 6},
  'c': {'g': 4, 'h': 5},
  'd': {'e': 1, 'f': 2, 'g': 3, 'i': 5, 'k': 7, 'l': 8},
  'e': {'g': 2},
- 'f': {'i': 3, 'k': 5, 'l': 6, 'g': 9, 'f': 10},
+ 'f': {'i': 3, 'k': 5, 'g': 9, 'f': 10, 'l': 6},
  'g': {},
  'h': {},
  'i': {'k': 2, 'l': 3, 'g': 6, 'f': 7, 'i': 10},
@@ -480,14 +487,12 @@ Transitive Closure
  'l': {'l': 0},
 }
 
-Transitive Weighted Edges:
-{a: {b: 1, c: 2, h: 7, g: 6, e: 40}, b: {h: 6}, c: {g: 4, h: 5}, d: {e: 1, f: 2, g: 3, i: 5, k: 7, l: 8}, e: {g: 2}, f: {i: 3, k: 5, l: 6, g: 9, f: 10}, g: {}, h: {}, i: {k: 2, l: 3, g: 6, f: 7, i: 10}, k: {g: 4, f: 5, i: 8, k: 10, l: 11}, l: {l: 0}}
-
 Vertices reachable from d:
 {e, g, f, i, k, l}
 
 Update weight of edge (a,b) with value 101:
 graph.weightedEdges(a): {b: 101, c: 2, h: 7, g: 7, e: 40}
+
 ```
 </details>
 
