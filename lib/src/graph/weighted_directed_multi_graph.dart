@@ -10,7 +10,7 @@ import 'directed_graph_base.dart';
 /// [W].
 /// * There can be several edges between two vertices.
 /// * [T] must be usable as a map key.
-class WeightedDirectedMultiGraph<T extends Object, W extends Comparable>
+class WeightedDirectedMultiGraph<T extends Object, W extends Comparable<Object>>
     extends DirectedGraphBase<T> {
   /// The weight of an empty path.
   /// * Used as the initial value when summing the weight of a path.
