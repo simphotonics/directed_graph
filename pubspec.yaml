@@ -22,7 +22,7 @@ dependencies:
   exception_templates: ^1.1.0
   lazy_memo: ^1.0.0
   meta: ^1.18.2
-  quote_buffer: ^0.2.7
+  quote_buffer: ^1.1.0
 
 dev_dependencies:
   benchmark_runner: ^2.2.1
