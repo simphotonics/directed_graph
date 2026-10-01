@@ -1,2 +1,4 @@
 # Don't publish images
 images/
+
+doc/api
