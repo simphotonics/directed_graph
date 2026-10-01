@@ -1,1248 +1,273 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="646" height="1744" viewBox="0 0 646 1744" role="img" aria-label="console2svg output">
+<svg xmlns="http://www.w3.org/2000/svg" width="704.8" height="1744" viewBox="0 0 704.8 1744" role="img" aria-label="console2svg output">
 <style>
 .c2.c { font-family: "JetBrains Mono","Cascadia Mono","Segoe UI Mono","Noto Sans Mono","SFMono-Regular",Menlo,Consolas,"DejaVu Sans Mono","Liberation Mono",monospace; font-size: 14px; }
 .c2 text { dominant-baseline: alphabetic; }
 .c2 .q { shape-rendering: crispEdges; }
-.c2 .c2b { animation: c2b 1s step-start infinite; }
-
 .c2 .w { white-space: pre; }
 .c2 .aa{fill:#d4d4d4}
 .c2 .ab{fill:#e5e5e5}
 .c2 .ac{fill:#0dbc79}
 .c2 .ad{fill:#2472c8}
-@keyframes c2b { 50% { visibility: hidden; } }
-</style><rect width="646" height="1744" fill="#1e1e1e"/>
-<g class="c2 c"><rect x="8" y="8" width="630" height="18" fill="#1e1e1e"/>
+</style><rect width="704.8" height="1744" fill="#1e1e1e"/>
+<g class="c2 c"><rect x="8" y="8" width="688.8" height="18" fill="#1e1e1e"/>
 <text class="aa" x="8" y="22">$ dart run benchmark_runner report benchmark/directed_graph_benchmark.dart</text></g>
-<defs>
-<g id="c2r0" class="c2 c">
-<rect width="630" height="18" id="c2e0" fill="#1e1e1e"/>
-</g>
-<g id="c2r1" class="c2 c">
-<use href="#c2e0"/>
-<text class="ab w" y="14" textLength="235.2">Locating benchmark files ...</text>
-</g>
-<g id="c2r2" class="c2 c">
-<use href="#c2e0"/>
-<text class="aa" y="14" textLength="344.4">./benchmark/directed_graph_benchmark.dart</text>
-</g>
-<g id="c2r3" class="c2 c">
-<use href="#c2e0"/>
-<text class="ab w" y="14" textLength="126">Progress timer:</text>
-<text class="ac" x="134.4" y="14" textLength="92.4">[00s:000ms]</text>
-</g>
-<g id="c2r4" class="c2 c"><use href="#c2r3"/>
-<g transform="translate(176.4)">
-<rect width="16.8" height="18" id="c2e1" fill="#1e1e1e" stroke="#1e1e1e" stroke-width="2" vector-effect="non-scaling-stroke"/>
-<text class="ac" y="14" textLength="16.8">25</text>
-</g>
-</g>
-<g id="c2r5" class="c2 c"><use href="#c2r4"/>
-<g transform="translate(176.4)">
-<use href="#c2e1"/>
-<text class="ac" y="14" textLength="16.8">50</text>
-</g>
-</g>
-<g id="c2r6" class="c2 c"><use href="#c2r5"/>
-<g transform="translate(176.4)">
-<use href="#c2e1"/>
-<text class="ac" y="14" textLength="16.8">75</text>
-</g>
-</g>
-<g id="c2r7" class="c2 c"><use href="#c2r6"/>
-<g transform="translate(151.2)">
-<rect width="42" height="18" id="c2e2" fill="#1e1e1e" stroke="#1e1e1e" stroke-width="2" vector-effect="non-scaling-stroke"/>
-<text class="ac" y="14" textLength="42">1s:00</text>
-</g>
-</g>
-<g id="c2r8" class="c2 c">
-<use href="#c2e0"/>
-<text class="ab w" y="14" textLength="126">Progress timer:</text>
-<text class="ac" x="134.4" y="14" textLength="92.4">[01s:250ms]</text>
-</g>
-<g id="c2r9" class="c2 c"><use href="#c2r8"/>
-<g transform="translate(176.4)">
-<use href="#c2e1"/>
-<text class="ac" y="14" textLength="16.8">50</text>
-</g>
-</g>
-<g id="c2r10" class="c2 c"><use href="#c2r9"/>
-<g transform="translate(176.4)">
-<use href="#c2e1"/>
-<text class="ac" y="14" textLength="16.8">75</text>
-</g>
-</g>
-<g id="c2r11" class="c2 c"><use href="#c2r10"/>
-<g transform="translate(151.2)">
-<use href="#c2e2"/>
-<text class="ac" y="14" textLength="42">2s:00</text>
-</g>
-</g>
-<g id="c2r12" class="c2 c"><use href="#c2r11"/>
-<g transform="translate(176.4)">
-<use href="#c2e1"/>
-<text class="ac" y="14" textLength="16.8">25</text>
-</g>
-</g>
-<g id="c2r13" class="c2 c">
-<use href="#c2e0"/>
-<text class="ab w" y="14" textLength="126">Progress timer:</text>
-<text class="ac" x="134.4" y="14" textLength="92.4">[02s:500ms]</text>
-</g>
-<g id="c2r14" class="c2 c"><use href="#c2r13"/>
-<g transform="translate(176.4)">
-<use href="#c2e1"/>
-<text class="ac" y="14" textLength="16.8">75</text>
-</g>
-</g>
-<g id="c2r15" class="c2 c"><use href="#c2r14"/>
-<g transform="translate(151.2)">
-<use href="#c2e2"/>
-<text class="ac" y="14" textLength="42">3s:00</text>
-</g>
-</g>
-<g id="c2r16" class="c2 c"><use href="#c2r15"/>
-<g transform="translate(176.4)">
-<use href="#c2e1"/>
-<text class="ac" y="14" textLength="16.8">25</text>
-</g>
-</g>
-<g id="c2r17" class="c2 c"><use href="#c2r16"/>
-<g transform="translate(176.4)">
-<use href="#c2e1"/>
-<text class="ac" y="14" textLength="16.8">50</text>
-</g>
-</g>
-<g id="c2r18" class="c2 c">
-<use href="#c2e0"/>
-<text class="ab w" y="14" textLength="126">Progress timer:</text>
-<text class="ac" x="134.4" y="14" textLength="92.4">[03s:750ms]</text>
-</g>
-<g id="c2r19" class="c2 c"><use href="#c2r18"/>
-<g transform="translate(151.2)">
-<use href="#c2e2"/>
-<text class="ac" y="14" textLength="42">4s:00</text>
-</g>
-</g>
-<g id="c2r20" class="c2 c"><use href="#c2r19"/>
-<g transform="translate(176.4)">
-<use href="#c2e1"/>
-<text class="ac" y="14" textLength="16.8">25</text>
-</g>
-</g>
-<g id="c2r21" class="c2 c"><use href="#c2r20"/>
-<g transform="translate(176.4)">
-<use href="#c2e1"/>
-<text class="ac" y="14" textLength="16.8">50</text>
-</g>
-</g>
-<g id="c2r22" class="c2 c"><use href="#c2r21"/>
-<g transform="translate(176.4)">
-<use href="#c2e1"/>
-<text class="ac" y="14" textLength="16.8">75</text>
-</g>
-</g>
-<g id="c2r23" class="c2 c">
-<use href="#c2e0"/>
-<text class="ab w" y="14" textLength="126">Progress timer:</text>
-<text class="ac" x="134.4" y="14" textLength="92.4">[05s:000ms]</text>
-</g>
-<g id="c2r24" class="c2 c"><use href="#c2r23"/>
-<g transform="translate(176.4)">
-<use href="#c2e1"/>
-<text class="ac" y="14" textLength="16.8">25</text>
-</g>
-</g>
-<g id="c2r25" class="c2 c"><use href="#c2r24"/>
-<g transform="translate(176.4)">
-<use href="#c2e1"/>
-<text class="ac" y="14" textLength="16.8">50</text>
-</g>
-</g>
-<g id="c2r26" class="c2 c"><use href="#c2r25"/>
-<g transform="translate(176.4)">
-<use href="#c2e1"/>
-<text class="ac" y="14" textLength="16.8">75</text>
-</g>
-</g>
-<g id="c2r27" class="c2 c">
-<use href="#c2e0"/>
-<text class="ab" y="14" textLength="8.4">$</text>
-<text class="aa w" x="16.8" y="14" textLength="386.4">dart ./benchmark/directed_graph_benchmark.dart</text>
-</g>
-<g id="c2r28" class="c2 c">
-<use href="#c2e0"/>
-<text class="ab" x="16.8" y="14" textLength="109.2">[077ms:712us]</text>
-<text class="aa w" x="134.4" y="14" textLength="361.2">Manipulating edges: remove and add vertex l</text>
-</g>
-<g id="c2r29" class="c2 c">
-<use href="#c2e0"/>
-<text class="ac w" x="33.6" y="14" textLength="184.8">mean: 1.073 ± 0.94 us,</text>
-<text class="ad w" x="226.8" y="14" textLength="184.8">median: 0.89 ± 0.29 us</text>
-</g>
-<g id="c2r30" class="c2 c">
-<use href="#c2e0"/>
-<rect class="q" x="33.6" y="4.5" width="8.4" height="13.5" id="c2e3" fill="#d4d4d4" stroke="#d4d4d4" stroke-width="2" vector-effect="non-scaling-stroke"/>
-<rect class="q" x="42" y="13.5" width="8.4" height="4.5" id="c2e4" fill="#d4d4d4" stroke="#d4d4d4" stroke-width="2" vector-effect="non-scaling-stroke"/>
-<text class="aa" x="50.4" y="14" textLength="8.4">_</text>
-<rect class="q" x="58.8" width="7.35" height="18" id="c2e5" fill="#11a8cd" stroke="#11a8cd" stroke-width="2" vector-effect="non-scaling-stroke"/>
-<rect class="q" x="67.2" y="13.5" width="8.4" height="4.5" id="c2e6" fill="#d4d4d4" stroke="#d4d4d4" stroke-width="2" vector-effect="non-scaling-stroke"/>
-<text class="ac" x="75.6" y="14" textLength="8.4">_</text>
-<text class="ab" x="84" y="14" textLength="8.4">_</text>
-<text class="aa" x="92.4" y="14" textLength="67.2">________</text>
-<text class="ab" x="159.6" y="14" textLength="8.4">_</text>
-<text class="aa w" x="168" y="14" textLength="42">_  66</text>
-<text class="ab" x="226.8" y="14" textLength="33.6">____</text>
-<text class="aa" x="260.4" y="14" textLength="8.4">_</text>
-</g>
-<g id="c2r31" class="c2 c">
-<use href="#c2e0"/>
-<text class="aa w" x="33.6" y="14" textLength="134.4">sample size: 157</text>
-<text class="ab w" x="176.4" y="14" textLength="201.6">(averaged over 181 runs)</text>
-</g>
-<g id="c2r32" class="c2 c">
-<use href="#c2e0"/>
-<text class="ab" x="16.8" y="14" textLength="109.2">[090ms:912us]</text>
-<text class="aa w" x="134.4" y="14" textLength="252">Manipulating edges: sort edges</text>
-</g>
-<g id="c2r33" class="c2 c">
-<use href="#c2e0"/>
-<text class="ac w" x="33.6" y="14" textLength="176.4">mean: 1.67 ± 0.29 us,</text>
-<text class="ad w" x="218.4" y="14" textLength="184.8">median: 1.56 ± 0.34 us</text>
-</g>
-<g id="c2r34" class="c2 c">
-<use href="#c2e0"/>
-<rect class="q" x="33.6" width="7.35" height="18" id="c2e7" fill="#d4d4d4" stroke="#d4d4d4" stroke-width="2" vector-effect="non-scaling-stroke"/>
-<rect class="q" x="42" y="13.5" width="8.4" height="4.5" id="c2e8" fill="#11a8cd" stroke="#11a8cd" stroke-width="2" vector-effect="non-scaling-stroke"/>
-<rect class="q" x="50.4" y="13.5" width="8.4" height="4.5" id="c2e9" fill="#0dbc79" stroke="#0dbc79" stroke-width="2" vector-effect="non-scaling-stroke"/>
-<rect class="q" x="58.8" y="13.5" width="8.4" height="4.5" id="c2e10" fill="#d4d4d4" stroke="#d4d4d4" stroke-width="2" vector-effect="non-scaling-stroke"/>
-<rect class="q" x="67.2" y="15.75" width="8.4" height="2.25" id="c2e11" fill="#d4d4d4" stroke="#d4d4d4" stroke-width="2" vector-effect="non-scaling-stroke"/>
-<text class="aa" x="75.6" y="14" textLength="25.2">___</text>
-<text class="ab" x="100.8" y="14" textLength="8.4">_</text>
-<text class="aa" x="109.2" y="14" textLength="16.8">__</text>
-<text class="ab" x="126" y="14" textLength="42">_____</text>
-<text class="aa" x="168" y="14" textLength="8.4">_</text>
-</g>
-<g id="c2r35" class="c2 c">
-<use href="#c2e0"/>
-<text class="aa w" x="33.6" y="14" textLength="134.4">sample size: 150</text>
-<text class="ab w" x="176.4" y="14" textLength="201.6">(averaged over 171 runs)</text>
-</g>
-<g id="c2r36" class="c2 c">
-<use href="#c2e0"/>
-<text class="ab" x="16.8" y="14" textLength="109.2">[006ms:029us]</text>
-<text class="aa w" x="134.4" y="14" textLength="159.6">Topology: isAcyclic</text>
-</g>
-<g id="c2r37" class="c2 c">
-<use href="#c2e0"/>
-<text class="ac w" x="33.6" y="14" textLength="193.2">mean: 0.010 ± 0.012 us,</text>
-<text class="ad w" x="235.2" y="14" textLength="218.4">median: 0.0060 ± 0.0100 us</text>
-</g>
-<g id="c2r38" class="c2 c">
-<use href="#c2e0"/>
-<rect class="q" x="33.6" width="7.35" height="18" id="c2e12" fill="#11a8cd" stroke="#11a8cd" stroke-width="2" vector-effect="non-scaling-stroke"/>
-<text class="ab" x="42" y="14" textLength="16.8">__</text>
-<rect class="q" x="58.8" y="11.25" width="8.4" height="6.75" id="c2e13" fill="#d4d4d4" stroke="#d4d4d4" stroke-width="2" vector-effect="non-scaling-stroke"/>
-<text class="aa" x="67.2" y="14" textLength="8.4">_</text>
-<text class="ab" x="75.6" y="14" textLength="8.4">_</text>
-<text class="aa" x="84" y="14" textLength="8.4">_</text>
-<text class="ab" x="92.4" y="14" textLength="42">_____</text>
-<text class="aa" x="134.4" y="14" textLength="8.4">_</text>
-<text class="ab" x="142.8" y="14" textLength="16.8">__</text>
-<text class="aa" x="159.6" y="14" textLength="8.4">_</text>
-<text class="ab" x="168" y="14" textLength="8.4">_</text>
-<text class="aa w" x="176.4" y="14" textLength="50.4">__  17</text>
-<text class="ab" x="243.6" y="14" textLength="33.6">____</text>
-<text class="aa" x="277.2" y="14" textLength="8.4">_</text>
-</g>
-<g id="c2r39" class="c2 c">
-<use href="#c2e0"/>
-<text class="aa w" x="33.6" y="14" textLength="134.4">sample size: 251</text>
-<text class="ab w" x="176.4" y="14" textLength="201.6">(averaged over 325 runs)</text>
-</g>
-<g id="c2r40" class="c2 c">
-<use href="#c2e0"/>
-<text class="ab" x="16.8" y="14" textLength="109.2">[116ms:236us]</text>
-<text class="aa w" x="134.4" y="14" textLength="243.6">Topology: topologicalOrdering</text>
-</g>
-<g id="c2r41" class="c2 c">
-<use href="#c2e0"/>
-<text class="ac w" x="33.6" y="14" textLength="176.4">mean: 2.69 ± 0.39 us,</text>
-<text class="ad w" x="218.4" y="14" textLength="184.8">median: 2.53 ± 0.49 us</text>
-</g>
-<g id="c2r42" class="c2 c"><use href="#c2r0"/>
-<g transform="translate(33.6)">
-<rect width="109.2" height="18" id="c2e14" fill="#1e1e1e" stroke="#1e1e1e" stroke-width="2" vector-effect="non-scaling-stroke"/>
-<rect class="q" width="7.35" height="18" id="c2e15" fill="#d4d4d4" stroke="#d4d4d4" stroke-width="2" vector-effect="non-scaling-stroke"/>
-<rect class="q" x="8.4" y="11.25" width="8.4" height="6.75" id="c2e16" fill="#11a8cd" stroke="#11a8cd" stroke-width="2" vector-effect="non-scaling-stroke"/>
-<rect class="q" x="16.8" y="9" width="8.4" height="9" id="c2e17" fill="#0dbc79" stroke="#0dbc79" stroke-width="2" vector-effect="non-scaling-stroke"/>
-<rect class="q" x="25.2" y="11.25" width="8.4" height="6.75" id="c2e18" fill="#d4d4d4" stroke="#d4d4d4" stroke-width="2" vector-effect="non-scaling-stroke"/>
-<text class="aa" x="33.6" y="14" textLength="8.4">_</text>
-<rect class="q" x="42" y="15.75" width="8.4" height="2.25" id="c2e19" fill="#d4d4d4" stroke="#d4d4d4" stroke-width="2" vector-effect="non-scaling-stroke"/>
-<text class="ab" x="50.4" y="14" textLength="16.8">__</text>
-<text class="aa" x="67.2" y="14" textLength="8.4">_</text>
-<text class="ab" x="75.6" y="14" textLength="25.2">___</text>
-<text class="aa" x="100.8" y="14" textLength="8.4">_</text>
-</g>
-</g>
-<g id="c2r43" class="c2 c">
-<use href="#c2e0"/>
-<text class="aa w" x="33.6" y="14" textLength="134.4">sample size: 128</text>
-<text class="ab w" x="176.4" y="14" textLength="201.6">(averaged over 138 runs)</text>
-</g>
-<g id="c2r44" class="c2 c">
-<use href="#c2e0"/>
-<text class="ab" x="16.8" y="14" textLength="109.2">[116ms:028us]</text>
-<text class="aa w" x="134.4" y="14" textLength="294">Topology: sortedTopologicalOrdering</text>
-</g>
-<g id="c2r45" class="c2 c">
-<use href="#c2e0"/>
-<text class="ac w" x="33.6" y="14" textLength="176.4">mean: 2.68 ± 0.61 us,</text>
-<text class="ad w" x="218.4" y="14" textLength="184.8">median: 2.38 ± 0.38 us</text>
-</g>
-<g id="c2r46" class="c2 c">
-<use href="#c2e0"/>
-<use href="#c2e12"/>
-<text class="aa" x="42" y="14" textLength="8.4">_</text>
-<rect class="q" x="50.4" y="11.25" width="8.4" height="6.75" id="c2e20" fill="#0dbc79" stroke="#0dbc79" stroke-width="2" vector-effect="non-scaling-stroke"/>
-<rect class="q" x="58.8" y="15.75" width="8.4" height="2.25" id="c2e21" fill="#d4d4d4" stroke="#d4d4d4" stroke-width="2" vector-effect="non-scaling-stroke"/>
-<use href="#c2e11"/>
-<text class="aa" x="75.6" y="14" textLength="33.6">____</text>
-<text class="ab" x="109.2" y="14" textLength="25.2">___</text>
-<text class="aa" x="134.4" y="14" textLength="16.8">__</text>
-<text class="ab" x="151.2" y="14" textLength="8.4">_</text>
-<text class="aa" x="159.6" y="14" textLength="8.4">_</text>
-<text class="ab" x="168" y="14" textLength="8.4">_</text>
-<text class="aa" x="176.4" y="14" textLength="16.8">__</text>
-<text class="ab" x="193.2" y="14" textLength="75.6">_________</text>
-<text class="aa" x="268.8" y="14" textLength="8.4">_</text>
-</g>
-<g id="c2r47" class="c2 c">
-<use href="#c2e0"/>
-<text class="aa w" x="33.6" y="14" textLength="134.4">sample size: 128</text>
-<text class="ab w" x="176.4" y="14" textLength="201.6">(averaged over 139 runs)</text>
-</g>
-<g id="c2r48" class="c2 c">
-<use href="#c2e0"/>
-<text class="ab" x="16.8" y="14" textLength="109.2">[164ms:902us]</text>
-<text class="aa w" x="134.4" y="14" textLength="226.8">Topology: transitiveClosure</text>
-</g>
-<g id="c2r49" class="c2 c">
-<use href="#c2e0"/>
-<text class="ac w" x="33.6" y="14" textLength="176.4">mean: 6.38 ± 0.81 us,</text>
-<text class="ad w" x="218.4" y="14" textLength="184.8">median: 6.24 ± 0.97 us</text>
-</g>
-<g id="c2r50" class="c2 c"><use href="#c2r0"/>
-<g transform="translate(33.6)">
-<rect width="126" height="18" id="c2e22" fill="#1e1e1e" stroke="#1e1e1e" stroke-width="2" vector-effect="non-scaling-stroke"/>
-<use href="#c2e15"/>
-<rect class="q" x="8.4" width="7.35" height="18" id="c2e23" fill="#d4d4d4" stroke="#d4d4d4" stroke-width="2" vector-effect="non-scaling-stroke"/>
-<rect class="q" x="16.8" width="8.4" height="18" id="c2e24" fill="#11a8cd" stroke="#11a8cd" stroke-width="2" vector-effect="non-scaling-stroke"/>
-<rect class="q" x="25.2" y="4.5" width="8.4" height="13.5" id="c2e25" fill="#d4d4d4" stroke="#d4d4d4" stroke-width="2" vector-effect="non-scaling-stroke"/>
-<rect class="q" x="33.6" y="11.25" width="8.4" height="6.75" id="c2e26" fill="#d4d4d4" stroke="#d4d4d4" stroke-width="2" vector-effect="non-scaling-stroke"/>
-<text class="aa" x="42" y="14" textLength="8.4">_</text>
-<text class="ab" x="50.4" y="14" textLength="25.2">___</text>
-<text class="aa" x="75.6" y="14" textLength="8.4">_</text>
-<text class="ab" x="84" y="14" textLength="33.6">____</text>
-<text class="aa" x="117.6" y="14" textLength="8.4">_</text>
-</g>
-</g>
-<g id="c2r51" class="c2 c">
-<use href="#c2e0"/>
-<text class="aa w" x="33.6" y="14" textLength="134.4">sample size: 102</text>
-<text class="ab w" x="176.4" y="14" textLength="201.6">(averaged over 103 runs)</text>
-</g>
-<g id="c2r52" class="c2 c">
-<use href="#c2e0"/>
-<text class="ab" x="16.8" y="14" textLength="109.2">[003ms:385us]</text>
-<text class="aa w" x="134.4" y="14" textLength="176.4">Topology: cycleVertex</text>
-</g>
-<g id="c2r53" class="c2 c">
-<use href="#c2e0"/>
-<text class="ac w" x="33.6" y="14" textLength="193.2">mean: 0.014 ± 0.011 us,</text>
-<text class="ad w" x="235.2" y="14" textLength="210">median: 0.011 ± 0.0070 us</text>
-</g>
-<g id="c2r54" class="c2 c">
-<use href="#c2e0"/>
-<use href="#c2e7"/>
-<rect class="q" x="42" width="8.4" height="18" id="c2e27" fill="#11a8cd" stroke="#11a8cd" stroke-width="2" vector-effect="non-scaling-stroke"/>
-<rect class="q" x="50.4" y="9" width="8.4" height="9" id="c2e28" fill="#d4d4d4" stroke="#d4d4d4" stroke-width="2" vector-effect="non-scaling-stroke"/>
-<rect class="q" x="58.8" y="13.5" width="8.4" height="4.5" id="c2e29" fill="#0dbc79" stroke="#0dbc79" stroke-width="2" vector-effect="non-scaling-stroke"/>
-<rect class="q" x="67.2" y="6.75" width="8.4" height="11.25" id="c2e30" fill="#d4d4d4" stroke="#d4d4d4" stroke-width="2" vector-effect="non-scaling-stroke"/>
-<text class="aa" x="75.6" y="14" textLength="16.8">__</text>
-<rect class="q" x="92.4" y="15.75" width="8.4" height="2.25" id="c2e31" fill="#d4d4d4" stroke="#d4d4d4" stroke-width="2" vector-effect="non-scaling-stroke"/>
-<text class="aa" x="100.8" y="14" textLength="16.8">__</text>
-<text class="ab" x="117.6" y="14" textLength="8.4">_</text>
-<text class="aa" x="126" y="14" textLength="8.4">_</text>
-<text class="ab" x="134.4" y="14" textLength="8.4">_</text>
-<text class="aa" x="142.8" y="14" textLength="8.4">_</text>
-<text class="ab" x="151.2" y="14" textLength="33.6">____</text>
-<text class="aa" x="184.8" y="14" textLength="8.4">_</text>
-<text class="ab" x="193.2" y="14" textLength="8.4">_</text>
-<text class="aa" x="218.4" y="14" textLength="16.8">57</text>
-<text class="ab" x="252" y="14" textLength="33.6">____</text>
-<text class="aa" x="285.6" y="14" textLength="8.4">_</text>
-</g>
-<g id="c2r55" class="c2 c">
-<use href="#c2e0"/>
-<text class="aa w" x="33.6" y="14" textLength="134.4">sample size: 294</text>
-<text class="ab w" x="176.4" y="14" textLength="201.6">(averaged over 391 runs)</text>
-</g>
-<g id="c2r56" class="c2 c">
-<use href="#c2e0"/>
-<text class="ab" x="16.8" y="14" textLength="109.2">[010ms:084us]</text>
-<text class="aa w" x="134.4" y="14" textLength="126">Topology: cycle</text>
-</g>
-<g id="c2r57" class="c2 c">
-<use href="#c2e0"/>
-<text class="ac w" x="33.6" y="14" textLength="184.8">mean: 0.059 ± 0.14 us,</text>
-<text class="ad w" x="226.8" y="14" textLength="201.6">median: 0.053 ± 0.030 us</text>
-</g>
-<g id="c2r58" class="c2 c">
-<use href="#c2e0"/>
-<rect class="q" x="33.6" y="15.75" width="8.4" height="2.25" id="c2e32" fill="#d4d4d4" stroke="#d4d4d4" stroke-width="2" vector-effect="non-scaling-stroke"/>
-<rect class="q" x="42" y="9" width="8.4" height="9" id="c2e33" fill="#d4d4d4" stroke="#d4d4d4" stroke-width="2" vector-effect="non-scaling-stroke"/>
-<rect class="q" x="50.4" y="13.5" width="8.4" height="4.5" id="c2e34" fill="#d4d4d4" stroke="#d4d4d4" stroke-width="2" vector-effect="non-scaling-stroke"/>
-<use href="#c2e10"/>
-<use href="#c2e6"/>
-<rect class="q" x="75.6" width="7.35" height="18" id="c2e35" fill="#11a8cd" stroke="#11a8cd" stroke-width="2" vector-effect="non-scaling-stroke"/>
-<rect class="q" x="84" y="15.75" width="8.4" height="2.25" id="c2e36" fill="#d4d4d4" stroke="#d4d4d4" stroke-width="2" vector-effect="non-scaling-stroke"/>
-<use href="#c2e31"/>
-<text class="aa" x="100.8" y="14" textLength="33.6">____</text>
-<text class="ab" x="134.4" y="14" textLength="8.4">_</text>
-<text class="aa" x="142.8" y="14" textLength="33.6">____</text>
-<text class="ab" x="176.4" y="14" textLength="8.4">_</text>
-<text class="aa" x="184.8" y="14" textLength="16.8">__</text>
-<text class="ab" x="201.6" y="14" textLength="8.4">_</text>
-<text class="aa" x="226.8" y="14" textLength="25.2">201</text>
-<text class="ab" x="268.8" y="14" textLength="33.6">____</text>
-<text class="aa" x="302.4" y="14" textLength="8.4">_</text>
-</g>
-<g id="c2r59" class="c2 c">
-<use href="#c2e0"/>
-<text class="aa w" x="33.6" y="14" textLength="134.4">sample size: 268</text>
-<text class="ab w" x="176.4" y="14" textLength="201.6">(averaged over 351 runs)</text>
-</g>
-<g id="c2r60" class="c2 c">
-<use href="#c2e0"/>
-<text class="ab" x="16.8" y="14" textLength="109.2">[167ms:693us]</text>
-<text class="aa w" x="134.4" y="14" textLength="184.8">Topology: localSources</text>
-</g>
-<g id="c2r61" class="c2 c">
-<use href="#c2e0"/>
-<text class="ac w" x="33.6" y="14" textLength="176.4">mean: 6.13 ± 2.49 us,</text>
-<text class="ad w" x="218.4" y="14" textLength="201.6">median: 5.66 ± 3.0080 us</text>
-</g>
-<g id="c2r62" class="c2 c"><use href="#c2r0"/>
-<g transform="translate(33.6)">
-<rect width="100.8" height="18" id="c2e37" fill="#1e1e1e" stroke="#1e1e1e" stroke-width="2" vector-effect="non-scaling-stroke"/>
-<use href="#c2e15"/>
-<use href="#c2e16"/>
-<rect class="q" x="16.8" y="4.5" width="8.4" height="13.5" id="c2e38" fill="#0dbc79" stroke="#0dbc79" stroke-width="2" vector-effect="non-scaling-stroke"/>
-<use href="#c2e18"/>
-<rect class="q" x="33.6" y="13.5" width="8.4" height="4.5" id="c2e39" fill="#d4d4d4" stroke="#d4d4d4" stroke-width="2" vector-effect="non-scaling-stroke"/>
-<text class="aa" x="42" y="14" textLength="25.2">___</text>
-<text class="ab" x="67.2" y="14" textLength="25.2">___</text>
-<text class="aa" x="92.4" y="14" textLength="8.4">_</text>
-</g>
-</g>
-<g id="c2r63" class="c2 c">
-<use href="#c2e0"/>
-<text class="aa w" x="33.6" y="14" textLength="134.4">sample size: 100</text>
-<text class="ab w" x="176.4" y="14" textLength="201.6">(averaged over 100 runs)</text>
-</g>
-<g id="c2r64" class="c2 c">
-<use href="#c2e0"/>
-<text class="ab" x="16.8" y="14" textLength="109.2">[192ms:293us]</text>
-<text class="aa w" x="134.4" y="14" textLength="310.8">Topology: stronglyConnectedComponents</text>
-</g>
-<g id="c2r65" class="c2 c">
-<use href="#c2e0"/>
-<text class="ac w" x="33.6" y="14" textLength="176.4">mean: 6.95 ± 2.76 us,</text>
-<text class="ad w" x="218.4" y="14" textLength="184.8">median: 6.40 ± 3.27 us</text>
-</g>
-<g id="c2r66" class="c2 c"><use href="#c2r0"/>
-<g transform="translate(33.6)">
-<use href="#c2e37"/>
-<rect class="q" y="9" width="8.4" height="9" id="c2e40" fill="#d4d4d4" stroke="#d4d4d4" stroke-width="2" vector-effect="non-scaling-stroke"/>
-<rect class="q" x="8.4" y="9" width="8.4" height="9" id="c2e41" fill="#d4d4d4" stroke="#d4d4d4" stroke-width="2" vector-effect="non-scaling-stroke"/>
-<rect class="q" x="16.8" width="8.4" height="18" id="c2e42" fill="#d4d4d4" stroke="#d4d4d4" stroke-width="2" vector-effect="non-scaling-stroke"/>
-<rect class="q" x="25.2" width="7.35" height="18" id="c2e43" fill="#11a8cd" stroke="#11a8cd" stroke-width="2" vector-effect="non-scaling-stroke"/>
-<use href="#c2e26"/>
-<rect class="q" x="42" y="11.25" width="8.4" height="6.75" id="c2e44" fill="#d4d4d4" stroke="#d4d4d4" stroke-width="2" vector-effect="non-scaling-stroke"/>
-<use href="#c2e34"/>
-<use href="#c2e21"/>
-<text class="aa" x="67.2" y="14" textLength="8.4">_</text>
-<text class="ab" x="75.6" y="14" textLength="16.8">__</text>
-<text class="aa" x="92.4" y="14" textLength="8.4">_</text>
-</g>
-</g>
-<g id="c2r67" class="c2 c">
-<use href="#c2e0"/>
-<text class="ab" x="16.8" y="14" textLength="109.2">[147ms:258us]</text>
-<text class="aa w" x="134.4" y="14" textLength="193.2">Topology: shortestPaths</text>
-</g>
-<g id="c2r68" class="c2 c">
-<use href="#c2e0"/>
-<text class="ac w" x="33.6" y="14" textLength="176.4">mean: 4.69 ± 3.43 us,</text>
-<text class="ad w" x="218.4" y="14" textLength="184.8">median: 4.24 ± 2.57 us</text>
-</g>
-<g id="c2r69" class="c2 c">
-<use href="#c2e0"/>
-<rect class="q" x="33.6" y="2.25" width="8.4" height="15.75" id="c2e45" fill="#d4d4d4" stroke="#d4d4d4" stroke-width="2" vector-effect="non-scaling-stroke"/>
-<use href="#c2e33"/>
-<rect class="q" x="50.4" width="7.35" height="18" id="c2e46" fill="#11a8cd" stroke="#11a8cd" stroke-width="2" vector-effect="non-scaling-stroke"/>
-<rect class="q" x="58.8" y="9" width="8.4" height="9" id="c2e47" fill="#d4d4d4" stroke="#d4d4d4" stroke-width="2" vector-effect="non-scaling-stroke"/>
-<rect class="q" x="67.2" y="11.25" width="8.4" height="6.75" id="c2e48" fill="#d4d4d4" stroke="#d4d4d4" stroke-width="2" vector-effect="non-scaling-stroke"/>
-<rect class="q" x="75.6" y="15.75" width="8.4" height="2.25" id="c2e49" fill="#d4d4d4" stroke="#d4d4d4" stroke-width="2" vector-effect="non-scaling-stroke"/>
-<use href="#c2e36"/>
-<use href="#c2e31"/>
-<text class="ab" x="100.8" y="14" textLength="168">____________________</text>
-<text class="aa" x="268.8" y="14" textLength="8.4">_</text>
-</g>
-<g id="c2r70" class="c2 c">
-<use href="#c2e0"/>
-<text class="aa w" x="33.6" y="14" textLength="134.4">sample size: 103</text>
-<text class="ab w" x="176.4" y="14" textLength="201.6">(averaged over 104 runs)</text>
-</g>
-<g id="c2r71" class="c2 c">
-<use href="#c2e0"/>
-<text class="ab" x="16.8" y="14" textLength="109.2">[095ms:010us]</text>
-<text class="aa w" x="134.4" y="14" textLength="184.8">Topology: shortestPath</text>
-</g>
-<g id="c2r72" class="c2 c">
-<use href="#c2e0"/>
-<text class="ac w" x="33.6" y="14" textLength="176.4">mean: 1.84 ± 2.18 us,</text>
-<text class="ad w" x="218.4" y="14" textLength="184.8">median: 1.35 ± 1.20 us</text>
-</g>
-<g id="c2r73" class="c2 c">
-<use href="#c2e0"/>
-<use href="#c2e45"/>
-<rect class="q" x="42" width="7.35" height="18" id="c2e50" fill="#d4d4d4" stroke="#d4d4d4" stroke-width="2" vector-effect="non-scaling-stroke"/>
-<rect class="q" x="50.4" y="9" width="8.4" height="9" id="c2e51" fill="#11a8cd" stroke="#11a8cd" stroke-width="2" vector-effect="non-scaling-stroke"/>
-<rect class="q" x="58.8" y="9" width="8.4" height="9" id="c2e52" fill="#0dbc79" stroke="#0dbc79" stroke-width="2" vector-effect="non-scaling-stroke"/>
-<use href="#c2e6"/>
-<rect class="q" x="75.6" y="13.5" width="8.4" height="4.5" id="c2e53" fill="#d4d4d4" stroke="#d4d4d4" stroke-width="2" vector-effect="non-scaling-stroke"/>
-<text class="aa" x="84" y="14" textLength="33.6">____</text>
-<text class="ab" x="117.6" y="14" textLength="25.2">___</text>
-<text class="aa w" x="142.8" y="14" textLength="58.8">___  32</text>
-<text class="ab" x="218.4" y="14" textLength="33.6">____</text>
-<text class="aa" x="252" y="14" textLength="8.4">_</text>
-</g>
-<g id="c2r74" class="c2 c">
-<use href="#c2e0"/>
-<text class="ab" x="16.8" y="14" textLength="109.2">[073ms:003us]</text>
-<text class="aa w" x="134.4" y="14" textLength="117.6">Topology: path</text>
-</g>
-<g id="c2r75" class="c2 c">
-<use href="#c2e0"/>
-<text class="ac w" x="33.6" y="14" textLength="176.4">mean: 1.25 ± 0.99 us,</text>
-<text class="ad w" x="218.4" y="14" textLength="184.8">median: 0.95 ± 0.87 us</text>
-</g>
-<g id="c2r76" class="c2 c">
-<use href="#c2e0"/>
-<use href="#c2e7"/>
-<rect class="q" x="42" y="11.25" width="8.4" height="6.75" id="c2e54" fill="#11a8cd" stroke="#11a8cd" stroke-width="2" vector-effect="non-scaling-stroke"/>
-<rect class="q" x="50.4" y="9" width="8.4" height="9" id="c2e55" fill="#0dbc79" stroke="#0dbc79" stroke-width="2" vector-effect="non-scaling-stroke"/>
-<use href="#c2e21"/>
-<use href="#c2e11"/>
-<use href="#c2e49"/>
-<text class="aa" x="84" y="14" textLength="42">_____</text>
-<text class="ab" x="126" y="14" textLength="184.8">______________________</text>
-<text class="aa" x="310.8" y="14" textLength="8.4">_</text>
-</g>
-<g id="c2r77" class="c2 c">
-<use href="#c2e0"/>
-<text class="aa w" x="33.6" y="14" textLength="134.4">sample size: 190</text>
-<text class="ab w" x="176.4" y="14" textLength="201.6">(averaged over 233 runs)</text>
-</g>
-<g id="c2r78" class="c2 c">
-<use href="#c2e0"/>
-<text class="ab" x="16.8" y="14" textLength="109.2">[034ms:666us]</text>
-<text class="aa w" x="134.4" y="14" textLength="252">Topology: reachableVertices(d)</text>
-</g>
-<g id="c2r79" class="c2 c">
-<use href="#c2e0"/>
-<text class="ac w" x="33.6" y="14" textLength="176.4">mean: 0.48 ± 0.30 us,</text>
-<text class="ad w" x="218.4" y="14" textLength="184.8">median: 0.36 ± 0.12 us</text>
-</g>
-<g id="c2r80" class="c2 c">
-<use href="#c2e0"/>
-<use href="#c2e12"/>
-<use href="#c2e19"/>
-<text class="aa" x="50.4" y="14" textLength="8.4">_</text>
-<text class="ac" x="58.8" y="14" textLength="8.4">_</text>
-<text class="aa" x="67.2" y="14" textLength="25.2">___</text>
-<text class="ab" x="92.4" y="14" textLength="8.4">_</text>
-<text class="aa" x="100.8" y="14" textLength="67.2">________</text>
-<text class="ab" x="168" y="14" textLength="8.4">_</text>
-<text class="aa w" x="176.4" y="14" textLength="42">_  41</text>
-<text class="ab" x="235.2" y="14" textLength="16.8">__</text>
-<text class="aa" x="252" y="14" textLength="8.4">_</text>
-<text class="ab" x="260.4" y="14" textLength="8.4">_</text>
-<text class="aa" x="268.8" y="14" textLength="8.4">_</text>
-</g>
-<g id="c2r81" class="c2 c">
-<use href="#c2e0"/>
-<text class="aa w" x="33.6" y="14" textLength="134.4">sample size: 200</text>
-<text class="ab w" x="176.4" y="14" textLength="201.6">(averaged over 249 runs)</text>
-</g>
-<g id="c2r82" class="c2 c">
-<use href="#c2e0"/>
-<text class="ab" x="16.8" y="14" textLength="109.2">[996ms:251us]</text>
-<text class="aa w" x="134.4" y="14" textLength="201.6">Comparator: user defined</text>
-</g>
-<g id="c2r83" class="c2 c">
-<use href="#c2e0"/>
-<text class="ac w" x="33.6" y="14" textLength="184.8">mean: 79.47 ± 8.71 ms,</text>
-<text class="ad w" x="226.8" y="14" textLength="201.6">median: 77.052 ± 6.19 ms</text>
-</g>
-<g id="c2r84" class="c2 c"><use href="#c2r0"/>
-<g transform="translate(33.6)">
-<rect width="50.4" height="18" id="c2e56" fill="#1e1e1e" stroke="#1e1e1e" stroke-width="2" vector-effect="non-scaling-stroke"/>
-<rect class="q" y="4.5" width="8.4" height="13.5" id="c2e57" fill="#d4d4d4" stroke="#d4d4d4" stroke-width="2" vector-effect="non-scaling-stroke"/>
-<rect class="q" x="8.4" width="7.35" height="18" id="c2e58" fill="#11a8cd" stroke="#11a8cd" stroke-width="2" vector-effect="non-scaling-stroke"/>
-<rect class="q" x="16.8" y="13.5" width="8.4" height="4.5" id="c2e59" fill="#d4d4d4" stroke="#d4d4d4" stroke-width="2" vector-effect="non-scaling-stroke"/>
-<text class="ab" x="25.2" y="14" textLength="16.8">__</text>
-<use href="#c2e4"/>
-</g>
-</g>
-<g id="c2r85" class="c2 c"><use href="#c2r0"/>
-<g transform="translate(33.6)">
-<use href="#c2e22"/>
-<text class="aa w" y="14" textLength="126">sample size: 10</text>
-</g>
-</g>
-<g id="c2r86" class="c2 c">
-<use href="#c2e0"/>
-<text class="ab" x="16.8" y="14" textLength="92.4">[01s:557ms]</text>
-<text class="aa w" x="117.6" y="14" textLength="168">Comparator: inferred</text>
-</g>
-<g id="c2r87" class="c2 c">
-<use href="#c2e0"/>
-<text class="ac w" x="33.6" y="14" textLength="201.6">mean: 131.077 ± 5.14 ms,</text>
-<text class="ad w" x="243.6" y="14" textLength="210">median: 129.91 ± 7.097 ms</text>
-</g>
-<g id="c2r88" class="c2 c"><use href="#c2r0"/>
-<g transform="translate(33.6)">
-<rect width="33.6" height="18" id="c2e60" fill="#1e1e1e" stroke="#1e1e1e" stroke-width="2" vector-effect="non-scaling-stroke"/>
-<use href="#c2e15"/>
-<rect class="q" x="8.4" y="2.25" width="8.4" height="15.75" id="c2e61" fill="#11a8cd" stroke="#11a8cd" stroke-width="2" vector-effect="non-scaling-stroke"/>
-<rect class="q" x="16.8" y="9" width="8.4" height="9" id="c2e62" fill="#d4d4d4" stroke="#d4d4d4" stroke-width="2" vector-effect="non-scaling-stroke"/>
-<rect class="q" x="25.2" y="13.5" width="8.4" height="4.5" id="c2e63" fill="#d4d4d4" stroke="#d4d4d4" stroke-width="2" vector-effect="non-scaling-stroke"/>
-</g>
-</g>
-<g id="c2r89" class="c2 c">
-<use href="#c2e0"/>
-<text class="ab w" y="14" textLength="277.2">-------      Summary     --------</text>
-</g>
-<g id="c2r90" class="c2 c">
-<use href="#c2e0"/>
-<text class="aa w" y="14" textLength="126">Total run time:</text>
-<text class="ac" x="134.4" y="14" textLength="92.4">[06s:107ms]</text>
-</g>
-<g id="c2r91" class="c2 c">
-<use href="#c2e0"/>
-<text class="aa w" y="14" textLength="176.4">Completed benchmarks:</text>
-<text class="ac" x="184.8" y="14" textLength="16.8">16</text>
-<text class="aa" x="201.6" y="14" textLength="8.4">.</text>
-</g>
-<g id="c2r92" class="c2 c">
-<use href="#c2e0"/>
-<text class="ac w" y="14" textLength="193.2">Completed successfully.</text>
-</g>
-<g id="c2r93" class="c2 c">
-<use href="#c2e0"/>
-<text class="aa w" y="14" textLength="176.4">Exiting with code: 0.</text>
-</g>
-</defs>
-<g transform="translate(8 26)">
-<g>
-<use href="#c2r0" display="inline"/>
-<use href="#c2r1" y="18" display="inline"/>
-<use href="#c2r2" y="36" display="inline"/>
-<use href="#c2r0" y="54" display="inline"/>
-<use href="#c2r0" y="72" display="none">
-<animate attributeName="display" values="inline;none" keyTimes="0;0.034884" dur="21.5s" calcMode="discrete" repeatCount="indefinite"/>
-</use>
-<use href="#c2r3" y="72" display="none">
-<animate attributeName="display" values="none;inline;none" keyTimes="0;0.034884;0.046512" dur="21.5s" calcMode="discrete" repeatCount="indefinite"/>
-</use>
-<use href="#c2r4" y="72" display="none">
-<animate attributeName="display" values="none;inline;none" keyTimes="0;0.046512;0.054264" dur="21.5s" calcMode="discrete" repeatCount="indefinite"/>
-</use>
-<use href="#c2r5" y="72" display="none">
-<animate attributeName="display" values="none;inline;none" keyTimes="0;0.054264;0.065891" dur="21.5s" calcMode="discrete" repeatCount="indefinite"/>
-</use>
-<use href="#c2r6" y="72" display="none">
-<animate attributeName="display" values="none;inline;none" keyTimes="0;0.065891;0.077519" dur="21.5s" calcMode="discrete" repeatCount="indefinite"/>
-</use>
-<use href="#c2r7" y="72" display="none">
-<animate attributeName="display" values="none;inline;none" keyTimes="0;0.077519;0.093023" dur="21.5s" calcMode="discrete" repeatCount="indefinite"/>
-</use>
-<use href="#c2r8" y="72" display="none">
-<animate attributeName="display" values="none;inline;none" keyTimes="0;0.093023;0.104651" dur="21.5s" calcMode="discrete" repeatCount="indefinite"/>
-</use>
-<use href="#c2r9" y="72" display="none">
-<animate attributeName="display" values="none;inline;none" keyTimes="0;0.104651;0.112403" dur="21.5s" calcMode="discrete" repeatCount="indefinite"/>
-</use>
-<use href="#c2r10" y="72" display="none">
-<animate attributeName="display" values="none;inline;none" keyTimes="0;0.112403;0.127907" dur="21.5s" calcMode="discrete" repeatCount="indefinite"/>
-</use>
-<use href="#c2r11" y="72" display="none">
-<animate attributeName="display" values="none;inline;none" keyTimes="0;0.127907;0.139535" dur="21.5s" calcMode="discrete" repeatCount="indefinite"/>
-</use>
-<use href="#c2r12" y="72" display="none">
-<animate attributeName="display" values="none;inline;none" keyTimes="0;0.139535;0.151163" dur="21.5s" calcMode="discrete" repeatCount="indefinite"/>
-</use>
-<use href="#c2r13" y="72" display="none">
-<animate attributeName="display" values="none;inline;none" keyTimes="0;0.151163;0.162791" dur="21.5s" calcMode="discrete" repeatCount="indefinite"/>
-</use>
-<use href="#c2r14" y="72" display="none">
-<animate attributeName="display" values="none;inline;none" keyTimes="0;0.162791;0.174419" dur="21.5s" calcMode="discrete" repeatCount="indefinite"/>
-</use>
-<use href="#c2r15" y="72" display="none">
-<animate attributeName="display" values="none;inline;none" keyTimes="0;0.174419;0.186047" dur="21.5s" calcMode="discrete" repeatCount="indefinite"/>
-</use>
-<use href="#c2r16" y="72" display="none">
-<animate attributeName="display" values="none;inline;none" keyTimes="0;0.186047;0.197674" dur="21.5s" calcMode="discrete" repeatCount="indefinite"/>
-</use>
-<use href="#c2r17" y="72" display="none">
-<animate attributeName="display" values="none;inline;none" keyTimes="0;0.197674;0.205426" dur="21.5s" calcMode="discrete" repeatCount="indefinite"/>
-</use>
-<use href="#c2r18" y="72" display="none">
-<animate attributeName="display" values="none;inline;none" keyTimes="0;0.205426;0.22093" dur="21.5s" calcMode="discrete" repeatCount="indefinite"/>
-</use>
-<use href="#c2r19" y="72" display="none">
-<animate attributeName="display" values="none;inline;none" keyTimes="0;0.22093;0.232558" dur="21.5s" calcMode="discrete" repeatCount="indefinite"/>
-</use>
-<use href="#c2r20" y="72" display="none">
-<animate attributeName="display" values="none;inline;none" keyTimes="0;0.232558;0.24031" dur="21.5s" calcMode="discrete" repeatCount="indefinite"/>
-</use>
-<use href="#c2r21" y="72" display="none">
-<animate attributeName="display" values="none;inline;none" keyTimes="0;0.24031;0.251938" dur="21.5s" calcMode="discrete" repeatCount="indefinite"/>
-</use>
-<use href="#c2r22" y="72" display="none">
-<animate attributeName="display" values="none;inline;none" keyTimes="0;0.251938;0.263566" dur="21.5s" calcMode="discrete" repeatCount="indefinite"/>
-</use>
-<use href="#c2r23" y="72" display="none">
-<animate attributeName="display" values="none;inline;none" keyTimes="0;0.263566;0.27907" dur="21.5s" calcMode="discrete" repeatCount="indefinite"/>
-</use>
-<use href="#c2r24" y="72" display="none">
-<animate attributeName="display" values="none;inline;none" keyTimes="0;0.27907;0.286822" dur="21.5s" calcMode="discrete" repeatCount="indefinite"/>
-</use>
-<use href="#c2r25" y="72" display="none">
-<animate attributeName="display" values="none;inline;none" keyTimes="0;0.286822;0.29199" dur="21.5s" calcMode="discrete" repeatCount="indefinite"/>
-</use>
-<use href="#c2r26" y="72" display="none">
-<animate attributeName="display" values="none;inline;none" keyTimes="0;0.29199;0.297158" dur="21.5s" calcMode="discrete" repeatCount="indefinite"/>
-</use>
-<use href="#c2r27" y="72" display="none">
-<animate attributeName="display" values="none;inline" keyTimes="0;0.297158" dur="21.5s" calcMode="discrete" repeatCount="indefinite"/>
-</use>
-<use href="#c2r0" y="90" display="none">
-<animate attributeName="display" values="inline;none" keyTimes="0;0.297158" dur="21.5s" calcMode="discrete" repeatCount="indefinite"/>
-</use>
-<use href="#c2r28" y="90" display="none">
-<animate attributeName="display" values="none;inline" keyTimes="0;0.297158" dur="21.5s" calcMode="discrete" repeatCount="indefinite"/>
-</use>
-<use href="#c2r0" y="108" display="none">
-<animate attributeName="display" values="inline;none" keyTimes="0;0.297158" dur="21.5s" calcMode="discrete" repeatCount="indefinite"/>
-</use>
-<use href="#c2r29" y="108" display="none">
-<animate attributeName="display" values="none;inline" keyTimes="0;0.297158" dur="21.5s" calcMode="discrete" repeatCount="indefinite"/>
-</use>
-<use href="#c2r0" y="126" display="none">
-<animate attributeName="display" values="inline;none" keyTimes="0;0.297158" dur="21.5s" calcMode="discrete" repeatCount="indefinite"/>
-</use>
-<use href="#c2r30" y="126" display="none">
-<animate attributeName="display" values="none;inline" keyTimes="0;0.297158" dur="21.5s" calcMode="discrete" repeatCount="indefinite"/>
-</use>
-<use href="#c2r0" y="144" display="none">
-<animate attributeName="display" values="inline;none" keyTimes="0;0.297158" dur="21.5s" calcMode="discrete" repeatCount="indefinite"/>
-</use>
-<use href="#c2r31" y="144" display="none">
-<animate attributeName="display" values="none;inline" keyTimes="0;0.297158" dur="21.5s" calcMode="discrete" repeatCount="indefinite"/>
-</use>
-<use href="#c2r0" y="162" display="inline"/>
-<use href="#c2r0" y="180" display="none">
-<animate attributeName="display" values="inline;none" keyTimes="0;0.297158" dur="21.5s" calcMode="discrete" repeatCount="indefinite"/>
-</use>
-<use href="#c2r32" y="180" display="none">
-<animate attributeName="display" values="none;inline" keyTimes="0;0.297158" dur="21.5s" calcMode="discrete" repeatCount="indefinite"/>
-</use>
-<use href="#c2r0" y="198" display="none">
-<animate attributeName="display" values="inline;none" keyTimes="0;0.297158" dur="21.5s" calcMode="discrete" repeatCount="indefinite"/>
-</use>
-<use href="#c2r33" y="198" display="none">
-<animate attributeName="display" values="none;inline" keyTimes="0;0.297158" dur="21.5s" calcMode="discrete" repeatCount="indefinite"/>
-</use>
-<use href="#c2r0" y="216" display="none">
-<animate attributeName="display" values="inline;none" keyTimes="0;0.297158" dur="21.5s" calcMode="discrete" repeatCount="indefinite"/>
-</use>
-<use href="#c2r34" y="216" display="none">
-<animate attributeName="display" values="none;inline" keyTimes="0;0.297158" dur="21.5s" calcMode="discrete" repeatCount="indefinite"/>
-</use>
-<use href="#c2r0" y="234" display="none">
-<animate attributeName="display" values="inline;none" keyTimes="0;0.297158" dur="21.5s" calcMode="discrete" repeatCount="indefinite"/>
-</use>
-<use href="#c2r35" y="234" display="none">
-<animate attributeName="display" values="none;inline" keyTimes="0;0.297158" dur="21.5s" calcMode="discrete" repeatCount="indefinite"/>
-</use>
-<use href="#c2r0" y="252" display="inline"/>
-<use href="#c2r0" y="270" display="none">
-<animate attributeName="display" values="inline;none" keyTimes="0;0.297158" dur="21.5s" calcMode="discrete" repeatCount="indefinite"/>
-</use>
-<use href="#c2r36" y="270" display="none">
-<animate attributeName="display" values="none;inline" keyTimes="0;0.297158" dur="21.5s" calcMode="discrete" repeatCount="indefinite"/>
-</use>
-<use href="#c2r0" y="288" display="none">
-<animate attributeName="display" values="inline;none" keyTimes="0;0.297158" dur="21.5s" calcMode="discrete" repeatCount="indefinite"/>
-</use>
-<use href="#c2r37" y="288" display="none">
-<animate attributeName="display" values="none;inline" keyTimes="0;0.297158" dur="21.5s" calcMode="discrete" repeatCount="indefinite"/>
-</use>
-<use href="#c2r0" y="306" display="none">
-<animate attributeName="display" values="inline;none" keyTimes="0;0.297158" dur="21.5s" calcMode="discrete" repeatCount="indefinite"/>
-</use>
-<use href="#c2r38" y="306" display="none">
-<animate attributeName="display" values="none;inline" keyTimes="0;0.297158" dur="21.5s" calcMode="discrete" repeatCount="indefinite"/>
-</use>
-<use href="#c2r0" y="324" display="none">
-<animate attributeName="display" values="inline;none" keyTimes="0;0.297158" dur="21.5s" calcMode="discrete" repeatCount="indefinite"/>
-</use>
-<use href="#c2r39" y="324" display="none">
-<animate attributeName="display" values="none;inline" keyTimes="0;0.297158" dur="21.5s" calcMode="discrete" repeatCount="indefinite"/>
-</use>
-<use href="#c2r0" y="342" display="inline"/>
-<use href="#c2r0" y="360" display="none">
-<animate attributeName="display" values="inline;none" keyTimes="0;0.297158" dur="21.5s" calcMode="discrete" repeatCount="indefinite"/>
-</use>
-<use href="#c2r40" y="360" display="none">
-<animate attributeName="display" values="none;inline" keyTimes="0;0.297158" dur="21.5s" calcMode="discrete" repeatCount="indefinite"/>
-</use>
-<use href="#c2r0" y="378" display="none">
-<animate attributeName="display" values="inline;none" keyTimes="0;0.297158" dur="21.5s" calcMode="discrete" repeatCount="indefinite"/>
-</use>
-<use href="#c2r41" y="378" display="none">
-<animate attributeName="display" values="none;inline" keyTimes="0;0.297158" dur="21.5s" calcMode="discrete" repeatCount="indefinite"/>
-</use>
-<use href="#c2r0" y="396" display="none">
-<animate attributeName="display" values="inline;none" keyTimes="0;0.297158" dur="21.5s" calcMode="discrete" repeatCount="indefinite"/>
-</use>
-<use href="#c2r42" y="396" display="none">
-<animate attributeName="display" values="none;inline" keyTimes="0;0.297158" dur="21.5s" calcMode="discrete" repeatCount="indefinite"/>
-</use>
-<use href="#c2r0" y="414" display="none">
-<animate attributeName="display" values="inline;none" keyTimes="0;0.297158" dur="21.5s" calcMode="discrete" repeatCount="indefinite"/>
-</use>
-<use href="#c2r43" y="414" display="none">
-<animate attributeName="display" values="none;inline" keyTimes="0;0.297158" dur="21.5s" calcMode="discrete" repeatCount="indefinite"/>
-</use>
-<use href="#c2r0" y="432" display="inline"/>
-<use href="#c2r0" y="450" display="none">
-<animate attributeName="display" values="inline;none" keyTimes="0;0.297158" dur="21.5s" calcMode="discrete" repeatCount="indefinite"/>
-</use>
-<use href="#c2r44" y="450" display="none">
-<animate attributeName="display" values="none;inline" keyTimes="0;0.297158" dur="21.5s" calcMode="discrete" repeatCount="indefinite"/>
-</use>
-<use href="#c2r0" y="468" display="none">
-<animate attributeName="display" values="inline;none" keyTimes="0;0.297158" dur="21.5s" calcMode="discrete" repeatCount="indefinite"/>
-</use>
-<use href="#c2r45" y="468" display="none">
-<animate attributeName="display" values="none;inline" keyTimes="0;0.297158" dur="21.5s" calcMode="discrete" repeatCount="indefinite"/>
-</use>
-<use href="#c2r0" y="486" display="none">
-<animate attributeName="display" values="inline;none" keyTimes="0;0.297158" dur="21.5s" calcMode="discrete" repeatCount="indefinite"/>
-</use>
-<use href="#c2r46" y="486" display="none">
-<animate attributeName="display" values="none;inline" keyTimes="0;0.297158" dur="21.5s" calcMode="discrete" repeatCount="indefinite"/>
-</use>
-<use href="#c2r0" y="504" display="none">
-<animate attributeName="display" values="inline;none" keyTimes="0;0.297158" dur="21.5s" calcMode="discrete" repeatCount="indefinite"/>
-</use>
-<use href="#c2r47" y="504" display="none">
-<animate attributeName="display" values="none;inline" keyTimes="0;0.297158" dur="21.5s" calcMode="discrete" repeatCount="indefinite"/>
-</use>
-<use href="#c2r0" y="522" display="inline"/>
-<use href="#c2r0" y="540" display="none">
-<animate attributeName="display" values="inline;none" keyTimes="0;0.297158" dur="21.5s" calcMode="discrete" repeatCount="indefinite"/>
-</use>
-<use href="#c2r48" y="540" display="none">
-<animate attributeName="display" values="none;inline" keyTimes="0;0.297158" dur="21.5s" calcMode="discrete" repeatCount="indefinite"/>
-</use>
-<use href="#c2r0" y="558" display="none">
-<animate attributeName="display" values="inline;none" keyTimes="0;0.297158" dur="21.5s" calcMode="discrete" repeatCount="indefinite"/>
-</use>
-<use href="#c2r49" y="558" display="none">
-<animate attributeName="display" values="none;inline" keyTimes="0;0.297158" dur="21.5s" calcMode="discrete" repeatCount="indefinite"/>
-</use>
-<use href="#c2r0" y="576" display="none">
-<animate attributeName="display" values="inline;none" keyTimes="0;0.297158" dur="21.5s" calcMode="discrete" repeatCount="indefinite"/>
-</use>
-<use href="#c2r50" y="576" display="none">
-<animate attributeName="display" values="none;inline" keyTimes="0;0.297158" dur="21.5s" calcMode="discrete" repeatCount="indefinite"/>
-</use>
-<use href="#c2r0" y="594" display="none">
-<animate attributeName="display" values="inline;none" keyTimes="0;0.297158" dur="21.5s" calcMode="discrete" repeatCount="indefinite"/>
-</use>
-<use href="#c2r51" y="594" display="none">
-<animate attributeName="display" values="none;inline" keyTimes="0;0.297158" dur="21.5s" calcMode="discrete" repeatCount="indefinite"/>
-</use>
-<use href="#c2r0" y="612" display="inline"/>
-<use href="#c2r0" y="630" display="none">
-<animate attributeName="display" values="inline;none" keyTimes="0;0.297158" dur="21.5s" calcMode="discrete" repeatCount="indefinite"/>
-</use>
-<use href="#c2r52" y="630" display="none">
-<animate attributeName="display" values="none;inline" keyTimes="0;0.297158" dur="21.5s" calcMode="discrete" repeatCount="indefinite"/>
-</use>
-<use href="#c2r0" y="648" display="none">
-<animate attributeName="display" values="inline;none" keyTimes="0;0.297158" dur="21.5s" calcMode="discrete" repeatCount="indefinite"/>
-</use>
-<use href="#c2r53" y="648" display="none">
-<animate attributeName="display" values="none;inline" keyTimes="0;0.297158" dur="21.5s" calcMode="discrete" repeatCount="indefinite"/>
-</use>
-<use href="#c2r0" y="666" display="none">
-<animate attributeName="display" values="inline;none" keyTimes="0;0.297158" dur="21.5s" calcMode="discrete" repeatCount="indefinite"/>
-</use>
-<use href="#c2r54" y="666" display="none">
-<animate attributeName="display" values="none;inline" keyTimes="0;0.297158" dur="21.5s" calcMode="discrete" repeatCount="indefinite"/>
-</use>
-<use href="#c2r0" y="684" display="none">
-<animate attributeName="display" values="inline;none" keyTimes="0;0.297158" dur="21.5s" calcMode="discrete" repeatCount="indefinite"/>
-</use>
-<use href="#c2r55" y="684" display="none">
-<animate attributeName="display" values="none;inline" keyTimes="0;0.297158" dur="21.5s" calcMode="discrete" repeatCount="indefinite"/>
-</use>
-<use href="#c2r0" y="702" display="inline"/>
-<use href="#c2r0" y="720" display="none">
-<animate attributeName="display" values="inline;none" keyTimes="0;0.297158" dur="21.5s" calcMode="discrete" repeatCount="indefinite"/>
-</use>
-<use href="#c2r56" y="720" display="none">
-<animate attributeName="display" values="none;inline" keyTimes="0;0.297158" dur="21.5s" calcMode="discrete" repeatCount="indefinite"/>
-</use>
-<use href="#c2r0" y="738" display="none">
-<animate attributeName="display" values="inline;none" keyTimes="0;0.297158" dur="21.5s" calcMode="discrete" repeatCount="indefinite"/>
-</use>
-<use href="#c2r57" y="738" display="none">
-<animate attributeName="display" values="none;inline" keyTimes="0;0.297158" dur="21.5s" calcMode="discrete" repeatCount="indefinite"/>
-</use>
-<use href="#c2r0" y="756" display="none">
-<animate attributeName="display" values="inline;none" keyTimes="0;0.297158" dur="21.5s" calcMode="discrete" repeatCount="indefinite"/>
-</use>
-<use href="#c2r58" y="756" display="none">
-<animate attributeName="display" values="none;inline" keyTimes="0;0.297158" dur="21.5s" calcMode="discrete" repeatCount="indefinite"/>
-</use>
-<use href="#c2r0" y="774" display="none">
-<animate attributeName="display" values="inline;none" keyTimes="0;0.297158" dur="21.5s" calcMode="discrete" repeatCount="indefinite"/>
-</use>
-<use href="#c2r59" y="774" display="none">
-<animate attributeName="display" values="none;inline" keyTimes="0;0.297158" dur="21.5s" calcMode="discrete" repeatCount="indefinite"/>
-</use>
-<use href="#c2r0" y="792" display="inline"/>
-<use href="#c2r0" y="810" display="none">
-<animate attributeName="display" values="inline;none" keyTimes="0;0.297158" dur="21.5s" calcMode="discrete" repeatCount="indefinite"/>
-</use>
-<use href="#c2r60" y="810" display="none">
-<animate attributeName="display" values="none;inline" keyTimes="0;0.297158" dur="21.5s" calcMode="discrete" repeatCount="indefinite"/>
-</use>
-<use href="#c2r0" y="828" display="none">
-<animate attributeName="display" values="inline;none" keyTimes="0;0.297158" dur="21.5s" calcMode="discrete" repeatCount="indefinite"/>
-</use>
-<use href="#c2r61" y="828" display="none">
-<animate attributeName="display" values="none;inline" keyTimes="0;0.297158" dur="21.5s" calcMode="discrete" repeatCount="indefinite"/>
-</use>
-<use href="#c2r0" y="846" display="none">
-<animate attributeName="display" values="inline;none" keyTimes="0;0.297158" dur="21.5s" calcMode="discrete" repeatCount="indefinite"/>
-</use>
-<use href="#c2r62" y="846" display="none">
-<animate attributeName="display" values="none;inline" keyTimes="0;0.297158" dur="21.5s" calcMode="discrete" repeatCount="indefinite"/>
-</use>
-<use href="#c2r0" y="864" display="none">
-<animate attributeName="display" values="inline;none" keyTimes="0;0.297158" dur="21.5s" calcMode="discrete" repeatCount="indefinite"/>
-</use>
-<use href="#c2r63" y="864" display="none">
-<animate attributeName="display" values="none;inline" keyTimes="0;0.297158" dur="21.5s" calcMode="discrete" repeatCount="indefinite"/>
-</use>
-<use href="#c2r0" y="882" display="inline"/>
-<use href="#c2r0" y="900" display="none">
-<animate attributeName="display" values="inline;none" keyTimes="0;0.297158" dur="21.5s" calcMode="discrete" repeatCount="indefinite"/>
-</use>
-<use href="#c2r64" y="900" display="none">
-<animate attributeName="display" values="none;inline" keyTimes="0;0.297158" dur="21.5s" calcMode="discrete" repeatCount="indefinite"/>
-</use>
-<use href="#c2r0" y="918" display="none">
-<animate attributeName="display" values="inline;none" keyTimes="0;0.297158" dur="21.5s" calcMode="discrete" repeatCount="indefinite"/>
-</use>
-<use href="#c2r65" y="918" display="none">
-<animate attributeName="display" values="none;inline" keyTimes="0;0.297158" dur="21.5s" calcMode="discrete" repeatCount="indefinite"/>
-</use>
-<use href="#c2r0" y="936" display="none">
-<animate attributeName="display" values="inline;none" keyTimes="0;0.297158" dur="21.5s" calcMode="discrete" repeatCount="indefinite"/>
-</use>
-<use href="#c2r66" y="936" display="none">
-<animate attributeName="display" values="none;inline" keyTimes="0;0.297158" dur="21.5s" calcMode="discrete" repeatCount="indefinite"/>
-</use>
-<use href="#c2r0" y="954" display="none">
-<animate attributeName="display" values="inline;none" keyTimes="0;0.297158" dur="21.5s" calcMode="discrete" repeatCount="indefinite"/>
-</use>
-<use href="#c2r47" y="954" display="none">
-<animate attributeName="display" values="none;inline" keyTimes="0;0.297158" dur="21.5s" calcMode="discrete" repeatCount="indefinite"/>
-</use>
-<use href="#c2r0" y="972" display="inline"/>
-<use href="#c2r0" y="990" display="none">
-<animate attributeName="display" values="inline;none" keyTimes="0;0.297158" dur="21.5s" calcMode="discrete" repeatCount="indefinite"/>
-</use>
-<use href="#c2r67" y="990" display="none">
-<animate attributeName="display" values="none;inline" keyTimes="0;0.297158" dur="21.5s" calcMode="discrete" repeatCount="indefinite"/>
-</use>
-<use href="#c2r0" y="1008" display="none">
-<animate attributeName="display" values="inline;none" keyTimes="0;0.297158" dur="21.5s" calcMode="discrete" repeatCount="indefinite"/>
-</use>
-<use href="#c2r68" y="1008" display="none">
-<animate attributeName="display" values="none;inline" keyTimes="0;0.297158" dur="21.5s" calcMode="discrete" repeatCount="indefinite"/>
-</use>
-<use href="#c2r0" y="1026" display="none">
-<animate attributeName="display" values="inline;none" keyTimes="0;0.297158" dur="21.5s" calcMode="discrete" repeatCount="indefinite"/>
-</use>
-<use href="#c2r69" y="1026" display="none">
-<animate attributeName="display" values="none;inline" keyTimes="0;0.297158" dur="21.5s" calcMode="discrete" repeatCount="indefinite"/>
-</use>
-<use href="#c2r0" y="1044" display="none">
-<animate attributeName="display" values="inline;none" keyTimes="0;0.297158" dur="21.5s" calcMode="discrete" repeatCount="indefinite"/>
-</use>
-<use href="#c2r70" y="1044" display="none">
-<animate attributeName="display" values="none;inline" keyTimes="0;0.297158" dur="21.5s" calcMode="discrete" repeatCount="indefinite"/>
-</use>
-<use href="#c2r0" y="1062" display="inline"/>
-<use href="#c2r0" y="1080" display="none">
-<animate attributeName="display" values="inline;none" keyTimes="0;0.297158" dur="21.5s" calcMode="discrete" repeatCount="indefinite"/>
-</use>
-<use href="#c2r71" y="1080" display="none">
-<animate attributeName="display" values="none;inline" keyTimes="0;0.297158" dur="21.5s" calcMode="discrete" repeatCount="indefinite"/>
-</use>
-<use href="#c2r0" y="1098" display="none">
-<animate attributeName="display" values="inline;none" keyTimes="0;0.297158" dur="21.5s" calcMode="discrete" repeatCount="indefinite"/>
-</use>
-<use href="#c2r72" y="1098" display="none">
-<animate attributeName="display" values="none;inline" keyTimes="0;0.297158" dur="21.5s" calcMode="discrete" repeatCount="indefinite"/>
-</use>
-<use href="#c2r0" y="1116" display="none">
-<animate attributeName="display" values="inline;none" keyTimes="0;0.297158" dur="21.5s" calcMode="discrete" repeatCount="indefinite"/>
-</use>
-<use href="#c2r73" y="1116" display="none">
-<animate attributeName="display" values="none;inline" keyTimes="0;0.297158" dur="21.5s" calcMode="discrete" repeatCount="indefinite"/>
-</use>
-<use href="#c2r0" y="1134" display="none">
-<animate attributeName="display" values="inline;none" keyTimes="0;0.297158" dur="21.5s" calcMode="discrete" repeatCount="indefinite"/>
-</use>
-<use href="#c2r35" y="1134" display="none">
-<animate attributeName="display" values="none;inline" keyTimes="0;0.297158" dur="21.5s" calcMode="discrete" repeatCount="indefinite"/>
-</use>
-<use href="#c2r0" y="1152" display="inline"/>
-<use href="#c2r0" y="1170" display="none">
-<animate attributeName="display" values="inline;none" keyTimes="0;0.297158" dur="21.5s" calcMode="discrete" repeatCount="indefinite"/>
-</use>
-<use href="#c2r74" y="1170" display="none">
-<animate attributeName="display" values="none;inline" keyTimes="0;0.297158" dur="21.5s" calcMode="discrete" repeatCount="indefinite"/>
-</use>
-<use href="#c2r0" y="1188" display="none">
-<animate attributeName="display" values="inline;none" keyTimes="0;0.297158" dur="21.5s" calcMode="discrete" repeatCount="indefinite"/>
-</use>
-<use href="#c2r75" y="1188" display="none">
-<animate attributeName="display" values="none;inline" keyTimes="0;0.297158" dur="21.5s" calcMode="discrete" repeatCount="indefinite"/>
-</use>
-<use href="#c2r0" y="1206" display="none">
-<animate attributeName="display" values="inline;none" keyTimes="0;0.297158" dur="21.5s" calcMode="discrete" repeatCount="indefinite"/>
-</use>
-<use href="#c2r76" y="1206" display="none">
-<animate attributeName="display" values="none;inline" keyTimes="0;0.297158" dur="21.5s" calcMode="discrete" repeatCount="indefinite"/>
-</use>
-<use href="#c2r0" y="1224" display="none">
-<animate attributeName="display" values="inline;none" keyTimes="0;0.297158" dur="21.5s" calcMode="discrete" repeatCount="indefinite"/>
-</use>
-<use href="#c2r77" y="1224" display="none">
-<animate attributeName="display" values="none;inline" keyTimes="0;0.297158" dur="21.5s" calcMode="discrete" repeatCount="indefinite"/>
-</use>
-<use href="#c2r0" y="1242" display="inline"/>
-<use href="#c2r0" y="1260" display="none">
-<animate attributeName="display" values="inline;none" keyTimes="0;0.297158" dur="21.5s" calcMode="discrete" repeatCount="indefinite"/>
-</use>
-<use href="#c2r78" y="1260" display="none">
-<animate attributeName="display" values="none;inline" keyTimes="0;0.297158" dur="21.5s" calcMode="discrete" repeatCount="indefinite"/>
-</use>
-<use href="#c2r0" y="1278" display="none">
-<animate attributeName="display" values="inline;none" keyTimes="0;0.297158" dur="21.5s" calcMode="discrete" repeatCount="indefinite"/>
-</use>
-<use href="#c2r79" y="1278" display="none">
-<animate attributeName="display" values="none;inline" keyTimes="0;0.297158" dur="21.5s" calcMode="discrete" repeatCount="indefinite"/>
-</use>
-<use href="#c2r0" y="1296" display="none">
-<animate attributeName="display" values="inline;none" keyTimes="0;0.297158" dur="21.5s" calcMode="discrete" repeatCount="indefinite"/>
-</use>
-<use href="#c2r80" y="1296" display="none">
-<animate attributeName="display" values="none;inline" keyTimes="0;0.297158" dur="21.5s" calcMode="discrete" repeatCount="indefinite"/>
-</use>
-<use href="#c2r0" y="1314" display="none">
-<animate attributeName="display" values="inline;none" keyTimes="0;0.297158" dur="21.5s" calcMode="discrete" repeatCount="indefinite"/>
-</use>
-<use href="#c2r81" y="1314" display="none">
-<animate attributeName="display" values="none;inline" keyTimes="0;0.297158" dur="21.5s" calcMode="discrete" repeatCount="indefinite"/>
-</use>
-<use href="#c2r0" y="1332" display="inline"/>
-<use href="#c2r0" y="1350" display="none">
-<animate attributeName="display" values="inline;none" keyTimes="0;0.297158" dur="21.5s" calcMode="discrete" repeatCount="indefinite"/>
-</use>
-<use href="#c2r82" y="1350" display="none">
-<animate attributeName="display" values="none;inline" keyTimes="0;0.297158" dur="21.5s" calcMode="discrete" repeatCount="indefinite"/>
-</use>
-<use href="#c2r0" y="1368" display="none">
-<animate attributeName="display" values="inline;none" keyTimes="0;0.297158" dur="21.5s" calcMode="discrete" repeatCount="indefinite"/>
-</use>
-<use href="#c2r83" y="1368" display="none">
-<animate attributeName="display" values="none;inline" keyTimes="0;0.297158" dur="21.5s" calcMode="discrete" repeatCount="indefinite"/>
-</use>
-<use href="#c2r0" y="1386" display="none">
-<animate attributeName="display" values="inline;none" keyTimes="0;0.297158" dur="21.5s" calcMode="discrete" repeatCount="indefinite"/>
-</use>
-<use href="#c2r84" y="1386" display="none">
-<animate attributeName="display" values="none;inline" keyTimes="0;0.297158" dur="21.5s" calcMode="discrete" repeatCount="indefinite"/>
-</use>
-<use href="#c2r0" y="1404" display="none">
-<animate attributeName="display" values="inline;none" keyTimes="0;0.297158" dur="21.5s" calcMode="discrete" repeatCount="indefinite"/>
-</use>
-<use href="#c2r85" y="1404" display="none">
-<animate attributeName="display" values="none;inline" keyTimes="0;0.297158" dur="21.5s" calcMode="discrete" repeatCount="indefinite"/>
-</use>
-<use href="#c2r0" y="1422" display="inline"/>
-<use href="#c2r0" y="1440" display="none">
-<animate attributeName="display" values="inline;none" keyTimes="0;0.297158" dur="21.5s" calcMode="discrete" repeatCount="indefinite"/>
-</use>
-<use href="#c2r86" y="1440" display="none">
-<animate attributeName="display" values="none;inline" keyTimes="0;0.297158" dur="21.5s" calcMode="discrete" repeatCount="indefinite"/>
-</use>
-<use href="#c2r0" y="1458" display="none">
-<animate attributeName="display" values="inline;none" keyTimes="0;0.297158" dur="21.5s" calcMode="discrete" repeatCount="indefinite"/>
-</use>
-<use href="#c2r87" y="1458" display="none">
-<animate attributeName="display" values="none;inline" keyTimes="0;0.297158" dur="21.5s" calcMode="discrete" repeatCount="indefinite"/>
-</use>
-<use href="#c2r0" y="1476" display="none">
-<animate attributeName="display" values="inline;none" keyTimes="0;0.297158" dur="21.5s" calcMode="discrete" repeatCount="indefinite"/>
-</use>
-<use href="#c2r88" y="1476" display="none">
-<animate attributeName="display" values="none;inline" keyTimes="0;0.297158" dur="21.5s" calcMode="discrete" repeatCount="indefinite"/>
-</use>
-<use href="#c2r0" y="1494" display="none">
-<animate attributeName="display" values="inline;none" keyTimes="0;0.297158" dur="21.5s" calcMode="discrete" repeatCount="indefinite"/>
-</use>
-<use href="#c2r85" y="1494" display="none">
-<animate attributeName="display" values="none;inline" keyTimes="0;0.297158" dur="21.5s" calcMode="discrete" repeatCount="indefinite"/>
-</use>
-<use href="#c2r0" y="1512" display="inline"/>
-<use href="#c2r0" y="1530" display="inline"/>
-<use href="#c2r0" y="1548" display="none">
-<animate attributeName="display" values="inline;none" keyTimes="0;0.302326" dur="21.5s" calcMode="discrete" repeatCount="indefinite"/>
-</use>
-<use href="#c2r89" y="1548" display="none">
-<animate attributeName="display" values="none;inline" keyTimes="0;0.302326" dur="21.5s" calcMode="discrete" repeatCount="indefinite"/>
-</use>
-<use href="#c2r0" y="1566" display="none">
-<animate attributeName="display" values="inline;none" keyTimes="0;0.302326" dur="21.5s" calcMode="discrete" repeatCount="indefinite"/>
-</use>
-<use href="#c2r90" y="1566" display="none">
-<animate attributeName="display" values="none;inline" keyTimes="0;0.302326" dur="21.5s" calcMode="discrete" repeatCount="indefinite"/>
-</use>
-<use href="#c2r0" y="1584" display="none">
-<animate attributeName="display" values="inline;none" keyTimes="0;0.302326" dur="21.5s" calcMode="discrete" repeatCount="indefinite"/>
-</use>
-<use href="#c2r91" y="1584" display="none">
-<animate attributeName="display" values="none;inline" keyTimes="0;0.302326" dur="21.5s" calcMode="discrete" repeatCount="indefinite"/>
-</use>
-<use href="#c2r0" y="1602" display="none">
-<animate attributeName="display" values="inline;none" keyTimes="0;0.302326" dur="21.5s" calcMode="discrete" repeatCount="indefinite"/>
-</use>
-<use href="#c2r92" y="1602" display="none">
-<animate attributeName="display" values="none;inline" keyTimes="0;0.302326" dur="21.5s" calcMode="discrete" repeatCount="indefinite"/>
-</use>
-<use href="#c2r0" y="1620" display="none">
-<animate attributeName="display" values="inline;none" keyTimes="0;0.302326" dur="21.5s" calcMode="discrete" repeatCount="indefinite"/>
-</use>
-<use href="#c2r93" y="1620" display="none">
-<animate attributeName="display" values="none;inline" keyTimes="0;0.302326" dur="21.5s" calcMode="discrete" repeatCount="indefinite"/>
-</use>
-<use href="#c2r0" y="1638" display="inline"/>
-<use href="#c2r0" y="1656" display="inline"/>
-<use href="#c2r0" y="1674" display="inline"/>
-<use href="#c2r0" y="1692" display="inline"/>
-<g display="none">
-<animate attributeName="display" values="inline;none" keyTimes="0;0.034884" dur="21.5s" calcMode="discrete" repeatCount="indefinite"/>
-<rect class="u" y="54" width="8.4" height="18" fill="#d4d4d4" opacity="0.65"/>
-</g>
-<g display="none">
-<animate attributeName="display" values="none;inline;none" keyTimes="0;0.034884;0.046512" dur="21.5s" calcMode="discrete" repeatCount="indefinite"/>
-<rect class="u" x="226.8" y="72" width="8.4" height="18" fill="#d4d4d4" opacity="0.65"/>
-</g>
-<g display="none">
-<animate attributeName="display" values="none;inline;none" keyTimes="0;0.046512;0.054264" dur="21.5s" calcMode="discrete" repeatCount="indefinite"/>
-<rect class="u" y="72" width="8.4" height="18" fill="#d4d4d4" opacity="0.65"/>
-</g>
-<g display="none">
-<animate attributeName="display" values="none;inline;none" keyTimes="0;0.054264;0.093023" dur="21.5s" calcMode="discrete" repeatCount="indefinite"/>
-<rect class="u" x="226.8" y="72" width="8.4" height="18" fill="#d4d4d4" opacity="0.65"/>
-</g>
-<g display="none">
-<animate attributeName="display" values="none;inline;none" keyTimes="0;0.093023;0.112403" dur="21.5s" calcMode="discrete" repeatCount="indefinite"/>
-<rect class="u" y="72" width="8.4" height="18" fill="#d4d4d4" opacity="0.65"/>
-</g>
-<g display="none">
-<animate attributeName="display" values="none;inline;none" keyTimes="0;0.112403;0.127907" dur="21.5s" calcMode="discrete" repeatCount="indefinite"/>
-<rect class="u" x="226.8" y="72" width="8.4" height="18" fill="#d4d4d4" opacity="0.65"/>
-</g>
-<g display="none">
-<animate attributeName="display" values="none;inline;none" keyTimes="0;0.127907;0.139535" dur="21.5s" calcMode="discrete" repeatCount="indefinite"/>
-<rect class="u" y="72" width="8.4" height="18" fill="#d4d4d4" opacity="0.65"/>
-</g>
-<g display="none">
-<animate attributeName="display" values="none;inline;none" keyTimes="0;0.139535;0.151163" dur="21.5s" calcMode="discrete" repeatCount="indefinite"/>
-<rect class="u" x="226.8" y="72" width="8.4" height="18" fill="#d4d4d4" opacity="0.65"/>
-</g>
-<g display="none">
-<animate attributeName="display" values="none;inline;none" keyTimes="0;0.151163;0.174419" dur="21.5s" calcMode="discrete" repeatCount="indefinite"/>
-<rect class="u" y="72" width="8.4" height="18" fill="#d4d4d4" opacity="0.65"/>
-</g>
-<g display="none">
-<animate attributeName="display" values="none;inline;none" keyTimes="0;0.174419;0.186047" dur="21.5s" calcMode="discrete" repeatCount="indefinite"/>
-<rect class="u" x="226.8" y="72" width="8.4" height="18" fill="#d4d4d4" opacity="0.65"/>
-</g>
-<g display="none">
-<animate attributeName="display" values="none;inline;none" keyTimes="0;0.186047;0.197674" dur="21.5s" calcMode="discrete" repeatCount="indefinite"/>
-<rect class="u" y="72" width="8.4" height="18" fill="#d4d4d4" opacity="0.65"/>
-</g>
-<g display="none">
-<animate attributeName="display" values="none;inline;none" keyTimes="0;0.197674;0.27907" dur="21.5s" calcMode="discrete" repeatCount="indefinite"/>
-<rect class="u" x="226.8" y="72" width="8.4" height="18" fill="#d4d4d4" opacity="0.65"/>
-</g>
-<g display="none">
-<animate attributeName="display" values="none;inline;none" keyTimes="0;0.27907;0.286822" dur="21.5s" calcMode="discrete" repeatCount="indefinite"/>
-<rect class="u" y="72" width="8.4" height="18" fill="#d4d4d4" opacity="0.65"/>
-</g>
-<g display="none">
-<animate attributeName="display" values="none;inline;none" keyTimes="0;0.286822;0.29199" dur="21.5s" calcMode="discrete" repeatCount="indefinite"/>
-<rect class="u" x="226.8" y="72" width="8.4" height="18" fill="#d4d4d4" opacity="0.65"/>
-</g>
-<g display="none">
-<animate attributeName="display" values="none;inline;none" keyTimes="0;0.29199;0.297158" dur="21.5s" calcMode="discrete" repeatCount="indefinite"/>
-<rect class="u" y="72" width="8.4" height="18" fill="#d4d4d4" opacity="0.65"/>
-</g>
-<g display="none">
-<animate attributeName="display" values="none;inline;none" keyTimes="0;0.297158;0.302326" dur="21.5s" calcMode="discrete" repeatCount="indefinite"/>
-<rect class="u" y="1548" width="8.4" height="18" fill="#d4d4d4" opacity="0.65"/>
-</g>
-<g display="none">
-<animate attributeName="display" values="none;inline" keyTimes="0;0.302326" dur="21.5s" calcMode="discrete" repeatCount="indefinite"/>
-<rect class="u" y="1656" width="8.4" height="18" fill="#d4d4d4" opacity="0.65"/>
-</g>
-</g>
+<g class="c2 c" transform="translate(8 26)">
+<rect width="688.8" height="1710" fill="#1e1e1e"/>
+<text class="ab w" y="32" textLength="235.2">Locating benchmark files ...</text>
+<text class="aa" y="50" textLength="344.4">./benchmark/directed_graph_benchmark.dart</text>
+<text class="ab" y="86" textLength="8.4">$</text>
+<text class="aa w" x="16.8" y="86" textLength="386.4">dart ./benchmark/directed_graph_benchmark.dart</text>
+<text class="ab" x="16.8" y="104" textLength="109.2">[076ms:895us]</text>
+<text class="aa w" x="134.4" y="104" textLength="361.2">Manipulating edges: remove and add vertex l</text>
+<text class="ac w" x="33.6" y="122" textLength="184.8">mean: 1.018 ± 0.96 us,</text>
+<text class="ad w" x="226.8" y="122" textLength="184.8">median: 0.88 ± 0.23 us</text>
+<rect class="q" x="33.6" y="141.75" width="8.4" height="2.25" fill="#d4d4d4" stroke="#d4d4d4" stroke-width="2" vector-effect="non-scaling-stroke"/>
+<rect class="q" x="42" y="135" width="8.4" height="9" fill="#d4d4d4" stroke="#d4d4d4" stroke-width="2" vector-effect="non-scaling-stroke"/>
+<rect class="q" x="50.4" y="137.25" width="8.4" height="6.75" fill="#d4d4d4" stroke="#d4d4d4" stroke-width="2" vector-effect="non-scaling-stroke"/>
+<text class="aa" x="58.8" y="140" textLength="8.4">_</text>
+<rect class="q" x="67.2" y="126" width="7.35" height="18" fill="#11a8cd" stroke="#11a8cd" stroke-width="2" vector-effect="non-scaling-stroke"/>
+<rect class="q" x="75.6" y="139.5" width="8.4" height="4.5" fill="#d4d4d4" stroke="#d4d4d4" stroke-width="2" vector-effect="non-scaling-stroke"/>
+<rect class="q" x="84" y="141.75" width="8.4" height="2.25" fill="#0dbc79" stroke="#0dbc79" stroke-width="2" vector-effect="non-scaling-stroke"/>
+<text class="aa" x="92.4" y="140" textLength="33.6">____</text>
+<text class="ab" x="126" y="140" textLength="58.8">_______</text>
+<text class="aa" x="201.6" y="140" textLength="16.8">97</text>
+<text class="ab" x="235.2" y="140" textLength="33.6">____</text>
+<text class="aa" x="268.8" y="140" textLength="8.4">_</text>
+<text class="aa w" x="33.6" y="158" textLength="134.4">sample size: 155</text>
+<text class="ab w" x="176.4" y="158" textLength="201.6">(averaged over 179 runs)</text>
+<text class="ab" x="16.8" y="194" textLength="109.2">[087ms:487us]</text>
+<text class="aa w" x="134.4" y="194" textLength="252">Manipulating edges: sort edges</text>
+<text class="ac w" x="33.6" y="212" textLength="176.4">mean: 1.58 ± 0.17 us,</text>
+<text class="ad w" x="218.4" y="212" textLength="184.8">median: 1.47 ± 0.24 us</text>
+<rect class="q" x="33.6" y="216" width="7.35" height="18" fill="#11a8cd" stroke="#11a8cd" stroke-width="2" vector-effect="non-scaling-stroke"/>
+<rect class="q" x="42" y="231.75" width="8.4" height="2.25" fill="#0dbc79" stroke="#0dbc79" stroke-width="2" vector-effect="non-scaling-stroke"/>
+<rect class="q" x="50.4" y="231.75" width="8.4" height="2.25" fill="#d4d4d4" stroke="#d4d4d4" stroke-width="2" vector-effect="non-scaling-stroke"/>
+<rect class="q" x="58.8" y="231.75" width="8.4" height="2.25" fill="#d4d4d4" stroke="#d4d4d4" stroke-width="2" vector-effect="non-scaling-stroke"/>
+<rect class="q" x="67.2" y="229.5" width="8.4" height="4.5" fill="#d4d4d4" stroke="#d4d4d4" stroke-width="2" vector-effect="non-scaling-stroke"/>
+<text class="aa" x="75.6" y="230" textLength="25.2">___</text>
+<text class="aa w" x="33.6" y="248" textLength="134.4">sample size: 154</text>
+<text class="ab w" x="176.4" y="248" textLength="201.6">(averaged over 177 runs)</text>
+<text class="ab" x="16.8" y="284" textLength="109.2">[006ms:263us]</text>
+<text class="aa w" x="134.4" y="284" textLength="159.6">Topology: isAcyclic</text>
+<text class="ac w" x="33.6" y="302" textLength="193.2">mean: 0.011 ± 0.015 us,</text>
+<text class="ad w" x="235.2" y="302" textLength="218.4">median: 0.0060 ± 0.0100 us</text>
+<rect class="q" x="33.6" y="306" width="7.35" height="18" fill="#11a8cd" stroke="#11a8cd" stroke-width="2" vector-effect="non-scaling-stroke"/>
+<text class="ab" x="42" y="320" textLength="8.4">_</text>
+<text class="aa" x="50.4" y="320" textLength="8.4">_</text>
+<rect class="q" x="58.8" y="317.25" width="8.4" height="6.75" fill="#d4d4d4" stroke="#d4d4d4" stroke-width="2" vector-effect="non-scaling-stroke"/>
+<text class="aa" x="67.2" y="320" textLength="8.4">_</text>
+<text class="ab" x="75.6" y="320" textLength="8.4">_</text>
+<text class="aa" x="84" y="320" textLength="8.4">_</text>
+<text class="ab" x="92.4" y="320" textLength="42">_____</text>
+<text class="aa" x="134.4" y="320" textLength="8.4">_</text>
+<text class="ab" x="142.8" y="320" textLength="8.4">_</text>
+<text class="aa" x="151.2" y="320" textLength="8.4">_</text>
+<text class="ab" x="159.6" y="320" textLength="33.6">____</text>
+<text class="aa" x="210" y="320" textLength="16.8">40</text>
+<text class="ab" x="243.6" y="320" textLength="33.6">____</text>
+<text class="aa" x="277.2" y="320" textLength="8.4">_</text>
+<text class="aa w" x="33.6" y="338" textLength="134.4">sample size: 248</text>
+<text class="ab w" x="176.4" y="338" textLength="201.6">(averaged over 321 runs)</text>
+<text class="ab" x="16.8" y="374" textLength="109.2">[112ms:876us]</text>
+<text class="aa w" x="134.4" y="374" textLength="243.6">Topology: topologicalOrdering</text>
+<text class="ac w" x="33.6" y="392" textLength="176.4">mean: 2.57 ± 0.29 us,</text>
+<text class="ad w" x="218.4" y="392" textLength="184.8">median: 2.43 ± 0.29 us</text>
+<rect class="q" x="33.6" y="396" width="7.35" height="18" fill="#11a8cd" stroke="#11a8cd" stroke-width="2" vector-effect="non-scaling-stroke"/>
+<rect class="q" x="42" y="411.75" width="8.4" height="2.25" fill="#d4d4d4" stroke="#d4d4d4" stroke-width="2" vector-effect="non-scaling-stroke"/>
+<text class="ac" x="50.4" y="410" textLength="8.4">_</text>
+<text class="aa" x="58.8" y="410" textLength="8.4">_</text>
+<rect class="q" x="67.2" y="411.75" width="8.4" height="2.25" fill="#d4d4d4" stroke="#d4d4d4" stroke-width="2" vector-effect="non-scaling-stroke"/>
+<rect class="q" x="75.6" y="411.75" width="8.4" height="2.25" fill="#d4d4d4" stroke="#d4d4d4" stroke-width="2" vector-effect="non-scaling-stroke"/>
+<text class="aa" x="84" y="410" textLength="16.8">__</text>
+<text class="ab" x="100.8" y="410" textLength="50.4">______</text>
+<text class="aa" x="151.2" y="410" textLength="16.8">__</text>
+<text class="aa w" x="33.6" y="428" textLength="134.4">sample size: 135</text>
+<text class="ab w" x="176.4" y="428" textLength="201.6">(averaged over 149 runs)</text>
+<text class="ab" x="16.8" y="464" textLength="109.2">[113ms:775us]</text>
+<text class="aa w" x="134.4" y="464" textLength="294">Topology: sortedTopologicalOrdering</text>
+<text class="ac w" x="33.6" y="482" textLength="176.4">mean: 2.59 ± 0.65 us,</text>
+<text class="ad w" x="218.4" y="482" textLength="184.8">median: 2.38 ± 0.25 us</text>
+<rect class="q" x="33.6" y="486" width="7.35" height="18" fill="#11a8cd" stroke="#11a8cd" stroke-width="2" vector-effect="non-scaling-stroke"/>
+<rect class="q" x="42" y="499.5" width="8.4" height="4.5" fill="#d4d4d4" stroke="#d4d4d4" stroke-width="2" vector-effect="non-scaling-stroke"/>
+<text class="aa" x="50.4" y="500" textLength="8.4">_</text>
+<rect class="q" x="58.8" y="501.75" width="8.4" height="2.25" fill="#0dbc79" stroke="#0dbc79" stroke-width="2" vector-effect="non-scaling-stroke"/>
+<text class="aa" x="67.2" y="500" textLength="16.8">__</text>
+<rect class="q" x="84" y="501.75" width="8.4" height="2.25" fill="#d4d4d4" stroke="#d4d4d4" stroke-width="2" vector-effect="non-scaling-stroke"/>
+<text class="aa" x="92.4" y="500" textLength="42">_____</text>
+<text class="ab" x="134.4" y="500" textLength="33.6">____</text>
+<text class="aa" x="184.8" y="500" textLength="16.8">33</text>
+<text class="ab" x="218.4" y="500" textLength="33.6">____</text>
+<text class="aa" x="252" y="500" textLength="8.4">_</text>
+<text class="aa w" x="33.6" y="518" textLength="134.4">sample size: 144</text>
+<text class="ab w" x="176.4" y="518" textLength="201.6">(averaged over 162 runs)</text>
+<text class="ab" x="16.8" y="554" textLength="109.2">[161ms:969us]</text>
+<text class="aa w" x="134.4" y="554" textLength="226.8">Topology: transitiveClosure</text>
+<text class="ac w" x="33.6" y="572" textLength="184.8">mean: 6.083 ± 0.43 us,</text>
+<text class="ad w" x="226.8" y="572" textLength="201.6">median: 6.0065 ± 0.71 us</text>
+<rect class="q" x="33.6" y="576" width="7.35" height="18" fill="#d4d4d4" stroke="#d4d4d4" stroke-width="2" vector-effect="non-scaling-stroke"/>
+<rect class="q" x="42" y="576" width="8.4" height="18" fill="#11a8cd" stroke="#11a8cd" stroke-width="2" vector-effect="non-scaling-stroke"/>
+<rect class="q" x="50.4" y="580.5" width="8.4" height="13.5" fill="#d4d4d4" stroke="#d4d4d4" stroke-width="2" vector-effect="non-scaling-stroke"/>
+<rect class="q" x="58.8" y="585" width="8.4" height="9" fill="#d4d4d4" stroke="#d4d4d4" stroke-width="2" vector-effect="non-scaling-stroke"/>
+<rect class="q" x="67.2" y="591.75" width="8.4" height="2.25" fill="#d4d4d4" stroke="#d4d4d4" stroke-width="2" vector-effect="non-scaling-stroke"/>
+<text class="aa" x="75.6" y="590" textLength="8.4">_</text>
+<text class="aa w" x="33.6" y="608" textLength="134.4">sample size: 100</text>
+<text class="ab w" x="176.4" y="608" textLength="201.6">(averaged over 100 runs)</text>
+<text class="ab" x="16.8" y="644" textLength="109.2">[002ms:563us]</text>
+<text class="aa w" x="134.4" y="644" textLength="176.4">Topology: cycleVertex</text>
+<text class="ac w" x="33.6" y="662" textLength="210">mean: 0.0086 ± 0.0088 us,</text>
+<text class="ad w" x="252" y="662" textLength="226.8">median: 0.0050 ± 0.00100 us</text>
+<rect class="q" x="33.6" y="666" width="7.35" height="18" fill="#11a8cd" stroke="#11a8cd" stroke-width="2" vector-effect="non-scaling-stroke"/>
+<text class="ab" x="42" y="680" textLength="16.8">__</text>
+<rect class="q" x="58.8" y="677.25" width="8.4" height="6.75" fill="#d4d4d4" stroke="#d4d4d4" stroke-width="2" vector-effect="non-scaling-stroke"/>
+<text class="ab" x="67.2" y="680" textLength="134.4">________________</text>
+<text class="aa" x="218.4" y="680" textLength="25.2">289</text>
+<text class="ab" x="260.4" y="680" textLength="33.6">____</text>
+<text class="aa" x="294" y="680" textLength="8.4">_</text>
+<text class="aa w" x="33.6" y="698" textLength="134.4">sample size: 296</text>
+<text class="ab w" x="176.4" y="698" textLength="201.6">(averaged over 393 runs)</text>
+<text class="ab" x="16.8" y="734" textLength="109.2">[004ms:428us]</text>
+<text class="aa w" x="134.4" y="734" textLength="126">Topology: cycle</text>
+<text class="ac w" x="33.6" y="752" textLength="193.2">mean: 0.020 ± 0.028 us,</text>
+<text class="ad w" x="235.2" y="752" textLength="210">median: 0.011 ± 0.0020 us</text>
+<rect class="q" x="33.6" y="756" width="7.35" height="18" fill="#11a8cd" stroke="#11a8cd" stroke-width="2" vector-effect="non-scaling-stroke"/>
+<text class="ab" x="42" y="770" textLength="8.4">_</text>
+<rect class="q" x="50.4" y="767.25" width="8.4" height="6.75" fill="#d4d4d4" stroke="#d4d4d4" stroke-width="2" vector-effect="non-scaling-stroke"/>
+<text class="aa" x="58.8" y="770" textLength="8.4">_</text>
+<text class="ab" x="67.2" y="770" textLength="75.6">_________</text>
+<text class="aa" x="142.8" y="770" textLength="8.4">_</text>
+<text class="ab" x="151.2" y="770" textLength="8.4">_</text>
+<text class="aa" x="159.6" y="770" textLength="8.4">_</text>
+<text class="ab" x="168" y="770" textLength="33.6">____</text>
+<text class="aa" x="218.4" y="770" textLength="25.2">538</text>
+<text class="ab" x="260.4" y="770" textLength="33.6">____</text>
+<text class="aa" x="294" y="770" textLength="8.4">_</text>
+<text class="aa w" x="33.6" y="788" textLength="134.4">sample size: 287</text>
+<text class="ab w" x="176.4" y="788" textLength="201.6">(averaged over 379 runs)</text>
+<text class="ab" x="16.8" y="824" textLength="109.2">[138ms:371us]</text>
+<text class="aa w" x="134.4" y="824" textLength="184.8">Topology: localSources</text>
+<text class="ac w" x="33.6" y="842" textLength="176.4">mean: 3.92 ± 0.25 us,</text>
+<text class="ad w" x="218.4" y="842" textLength="184.8">median: 3.76 ± 0.35 us</text>
+<rect class="q" x="33.6" y="846" width="7.35" height="18" fill="#11a8cd" stroke="#11a8cd" stroke-width="2" vector-effect="non-scaling-stroke"/>
+<rect class="q" x="42" y="861.75" width="8.4" height="2.25" fill="#0dbc79" stroke="#0dbc79" stroke-width="2" vector-effect="non-scaling-stroke"/>
+<rect class="q" x="50.4" y="861.75" width="8.4" height="2.25" fill="#d4d4d4" stroke="#d4d4d4" stroke-width="2" vector-effect="non-scaling-stroke"/>
+<rect class="q" x="58.8" y="861.75" width="8.4" height="2.25" fill="#d4d4d4" stroke="#d4d4d4" stroke-width="2" vector-effect="non-scaling-stroke"/>
+<rect class="q" x="67.2" y="861.75" width="8.4" height="2.25" fill="#d4d4d4" stroke="#d4d4d4" stroke-width="2" vector-effect="non-scaling-stroke"/>
+<text class="aa" x="75.6" y="860" textLength="16.8">__</text>
+<text class="ab" x="92.4" y="860" textLength="8.4">_</text>
+<text class="aa" x="100.8" y="860" textLength="8.4">_</text>
+<text class="aa w" x="33.6" y="878" textLength="134.4">sample size: 130</text>
+<text class="ab w" x="176.4" y="878" textLength="201.6">(averaged over 142 runs)</text>
+<text class="ab" x="16.8" y="914" textLength="109.2">[128ms:373us]</text>
+<text class="aa w" x="134.4" y="914" textLength="310.8">Topology: stronglyConnectedComponents</text>
+<text class="ac w" x="33.6" y="932" textLength="176.4">mean: 3.18 ± 0.39 us,</text>
+<text class="ad w" x="218.4" y="932" textLength="184.8">median: 3.12 ± 0.46 us</text>
+<rect class="q" x="33.6" y="936" width="7.35" height="18" fill="#d4d4d4" stroke="#d4d4d4" stroke-width="2" vector-effect="non-scaling-stroke"/>
+<rect class="q" x="42" y="949.5" width="8.4" height="4.5" fill="#11a8cd" stroke="#11a8cd" stroke-width="2" vector-effect="non-scaling-stroke"/>
+<rect class="q" x="50.4" y="942.75" width="8.4" height="11.25" fill="#0dbc79" stroke="#0dbc79" stroke-width="2" vector-effect="non-scaling-stroke"/>
+<rect class="q" x="58.8" y="947.25" width="8.4" height="6.75" fill="#d4d4d4" stroke="#d4d4d4" stroke-width="2" vector-effect="non-scaling-stroke"/>
+<rect class="q" x="67.2" y="951.75" width="8.4" height="2.25" fill="#d4d4d4" stroke="#d4d4d4" stroke-width="2" vector-effect="non-scaling-stroke"/>
+<text class="aa" x="75.6" y="950" textLength="33.6">____</text>
+<text class="ab" x="109.2" y="950" textLength="75.6">_________</text>
+<text class="aa" x="184.8" y="950" textLength="8.4">_</text>
+<text class="aa w" x="33.6" y="968" textLength="134.4">sample size: 147</text>
+<text class="ab w" x="176.4" y="968" textLength="201.6">(averaged over 167 runs)</text>
+<text class="ab" x="16.8" y="1004" textLength="109.2">[099ms:917us]</text>
+<text class="aa w" x="134.4" y="1004" textLength="193.2">Topology: shortestPaths</text>
+<text class="ac w" x="33.6" y="1022" textLength="184.8">mean: 2.020 ± 0.19 us,</text>
+<text class="ad w" x="226.8" y="1022" textLength="184.8">median: 1.89 ± 0.36 us</text>
+<rect class="q" x="33.6" y="1026" width="7.35" height="18" fill="#11a8cd" stroke="#11a8cd" stroke-width="2" vector-effect="non-scaling-stroke"/>
+<rect class="q" x="42" y="1041.75" width="8.4" height="2.25" fill="#0dbc79" stroke="#0dbc79" stroke-width="2" vector-effect="non-scaling-stroke"/>
+<rect class="q" x="50.4" y="1041.75" width="8.4" height="2.25" fill="#d4d4d4" stroke="#d4d4d4" stroke-width="2" vector-effect="non-scaling-stroke"/>
+<rect class="q" x="58.8" y="1035" width="8.4" height="9" fill="#d4d4d4" stroke="#d4d4d4" stroke-width="2" vector-effect="non-scaling-stroke"/>
+<text class="aa" x="67.2" y="1040" textLength="16.8">__</text>
+<text class="aa w" x="33.6" y="1058" textLength="134.4">sample size: 165</text>
+<text class="ab w" x="176.4" y="1058" textLength="201.6">(averaged over 194 runs)</text>
+<text class="ab" x="16.8" y="1094" textLength="109.2">[055ms:687us]</text>
+<text class="aa w" x="134.4" y="1094" textLength="184.8">Topology: shortestPath</text>
+<text class="ac w" x="33.6" y="1112" textLength="176.4">mean: 0.82 ± 0.50 us,</text>
+<text class="ad w" x="218.4" y="1112" textLength="184.8">median: 0.68 ± 0.27 us</text>
+<rect class="q" x="33.6" y="1116" width="7.35" height="18" fill="#d4d4d4" stroke="#d4d4d4" stroke-width="2" vector-effect="non-scaling-stroke"/>
+<rect class="q" x="42" y="1129.5" width="8.4" height="4.5" fill="#11a8cd" stroke="#11a8cd" stroke-width="2" vector-effect="non-scaling-stroke"/>
+<text class="ac" x="50.4" y="1130" textLength="8.4">_</text>
+<rect class="q" x="58.8" y="1125" width="8.4" height="9" fill="#d4d4d4" stroke="#d4d4d4" stroke-width="2" vector-effect="non-scaling-stroke"/>
+<text class="aa" x="67.2" y="1130" textLength="16.8">__</text>
+<text class="ab" x="84" y="1130" textLength="8.4">_</text>
+<text class="aa" x="92.4" y="1130" textLength="8.4">_</text>
+<text class="ab" x="100.8" y="1130" textLength="50.4">______</text>
+<text class="aa" x="151.2" y="1130" textLength="16.8">__</text>
+<text class="ab" x="168" y="1130" textLength="8.4">_</text>
+<text class="aa" x="193.2" y="1130" textLength="16.8">36</text>
+<text class="ab" x="226.8" y="1130" textLength="33.6">____</text>
+<text class="aa" x="260.4" y="1130" textLength="8.4">_</text>
+<text class="aa w" x="33.6" y="1148" textLength="134.4">sample size: 181</text>
+<text class="ab w" x="176.4" y="1148" textLength="201.6">(averaged over 220 runs)</text>
+<text class="ab" x="16.8" y="1184" textLength="109.2">[049ms:042us]</text>
+<text class="aa w" x="134.4" y="1184" textLength="117.6">Topology: path</text>
+<text class="ac w" x="33.6" y="1202" textLength="176.4">mean: 0.69 ± 0.11 us,</text>
+<text class="ad w" x="218.4" y="1202" textLength="193.2">median: 0.63 ± 0.066 us</text>
+<rect class="q" x="33.6" y="1206" width="7.35" height="18" fill="#11a8cd" stroke="#11a8cd" stroke-width="2" vector-effect="non-scaling-stroke"/>
+<rect class="q" x="42" y="1219.5" width="8.4" height="4.5" fill="#d4d4d4" stroke="#d4d4d4" stroke-width="2" vector-effect="non-scaling-stroke"/>
+<text class="aa" x="50.4" y="1220" textLength="8.4">_</text>
+<text class="ac" x="58.8" y="1220" textLength="8.4">_</text>
+<text class="aa" x="67.2" y="1220" textLength="50.4">______</text>
+<text class="ab" x="117.6" y="1220" textLength="8.4">_</text>
+<rect class="q" x="126" y="1221.75" width="8.4" height="2.25" fill="#d4d4d4" stroke="#d4d4d4" stroke-width="2" vector-effect="non-scaling-stroke"/>
+<text class="aa" x="134.4" y="1220" textLength="25.2">___</text>
+<text class="ab" x="159.6" y="1220" textLength="8.4">_</text>
+<text class="aa" x="168" y="1220" textLength="16.8">__</text>
+<text class="ab" x="184.8" y="1220" textLength="42">_____</text>
+<text class="aa" x="226.8" y="1220" textLength="8.4">_</text>
+<text class="ab" x="235.2" y="1220" textLength="16.8">__</text>
+<text class="aa" x="252" y="1220" textLength="8.4">_</text>
+<text class="aa w" x="33.6" y="1238" textLength="134.4">sample size: 216</text>
+<text class="ab w" x="176.4" y="1238" textLength="201.6">(averaged over 273 runs)</text>
+<text class="ab" x="16.8" y="1274" textLength="109.2">[034ms:118us]</text>
+<text class="aa w" x="134.4" y="1274" textLength="252">Topology: reachableVertices(d)</text>
+<text class="ac w" x="33.6" y="1292" textLength="184.8">mean: 0.35 ± 0.047 us,</text>
+<text class="ad w" x="226.8" y="1292" textLength="201.6">median: 0.33 ± 0.0040 us</text>
+<text class="aa" x="33.6" y="1310" textLength="8.4">_</text>
+<rect class="q" x="42" y="1309.5" width="8.4" height="4.5" fill="#d4d4d4" stroke="#d4d4d4" stroke-width="2" vector-effect="non-scaling-stroke"/>
+<rect class="q" x="50.4" y="1296" width="7.35" height="18" fill="#11a8cd" stroke="#11a8cd" stroke-width="2" vector-effect="non-scaling-stroke"/>
+<rect class="q" x="58.8" y="1307.25" width="8.4" height="6.75" fill="#d4d4d4" stroke="#d4d4d4" stroke-width="2" vector-effect="non-scaling-stroke"/>
+<rect class="q" x="67.2" y="1309.5" width="8.4" height="4.5" fill="#d4d4d4" stroke="#d4d4d4" stroke-width="2" vector-effect="non-scaling-stroke"/>
+<rect class="q" x="75.6" y="1311.75" width="8.4" height="2.25" fill="#d4d4d4" stroke="#d4d4d4" stroke-width="2" vector-effect="non-scaling-stroke"/>
+<text class="aa" x="84" y="1310" textLength="16.8">__</text>
+<text class="ab" x="100.8" y="1310" textLength="25.2">___</text>
+<text class="aa" x="126" y="1310" textLength="25.2">___</text>
+<text class="ac" x="151.2" y="1310" textLength="8.4">_</text>
+<text class="aa" x="159.6" y="1310" textLength="25.2">___</text>
+<text class="ab" x="184.8" y="1310" textLength="16.8">__</text>
+<text class="aa w" x="201.6" y="1310" textLength="50.4">_  197</text>
+<text class="ab" x="268.8" y="1310" textLength="33.6">____</text>
+<text class="aa" x="302.4" y="1310" textLength="8.4">_</text>
+<text class="aa w" x="33.6" y="1328" textLength="134.4">sample size: 256</text>
+<text class="ab w" x="176.4" y="1328" textLength="201.6">(averaged over 332 runs)</text>
+<text class="ab" x="16.8" y="1364" textLength="92.4">[01s:338ms]</text>
+<text class="aa w" x="117.6" y="1364" textLength="201.6">Comparator: user defined</text>
+<text class="ac w" x="33.6" y="1382" textLength="184.8">mean: 70.32 ± 0.85 ms,</text>
+<text class="ad w" x="226.8" y="1382" textLength="193.2">median: 69.95 ± 0.91 ms</text>
+<rect class="q" x="33.6" y="1395" width="8.4" height="9" fill="#d4d4d4" stroke="#d4d4d4" stroke-width="2" vector-effect="non-scaling-stroke"/>
+<rect class="q" x="42" y="1386" width="7.35" height="18" fill="#11a8cd" stroke="#11a8cd" stroke-width="2" vector-effect="non-scaling-stroke"/>
+<rect class="q" x="50.4" y="1401.75" width="8.4" height="2.25" fill="#d4d4d4" stroke="#d4d4d4" stroke-width="2" vector-effect="non-scaling-stroke"/>
+<rect class="q" x="58.8" y="1399.5" width="8.4" height="4.5" fill="#d4d4d4" stroke="#d4d4d4" stroke-width="2" vector-effect="non-scaling-stroke"/>
+<rect class="q" x="67.2" y="1401.75" width="8.4" height="2.25" fill="#d4d4d4" stroke="#d4d4d4" stroke-width="2" vector-effect="non-scaling-stroke"/>
+<text class="aa w" x="33.6" y="1418" textLength="126">sample size: 16</text>
+<text class="ab" x="16.8" y="1454" textLength="92.4">[01s:418ms]</text>
+<text class="aa w" x="117.6" y="1454" textLength="168">Comparator: inferred</text>
+<text class="ac w" x="33.6" y="1472" textLength="193.2">mean: 117.87 ± 1.80 ms,</text>
+<text class="ad w" x="235.2" y="1472" textLength="201.6">median: 117.57 ± 2.26 ms</text>
+<rect class="q" x="33.6" y="1476" width="7.35" height="18" fill="#d4d4d4" stroke="#d4d4d4" stroke-width="2" vector-effect="non-scaling-stroke"/>
+<rect class="q" x="42" y="1476" width="7.35" height="18" fill="#11a8cd" stroke="#11a8cd" stroke-width="2" vector-effect="non-scaling-stroke"/>
+<rect class="q" x="50.4" y="1489.5" width="8.4" height="4.5" fill="#d4d4d4" stroke="#d4d4d4" stroke-width="2" vector-effect="non-scaling-stroke"/>
+<rect class="q" x="58.8" y="1489.5" width="8.4" height="4.5" fill="#d4d4d4" stroke="#d4d4d4" stroke-width="2" vector-effect="non-scaling-stroke"/>
+<text class="aa w" x="33.6" y="1508" textLength="126">sample size: 10</text>
+<text class="ab w" y="1562" textLength="277.2">-------      Summary     --------</text>
+<text class="aa w" y="1580" textLength="126">Total run time:</text>
+<text class="ac" x="134.4" y="1580" textLength="92.4">[06s:124ms]</text>
+<text class="aa w" y="1598" textLength="176.4">Completed benchmarks:</text>
+<text class="ac" x="184.8" y="1598" textLength="16.8">16</text>
+<text class="aa" x="201.6" y="1598" textLength="8.4">.</text>
+<text class="ac w" y="1616" textLength="193.2">Completed successfully.</text>
+<text class="aa w" y="1634" textLength="176.4">Exiting with code: 0.</text>
 </g>
 </svg>
