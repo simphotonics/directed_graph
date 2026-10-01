@@ -15,15 +15,17 @@ Examples include: network connections, links in a document pointing to other par
 foreign keys in a relational database, file dependencies in a build system, etc.
 
 The package [`directed_graph`][directed_graph] contains the graphs:
-[`DirectedGraph`][DirectedGraph], [`WeightedDirectedGraph`][WeightedDirectedGraph],
-[`BidirectedGraph`][BidirectedGraph], [`UnmodifiableDirectedGraph`][UnmodifiableDirectedGraph],
-[`DirectedMultiGraph`][DirectedMultiGraph], and [`WeightedDirectedMultiGraph`][WeightedDirectedMultiGraph].
+[`DirectedGraph`][DirectedGraph], [`UnmodifiableDirectedGraph`][UnmodifiableDirectedGraph],
+[`DirectedMultiGraph`][DirectedMultiGraph],
+[`WeightedDirectedGraph`][WeightedDirectedGraph],
+[`WeightedDirectedMultiGraph`][WeightedDirectedMultiGraph], and
+[`BidirectedGraph`][BidirectedGraph].
 
-It includes methods that enable:
+The graph classes provide methods for:
 * adding/removing vertices and edges,
-* sorting of vertices and edges.
+* sorting vertices and edges.
 
-The library provides access to algorithms
+The library includes algorithms
 for finding:
 * the shortest path between vertices,
 * the path with the lowest/highest weight (for weighted directed graphs),
@@ -33,7 +35,8 @@ for finding:
 * a topological ordering of the graph vertices,
 * a reverse topological ordering of the graph vertices.
 
-The class [`GraphCrawler`][GraphCrawler] can be used to retrieve *paths* or *walks* connecting two vertices.
+The class [`GraphCrawler`][GraphCrawler] can be used to retrieve
+*paths* or *walks* connecting two vertices.
 
 ## Terminology
 
