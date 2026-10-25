@@ -70,10 +70,10 @@ even though the edges (I, K) and (L, L) render the total graph cyclic.
    * For a quasi-topological ordering to exist, any two vertices belonging to the *sub-set*
 must not be mutually connected. That is, if there is a path \[v<sub>i</sub>, ...,   v<sub>j</sub>\]
 then there must not be a path \[v<sub>j</sub>, ...,   v<sub>i</sub>\] and vice versa. Note:
-  * The paths \[v<sub>i</sub>, ...,   v<sub>j</sub>\] and
+  The paths \[v<sub>i</sub>, ...,   v<sub>j</sub>\] and
 \[v<sub>j</sub>, ...,   v<sub>i</sub>\] may include vertices that are *not* in
-the sub-set, but belong to the graph.
-  * A quasi-topological ordering many exist even if the
+the sub-set.
+  * A quasi-topological ordering may exist even if the
 total graph is cyclic.
 
 
