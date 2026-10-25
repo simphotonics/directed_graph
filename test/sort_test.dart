@@ -64,4 +64,18 @@ void main() {
       expect(defaultVertexComparator<Object>(), isNull);
     });
   });
+  group('isComparable:', () {
+    test('int', () {
+      expect(isComparable<int>(), isTrue);
+    });
+    test('dynamic', () {
+      expect(isComparable(), isFalse);
+    });
+    test('String?', () {
+      expect(isComparable<String?>(), isFalse);
+    });
+    test('List<int>', () {
+      expect(isComparable<List<int>>(), isFalse);
+    });
+  });
 }

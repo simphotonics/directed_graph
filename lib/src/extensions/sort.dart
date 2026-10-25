@@ -8,7 +8,12 @@ typedef Summation<W> = W Function(W left, W right);
 /// Returns `true` if [T] implements or extends [Comparable].
 bool _isComparable<T>() => (Iterable<T>.empty() is Iterable<Comparable>);
 
-/// A memoized generic function with no arguments and return type [bool].
+/// Returns `true` if the type argument is [Comparable], and `false` otherwise.
+///
+///```
+///// Usage
+///print(isComparable<String>()); // true
+///```
 final isComparable = GenericMemoizedFunction(_isComparable);
 
 /// Returns a generic function of type `int Function(T, T)` or `null` if
