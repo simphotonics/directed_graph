@@ -3,7 +3,7 @@ name: directed_graph
 description: Generic directed graph and weighted directed graph with algorithms
   enabling sorting and topological ordering of vertices.
 
-version: 1.0.0
+version: 1.1.0
 
 homepage: https://github.com/simphotonics/directed_graph
 
@@ -20,11 +20,11 @@ environment:
 dependencies:
   collection: ^1.19.1
   exception_templates: ^1.1.0
-  lazy_memo: ^1.0.0
+  lazy_memo: ^2.0.0
   meta: ^1.18.2
   quote_buffer: ^1.1.0
 
 dev_dependencies:
-  benchmark_runner: ^2.2.2
+  benchmark_runner: ^2.2.3
   lints: ^6.1.0
   test: ^1.32.0

@@ -1,4 +1,8 @@
-### 1.0.0
+## 1.0.1
+- Renamed graph method `updateCache()` -> `invalidateCache()`.
+- Upgraded dependencies.
+
+## 1.0.0
 - Added the classes `UnmodifiableDirectedGraph`, `DirectedMultiGraph`, and
 `WeightedDirectedMultiGraph`.
 - Removed the getter `inverseComparator`, to prevent users from inadvertently
