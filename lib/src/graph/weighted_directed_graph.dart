@@ -157,7 +157,7 @@ class WeightedDirectedGraph<T extends Object, W extends Comparable<Object>>
     }
     // Add any new vertices to the graph:
     _edges[connectedVertex] ??= <T, W>{};
-    updateCache();
+    invalidateCache();
   }
 
   /// Adds weighted edges pointing from [vertex] to the vertices specified as
@@ -174,13 +174,13 @@ class WeightedDirectedGraph<T extends Object, W extends Comparable<Object>>
     for (final connectedVertex in weightedEdges.keys) {
       _edges[connectedVertex] ??= <T, W>{};
     }
-    updateCache();
+    invalidateCache();
   }
 
   @override
   void clear() {
     _edges.clear();
-    updateCache();
+    invalidateCache();
   }
 
   @override
@@ -188,7 +188,7 @@ class WeightedDirectedGraph<T extends Object, W extends Comparable<Object>>
     for (final vertex in _edges.keys) {
       _edges[vertex]!.clear();
     }
-    updateCache();
+    invalidateCache();
   }
 
   @override
@@ -258,7 +258,7 @@ class WeightedDirectedGraph<T extends Object, W extends Comparable<Object>>
     if (!_edges.containsKey(vertex)) return;
     removeIncomingEdges(vertex);
     _edges.remove(vertex);
-    updateCache();
+    invalidateCache();
   }
 
   /// Removes the edge pointing from [vertex] to [connectedVertex].
@@ -266,7 +266,7 @@ class WeightedDirectedGraph<T extends Object, W extends Comparable<Object>>
   /// Does not remove the vertices.
   void removeEdge(T vertex, T connectedVertex) {
     _edges[vertex]?.remove(connectedVertex);
-    updateCache();
+    invalidateCache();
   }
 
   /// Removes edges pointing from [vertex] to [connectedVertices].
@@ -279,7 +279,7 @@ class WeightedDirectedGraph<T extends Object, W extends Comparable<Object>>
       (connectedVertex, edgeWeight) =>
           connectedVertices.contains(connectedVertex),
     );
-    updateCache();
+    invalidateCache();
   }
 
   /// Removes edges ending at [vertex] from the graph.
@@ -291,7 +291,7 @@ class WeightedDirectedGraph<T extends Object, W extends Comparable<Object>>
     for (final connectedVertices in _edges.values) {
       connectedVertices.remove(vertex);
     }
-    updateCache();
+    invalidateCache();
   }
 
   /// Sorts the graph vertices using [comparator] and then calls
@@ -333,7 +333,6 @@ class WeightedDirectedGraph<T extends Object, W extends Comparable<Object>>
   String toString() {
     var b = StringBuffer();
     final q = (T == String) ? '\'' : '';
-
     b.writeln('{');
     for (final vertex in sortedVertices) {
       b.write(' $q$vertex$q: ');
@@ -344,7 +343,6 @@ class WeightedDirectedGraph<T extends Object, W extends Comparable<Object>>
         ),
         ', ',
       );
-
       b.write('},');
       b.writeln('');
     }
@@ -353,9 +351,9 @@ class WeightedDirectedGraph<T extends Object, W extends Comparable<Object>>
   }
 
   @override
-  void updateCache() {
-    _weight.updateCache();
-    super.updateCache();
+  void invalidateCache() {
+    _weight.invalidateCache();
+    super.invalidateCache();
   }
 
   /// Assigns [weight] to an existing edge connecting [vertex]
@@ -374,7 +372,7 @@ class WeightedDirectedGraph<T extends Object, W extends Comparable<Object>>
       return false;
     } else {
       _edges[vertex]![connectedVertex] = weight;
-      _weight.updateCache();
+      _weight.invalidateCache();
       return true;
     }
   }

@@ -157,7 +157,7 @@ class WeightedDirectedMultiGraph<T extends Object, W extends Comparable<Object>>
     }
     // Add any new vertices to the graph:
     _edges[connectedVertex] ??= <T, List<W>>{};
-    updateCache();
+    invalidateCache();
   }
 
   /// Adds weighted edges pointing from [vertex] to the vertices specified as
@@ -188,13 +188,13 @@ class WeightedDirectedMultiGraph<T extends Object, W extends Comparable<Object>>
     for (final connectedVertex in weightedEdges.keys) {
       _edges[connectedVertex] ??= <T, List<W>>{};
     }
-    updateCache();
+    invalidateCache();
   }
 
   @override
   void clear() {
     _edges.clear();
-    updateCache();
+    invalidateCache();
   }
 
   @override
@@ -202,7 +202,7 @@ class WeightedDirectedMultiGraph<T extends Object, W extends Comparable<Object>>
     for (final vertex in _edges.keys) {
       _edges[vertex]!.clear();
     }
-    updateCache();
+    invalidateCache();
   }
 
   @override
@@ -272,7 +272,7 @@ class WeightedDirectedMultiGraph<T extends Object, W extends Comparable<Object>>
     if (!_edges.containsKey(vertex)) return;
     removeIncomingEdges(vertex);
     _edges.remove(vertex);
-    updateCache();
+    invalidateCache();
   }
 
   /// Removes the edge with [weight] pointing from [vertex] to [connectedVertex].
@@ -282,7 +282,7 @@ class WeightedDirectedMultiGraph<T extends Object, W extends Comparable<Object>>
       if (_edges[vertex]![connectedVertex]!.isEmpty) {
         _edges[vertex]!.remove(connectedVertex);
       }
-      updateCache();
+      invalidateCache();
     }
   }
 
@@ -290,7 +290,7 @@ class WeightedDirectedMultiGraph<T extends Object, W extends Comparable<Object>>
   /// [edgeWeights].
   ///
   /// * Does not remove any vertices from the graph.
-  /// * Calls [updateCache] if any edges were removed.
+  /// * Calls [invalidateCache] if any edges were removed.
   void removeEdges(T vertex, Map<T, List<W>> edgeWeights) {
     edgeWeights.forEach((connectedVertex, weights) {
       for (final weight in weights) {
@@ -308,7 +308,7 @@ class WeightedDirectedMultiGraph<T extends Object, W extends Comparable<Object>>
     for (final edgeWeights in _edges.values) {
       edgeWeights.remove(vertex);
     }
-    updateCache();
+    invalidateCache();
   }
 
   /// Sorts the graph vertices using [comparator] and then calls
@@ -341,7 +341,6 @@ class WeightedDirectedMultiGraph<T extends Object, W extends Comparable<Object>>
   String toString() {
     var b = StringBuffer();
     final q = (T == String) ? '\'' : '';
-
     b.writeln('{');
     for (final vertex in sortedVertices) {
       b.write(' $q$vertex$q: ');
@@ -352,7 +351,6 @@ class WeightedDirectedMultiGraph<T extends Object, W extends Comparable<Object>>
         ),
         ', ',
       );
-
       b.write('},');
       b.writeln('');
     }
@@ -361,9 +359,9 @@ class WeightedDirectedMultiGraph<T extends Object, W extends Comparable<Object>>
   }
 
   @override
-  void updateCache() {
-    _weight.updateCache();
-    super.updateCache();
+  void invalidateCache() {
+    _weight.invalidateCache();
+    super.invalidateCache();
   }
 
   @override

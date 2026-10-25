@@ -85,7 +85,7 @@ class DirectedMultiGraph<T extends Object> extends DirectedGraphBase<T> {
     }
     // Add any new vertices to the graph:
     _edges[connectedVertex] ??= <T, int>{};
-    updateCache();
+    invalidateCache();
   }
 
   /// Adds weighted edges pointing from [vertex] to the vertices specified as
@@ -104,13 +104,13 @@ class DirectedMultiGraph<T extends Object> extends DirectedGraphBase<T> {
     for (final connectedVertex in vertices) {
       _edges[connectedVertex] ??= <T, int>{};
     }
-    updateCache();
+    invalidateCache();
   }
 
   @override
   void clear() {
     _edges.clear();
-    updateCache();
+    invalidateCache();
   }
 
   @override
@@ -118,7 +118,7 @@ class DirectedMultiGraph<T extends Object> extends DirectedGraphBase<T> {
     for (final vertex in _edges.keys) {
       _edges[vertex]!.clear();
     }
-    updateCache();
+    invalidateCache();
   }
 
   /// Returns the edge count of the edge (vertex, connectedVertex).
@@ -141,7 +141,7 @@ class DirectedMultiGraph<T extends Object> extends DirectedGraphBase<T> {
     if (_edges.containsKey(vertex)) {
       removeIncomingEdges(vertex);
       _edges.remove(vertex);
-      updateCache();
+      invalidateCache();
     }
   }
 
@@ -151,7 +151,7 @@ class DirectedMultiGraph<T extends Object> extends DirectedGraphBase<T> {
       for (final connectedVertices in _edges.values) {
         connectedVertices.remove(vertex);
       }
-      updateCache();
+      invalidateCache();
     }
   }
 
@@ -161,7 +161,7 @@ class DirectedMultiGraph<T extends Object> extends DirectedGraphBase<T> {
   /// Does not remove any vertices from the graph.
   void removeEdge(T vertex, T connectedVertex) {
     _edges[vertex]?.decrement(connectedVertex);
-    updateCache();
+    invalidateCache();
   }
 
   /// Removes edges pointing from [vertex] to [connectedVertices].
@@ -173,7 +173,7 @@ class DirectedMultiGraph<T extends Object> extends DirectedGraphBase<T> {
     for (final connectedVertex in connectedVertices) {
       _edges[vertex]!.decrement(connectedVertex);
     }
-    updateCache();
+    invalidateCache();
   }
 
   /// Sorts the graph vertices using [comparator] and then calls
@@ -206,7 +206,6 @@ class DirectedMultiGraph<T extends Object> extends DirectedGraphBase<T> {
   String toString() {
     var b = StringBuffer();
     final q = (T == String) ? '\'' : '';
-
     b.writeln('{');
     for (final vertex in sortedVertices) {
       b.write(' $q$vertex$q: ');
@@ -217,7 +216,6 @@ class DirectedMultiGraph<T extends Object> extends DirectedGraphBase<T> {
         ),
         ', ',
       );
-
       b.write('},');
       b.writeln('');
     }

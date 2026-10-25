@@ -48,20 +48,6 @@ abstract class DirectedGraphBase<T extends Object> extends Iterable<T> {
   /// The map keys represent the set of vertices reachable from [start].
   Map<T, Iterable<T>> shortestPaths(T start) => crawler.shortestPaths(start);
 
-  /// Returns `true` if the graph vertices and edges can be sorted.
-  /// * A graph is sortable a [comparator] was specified during construction
-  ///   or set at a later time.
-  /// * A graph is sortable if the type generic type [T] implements
-  /// the interface [Comparable]. In that case, the default [comparator] is
-  /// used.
-  // bool get isSortable {
-  //   if (Iterable<T>.empty() is Iterable<Comparable> || _comparator != null) {
-  //     return true;
-  //   } else {
-  //     return false;
-  //   }
-  // }
-
   /// This field holds either:
   /// * the comparator provided as constructor parameter,
   /// * the comparator set by the user,
@@ -86,7 +72,7 @@ abstract class DirectedGraphBase<T extends Object> extends Iterable<T> {
   /// Sets the comparator used to sort graph vertices.
   set comparator(Comparator<T>? comparator) {
     _comparator = comparator;
-    _sortedVertices.updateCache();
+    _sortedVertices.invalidateCache();
   }
 
   /// Returns `true` if [comparator] is not null.
@@ -98,12 +84,12 @@ abstract class DirectedGraphBase<T extends Object> extends Iterable<T> {
   ///
   /// After calling this method
   /// all cached variables will be recalculated when next accessed.
-  void updateCache() {
-    _outDegreeMap.updateCache();
-    _inDegreeMap.updateCache();
-    _sortedVertices.updateCache();
-    _isAcyclic.updateCache();
-    _cycleVertex.updateCache();
+  void invalidateCache() {
+    _cycleVertex.invalidateCache();
+    _inDegreeMap.invalidateCache();
+    _isAcyclic.invalidateCache();
+    _outDegreeMap.invalidateCache();
+    _sortedVertices.invalidateCache();
   }
 
   /// Caches the sorted vertices.
@@ -217,8 +203,7 @@ abstract class DirectedGraphBase<T extends Object> extends Iterable<T> {
     }
   }
 
-  /// Returns the first vertex detected
-  /// that is part of a cycle.
+  /// Returns the first vertex found to be part of a cycle.
   ///
   /// Returns `null` if the graph is acyclic.
   T? _findCycleVertex() {

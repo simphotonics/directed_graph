@@ -89,7 +89,7 @@ class DirectedGraph<T extends Object> extends DirectedGraphBase<T> {
     }
     // If connectedVertex is new add it to the graph.
     _edges[connectedVertex] ??= <T>{};
-    updateCache();
+    invalidateCache();
   }
 
   /// Adds edges (connections) pointing from [vertex] to [connectedVertices].
@@ -104,13 +104,13 @@ class DirectedGraph<T extends Object> extends DirectedGraphBase<T> {
       // If connectedVertex is new add it to the graph.
       _edges[connectedVertex] ??= <T>{};
     }
-    updateCache();
+    invalidateCache();
   }
 
   @override
   void clear() {
     _edges.clear();
-    updateCache();
+    invalidateCache();
   }
 
   @override
@@ -118,7 +118,7 @@ class DirectedGraph<T extends Object> extends DirectedGraphBase<T> {
     for (final vertex in _edges.keys) {
       _edges[vertex]!.clear();
     }
-    updateCache();
+    invalidateCache();
   }
 
   @override
@@ -145,7 +145,7 @@ class DirectedGraph<T extends Object> extends DirectedGraphBase<T> {
     if (_edges.containsKey(vertex)) {
       removeIncomingEdges(vertex);
       _edges.remove(vertex);
-      updateCache();
+      invalidateCache();
     }
   }
 
@@ -159,7 +159,7 @@ class DirectedGraph<T extends Object> extends DirectedGraphBase<T> {
   /// Note: Does not remove the vertices.
   void removeEdges(T vertex, Set<T> connectedVertices) {
     _edges[vertex]?.removeAll(connectedVertices);
-    updateCache();
+    invalidateCache();
   }
 
   /// Removes edges ending at [vertex] from the graph.
@@ -168,7 +168,7 @@ class DirectedGraph<T extends Object> extends DirectedGraphBase<T> {
       for (final connectedVertices in _edges.values) {
         connectedVertices.remove(vertex);
       }
-      updateCache();
+      invalidateCache();
     }
   }
 
