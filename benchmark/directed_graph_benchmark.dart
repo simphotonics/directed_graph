@@ -11,8 +11,6 @@ int inverseComparator(String s1, String s2) {
   return -s1.compareTo(s2);
 }
 
-
-
 var a = 'a';
 var b = 'b';
 var c = 'c';
