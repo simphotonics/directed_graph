@@ -1,6 +1,8 @@
 ## 1.0.1
-- Renamed graph method `updateCache()` -> `invalidateCache()`.
+- Renamed graph method `updateCache()` -> `invalidateCache()` to mirror
+  the naming choice in `lazy_memo`.
 - Upgraded dependencies.
+- Replotted benchmark scores. 
 
 ## 1.0.0
 - Added the classes `UnmodifiableDirectedGraph`, `DirectedMultiGraph`, and
