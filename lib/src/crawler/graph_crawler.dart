@@ -10,7 +10,6 @@ final largestInt = double.maxFinite.floor();
 /// Function returning an `Iterable<T>` representing edge vertices.
 /// * If [vertex] has no neighbours the function must return
 ///   an empty iterable.
-/// * The function must never return `null`.
 typedef Edges<T extends Object> = Iterable<T> Function(T vertex);
 
 /// Utility class for crawling a graph defined by [edges] and
@@ -20,16 +19,55 @@ typedef Edges<T extends Object> = Iterable<T> Function(T vertex);
 /// may be same in order to represent a cycle.
 /// * A directed *walk* is defined as a list of connected vertices that can be
 /// traversed in sequential order.
-class GraphCrawler<T extends Object> {
-  new(this.edges);
-
-  /// Function returning an `Iterable<T>` representing edge vertices.
-  final Edges<T> edges;
+class GraphCrawler<T extends Object>(
+  /// Function returning an [Iterable] representing the vertices connected to
+  /// the vertex passed as function argument.
+  final Edges<T> edges,
+) {
+  /// Returns a map containing all trails commencing at [start].
+  ///
+  /// * The [start] vertex is omitted.
+  /// * Paths are grouped according to the last vertex in the path list.
+  /// * If a [target] vertex is specified the function will return
+  /// after a path from [start] to [target] was found and added to the map.
+  /// * Inspired by [`graphs`](https://pub.dev/documentation/graphs/latest/graphs/shortestPaths.html).
+  /// ```
+  /// // Usage:
+  /// import 'package:directed_graph/directed_graph.dart';
+  /// void main() {
+  ///   var graph = DirectedGraph<String, int>(
+  ///     {
+  ///       'a': {'a', 'b', 'h', 'c', 'e'},
+  ///       'b': {'h'},
+  ///       'c': {'h', 'g'},
+  ///       'd': {'e', 'f'},
+  ///       'e': {'g'},
+  ///       'f': {'i'},
+  ///       'i': {'l', 'k'},
+  ///       'k': {'g', 'f'},
+  ///      }
+  ///   );
+  ///   final crawler = GraphCrawler<String>(graph.edges);
+  ///   final treeMap = crawler.mappedTree('a', 'g');
+  ///   print(treeMap); // {a: [{a}], b: [{b}], h: [{h}, {b, h}, {c, h}], c: [{c}], e: [{e}], g: [{c, g}]}
+  /// }
+  /// ```
+  Map<T, List<Set<T>>> mappedTree(T start, [T? target]) {
+    final result = <T, List<Set<T>>>{};
+    final tree = this.tree(start, target);
+    for (final branch in tree) {
+      if (result.containsKey(branch.last)) {
+        result[branch.last]!.add(branch);
+      } else {
+        result[branch.last] = [branch];
+      }
+    }
+    return result;
+  }
 
   /// Returns the shortest path from [start] to [target].
   ///
   /// * Returns an empty list if [target] is not reachable from [start].
-  ///
   List<T> path(T start, T target) {
     final tree = <Set<T>>[];
     for (final connected in edges(start)) {
@@ -115,7 +153,7 @@ class GraphCrawler<T extends Object> {
               continue;
             } else {
               if (vertex == target) {
-                // Store detected path:
+                // Add the newly detected path:
                 pathList.add([start, ...path, vertex]);
               } else {
                 // Continue growing tree.
@@ -129,6 +167,37 @@ class GraphCrawler<T extends Object> {
     }
     return pathList;
   }
+
+  /// Returns a set containing all vertices that are reachable from
+  /// vertex [start].
+  Set<T> reachableVertices(T start) {
+    final result = <T>{};
+
+    void addReachableVertices(T root, T current) {
+      for (final vertex in edges(current)) {
+        if (result.contains(vertex)) continue;
+        result.add(vertex);
+        addReachableVertices(root, vertex);
+      }
+    }
+
+    addReachableVertices(start, start);
+    return result;
+  }
+
+  // Recursive method returning a tree with root vertex [start].
+  // List<Set<T>> tree1(T start) {
+  //   final result = <Set<T>>[];
+  //   void addPath(T root, T current, Set<T> path) {
+  //     for (final vertex in edges(current)) {
+  //       if (path.contains(vertex) || path.contains(root)) continue;
+  //       result.add(Set.of({...path, vertex}));
+  //       addPath(root, vertex, result.last);
+  //     }
+  //   }
+  //   addPath(start, start, {});
+  //   return result;
+  // }
 
   /// Returns a map containing the shortest paths from
   /// [start] to each reachable vertex.
@@ -148,8 +217,7 @@ class GraphCrawler<T extends Object> {
     if (tree.isNotEmpty) {
       var startIndex = 0;
       var endIndex = 0;
-
-      final visited = HashSet<T>()..add(start);
+      final visited = HashSet<T>();
       do {
         endIndex = tree.length;
         for (var i = startIndex; i < endIndex; ++i) {
@@ -215,83 +283,6 @@ class GraphCrawler<T extends Object> {
       }
       startIndex = endIndex;
     } while (endIndex < result.length);
-    return result;
-  }
-
-  // Recursive method returning a tree with root vertex [start].
-  // List<Set<T>> tree1(T start) {
-  //   final result = <Set<T>>[];
-  //   void addPath(T root, T current, Set<T> path) {
-  //     for (final vertex in edges(current)) {
-  //       if (path.contains(vertex) || path.contains(root)) continue;
-  //       result.add(Set.of({...path, vertex}));
-  //       addPath(root, vertex, result.last);
-  //     }
-  //   }
-  //   addPath(start, start, {});
-  //   return result;
-  // }
-
-  /// Returns a set containing all vertices that are reachable from
-  /// vertex [start].
-  Set<T> reachableVertices(T start) {
-    final result = <T>{};
-
-    void addReachableVertices(T root, T current) {
-      for (final vertex in edges(current)) {
-        if (result.contains(vertex)) continue;
-        result.add(vertex);
-        addReachableVertices(root, vertex);
-      }
-    }
-
-    addReachableVertices(start, start);
-    return result;
-  }
-
-  /// Returns a map containing all paths commencing at [start].
-  /// * Each entry of type `Set<T>` represents a path
-  ///   (the [start] vertex is omitted).
-  /// * Paths are grouped according to the last vertex in the path list.
-  /// * If a [target] vertex is specified the function will return
-  /// after a path from [start] to [target] was found and added to the map.
-  /// * Inspired by [`graphs`](https://pub.dev/documentation/graphs/latest/graphs/shortestPaths.html).
-  ///
-  /// Usage:
-  ///
-  /// ```
-  /// import 'package:directed_graph/directed_graph.dart';
-  /// void main() {
-  ///   var graph = DirectedGraph<String, int>(
-  ///     {
-  ///       'a': {'a', 'b', 'h', 'c', 'e'},
-  ///       'b': {'h'},
-  ///       'c': {'h', 'g'},
-  ///       'd': {'e', 'f'},
-  ///       'e': {'g'},
-  ///       'f': {'i'},
-  ///       'i': {'l', 'k'},
-  ///       'k': {'g', 'f'},
-  ///      }
-  ///   );
-  ///   final crawler = GraphCrawler<String>(graph.edges);
-  ///   final treeMap = crawler.mappedTree('a', 'g');
-  ///   print(treeMap);
-  /// }
-  /// ```
-  /// The program above generates the following console output:
-  ///
-  /// `{a: [{a}], b: [{b}], h: [{h}, {b, h}, {c, h}], c: [{c}], e: [{e}], g: [{c, g}]}`
-  Map<T, List<Set<T>>> mappedTree(T start, [T? target]) {
-    final result = <T, List<Set<T>>>{};
-    final tree = this.tree(start, target);
-    for (final branch in tree) {
-      if (result.containsKey(branch.last)) {
-        result[branch.last]!.add(branch);
-      } else {
-        result[branch.last] = [branch];
-      }
-    }
     return result;
   }
 }
