@@ -131,7 +131,6 @@ abstract class DirectedGraphBase<T extends Object> extends Iterable<T> {
   /// Returns `false` otherwise.
   bool vertexExists(T vertex);
 
-
   /// Returns a mapping between vertex and number of
   /// outgoing connections.
   late final LazyMap<T, int> outDegreeMap = LazyMap<T, int>(() {

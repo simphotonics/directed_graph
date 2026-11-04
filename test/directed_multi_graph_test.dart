@@ -480,10 +480,9 @@ void main() {
     });
     test('edgeCount 4', () {
       final graph = DirectedMultiGraph.of(graph0);
-      graph.addEdges(h, [a,a,]);
+      graph.addEdges(h, [a, a]);
       expect(graph.isValidMultiWalk([a, h, a, h, a, h]), isTrue);
       expect(graph.isValidMultiWalk([a, h, a, h, a, h, a]), isFalse);
-
     });
   });
   group('isValidPath:', () {
