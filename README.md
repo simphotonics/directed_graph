@@ -54,6 +54,7 @@ edge is assigned a weight. A *multi graph* can have several edges connecting the
 - *Path*: A path \[v<sub>i</sub>, ...,   v<sub>n</sub>\] is an ordered list of
    connected graph vertices where each inner vertex is *distinct*.
    The path \[A, E, G\] starts at vertex A and ends at vertex G.
+   
    Note that this definition is more lax compared to the mathematical definition of a path
    (where no vertex may be repeated). This was done deliberately, so that methods like
    `path(startVertex, endVertex)` are able to return a
@@ -65,7 +66,7 @@ edge is assigned a weight. A *multi graph* can have several edges connecting the
 - *Walk*: A walk is an ordered *list* of connected vertices.
   Note: An empty walk and a walk containing one graph vertex are
    considered valid, and the function `isValidWalk([])` returns `true`.
-\[D, F, I, K, F\] is a walk (and a trail) but not a path since the vertex F is listed twice.
+\[D, F, I, K, F\] is a walk but not a path since the vertex F is listed twice.
 - *DAG*: An acronym for *Directed Acyclic Graph*, a directed graph without cycles.
 - *Topological ordering*: An ordered *set* of all vertices in a graph such that v<sub>i</sub>
 occurs before v<sub>j</sub> if there is a directed edge (v<sub>i</sub>, v<sub>j</sub>).
