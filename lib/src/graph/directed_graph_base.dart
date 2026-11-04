@@ -28,7 +28,7 @@ abstract class DirectedGraphBase<T extends Object> extends Iterable<T> {
   T get last;
 
   @override
-  bool contains(Object? element);
+  bool contains(Object? element) => sortedVertices.contains(element);
 
   /// Removes all graph vertices. After this method returns the graph
   /// will be empty.
@@ -72,7 +72,7 @@ abstract class DirectedGraphBase<T extends Object> extends Iterable<T> {
   /// Sets the comparator used to sort graph vertices.
   set comparator(Comparator<T>? comparator) {
     _comparator = comparator;
-    _sortedVertices.invalidateCache();
+    sortedVertices.invalidateCache();
   }
 
   /// Returns `true` if [comparator] is not null.
@@ -86,16 +86,11 @@ abstract class DirectedGraphBase<T extends Object> extends Iterable<T> {
   /// all cached variables will be recalculated when next accessed.
   void invalidateCache() {
     _cycleVertex.invalidateCache();
-    _inDegreeMap.invalidateCache();
     _isAcyclic.invalidateCache();
-    _outDegreeMap.invalidateCache();
-    _sortedVertices.invalidateCache();
+    inDegreeMap.invalidateCache();
+    outDegreeMap.invalidateCache();
+    sortedVertices.invalidateCache();
   }
-
-  /// Caches the sorted vertices.
-  late final LazySet<T> _sortedVertices = LazySet<T>(
-    () => vertices.toSet()..sort(comparator),
-  );
 
   /// Caches the Boolean [isAcyclic].
   late final Lazy<bool> _isAcyclic = Lazy<bool>(
@@ -116,13 +111,14 @@ abstract class DirectedGraphBase<T extends Object> extends Iterable<T> {
   /// that form a cyclic path.
   T? get cycleVertex => _cycleVertex();
 
-  /// Returns an `Iterable<T>` of all vertices.
+  /// Returns an Iterable containing all graph vertices.
   Iterable<T> get vertices;
 
-  /// Returns an set containing all vertices sorted using [comparator].
+  /// Returns a [LazySet] containing all vertices sorted using [comparator].
   /// If [comparator] is `null` this getter returns the original
   /// unsorted set of vertices.
-  Set<T> get sortedVertices => _sortedVertices();
+  LazySet<T> get sortedVertices =>
+      LazySet<T>(() => vertices.toSet()..sort(comparator));
 
   /// Returns the vertices connected to [vertex].
   Set<T> edges(T vertex);
@@ -135,9 +131,10 @@ abstract class DirectedGraphBase<T extends Object> extends Iterable<T> {
   /// Returns `false` otherwise.
   bool vertexExists(T vertex);
 
+
   /// Returns a mapping between vertex and number of
   /// outgoing connections.
-  late final _outDegreeMap = LazyMap<T, int>(() {
+  late final LazyMap<T, int> outDegreeMap = LazyMap<T, int>(() {
     final map = <T, int>{};
     for (final vertex in sortedVertices) {
       map[vertex] = edges(vertex).length;
@@ -146,12 +143,8 @@ abstract class DirectedGraphBase<T extends Object> extends Iterable<T> {
   });
 
   /// Returns a mapping between vertex and number of
-  /// outgoing connections.
-  Map<T, int> get outDegreeMap => _outDegreeMap();
-
-  /// Returns a mapping between vertex and number of
   /// incoming connections.
-  late final _inDegreeMap = LazyMap<T, int>(() {
+  late final inDegreeMap = LazyMap<T, int>(() {
     var map = <T, int>{};
     for (final vertex in sortedVertices) {
       // The map entry might already exist if vertex is connected to a
@@ -163,10 +156,6 @@ abstract class DirectedGraphBase<T extends Object> extends Iterable<T> {
     }
     return map;
   });
-
-  /// Returns a mapping between vertex and number of
-  /// incoming connections.
-  Map<T, int> get inDegreeMap => _inDegreeMap();
 
   /// The graph crawler of this graph.
   late final GraphCrawler<T> crawler = GraphCrawler<T>(edges);
@@ -187,6 +176,77 @@ abstract class DirectedGraphBase<T extends Object> extends Iterable<T> {
   /// * To exclude cycles and list only the shortest paths
   ///   use the method [shortestPaths].
   List<List<T>> paths(T start, T target) => crawler.paths(start, target);
+
+  /// Returns `true` if the [walk] can be traversed sequencially
+  /// and `false` otherwise.
+  ///
+  /// * Returns `true` if [walk] is empty.
+  /// * Returns `true` if [walk] contains only one graph vertex.
+  bool isValidWalk(Iterable<T> walk) {
+    if (walk.isEmpty) return true;
+    var currentVertex = walk.first;
+    if (!vertexExists(currentVertex)) return false;
+    for (final nextVertex in walk.skip(1)) {
+      if (edgeExists(currentVertex, nextVertex)) {
+        currentVertex = nextVertex;
+      } else {
+        return false;
+      }
+    }
+    return true;
+  }
+
+  /// Returns `true` if [path] can be traversed sequentially and
+  /// no vertex appears twice, except for possibly the first and last.
+  /// Returns `false`, otherwise.
+  ///
+  /// * Returns `true` if [path] is empty.
+  /// * Returns `true` if [path] contains only one graph vertex.
+  bool isValidPath(Iterable<T> path) {
+    final it = path.iterator;
+    bool hasElement = it.moveNext();
+    // An empty path is considered valid.
+    if (!hasElement) return true;
+    late T current;
+    late T next;
+    final visited = HashSet<T>();
+
+    current = it.current;
+    if (vertexExists(current)) {
+      visited.add(current);
+    } else {
+      // Must be a graph vertex.
+      return false;
+    }
+
+    while (hasElement = it.moveNext()) {
+      next = it.current;
+      if (edgeExists(current, next)) {
+        if (visited.contains(next)) {
+          break;
+        } else {
+          current = next;
+          visited.add(current);
+        }
+      } else {
+        return false;
+      }
+    }
+
+    if (hasElement) {
+      // Check if next is the last element and if it is equal to the first.
+      if (!it.moveNext() && path.first == next) {
+        // The path represents a cycle. The inner vertices are distinct.
+        return true;
+      } else {
+        // Not a path.
+        return false;
+      }
+    } else {
+      // While loop completed, no vertices were revisited.
+      return true;
+    }
+  }
 
   /// Returns the first cycle detected or an empty list
   /// if the graph is acyclic.
