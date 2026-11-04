@@ -87,6 +87,20 @@ void main() {
     benchmark('reachableVertices(d)', () {
       graph.reachableVertices(d);
     });
+
+    var graph1 = DirectedGraph<String>({
+      a: {b, h, c, e},
+      d: {e, f},
+      b: {h},
+      c: {h, g},
+      f: {i},
+      i: {l},
+      h: {a},
+      k: {g, f},
+    }, comparator: comparator);
+    benchmark('isValidWalk', () {
+      graph1.isValidWalk([a, c, h, a, b, h, a]);
+    });
   });
   group('Comparator', () {
     final count = 10000000;
