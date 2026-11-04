@@ -387,30 +387,35 @@ class WeightedDirectedGraph<T extends Object, W extends Comparable<Object>>
   /// * Throws an error if the [walk] cannot be traversed.
   /// * Returns zero if the iterable [walk] is empty.
   W weightAlong(Iterable<T> walk) {
-    final edge = walk.take(2);
-    if (edge.length < 2) {
-      return zero;
-    }
-    final vertex = edge.first;
-    final connectedVertex = edge.last;
+    if (walk.isEmpty) return zero;
 
-    if (!_edges.containsKey(vertex)) {
+    var currentVertex = walk.first;
+
+    if (!_edges.containsKey(currentVertex)) {
       throw ErrorOfType<UnkownVertex>(
         message: 'Could not calculate weight of walk: $walk',
-        invalidState: '$vertex is not a graph vertex.',
+        invalidState: '$currentVertex is not a graph vertex.',
       );
     }
-    if (!_edges[vertex]!.containsKey(connectedVertex)) {
-      throw ErrorOfType<NotAnEdge>(
-        message: 'Could not calculate the weight of walk: $walk.',
-        invalidState: 'Vertex $vertex is not connected to $connectedVertex.}',
-        expectedState: '$walk must be traversable using existing graph edges.',
-      );
+
+    var result = zero;
+
+    for (final nextVertex in walk.skip(1)) {
+      if (edges(currentVertex).contains(nextVertex)) {
+        result = summation(result, _edges[currentVertex]![nextVertex]!);
+        currentVertex = nextVertex;
+      } else {
+        throw ErrorOfType<NotAnEdge>(
+          message: 'Could not calculate the weight of walk: $walk.',
+          invalidState:
+              'Vertex $currentVertex is not connected '
+              'to $nextVertex.}',
+          expectedState:
+              '$walk must be traversable using existing graph edges.',
+        );
+      }
     }
-    return summation(
-      _edges[vertex]![connectedVertex]!,
-      weightAlong(walk.skip(1)),
-    );
+    return result;
   }
 
   /// Returns a map containing the vertices connected to [vertex] as keys
