@@ -1,3 +1,10 @@
+## 1.2.0
+- The getter `sortedVertices`, `outDegreeMap`, and `inDegreeMap` now return
+  a lazy collection.
+- Added the graph methods `isValidPath` and `isValidWalk`.
+- For the class `DirectedMultiGraph`, added the method `isValidMultiWalk`.
+
+
 ## 1.1.0
 - Renamed graph method `updateCache()` -> `invalidateCache()` to mirror
   the naming choice in `lazy_memo`.
