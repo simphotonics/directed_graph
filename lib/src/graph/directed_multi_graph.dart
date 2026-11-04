@@ -1,7 +1,9 @@
 import 'package:directed_graph/src/extensions/edge_count.dart';
 import 'package:directed_graph/src/graph/directed_graph_base.dart';
 
+import '../extensions/pair_iterable.dart';
 import '../extensions/sort.dart' show SortMap;
+import 'pair.dart';
 
 /// A directed graph storing vertices of type [T].
 /// * Each graph edge has an [edgeCount], a positive integer.
@@ -134,6 +136,43 @@ class DirectedMultiGraph<T extends Object> extends DirectedGraphBase<T> {
 
   @override
   Set<T> edges(T vertex) => _edges[vertex]?.keys.toSet() ?? <T>{};
+
+  /// Returns `true` if there is a directed graph edge pointing from the
+  /// first vertex to the second, from the second to the third and so on.
+  ///
+  /// * Returns `true` if [walk] is empty.
+  /// * Returns `true` if [walk] contains only one graph vertex.
+  /// * Returns `false` if an edge is traversed more times than its [edgeCount].
+  bool isValidMultiWalk(Iterable<T> walk) {
+    if (walk.isEmpty) return true;
+    var current = walk.first;
+    if (!contains(current)) return false;
+
+    final pairCount = <Pair<T>, int>{};
+    for (final pair in walk.pairIterable) {
+      if (edgeExists(pair.from, pair.to)) {
+        switch (pairCount[pair]) {
+          case null:
+            // The graph edge "pair" exists => Its count is positive.
+            // Decrement the count and store.
+            // Note "pair" can occur several times.
+            pairCount[pair] = edgeCount(pair.from, pair.to) - 1;
+            break;
+          case int i when i > 0:
+            // [pair] has already been encountered at least once.
+            pairCount[pair] = --i;
+            break;
+          default:
+            // There are more instances of [pair] in part compared to the
+            // whole graph.
+            return false;
+        }
+      } else {
+        return false;
+      }
+    }
+    return true;
+  }
 
   /// Completely removes [vertex] from the graph, including outgoing
   /// and incoming edges.

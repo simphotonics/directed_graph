@@ -429,4 +429,98 @@ void main() {
       expect(graph.vertices, [a, b, c, d, e, f, g, h, i, k, l]);
     });
   });
+
+  group('isValidWalk:', () {
+    test('empty', () {
+      expect(graph0.isValidWalk([]), isTrue);
+    });
+    test('single element', () {
+      expect(graph0.isValidWalk([a]), isTrue);
+    });
+    test('non-graph element', () {
+      expect(graph0.isValidWalk(['phi']), isFalse);
+    });
+    test('cycle', () {
+      final graph = DirectedMultiGraph.of(graph0);
+      graph.addEdge(h, a);
+      expect(graph.isValidWalk([a, b, h, a]), isTrue);
+    });
+    test('arbitrary', () {
+      expect(graph0.isValidWalk([a, b, h, f]), isFalse);
+    });
+    test('repeated vertex', () {
+      final graph = DirectedMultiGraph.of(graph0);
+      graph.addEdge(h, a);
+      expect(graph.isValidWalk([a, b, h, a, c, g]), isTrue);
+    });
+  });
+
+  group('isValidMultiWalk:', () {
+    test('empty', () {
+      expect(graph0.isValidMultiWalk([]), isTrue);
+    });
+    test('single element', () {
+      expect(graph0.isValidMultiWalk([a]), isTrue);
+    });
+    test('non-graph element', () {
+      expect(graph0.isValidMultiWalk(['phi']), isFalse);
+    });
+    test('cycle', () {
+      final graph = DirectedMultiGraph.of(graph0);
+      graph.addEdge(h, a);
+      expect(graph.isValidMultiWalk([a, b, h, a]), isTrue);
+    });
+    test('arbitrary', () {
+      expect(graph0.isValidMultiWalk([a, b, h, f]), isFalse);
+    });
+    test('repeated vertex', () {
+      final graph = DirectedMultiGraph.of(graph0);
+      graph.addEdge(h, a);
+      expect(graph.isValidMultiWalk([a, b, h, a, c, g]), isTrue);
+    });
+    test('edgeCount 4', () {
+      final graph = DirectedMultiGraph.of(graph0);
+      graph.addEdges(h, [a,a,]);
+      expect(graph.isValidMultiWalk([a, h, a, h, a, h]), isTrue);
+      expect(graph.isValidMultiWalk([a, h, a, h, a, h, a]), isFalse);
+
+    });
+  });
+  group('isValidPath:', () {
+    test('empty', () {
+      expect(graph0.isValidPath([]), isTrue);
+    });
+    test('single element', () {
+      expect(graph0.isValidPath([a]), isTrue);
+    });
+    test('non-graph element', () {
+      expect(graph0.isValidPath(['phi']), isFalse);
+    });
+    test('cycle', () {
+      final graph = DirectedMultiGraph.of(graph0);
+      graph.addEdge(h, a);
+      expect(graph.isValidPath([a, b, h, a]), isTrue);
+    });
+    test('walk', () {
+      final graph = DirectedMultiGraph.of(graph0);
+      graph.addEdge(h, b);
+      graph.addEdge(b, a);
+      expect(graph.isValidPath([a, b, h, b, a]), isFalse);
+    });
+
+    test('arbitrary', () {
+      expect(graph0.isValidPath([a, b, h, f]), isFalse);
+    });
+    test('repeated vertex', () {
+      final graph = DirectedMultiGraph.of(graph0);
+      graph.addEdge(h, a);
+      graph.addEdge(g, a);
+      expect(graph.isValidPath([a, b, h, a, c, g, a]), isFalse);
+    });
+    test('self-loop', () {
+      final graph = DirectedMultiGraph.of(graph0);
+      graph.addEdge(l, l);
+      expect(graph.isValidPath([l, l]), isTrue);
+    });
+  });
 }
