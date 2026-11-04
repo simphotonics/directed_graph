@@ -1,12 +1,5 @@
 import 'package:directed_graph/directed_graph.dart';
 
-// // To run this program navigate to
-// // the folder 'directed_graph/example'
-// // in your terminal and type:
-// //
-// // # dart bin/example.dart
-// //
-// // followed by enter.
 void main() {
   const a = 'a';
   const b = 'b';
@@ -26,4 +19,10 @@ void main() {
   print('Graph: $graph\n');
 
   print('Cycle: ${graph.cycle()}');
+
+  print(graph.crawler.mappedTree(a));
+
+  print(graph.crawler.shortestPaths(a));
+
+  print(graph.paths(a, a));
 }
